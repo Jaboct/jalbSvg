@@ -1,0 +1,82 @@
+
+Append:
+lay/jh/std/jHighLayx8_new
+
+
+Name:
+jHigh-IDE [jalbSvg]
+
+
+Button:
+0	1	C:\Users\jacob\workspace\jHigh\testEnv/modCore lay\jHigh_jalbSvg
+#1	1	mingw32-make -C /home/jadoo/workspace/jHigh\jalbSvg\ CompType=win
+#1	1	mingw32-make -C /home/jadoo/workspace/jHigh\jalbSvg\ clean CompType=win
+1	1	make -C /home/jadoo/workspace/jHigh/jalbSvg/
+1	1	make -C /home/jadoo/workspace/jHigh/jalbSvg/ clean
+0	1	/home/jadoo/workspace/jHigh\testEnv/modCore lay\jHigh_jalbSvg
+#1	1	/home/jadoo/workspace/jHigh\jalbSvg\soSend.bat
+1	1	/home/jadoo/workspace/jHigh/jalbSvg/soSend.sh
+1	1	/home/jadoo/workspace/jHigh\jalbSvg\compSend.bat
+
+
+Dir:
+/home/jadoo/workspace/jHigh/jalbSvg/src/
+/home/jadoo/workspace/jHigh/jalbSvg/include/
+/home/jadoo/workspace/jHigh/jalbSvg/
+C:\Users\jacob\workspace\jHigh\testEnv/lay\
+C:\Users\jacob\programs\modCore\
+
+
+Text:
+/home/jadoo/workspace/jHigh/jalbSvg/makefile
+/home/jadoo/workspace/jHigh/jalbSvg/src/mod.c
+/home/jadoo/workspace/jHigh/jalbSvg/include/mod.h
+
+
+jHighLoad:
+// 0 is structStruct, 1 is fileStruct, 2 is a script which can contain either one.
+//0	C:\Users\jacob\workspace\freight\jHigh/res\saves\xml\structStruct/structStruct.xml
+//2	C:\Users\jacob\workspace\jHigh\res\xmlGroup_jHigh
+
+
+
+
+// uiGen stuff
+
+LayLib:
+uiGen	uiGen	uiGenInit	uiGen_render	uiGen_event	uiGenClose 	set_uiGen_id
+uiGen	uiGenEdit	uiGenInitEdit	uiGenRenderEdit	uiGenEventEdit	uiGenCloseEdit	uiGenEditNumber
+
+Getter:
+layoutUi	addCanvasEle	uiGen	setAddCanvas
+
+Setter:
+draw2d	getFunctWrap	uiGen	setDraw2dApi
+font	getFontFirst	uiGen	setFont16
+
+Run:
+uiGen	assemble_appendMod_full_list
+
+
+
+
+Hotkey:
+tool	1	pressButtonI	3
+#jHigh	u	generate_structList_uiGen
+
+
+Setter:
+layoutUi	takeTop	loop	setLastStageData
+
+
+jHighXmlGroup:
+#/home/jadoo/workspace/jHigh\jalbSvg\jh\_xmlGroup
+/home/jadoo/workspace/jHigh/jalbSvg/jh/_xmlGroup
+
+
+Run:
+#jHigh	link_jalbSvg
+#uiGen	assemble_appendMod_full_list
+
+
+

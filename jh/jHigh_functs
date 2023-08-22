@@ -1,0 +1,101 @@
+
+
+
+
+
+// MODNAME	NICKNAME	init	render	event	close	number
+
+
+// extern struct draw2dStruct *draw2dApi;
+// extern struct jalbFont *fonts[];
+/*
+extern float colorWhite[];
+extern float colorGray[];
+extern float colorDGray[];
+extern float colorDGray1[];
+extern float colorDGray2[];
+extern float colorBlack[];
+extern float colorGold[];
+extern float colorOrange[];
+*/
+
+/** Functions */
+
+int id = -1;
+
+void *init ( ) {
+	return NULL;
+}
+
+void render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void *data ) {
+	printf ( "render ( )\n" );
+	draw2dApi->fillRect ( XYWHpass, colorBlack, screenDims, glBuffers );
+}
+
+int event ( SDL_Event *e, int *clickXY, int *eleWH, void *data ) {
+	if ( e->type == SDL_QUIT ) {
+	} else if ( e->type == SDL_KEYDOWN ) {
+//		if ( e->key.keysym.sym == SDLK_1 ) {
+//		}
+	} else if ( e->type == SDL_KEYUP ) {
+	} else if ( e->type == SDL_MOUSEBUTTONDOWN ) {
+//		if ( e->button.button == SDL_BUTTON_LEFT ) {
+//			e->button.x, or clickXY[0]
+//		} else if ( e->button.button == SDL_BUTTON_RIGHT ) {
+//		}
+	} else if ( e->type == SDL_MOUSEBUTTONUP ) {
+	} else if ( e->type == SDL_MOUSEMOTION ) {
+	} else if ( e->type == SDL_MOUSEWHEEL ) {
+	}
+
+	return 0;
+}
+
+void close ( char *data ) {
+}
+
+void number ( int id ) {
+	id = id;
+}
+
+
+
+
+----------------------------------------------
+Header
+----------------------------------------------
+
+
+
+#pragma once
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#include <SDL2/SDL.h>
+#include <GL/glew.h>
+#include <GL/gl.h>
+
+
+#include <jalbDraw/jalb_draw2d_api.h>
+
+#include "mod.h"
+
+/** Functions */
+
+void *init ( );
+void render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void *data );
+int event ( SDL_Event *e, int *clickXY, int *eleWH, void *data );
+void close ( char *data );
+void number ( int id );
+
+
+
+
+
+
+
+
+
+
