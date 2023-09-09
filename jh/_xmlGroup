@@ -4,6 +4,9 @@
 
 # structStructs
 jh/structStruct/svg.xml
+jh/structStruct/nakedUnion.xml
+jh/structStruct/g.xml
+jh/structStruct/path.xml
 
 # fileStructs
 jh/fileStruct/mod.xml
@@ -19,6 +22,6 @@ jh/scriptEle/script.xml
 jh/projectVar/projectVar.xml
 
 # modStructs
-jh/modStruct/modStruct.xml
+jh/modStruct/jalbSvg.xml
 
 

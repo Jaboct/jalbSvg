@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <structStruct>
-  <name>svg</name>
+  <name>path</name>
   <vars>
     <subVar>
-      <name>width</name>
+      <name>style</name>
       <type>0</type>
       <typeIndex>4</typeIndex>
       <initType>0</initType>
@@ -19,7 +19,7 @@
       <saveFlag>1</saveFlag>
     </subVar>
     <subVar>
-      <name>height</name>
+      <name>d</name>
       <type>0</type>
       <typeIndex>4</typeIndex>
       <initType>0</initType>
@@ -35,25 +35,17 @@
       <saveFlag>1</saveFlag>
     </subVar>
     <subVar>
-      <name>eles</name>
+      <name>id</name>
       <type>0</type>
-      <typeIndex>3</typeIndex>
+      <typeIndex>4</typeIndex>
       <initType>0</initType>
       <initTypeData>
         <>-1</>
       </initTypeData>
       <closeType>0</closeType>
-      <length>0</length>
+      <length>-1</length>
       <literal>1</literal>
-      <subAl>
-        <curEles>10</curEles>
-        <eleSize>0</eleSize>
-        <overflow>10</overflow>
-        <literal>0</literal>
-        <type>1</type>
-        <typeIndex>1</typeIndex>
-        <length>-1</length>
-      </subAl>
+      <>-1</>
       <external>0</external>
       <attribute>0</attribute>
       <saveFlag>1</saveFlag>

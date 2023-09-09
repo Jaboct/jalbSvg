@@ -1,43 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <structStruct>
-  <name>svg</name>
+  <name>nakedUnion</name>
   <vars>
     <subVar>
-      <name>width</name>
+      <name></name>
       <type>0</type>
-      <typeIndex>4</typeIndex>
-      <initType>0</initType>
-      <initTypeData>
-        <>-1</>
-      </initTypeData>
-      <closeType>0</closeType>
-      <length>-1</length>
-      <literal>1</literal>
-      <>-1</>
-      <external>0</external>
-      <attribute>0</attribute>
-      <saveFlag>1</saveFlag>
-    </subVar>
-    <subVar>
-      <name>height</name>
-      <type>0</type>
-      <typeIndex>4</typeIndex>
-      <initType>0</initType>
-      <initTypeData>
-        <>-1</>
-      </initTypeData>
-      <closeType>0</closeType>
-      <length>-1</length>
-      <literal>1</literal>
-      <>-1</>
-      <external>0</external>
-      <attribute>0</attribute>
-      <saveFlag>1</saveFlag>
-    </subVar>
-    <subVar>
-      <name>eles</name>
-      <type>0</type>
-      <typeIndex>3</typeIndex>
+      <typeIndex>6</typeIndex>
       <initType>0</initType>
       <initTypeData>
         <>-1</>
@@ -45,15 +13,62 @@
       <closeType>0</closeType>
       <length>0</length>
       <literal>1</literal>
-      <subAl>
-        <curEles>10</curEles>
-        <eleSize>0</eleSize>
-        <overflow>10</overflow>
-        <literal>0</literal>
-        <type>1</type>
-        <typeIndex>1</typeIndex>
-        <length>-1</length>
-      </subAl>
+      <subComplex>
+        <type>
+          <name></name>
+          <type>0</type>
+          <typeIndex>-1</typeIndex>
+          <initType>0</initType>
+          <initTypeData>
+            <>-1</>
+          </initTypeData>
+          <closeType>0</closeType>
+          <length>0</length>
+          <literal>1</literal>
+          <>-1</>
+          <external>0</external>
+          <attribute>0</attribute>
+          <saveFlag>1</saveFlag>
+        </type>
+        <typeDec>-1</typeDec>
+        <list>
+
+    <subVar>
+      <name>g</name>
+      <type>1</type>
+      <typeIndex>2</typeIndex>
+      <initType>0</initType>
+      <initTypeData>
+        <>-1</>
+      </initTypeData>
+      <closeType>0</closeType>
+      <length>0</length>
+      <literal>0</literal>
+      <>-1</>
+      <external>0</external>
+      <attribute>0</attribute>
+      <saveFlag>1</saveFlag>
+    </subVar>
+    <subVar>
+      <name>path</name>
+      <type>1</type>
+      <typeIndex>3</typeIndex>
+      <initType>0</initType>
+      <initTypeData>
+        <>-1</>
+      </initTypeData>
+      <closeType>0</closeType>
+      <length>0</length>
+      <literal>0</literal>
+      <>-1</>
+      <external>0</external>
+      <attribute>0</attribute>
+      <saveFlag>1</saveFlag>
+    </subVar>
+
+        </list>
+        <prefix></prefix>
+      </subComplex>
       <external>0</external>
       <attribute>0</attribute>
       <saveFlag>1</saveFlag>

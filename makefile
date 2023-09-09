@@ -7,7 +7,7 @@ CFLAGS = -Wall -g -I$(IDIR)
 else
 CFLAGS = -Wall -g -I$(IDIR) -Dreg -DubuComp -I/usr/include/freetype2/
 endif
-CFLAGS2 = -fPIC -shared
+CFLAGS2 = -fPIC -shared -Wl,--no-undefined
 # -Wl,--no-undefined
 
 IDIR = include/
@@ -25,7 +25,7 @@ Dep = dep\\
 else
 LIBS = \
  -lGLEW -lGL -lSOIL -lfreetype \
- -ljalbDraw -ljalb \
+ -ljalb_xml -ljalbDraw -ljalb \
  -lSDL2 \
  -lm
 Dep = dep/
@@ -58,7 +58,9 @@ SPECIFICSO = $(patsubst %,$(LDIR)%.so,$(SPECIFIC))
 libSpecific: $(SPECIFICSO)
 
 # jalbSvg
-jalbSvgFiles = mod # classes included in this mod go here.
+jalbSvgFiles = mod svg hand \
+ backbone_jalbSvg xmlFunctGrouper_jalbSvg
+
 # can i make these 2 generic, so i dont need to copy paste it for each mod.
 jalbSvgOs = $(patsubst %,$(ODIR)%.o,$(jalbSvgFiles))
 jalbSvgDeps = $(patsubst %,$(Dep)%.d,$(jalbSvgFiles))
