@@ -24,6 +24,7 @@ struct backbone_subVar svg_width = {
 	},
 	.external = offsetof ( struct svg, width ),
 	.saveFlag = 1,
+	.naked = 0,
 };
 struct backbone_subVar svg_height = {
 	.name = "height",
@@ -37,6 +38,7 @@ struct backbone_subVar svg_height = {
 	},
 	.external = offsetof ( struct svg, height ),
 	.saveFlag = 1,
+	.naked = 0,
 };
 struct backbone_subAl svg_eles_subAl = {
 	.overflow = 10,
@@ -44,6 +46,7 @@ struct backbone_subAl svg_eles_subAl = {
 	.type = 1,
 	.typeIndex = 1,
 	.length = -1,
+	.naked = 1,
 };
 struct backbone_subVar svg_eles = {
 	.name = "eles",
@@ -58,6 +61,7 @@ struct backbone_subVar svg_eles = {
 	},
 	.external = offsetof ( struct svg, eles ),
 	.saveFlag = 1,
+	.naked = 1,
 };
 struct backbone_subVar *svg_varArr[] = {
 	&svg_width,
@@ -98,6 +102,7 @@ struct backbone_subVar nakedUnion__g = {
 	},
 	.external = offsetof ( struct nakedUnion, g ),
 	.saveFlag = 1,
+	.naked = 0,
 };
 struct backbone_subVar nakedUnion__path = {
 	.name = "path",
@@ -111,6 +116,7 @@ struct backbone_subVar nakedUnion__path = {
 	},
 	.external = offsetof ( struct nakedUnion, path ),
 	.saveFlag = 1,
+	.naked = 0,
 };
 struct backbone_subVar *nakedUnion__varArr[] = {
 	&nakedUnion__g,
@@ -137,6 +143,7 @@ struct backbone_subVar nakedUnion_ = {
 	},
 	offsetof ( struct nakedUnion, type ),
 	.saveFlag = 1,
+	.naked = 1,
 };
 struct backbone_subVar *nakedUnion_varArr[] = {
 	&nakedUnion_,
@@ -172,6 +179,7 @@ struct backbone_subVar g_id = {
 	},
 	.external = offsetof ( struct g, id ),
 	.saveFlag = 1,
+	.naked = 0,
 };
 struct backbone_subAl g_eles_subAl = {
 	.overflow = 0,
@@ -179,6 +187,7 @@ struct backbone_subAl g_eles_subAl = {
 	.type = 1,
 	.typeIndex = 1,
 	.length = -1,
+	.naked = 0,
 };
 struct backbone_subVar g_eles = {
 	.name = "eles",
@@ -193,6 +202,7 @@ struct backbone_subVar g_eles = {
 	},
 	.external = offsetof ( struct g, eles ),
 	.saveFlag = 1,
+	.naked = 0,
 };
 struct backbone_subVar *g_varArr[] = {
 	&g_id,
@@ -230,6 +240,7 @@ struct backbone_subVar path_style = {
 	},
 	.external = offsetof ( struct path, style ),
 	.saveFlag = 1,
+	.naked = 0,
 };
 struct backbone_subVar path_d = {
 	.name = "d",
@@ -243,6 +254,7 @@ struct backbone_subVar path_d = {
 	},
 	.external = offsetof ( struct path, d ),
 	.saveFlag = 1,
+	.naked = 0,
 };
 struct backbone_subVar path_id = {
 	.name = "id",
@@ -256,6 +268,7 @@ struct backbone_subVar path_id = {
 	},
 	.external = offsetof ( struct path, id ),
 	.saveFlag = 1,
+	.naked = 0,
 };
 struct backbone_subVar *path_varArr[] = {
 	&path_style,

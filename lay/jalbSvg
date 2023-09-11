@@ -86,7 +86,7 @@ blank
 Hotkey:
 jalbSvg	1	hand_stru_00
 jalbSvg	2	hand_test
-
+jalbSvg	3	hand_test_load
 
 Append:
 lay/ui/uiGen_hotkey
@@ -115,6 +115,9 @@ layoutUi	addCanvasEle	jalbSvg	setAddCanvas
 all
 
 
+Run:
+jalbSvg	line_1_test
+jalbSvg	extra_test
 
 
 

@@ -86,6 +86,8 @@ void svgBodyToVal ( void *varPass, int nameI, char *body ) {
 }
 
 int svgNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+	printf ( "svgNameToIndex ( )\n" );
+	printf ( "body: %s\n", body );
 
 	struct svg *var = data;
 	if ( strcmp ( body, "width" ) == 0 ) {
@@ -97,6 +99,8 @@ int svgNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
 		*ptrPtr = var->eles;
 		return jxnAlPtr;
 
+
+	// this should be able to be handled by a function, where i return the union struct? or null, im not sure.
 	} else if ( strcmp ( body, "g" ) == 0 ) {
 		struct nakedUnion *naked = nakedUnionInit ( );
 		arrayListAddEndPointer ( var->eles, naked );
@@ -108,7 +112,21 @@ int svgNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
 //		*retPtr = &var->g;
 		*retPtr = &naked->g;
 		return jxnPtr;
+
+	} else if ( strcmp ( body, "path" ) == 0 ) {
+		struct nakedUnion *naked = nakedUnionInit ( );
+		arrayListAddEndPointer ( var->eles, naked );
+		nakedUnionTypeChange0 ( naked, Path );
+
+//		nakedUnionTypeChange0 ( var, 0 );
+		*strPtr = "path";
+		void **retPtr = ret;
+		*retPtr = &naked->path;
+		return jxnPtr;
 	}
+
+	printf ( "svgNameToIndex ( ) UNHANDLED\n" );
+
 	return -1;
 }
 
@@ -258,6 +276,8 @@ void gBodyToVal ( void *varPass, int nameI, char *body ) {
 }
 
 int gNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+	printf ( "gNameToIndex ( )\n" );
+	printf ( "body: %s\n", body );
 
 	struct g *var = data;
 	if ( strcmp ( body, "id" ) == 0 ) {
@@ -266,6 +286,33 @@ int gNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
 		void **ptrPtr = (void**)ret;
 		*ptrPtr = var->eles;
 		return jxnAlPtr;
+
+
+
+	// this should be able to be handled by a function, where i return the union struct? or null, im not sure.
+	} else if ( strcmp ( body, "g" ) == 0 ) {
+		struct nakedUnion *naked = nakedUnionInit ( );
+		arrayListAddEndPointer ( var->eles, naked );
+		nakedUnionTypeChange0 ( naked, G );
+
+//		nakedUnionTypeChange0 ( var, 0 );
+		*strPtr = "g";
+		void **retPtr = ret;
+//		*retPtr = &var->g;
+		*retPtr = &naked->g;
+		return jxnPtr;
+
+	} else if ( strcmp ( body, "path" ) == 0 ) {
+		struct nakedUnion *naked = nakedUnionInit ( );
+		arrayListAddEndPointer ( var->eles, naked );
+		nakedUnionTypeChange0 ( naked, Path );
+
+//		nakedUnionTypeChange0 ( var, 0 );
+		*strPtr = "path";
+		void **retPtr = ret;
+		*retPtr = &naked->path;
+		return jxnPtr;
+
 	}
 	return -1;
 }
@@ -340,6 +387,7 @@ struct xmlFuncts pathXml = {
 	pathInitMask,
 	pathNameToIndex,
 	pathBodyToVal,
+	.postInit = pathPostInit,
 };
 
 void path_print ( struct path *stru ) {

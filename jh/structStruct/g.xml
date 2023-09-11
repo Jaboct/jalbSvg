@@ -17,6 +17,7 @@
       <external>0</external>
       <attribute>0</attribute>
       <saveFlag>1</saveFlag>
+      <naked>0</naked>
     </subVar>
     <subVar>
       <name>eles</name>
@@ -37,10 +38,12 @@
         <type>1</type>
         <typeIndex>1</typeIndex>
         <length>-1</length>
+        <naked>0</naked>
       </subAl>
       <external>0</external>
       <attribute>0</attribute>
       <saveFlag>1</saveFlag>
+      <naked>0</naked>
     </subVar>
   </vars>
   <overloadRenderEdit></overloadRenderEdit>

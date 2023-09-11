@@ -29,49 +29,51 @@
           <external>0</external>
           <attribute>0</attribute>
           <saveFlag>1</saveFlag>
+          <naked>0</naked>
         </type>
         <typeDec>-1</typeDec>
         <list>
-
-    <subVar>
-      <name>g</name>
-      <type>1</type>
-      <typeIndex>2</typeIndex>
-      <initType>0</initType>
-      <initTypeData>
-        <>-1</>
-      </initTypeData>
-      <closeType>0</closeType>
-      <length>0</length>
-      <literal>0</literal>
-      <>-1</>
-      <external>0</external>
-      <attribute>0</attribute>
-      <saveFlag>1</saveFlag>
-    </subVar>
-    <subVar>
-      <name>path</name>
-      <type>1</type>
-      <typeIndex>3</typeIndex>
-      <initType>0</initType>
-      <initTypeData>
-        <>-1</>
-      </initTypeData>
-      <closeType>0</closeType>
-      <length>0</length>
-      <literal>0</literal>
-      <>-1</>
-      <external>0</external>
-      <attribute>0</attribute>
-      <saveFlag>1</saveFlag>
-    </subVar>
-
+          <subVar>
+            <name>g</name>
+            <type>1</type>
+            <typeIndex>2</typeIndex>
+            <initType>0</initType>
+            <initTypeData>
+              <>-1</>
+            </initTypeData>
+            <closeType>0</closeType>
+            <length>0</length>
+            <literal>0</literal>
+            <>-1</>
+            <external>0</external>
+            <attribute>0</attribute>
+            <saveFlag>1</saveFlag>
+            <naked>0</naked>
+          </subVar>
+          <subVar>
+            <name>path</name>
+            <type>1</type>
+            <typeIndex>3</typeIndex>
+            <initType>0</initType>
+            <initTypeData>
+              <>-1</>
+            </initTypeData>
+            <closeType>0</closeType>
+            <length>0</length>
+            <literal>0</literal>
+            <>-1</>
+            <external>0</external>
+            <attribute>0</attribute>
+            <saveFlag>1</saveFlag>
+            <naked>0</naked>
+          </subVar>
         </list>
         <prefix></prefix>
       </subComplex>
       <external>0</external>
       <attribute>0</attribute>
       <saveFlag>1</saveFlag>
+      <naked>1</naked>
     </subVar>
   </vars>
   <overloadRenderEdit></overloadRenderEdit>

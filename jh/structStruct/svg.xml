@@ -17,6 +17,7 @@
       <external>0</external>
       <attribute>0</attribute>
       <saveFlag>1</saveFlag>
+      <naked>0</naked>
     </subVar>
     <subVar>
       <name>height</name>
@@ -33,6 +34,7 @@
       <external>0</external>
       <attribute>0</attribute>
       <saveFlag>1</saveFlag>
+      <naked>0</naked>
     </subVar>
     <subVar>
       <name>eles</name>
@@ -53,10 +55,12 @@
         <type>1</type>
         <typeIndex>1</typeIndex>
         <length>-1</length>
+        <naked>1</naked>
       </subAl>
       <external>0</external>
       <attribute>0</attribute>
       <saveFlag>1</saveFlag>
+      <naked>1</naked>
     </subVar>
   </vars>
   <overloadRenderEdit></overloadRenderEdit>

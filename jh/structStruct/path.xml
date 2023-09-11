@@ -17,6 +17,7 @@
       <external>0</external>
       <attribute>0</attribute>
       <saveFlag>1</saveFlag>
+      <naked>0</naked>
     </subVar>
     <subVar>
       <name>d</name>
@@ -33,6 +34,7 @@
       <external>0</external>
       <attribute>0</attribute>
       <saveFlag>1</saveFlag>
+      <naked>0</naked>
     </subVar>
     <subVar>
       <name>id</name>
@@ -49,6 +51,7 @@
       <external>0</external>
       <attribute>0</attribute>
       <saveFlag>1</saveFlag>
+      <naked>0</naked>
     </subVar>
   </vars>
   <overloadRenderEdit></overloadRenderEdit>
