@@ -53,6 +53,70 @@ body{
 </nav>
 </div>
 
+<div class="codeBox">
+Official Documentation
+https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d
+
+upper case is absolute location.
+lower case is relative.
+
+Move To: M m
+Line To: L l H h V v
+Cubic Bezier Curve: C c S s
+Quadratic Bezier Curve: Q q T t
+Elliptical Arc Curve: A a
+Close Path: Z z
+
+M: (x, y)+
+  Formula: Pn = {x, y}
+m: (dx, dy)+
+  Formula: Pn = {xo + dx, yo + dy} 
+
+L: (x, y)+
+  Formula: Po′ = Pn = {x, y} 
+l: (dx, dy)+
+  Formula: Po′ = Pn = {xo + dx, yo + dy}
+H: (x)+
+  Formula: Po′ = Pn = {x, yo}
+h: (dx)+
+  Formula: Po′ = Pn = {xo + dx, yo} 
+V: (x)+
+  Formula: Po′ = Pn = {xo, y}
+v: (dx)+
+  Formula: Po′ = Pn = {xo, yo + dy} 
+
+C: (x1,y1, x2,y2, x,y)+
+  Formulae:
+    Po′ = Pn = {x, y} ;
+    Pcs = {x1, y1} ;
+    Pce = {x2, y2} 
+c: (dx1,dy1, dx2,dy2, dx,dy)+
+  Formulae:
+    Po′ = Pn = {xo + dx, yo + dy} ;
+    Pcs = {xo + dx1, yo + dy1} ;
+    Pce = {xo + dx2, yo + dy2} 
+S: (x2,y2, x,y)+
+s: (dx2,dy2, dx,dy)+
+
+Q: (x1,y1, x,y)+
+  Formulae:
+    Po′ = Pn = {x, y} ;
+    Pc = {x1, y1} 
+q: (dx1,dy1, dx,dy)+
+  Formulae:
+    Po′ = Pn = {xo + dx, yo + dy} ;
+    Pc = {xo + dx1, yo + dy1}
+T: (x,y)+
+  Formula:
+    Po′ = Pn = {x, y} 
+t: (dx,dy)+
+  Formulae:
+    Po′ = Pn = {xo + dx, yo + dy} 
+
+A: (rx ry angle large-arc-flag sweep-flag x y)+
+a: (rx ry angle large-arc-flag sweep-flag dx dy)+
+</div>
+
 <br>
 <br>
 
