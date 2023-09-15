@@ -29,8 +29,11 @@ C:\Users\jacob\programs\modCore\
 
 Text:
 /home/jadoo/workspace/jHigh/jalbSvg/makefile
-/home/jadoo/workspace/jHigh/jalbSvg/src/mod.c
-/home/jadoo/workspace/jHigh/jalbSvg/include/mod.h
+#/home/jadoo/workspace/jHigh/jalbSvg/src/mod.c
+#/home/jadoo/workspace/jHigh/jalbSvg/include/mod.h
+/home/jadoo/workspace/jHigh/jalbSvg/src/hand.c
+
+
 
 
 jHighLoad:

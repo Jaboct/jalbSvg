@@ -3,7 +3,7 @@
 <html>
 
 <head>
-  <title>MODNAME index.html</title>
+  <title>jalbSvg index.html</title>
 
 <link rel="stylesheet" href="../../../../archive/notes/programs/html/codeSheet.css">
 
@@ -29,7 +29,7 @@ body{
 <header>
 <body id="top">
   <p>
-    <b>MODNAME documentation</b><br>
+    <b>jalbSvg documentation</b><br>
   </p>
 <!-- i should use a self made html ele, like head 2 or some shit. instead of pasting in 2 spaces and making it bold.-->
 <div id="colorstrip">
@@ -67,11 +67,13 @@ Quadratic Bezier Curve: Q q T t
 Elliptical Arc Curve: A a
 Close Path: Z z
 
+<u>Move To</u>
 M: (x, y)+
   Formula: Pn = {x, y}
 m: (dx, dy)+
   Formula: Pn = {xo + dx, yo + dy} 
 
+<u>Line To</u>
 L: (x, y)+
   Formula: Po′ = Pn = {x, y} 
 l: (dx, dy)+
@@ -85,6 +87,7 @@ V: (x)+
 v: (dx)+
   Formula: Po′ = Pn = {xo, yo + dy} 
 
+<u>Cubic Bezier Curve</u>
 C: (x1,y1, x2,y2, x,y)+
   Formulae:
     Po′ = Pn = {x, y} ;
@@ -98,6 +101,7 @@ c: (dx1,dy1, dx2,dy2, dx,dy)+
 S: (x2,y2, x,y)+
 s: (dx2,dy2, dx,dy)+
 
+<u>Quadratic Bezier Curve</u>
 Q: (x1,y1, x,y)+
   Formulae:
     Po′ = Pn = {x, y} ;
@@ -113,8 +117,14 @@ t: (dx,dy)+
   Formulae:
     Po′ = Pn = {xo + dx, yo + dy} 
 
+<u>Elliptical Arc Curve</u>
 A: (rx ry angle large-arc-flag sweep-flag x y)+
 a: (rx ry angle large-arc-flag sweep-flag dx dy)+
+
+<u>Close Path</u>
+Z
+z
+Close the current subpath by connecting the last point of the path with its initial point. If the two points are at different coordinates, a straight line is drawn between those two points. 
 </div>
 
 <br>

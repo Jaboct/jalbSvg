@@ -92,31 +92,6 @@ int svgNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
 		return 0;
 	} else if ( strcmp ( body, "height" ) == 0 ) {
 		return 1;
-
-	// this should be able to be handled by a function, where i return the union struct? or null, im not sure.
-	} else if ( strcmp ( body, "g" ) == 0 ) {
-		struct nakedUnion *naked = nakedUnionInit ( );
-		arrayListAddEndPointer ( var->eles, naked );
-		nakedUnionTypeChange0 ( naked, G );
-
-//		nakedUnionTypeChange0 ( var, 0 );
-		*strPtr = "g";
-		void **retPtr = ret;
-//		*retPtr = &var->g;
-		*retPtr = &naked->g;
-		return jxnPtr;
-
-	} else if ( strcmp ( body, "path" ) == 0 ) {
-		struct nakedUnion *naked = nakedUnionInit ( );
-		arrayListAddEndPointer ( var->eles, naked );
-		nakedUnionTypeChange0 ( naked, Path );
-
-//		nakedUnionTypeChange0 ( var, 0 );
-		*strPtr = "path";
-		void **retPtr = ret;
-		*retPtr = &naked->path;
-		return jxnPtr;
-
 	}
 	return -1;
 }
@@ -303,7 +278,7 @@ void pathFill ( struct path *var ) {
 	var->style[0] = '\0';
 	var->d[0] = '\0';
 	var->id[0] = '\0';
-	var->eles = initArrayList ( 10, sizeof ( char* ), 10 );
+	var->eles = initArrayList ( 0, sizeof ( out of range (type: -1) (typeIndex: -1)* ), 0 );
 }
 
 void *pathInitMask ( ) {
@@ -312,9 +287,6 @@ void *pathInitMask ( ) {
 
 }
 void pathClose ( struct path *var ) {
-	if ( var->eles ) {
-		freeArrayListPointer ( var->eles );
-	}
 	free ( var );
 
 }
@@ -335,7 +307,6 @@ void pathBodyToVal ( void *varPass, int nameI, char *body ) {
 	} else if ( nameI == 2 ) {
 		strcpy ( var->id, body );
 	} else if ( nameI == 3 ) {
-		consumeStdAl ( body, 4, 0, var->eles );
 	}
 }
 
@@ -349,32 +320,9 @@ int pathNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
 	} else if ( strcmp ( body, "id" ) == 0 ) {
 		return 2;
 	} else if ( strcmp ( body, "eles" ) == 0 ) {
-		return 3;
-
-	// this should be able to be handled by a function, where i return the union struct? or null, im not sure.
-	} else if ( strcmp ( body, "g" ) == 0 ) {
-		struct nakedUnion *naked = nakedUnionInit ( );
-		arrayListAddEndPointer ( var->eles, naked );
-		nakedUnionTypeChange0 ( naked, G );
-
-//		nakedUnionTypeChange0 ( var, 0 );
-		*strPtr = "g";
-		void **retPtr = ret;
-//		*retPtr = &var->g;
-		*retPtr = &naked->g;
-		return jxnPtr;
-
-	} else if ( strcmp ( body, "path" ) == 0 ) {
-		struct nakedUnion *naked = nakedUnionInit ( );
-		arrayListAddEndPointer ( var->eles, naked );
-		nakedUnionTypeChange0 ( naked, Path );
-
-//		nakedUnionTypeChange0 ( var, 0 );
-		*strPtr = "path";
-		void **retPtr = ret;
-		*retPtr = &naked->path;
-		return jxnPtr;
-
+		void **ptrPtr = (void**)ret;
+		*ptrPtr = var->eles;
+		return jxnAlPtr;
 	}
 	return -1;
 }
@@ -384,7 +332,6 @@ struct xmlFuncts pathXml = {
 	pathInitMask,
 	pathNameToIndex,
 	pathBodyToVal,
-	.postInit = pathPostInit,
 };
 
 void path_print ( struct path *stru ) {

@@ -45,7 +45,7 @@ struct path {
 	char style[256];
 	char d[256];
 	char id[256];
-	ArrayList *eles;	// (char*)
+	ArrayList *eles;	// (out of range (type: -1) (typeIndex: -1)*)
 };
 
 

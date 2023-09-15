@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <structStruct>
-  <name>path</name>
+  <name>ellipArc</name>
   <vars>
     <subVar>
-      <name>style</name>
+      <name>rel</name>
       <type>0</type>
-      <typeIndex>4</typeIndex>
+      <typeIndex>0</typeIndex>
       <initType>0</initType>
       <initTypeData>
         <>-1</>
@@ -20,9 +20,43 @@
       <naked>0</naked>
     </subVar>
     <subVar>
-      <name>d</name>
+      <name>XY</name>
       <type>0</type>
-      <typeIndex>4</typeIndex>
+      <typeIndex>1</typeIndex>
+      <initType>0</initType>
+      <initTypeData>
+        <>-1</>
+      </initTypeData>
+      <closeType>0</closeType>
+      <length>2</length>
+      <literal>1</literal>
+      <>-1</>
+      <external>0</external>
+      <attribute>0</attribute>
+      <saveFlag>1</saveFlag>
+      <naked>0</naked>
+    </subVar>
+    <subVar>
+      <name>rXY</name>
+      <type>0</type>
+      <typeIndex>1</typeIndex>
+      <initType>0</initType>
+      <initTypeData>
+        <>-1</>
+      </initTypeData>
+      <closeType>0</closeType>
+      <length>2</length>
+      <literal>1</literal>
+      <>-1</>
+      <external>0</external>
+      <attribute>0</attribute>
+      <saveFlag>1</saveFlag>
+      <naked>0</naked>
+    </subVar>
+    <subVar>
+      <name>angle</name>
+      <type>0</type>
+      <typeIndex>1</typeIndex>
       <initType>0</initType>
       <initTypeData>
         <>-1</>
@@ -37,9 +71,9 @@
       <naked>0</naked>
     </subVar>
     <subVar>
-      <name>id</name>
+      <name>largeArcFlag</name>
       <type>0</type>
-      <typeIndex>4</typeIndex>
+      <typeIndex>0</typeIndex>
       <initType>0</initType>
       <initTypeData>
         <>-1</>
@@ -54,52 +88,9 @@
       <naked>0</naked>
     </subVar>
     <subVar>
-      <name>eles</name>
+      <name>sweepFlag</name>
       <type>0</type>
-      <typeIndex>3</typeIndex>
-      <initType>0</initType>
-      <initTypeData>
-        <>-1</>
-      </initTypeData>
-      <closeType>0</closeType>
-      <length>0</length>
-      <literal>1</literal>
-      <subAl>
-        <curEles>10</curEles>
-        <eleSize>0</eleSize>
-        <overflow>10</overflow>
-        <literal>0</literal>
-        <type>0</type>
-        <typeIndex>4</typeIndex>
-        <length>-1</length>
-        <naked>0</naked>
-      </subAl>
-      <external>0</external>
-      <attribute>0</attribute>
-      <saveFlag>1</saveFlag>
-      <naked>0</naked>
-    </subVar>
-    <subVar>
-      <name>fill</name>
-      <type>0</type>
-      <typeIndex>4</typeIndex>
-      <initType>0</initType>
-      <initTypeData>
-        <>-1</>
-      </initTypeData>
-      <closeType>0</closeType>
-      <length>-1</length>
-      <literal>1</literal>
-      <>-1</>
-      <external>0</external>
-      <attribute>0</attribute>
-      <saveFlag>1</saveFlag>
-      <naked>0</naked>
-    </subVar>
-    <subVar>
-      <name>stroke</name>
-      <type>0</type>
-      <typeIndex>4</typeIndex>
+      <typeIndex>0</typeIndex>
       <initType>0</initType>
       <initTypeData>
         <>-1</>

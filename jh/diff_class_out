@@ -1,0 +1,83 @@
+89,90d88
+< 	printf ( "svgNameToIndex ( )\n" );
+< 	printf ( "body: %s\n", body );
+97,125d94
+< 	} else if ( strcmp ( body, "eles" ) == 0 ) {
+< 		void **ptrPtr = (void**)ret;
+< 		*ptrPtr = var->eles;
+< 		return jxnAlPtr;
+< 
+< 
+< 	// this should be able to be handled by a function, where i return the union struct? or null, im not sure.
+< 	} else if ( strcmp ( body, "g" ) == 0 ) {
+< 		struct nakedUnion *naked = nakedUnionInit ( );
+< 		arrayListAddEndPointer ( var->eles, naked );
+< 		nakedUnionTypeChange0 ( naked, G );
+< 
+< //		nakedUnionTypeChange0 ( var, 0 );
+< 		*strPtr = "g";
+< 		void **retPtr = ret;
+< //		*retPtr = &var->g;
+< 		*retPtr = &naked->g;
+< 		return jxnPtr;
+< 
+< 	} else if ( strcmp ( body, "path" ) == 0 ) {
+< 		struct nakedUnion *naked = nakedUnionInit ( );
+< 		arrayListAddEndPointer ( var->eles, naked );
+< 		nakedUnionTypeChange0 ( naked, Path );
+< 
+< //		nakedUnionTypeChange0 ( var, 0 );
+< 		*strPtr = "path";
+< 		void **retPtr = ret;
+< 		*retPtr = &naked->path;
+< 		return jxnPtr;
+127,129d95
+< 
+< 	printf ( "svgNameToIndex ( ) UNHANDLED\n" );
+< 
+279,280d244
+< 	printf ( "gNameToIndex ( )\n" );
+< 	printf ( "body: %s\n", body );
+289,315d252
+< 
+< 
+< 
+< 	// this should be able to be handled by a function, where i return the union struct? or null, im not sure.
+< 	} else if ( strcmp ( body, "g" ) == 0 ) {
+< 		struct nakedUnion *naked = nakedUnionInit ( );
+< 		arrayListAddEndPointer ( var->eles, naked );
+< 		nakedUnionTypeChange0 ( naked, G );
+< 
+< //		nakedUnionTypeChange0 ( var, 0 );
+< 		*strPtr = "g";
+< 		void **retPtr = ret;
+< //		*retPtr = &var->g;
+< 		*retPtr = &naked->g;
+< 		return jxnPtr;
+< 
+< 	} else if ( strcmp ( body, "path" ) == 0 ) {
+< 		struct nakedUnion *naked = nakedUnionInit ( );
+< 		arrayListAddEndPointer ( var->eles, naked );
+< 		nakedUnionTypeChange0 ( naked, Path );
+< 
+< //		nakedUnionTypeChange0 ( var, 0 );
+< 		*strPtr = "path";
+< 		void **retPtr = ret;
+< 		*retPtr = &naked->path;
+< 		return jxnPtr;
+< 
+343a281
+> 	var->eles = initArrayList ( 0, sizeof ( out of range (type: -1) (typeIndex: -1)* ), 0 );
+358a297
+> 	0,
+369a309
+> 	} else if ( nameI == 3 ) {
+374a315
+> 	struct path *var = data;
+380a322,325
+> 	} else if ( strcmp ( body, "eles" ) == 0 ) {
+> 		void **ptrPtr = (void**)ret;
+> 		*ptrPtr = var->eles;
+> 		return jxnAlPtr;
+390d334
+< 	.postInit = pathPostInit,

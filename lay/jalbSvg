@@ -118,8 +118,8 @@ all
 Run:
 jalbSvg	line_1_test
 jalbSvg	extra_test
-
-
+jalbSvg	proof_parseD
+jalbSvg	hand_test_01
 
 
 

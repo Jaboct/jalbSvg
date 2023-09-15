@@ -7,10 +7,17 @@ jh/structStruct/svg.xml
 jh/structStruct/nakedUnion.xml
 jh/structStruct/g.xml
 jh/structStruct/path.xml
+jh/structStruct/pathUni.xml
+jh/structStruct/moveTo.xml
+jh/structStruct/lineTo.xml
+jh/structStruct/cubicBez.xml
+jh/structStruct/quadBez.xml
+jh/structStruct/ellipArc.xml
 
 # fileStructs
 jh/fileStruct/mod.xml
 jh/fileStruct/svg.xml
+jh/fileStruct/path.xml
 
 # functions
 jh/function/funct.xml

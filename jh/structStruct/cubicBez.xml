@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <structStruct>
-  <name>path</name>
+  <name>cubicBez</name>
   <vars>
     <subVar>
-      <name>style</name>
+      <name>rel</name>
       <type>0</type>
-      <typeIndex>4</typeIndex>
+      <typeIndex>0</typeIndex>
       <initType>0</initType>
       <initTypeData>
         <>-1</>
@@ -20,15 +20,15 @@
       <naked>0</naked>
     </subVar>
     <subVar>
-      <name>d</name>
+      <name>XY</name>
       <type>0</type>
-      <typeIndex>4</typeIndex>
+      <typeIndex>1</typeIndex>
       <initType>0</initType>
       <initTypeData>
         <>-1</>
       </initTypeData>
       <closeType>0</closeType>
-      <length>-1</length>
+      <length>2</length>
       <literal>1</literal>
       <>-1</>
       <external>0</external>
@@ -37,15 +37,15 @@
       <naked>0</naked>
     </subVar>
     <subVar>
-      <name>id</name>
+      <name>c0</name>
       <type>0</type>
-      <typeIndex>4</typeIndex>
+      <typeIndex>1</typeIndex>
       <initType>0</initType>
       <initTypeData>
         <>-1</>
       </initTypeData>
       <closeType>0</closeType>
-      <length>-1</length>
+      <length>2</length>
       <literal>1</literal>
       <>-1</>
       <external>0</external>
@@ -54,41 +54,15 @@
       <naked>0</naked>
     </subVar>
     <subVar>
-      <name>eles</name>
+      <name>c1</name>
       <type>0</type>
-      <typeIndex>3</typeIndex>
+      <typeIndex>1</typeIndex>
       <initType>0</initType>
       <initTypeData>
         <>-1</>
       </initTypeData>
       <closeType>0</closeType>
-      <length>0</length>
-      <literal>1</literal>
-      <subAl>
-        <curEles>10</curEles>
-        <eleSize>0</eleSize>
-        <overflow>10</overflow>
-        <literal>0</literal>
-        <type>0</type>
-        <typeIndex>4</typeIndex>
-        <length>-1</length>
-        <naked>0</naked>
-      </subAl>
-      <external>0</external>
-      <attribute>0</attribute>
-      <saveFlag>1</saveFlag>
-      <naked>0</naked>
-    </subVar>
-    <subVar>
-      <name>fill</name>
-      <type>0</type>
-      <typeIndex>4</typeIndex>
-      <initType>0</initType>
-      <initTypeData>
-        <>-1</>
-      </initTypeData>
-      <closeType>0</closeType>
-      <length>-1</length>
+      <length>2</length>
       <literal>1</literal>
       <>-1</>
       <external>0</external>
@@ -97,9 +71,9 @@
       <naked>0</naked>
     </subVar>
     <subVar>
-      <name>stroke</name>
+      <name>type</name>
       <type>0</type>
-      <typeIndex>4</typeIndex>
+      <typeIndex>0</typeIndex>
       <initType>0</initType>
       <initTypeData>
         <>-1</>

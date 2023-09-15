@@ -8,9 +8,9 @@
 /** svg */
 
 int svg_attributes[] = {
-	0,
-	0,
-	0,
+	1,
+	1,
+	1,
 };
 struct backbone_subVar svg_width = {
 	.name = "width",
