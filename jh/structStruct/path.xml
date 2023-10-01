@@ -69,14 +69,14 @@
         <eleSize>0</eleSize>
         <overflow>10</overflow>
         <literal>0</literal>
-        <type>0</type>
+        <type>1</type>
         <typeIndex>4</typeIndex>
         <length>-1</length>
         <naked>0</naked>
       </subAl>
       <external>0</external>
       <attribute>0</attribute>
-      <saveFlag>1</saveFlag>
+      <saveFlag>99</saveFlag>
       <naked>0</naked>
     </subVar>
     <subVar>

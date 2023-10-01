@@ -21,6 +21,8 @@ Dims:
 LayLib:
 menu	menu	layEleInit	layEleRender	layEleEvent	layEleClose
 00	stru_00Edit	stru_00InitEdit	stru_00RenderEdit	stru_00EventEdit	stru_00CloseEdit	stru_00EditNumber
+jalbSvg	jalbSvg	jalbSvg_init	jalbSvg_render	jalbSvg_event	jalbSvg_close
+
 
 
 LayLib:
@@ -79,7 +81,8 @@ layoutUi	render	event
 
 
 Lay:
-blank
+#blank
+jalbSvg
 
 
 
@@ -120,6 +123,6 @@ jalbSvg	line_1_test
 jalbSvg	extra_test
 jalbSvg	proof_parseD
 jalbSvg	hand_test_01
-
-
+#jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/1_line_trim.svg"
+jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/curve_line_trim.svg"
 

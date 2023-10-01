@@ -33,12 +33,12 @@ struct pathUni {
 	};
 };
 enum pathUniEnum {
-	MoveTo = 0,
-	LineTo,
-	CubicBez,
-	QuadBez,
-	EllipArc,
-	PathEnd,	// 5
+	path_MoveTo = 0,
+	path_LineTo,
+	path_CubicBez,
+	path_QuadBez,
+	path_EllipArc,
+	path_PathEnd,	// 5
 };
 struct moveTo {
 	int rel;

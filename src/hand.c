@@ -1,71 +1,34 @@
 #include "hand.h"
 
+extern struct svg *global_svg;
 
 
-
-/** Functions */
 
 
 extern int num_structStruct_jalbSvg;
 extern struct xmlFuncts *xmlFuncts_arr_jalbSvg[];
 
-
+/*
 extern int len_backbone_arr_jalbSvg;
 extern struct backbone_structStruct *backbone_arr_jalbSvg[];
 
 extern int svg_attributes[];
 extern struct backbone_structStruct svg;
+*/
 
-void hand_test ( ) {
-	printf ( "hand_test ( )\n" );
 
-	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/test_00.xml";
+/** Functions */
+
+void load_global_svg ( char *dir ) {
+	printf ( "load_global_svg ( )\n" );
+	printf ( "dir: %s\n", dir );
+
 	struct svg *svgEle = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbSvg, num_structStruct_jalbSvg );
+	global_svg = svgEle;
 
 	say_svg ( svgEle );
 
-	char *dirSave = "/home/jadoo/workspace/jHigh/jalbSvg/res/test_save_00.xml";
-
-	fwriteXml_backbone ( dirSave, &svg, svgEle,
-		svg_attributes, backbone_arr_jalbSvg, len_backbone_arr_jalbSvg );
-
-	printf ( "hand_test ( ) OVER\n" );
-}
-
-void hand_test_load ( ) {
-	printf ( "hand_test_load ( )\n" );
-
-	char *dirLoad = "/home/jadoo/workspace/jHigh/jalbSvg/res/test_save_00.xml";
-	struct svg *svgEle = loadXmlFile_03 ( dirLoad, xmlFuncts_arr_jalbSvg, num_structStruct_jalbSvg );
-
-	say_svg ( svgEle );
-
-	char *dirSave = "/home/jadoo/workspace/jHigh/jalbSvg/res/test_save_01.xml";
-
-	fwriteXml_backbone ( dirSave, &svg, svgEle,
-		svg_attributes, backbone_arr_jalbSvg, len_backbone_arr_jalbSvg );
-
-	printf ( "hand_test_load ( ) OVER\n" );
-}
-
-void hand_test_01 ( ) {
-	printf ( "hand_test_01 ( )\n" );
-
-	char *dirLoad = "/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/heart.svg";
-	char *dirSave = "/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/heart_save.svg";
-
-	struct svg *svgEle = loadXmlFile_03 ( dirLoad, xmlFuncts_arr_jalbSvg, num_structStruct_jalbSvg );
-
-	expandSvg ( svgEle );
-
-	say_svg ( svgEle );
-
-	prepair_d ( svgEle->eles );
-
-	fwriteXml_backbone ( dirSave, &svg, svgEle,
-		svg_attributes, backbone_arr_jalbSvg, len_backbone_arr_jalbSvg );
-
-	printf ( "hand_test_01 ( ) OVER\n" );
+	printf ( "load_global_svg ( ) OVER\n" );
 }
 
 /*
@@ -111,48 +74,6 @@ void say_svg ( struct svg *svg ) {
 
 
 
-/** line 1 */
-
-void line_1_test ( ) {
-	printf ( "line_1_test ( )\n" );
-
-//	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/1_line.svg";
-	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/1_line_trim.svg";
-
-	// this is to test parsing.
-	struct svg *svgEle = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbSvg, num_structStruct_jalbSvg );
-
-	int numEles = arrayListGetLength ( svgEle->eles );
-	printf ( "numEles: %d\n", numEles );
-
-	sayEleList ( svgEle->eles );
-/*
-	int i;
-	int len;
-
-	i = 0;
-	len = numEles;
-
-	while ( i < len ) {
-		struct nakedUnion *uni = arrayListGetPointer ( svgEle->eles, i );
-
-		printf ( "uni->type: %d\n", uni->type );
-
-		if ( uni->type == G ) {
-			struct g *g = uni->g;
-			printf ( "id: %s\n", g->id );
-			printf ( "numEles: %d\n", arrayListGetLength ( g->eles ) );
-		}
-
-		i += 1;
-	}
-*/
-
-	// so i need to do postInit.
-
-
-	printf ( "line_1_test ( ) OVER\n" );
-}
 
 void sayEleList ( ArrayList *eles ) {
 	int i;
@@ -183,46 +104,29 @@ void sayEleList ( ArrayList *eles ) {
 	}
 }
 
-void extra_test ( ) {
-	printf ( "extra_test ( )\n" );
-
-	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/test_save_extra.xml";
-
-	// this is to test parsing.
-	struct svg *svgEle = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbSvg, num_structStruct_jalbSvg );
-
-	int numEles = arrayListGetLength ( svgEle->eles );
-	printf ( "numEles: %d\n", numEles );
-
-	int i;
-	int len;
-
-	i = 0;
-	len = numEles;
-
-	while ( i < len ) {
-		struct nakedUnion *uni = arrayListGetPointer ( svgEle->eles, i );
-
-		printf ( "uni->type: %d\n", uni->type );
-
-		i += 1;
-	}
-
-	printf ( "extra_test ( ) OVER\n" );
-}
 
 void pathPostInit ( void *data ) {
 	printf ( "pathPostInit ( )\n" );
 	struct path *path = data;
 
+	printf ( "pre\n" );
 	sayPath ( path );
 
 	// ok so i need to parse d.
 	// i can do this in the BodyToVal, i dont need to do it here.
 	// whatever.
+
+	parseD ( path->d, path->eles );
+
+	printf ( "post parse\n" );
+	sayPath ( path );
+
+	printf ( "pathPostInit ( ) OVER\n" );
 }
 
 void sayPath ( struct path *path ) {
+	printf ( "sayPath ( )\n" );
+
 	printf ( "style: %s\n", path->style );
 	printf ( "d: %s\n", path->d );
 	printf ( "id: %s\n", path->id );
@@ -232,27 +136,30 @@ void sayPath ( struct path *path ) {
 
 	i = 0;
 	len = arrayListGetLength ( path->eles );
+	printf ( "len: %d\n", len );
 	while ( i < len ) {
 		struct pathUni *uni = arrayListGetPointer ( path->eles, i );
 		sayPathUni ( uni );
 
 		i += 1;
 	}
+
+	printf ( "sayPath ( ) OVER\n" );
 }
 
 void sayPathUni ( struct pathUni *uni ) {
 	printf ( "sayPathUni ( )\n" );
 
 	printf ( "uni->type: %d\n", uni->type );
-	if ( uni->type == MoveTo ) {
+	if ( uni->type == path_MoveTo ) {
 		sayFloatArray ( "moveTo->XY", uni->moveTo->XY, 2 );
-	} else if ( uni->type == LineTo ) {
+	} else if ( uni->type == path_LineTo ) {
 		sayFloatArray ( "lineTo->XY", uni->lineTo->XY, 2 );
-	} else if ( uni->type == CubicBez ) {
+	} else if ( uni->type == path_CubicBez ) {
 		sayFloatArray ( "cubicBez->XY", uni->cubicBez->XY, 2 );
-	} else if ( uni->type == QuadBez ) {
+	} else if ( uni->type == path_QuadBez ) {
 		sayFloatArray ( "quadBez->XY", uni->quadBez->XY, 2 );
-	} else if ( uni->type == EllipArc ) {
+	} else if ( uni->type == path_EllipArc ) {
 		sayFloatArray ( "ellipArc->XY", uni->ellipArc->XY, 2 );
 	}
 
@@ -269,40 +176,6 @@ int isBlankSpace( char c ) {
 	return 0;
 }
 
-void proof_parseD ( ) {
-	printf ( "proof_parseD ( )\n" );
-
-	char *str = "M 10,30 \
-       A 20,20 0,0,1 50,30 \
-       A 20,20 0,0,1 90,30 \
-       Q 90,60 50,90 \
-       Q 10,60 10,30 z";
-
-	ArrayList *eles = initArrayList ( 10, sizeof ( struct pathUni* ), 10 );
-	parseD ( str, eles );
-
-	int i;
-	int len;
-
-	i = 0;
-	len = arrayListGetLength ( eles );
-
-	printf ( "eles.len: %d\n", len );
-
-	while ( i < len ) {
-		struct pathUni *uni = arrayListGetPointer ( eles, i );
-
-		sayPathUni ( uni );
-
-		i += 1;
-	}
-
-	char d[1024];
-	eleListToD ( eles, d );
-	printf ( "d: (%s)\n", d );
-
-	printf ( "proof_parseD ( ) OVER\n" );
-}
 
 void parseD ( char *d, ArrayList *eles ) {
 	printf ( "parseD ( )\n" );
@@ -336,6 +209,14 @@ void parseD ( char *d, ArrayList *eles ) {
 				thisType = charToPathUni2 ( str[i], &uni );
 				printf ( "parsed thisType: %d\n", thisType );
 
+				if ( thisType == -1 ) {
+					// assume its a de-facto L.
+					uni = pathUniInit ( );
+					pathUniTypeChange0 ( uni, path_LineTo );
+					thisType = 2;
+					i -= 1;
+				}
+
 				if ( thisType == 18 ||
 				     thisType == 19 ) {
 					// got a 'Z' or 'z'.
@@ -354,32 +235,32 @@ void parseD ( char *d, ArrayList *eles ) {
 					uni = pathUniInit ( );
 					arrayListAddEndPointer ( eles, uni );
 					if ( thisType < 1 * 2 ) {
-						pathUniTypeChange0 ( uni, MoveTo );
+						pathUniTypeChange0 ( uni, path_MoveTo );
 						if ( i % 2 == 1 ) {
 							uni->moveTo->rel = 1;
 						}
 					} else if ( thisType < 4 * 2 ) {
-						pathUniTypeChange0 ( uni, LineTo );
+						pathUniTypeChange0 ( uni, path_LineTo );
 						if ( i % 2 == 1 ) {
 							uni->lineTo->rel = 1;
 						}
 					} else if ( thisType < 6 * 2 ) {
-						pathUniTypeChange0 ( uni, CubicBez );
+						pathUniTypeChange0 ( uni, path_CubicBez );
 						if ( i % 2 == 1 ) {
 							uni->cubicBez->rel = 1;
 						}
 					} else if ( thisType < 8 * 2 ) {
-						pathUniTypeChange0 ( uni, QuadBez );
+						pathUniTypeChange0 ( uni, path_QuadBez );
 						if ( i % 2 == 1 ) {
 							uni->quadBez->rel = 1;
 						}
 					} else if ( thisType < 9 * 2 ) {
-						pathUniTypeChange0 ( uni, EllipArc );
+						pathUniTypeChange0 ( uni, path_EllipArc );
 						if ( i % 2 == 1 ) {
 // TODO							uni->ellipArc->rel = 1;
 						}
 					} else if ( thisType < 10 * 2 ) {
-						pathUniTypeChange0 ( uni, PathEnd );
+						pathUniTypeChange0 ( uni, path_PathEnd );
 					} else {
 						printf ( "unhandled type\n" );
 					}
@@ -459,6 +340,9 @@ int charToPathUni ( char c ) {
 
 
 int charToPathUni2 ( char c, struct pathUni **uniPass ) {
+	printf ( "charToPathUni2 ( )\n" );
+	printf ( "c: %c\n", c );
+
 	// put this before the alloc.
 	switch ( c ) {
 		case 'Z':
@@ -476,91 +360,91 @@ int charToPathUni2 ( char c, struct pathUni **uniPass ) {
 
 	switch ( c ) {
 		case 'M':
-			pathUniTypeChange0 ( uni, MoveTo );
+			pathUniTypeChange0 ( uni, path_MoveTo );
 			return 0;
 			break;
 		case 'm':
-			pathUniTypeChange0 ( uni, MoveTo );
+			pathUniTypeChange0 ( uni, path_MoveTo );
 			uni->moveTo->rel = 1;
 			return 1;
 			break;
 		case 'L':
-			pathUniTypeChange0 ( uni, LineTo );
+			pathUniTypeChange0 ( uni, path_LineTo );
 			return 2;
 			break;
 		case 'l':
-			pathUniTypeChange0 ( uni, LineTo );
+			pathUniTypeChange0 ( uni, path_LineTo );
 			uni->lineTo->rel = 1;
 			return 3;
 			break;
 		case 'V':
-			pathUniTypeChange0 ( uni, LineTo );
+			pathUniTypeChange0 ( uni, path_LineTo );
 			uni->lineTo->type = 1;
 			return 4;
 			break;
 		case 'v':
-			pathUniTypeChange0 ( uni, LineTo );
+			pathUniTypeChange0 ( uni, path_LineTo );
 			uni->lineTo->rel = 1;
 			uni->lineTo->type = 1;
 			return 5;
 			break;
 		case 'H':
-			pathUniTypeChange0 ( uni, LineTo );
+			pathUniTypeChange0 ( uni, path_LineTo );
 			uni->lineTo->type = 2;
 			return 6;
 			break;
 		case 'h':
-			pathUniTypeChange0 ( uni, LineTo );
+			pathUniTypeChange0 ( uni, path_LineTo );
 			uni->lineTo->rel = 1;
 			uni->lineTo->type = 2;
 			return 7;
 			break;
 		case 'C':
-			pathUniTypeChange0 ( uni, CubicBez );
+			pathUniTypeChange0 ( uni, path_CubicBez );
 			return 8;
 			break;
 		case 'c':
-			pathUniTypeChange0 ( uni, CubicBez );
+			pathUniTypeChange0 ( uni, path_CubicBez );
 			uni->cubicBez->rel = 1;
 			return 9;
 			break;
 		case 'S':
-			pathUniTypeChange0 ( uni, CubicBez );
+			pathUniTypeChange0 ( uni, path_CubicBez );
 			uni->cubicBez->type = 1;
 			return 10;
 			break;
 		case 's':
-			pathUniTypeChange0 ( uni, CubicBez );
+			pathUniTypeChange0 ( uni, path_CubicBez );
 			uni->cubicBez->rel = 1;
 			uni->cubicBez->type = 1;
 			return 11;
 			break;
 		case 'Q':
-			pathUniTypeChange0 ( uni, QuadBez );
+			pathUniTypeChange0 ( uni, path_QuadBez );
 			return 12;
 			break;
 		case 'q':
-			pathUniTypeChange0 ( uni, QuadBez );
+			pathUniTypeChange0 ( uni, path_QuadBez );
 			uni->quadBez->rel = 1;
 			return 13;
 			break;
 		case 'T':
-			pathUniTypeChange0 ( uni, QuadBez );
+			pathUniTypeChange0 ( uni, path_QuadBez );
 			uni->quadBez->type = 1;
 			return 14;
 			break;
 		case 't':
-			pathUniTypeChange0 ( uni, QuadBez );
+			pathUniTypeChange0 ( uni, path_QuadBez );
 			uni->quadBez->rel = 1;
 			uni->quadBez->type = 1;
 			return 15;
 			break;
 		case 'A':
-			pathUniTypeChange0 ( uni, EllipArc );
+			pathUniTypeChange0 ( uni, path_EllipArc );
 			return 16;
 			break;
 		case 'a':
-			pathUniTypeChange0 ( uni, EllipArc );
+			pathUniTypeChange0 ( uni, path_EllipArc );
 			uni->ellipArc->rel = 1;
 			return 17;
 			break;
@@ -735,7 +619,7 @@ void eleListToD ( ArrayList *eleList, char *d ) {
 	while ( i < len ) {
 		struct pathUni *uni = arrayListGetPointer ( eleList, i );
 
-		if ( uni->type == MoveTo ) {
+		if ( uni->type == path_MoveTo ) {
 			struct moveTo *moveTo = uni->moveTo;
 			char c;
 			if ( moveTo->rel ) {
@@ -745,7 +629,7 @@ void eleListToD ( ArrayList *eleList, char *d ) {
 			}
 			si += sprintf ( &d[si], "%c %f,%f ", c,
 				moveTo->XY[0], moveTo->XY[1] );
-		} else if ( uni->type == LineTo ) {
+		} else if ( uni->type == path_LineTo ) {
 			struct lineTo *lineTo = uni->lineTo;
 			if ( lineTo->type == 0 ) {
 				char c;
@@ -773,7 +657,7 @@ void eleListToD ( ArrayList *eleList, char *d ) {
 				}
 				si += sprintf ( &d[si], "%c %f ", c, lineTo->XY[1] );
 			}
-		} else if ( uni->type == CubicBez ) {
+		} else if ( uni->type == path_CubicBez ) {
 			struct cubicBez *cubicBez = uni->cubicBez;
 			if ( cubicBez->type == 0 ) {
 				char c;
@@ -797,7 +681,7 @@ void eleListToD ( ArrayList *eleList, char *d ) {
 					cubicBez->c1[0], cubicBez->c1[1],
 					cubicBez->XY[0], cubicBez->XY[1] );
 			}
-		} else if ( uni->type == QuadBez ) {
+		} else if ( uni->type == path_QuadBez ) {
 			struct quadBez *quadBez = uni->quadBez;
 			if ( quadBez->type == 0 ) {
 				char c;
@@ -819,7 +703,7 @@ void eleListToD ( ArrayList *eleList, char *d ) {
 				si += sprintf ( &d[si], "%c %f,%f ", c,
 					quadBez->XY[0], quadBez->XY[1] );
 			}
-		} else if ( uni->type == EllipArc ) {
+		} else if ( uni->type == path_EllipArc ) {
 			struct ellipArc *ellipArc = uni->ellipArc;
 			char c;
 			if ( ellipArc->rel ) {
@@ -832,7 +716,7 @@ void eleListToD ( ArrayList *eleList, char *d ) {
 				ellipArc->angle,
 				ellipArc->largeArcFlag, ellipArc->sweepFlag,
 				ellipArc->XY[0], ellipArc->XY[1] );
-		} else if ( uni->type == PathEnd ) {
+		} else if ( uni->type == path_PathEnd ) {
 //			struct ellipArc *ellipArc = uni->ellipArc;
 			si += sprintf ( &d[si], "Z");
 		}

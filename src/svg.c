@@ -275,7 +275,32 @@ int gNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
 		void **ptrPtr = (void**)ret;
 		*ptrPtr = var->eles;
 		return jxnAlPtr;
+
+	// this should be able to be handled by a function, where i return the union struct? or null, im not sure.
+	} else if ( strcmp ( body, "g" ) == 0 ) {
+		struct nakedUnion *naked = nakedUnionInit ( );
+		arrayListAddEndPointer ( var->eles, naked );
+		nakedUnionTypeChange0 ( naked, G );
+
+//		nakedUnionTypeChange0 ( var, 0 );
+		*strPtr = "g";
+		void **retPtr = ret;
+//		*retPtr = &var->g;
+		*retPtr = &naked->g;
+		return jxnPtr;
+
+	} else if ( strcmp ( body, "path" ) == 0 ) {
+		struct nakedUnion *naked = nakedUnionInit ( );
+		arrayListAddEndPointer ( var->eles, naked );
+		nakedUnionTypeChange0 ( naked, Path );
+
+//		nakedUnionTypeChange0 ( var, 0 );
+		*strPtr = "path";
+		void **retPtr = ret;
+		*retPtr = &naked->path;
+		return jxnPtr;
 	}
+
 	return -1;
 }
 

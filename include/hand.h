@@ -6,15 +6,17 @@
 #include "svg.h"
 #include "path.h"
 
-
-/** Functions */
-
+/** Structs */
 
 enum pathTypes {
 	path_moveTo = 0,
 	path_lineTo,
 	path_
 };
+
+/** Functions */
+
+void load_global_svg ( char *dir );
 
 void say_svg ( struct svg *svg );
 
@@ -29,7 +31,6 @@ void sayPathUni ( struct pathUni *uni );
 
 int isBlankSpace ( char c );
 
-void proof_parseD ( );
 void parseD ( char *d, ArrayList *eles );
 
 int charToPathUni ( char c );

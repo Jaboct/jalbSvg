@@ -58,7 +58,8 @@ SPECIFICSO = $(patsubst %,$(LDIR)%.so,$(SPECIFIC))
 libSpecific: $(SPECIFICSO)
 
 # jalbSvg
-jalbSvgFiles = mod svg hand path \
+jalbSvgFiles = mod mod_ext svg path \
+ hand proof \
  backbone_jalbSvg xmlFunctGrouper_jalbSvg
 
 # can i make these 2 generic, so i dont need to copy paste it for each mod.
