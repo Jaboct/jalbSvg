@@ -14,15 +14,18 @@ lay/ui/uiGen_default
 Dims:
 //3000, 2048
 //2048, 2048
-2400, 1600
+//2400, 1600
+100,300
 
 
 
 LayLib:
 menu	menu	layEleInit	layEleRender	layEleEvent	layEleClose
 00	stru_00Edit	stru_00InitEdit	stru_00RenderEdit	stru_00EventEdit	stru_00CloseEdit	stru_00EditNumber
-jalbSvg	jalbSvg	jalbSvg_init	jalbSvg_render	jalbSvg_event	jalbSvg_close
+#jalbSvg	jalbSvg	jalbSvg_init	jalbSvg_render	jalbSvg_event	jalbSvg_close
 
+LayLibDynamic:
+jalbSvg	jalbSvg	jalbSvg_init	jalbSvg_renderDyn	tic	jalbSvg_mEvent	jalbSvg_mEvent	jalbSvg_close
 
 
 LayLib:
@@ -85,11 +88,18 @@ Lay:
 jalbSvg
 
 
+Setter:
+window	getLastWindow	jalbSvg	set_window
+
 
 Hotkey:
 jalbSvg	1	hand_stru_00
 jalbSvg	2	hand_test
 jalbSvg	3	hand_test_load
+#jalbSvg	p	screenshot_02	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/ss.ppm"
+#jalbSvg	p	window_screenshot_bmp	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/ss.bmp"
+#jalbSvg	p	screenShot	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/ss.tga"
+jalbSvg	p	saveBmp	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/ss.bmp"
 
 Append:
 lay/ui/uiGen_hotkey
@@ -125,4 +135,6 @@ jalbSvg	proof_parseD
 jalbSvg	hand_test_01
 #jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/1_line_trim.svg"
 jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/curve_line_trim.svg"
+
+
 
