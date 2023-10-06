@@ -3,12 +3,14 @@
 /** AUTO GENERATED FILE */
 
 
-#include "jalbXml/jalbXml.h"
+#include <jalbXml/jalbXml.h>
 
 
 #include "backbone.h"
 #include "mod.h"
 #include "svg.h"
+#include "path.h"
+#include "text.h"
 
 /** Functions */
 

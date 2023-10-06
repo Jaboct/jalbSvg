@@ -117,6 +117,17 @@ int svgNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
 		*retPtr = &naked->path;
 		return jxnPtr;
 
+	} else if ( strcmp ( body, "text" ) == 0 ) {
+		struct nakedUnion *naked = nakedUnionInit ( );
+		arrayListAddEndPointer ( var->eles, naked );
+		nakedUnionTypeChange0 ( naked, Text );
+
+//		nakedUnionTypeChange0 ( var, 0 );
+		*strPtr = "text";
+		void **retPtr = ret;
+		*retPtr = &naked->text;
+		return jxnPtr;
+
 	}
 	return -1;
 }
@@ -156,6 +167,8 @@ void nakedUnionTypeChange0 ( struct nakedUnion *var, int type ) {
 		var->g = gInit ( );
 	} else if ( type == 1 ) {
 		var->path = pathInit ( );
+	} else if ( type == 2 ) {
+		var->text = textInit ( );
 	}
 	var->type = type;
 }
@@ -204,12 +217,14 @@ int nakedUnionNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
 		void **retPtr = ret;
 		*retPtr = &var->g;
 		return jxnPtr;
+
 	} else if ( strcmp ( body, "path" ) == 0 ) {
 		nakedUnionTypeChange0 ( var, 1 );
 		*strPtr = "path";
 		void **retPtr = ret;
 		*retPtr = &var->path;
 		return jxnPtr;
+
 	}
 	return -1;
 }
@@ -267,6 +282,8 @@ void gBodyToVal ( void *varPass, int nameI, char *body ) {
 }
 
 int gNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+	printf ( "gNameToIndex ( )\n" );
+	printf ( "body: %s\n", body );
 
 	struct g *var = data;
 	if ( strcmp ( body, "id" ) == 0 ) {
@@ -294,11 +311,26 @@ int gNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
 		arrayListAddEndPointer ( var->eles, naked );
 		nakedUnionTypeChange0 ( naked, Path );
 
+		printf ( "naked->path: %p\n", naked->path );
+		printf ( "&naked->path: %p\n", &naked->path );
+
 //		nakedUnionTypeChange0 ( var, 0 );
 		*strPtr = "path";
 		void **retPtr = ret;
 		*retPtr = &naked->path;
 		return jxnPtr;
+
+	} else if ( strcmp ( body, "text" ) == 0 ) {
+		struct nakedUnion *naked = nakedUnionInit ( );
+		arrayListAddEndPointer ( var->eles, naked );
+		nakedUnionTypeChange0 ( naked, Text );
+
+//		nakedUnionTypeChange0 ( var, 0 );
+		*strPtr = "text";
+		void **retPtr = ret;
+		*retPtr = &naked->text;
+		return jxnPtr;
+
 	}
 
 	return -1;
@@ -398,6 +430,17 @@ int pathNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
 		*strPtr = "path";
 		void **retPtr = ret;
 		*retPtr = &naked->path;
+		return jxnPtr;
+
+	} else if ( strcmp ( body, "text" ) == 0 ) {
+		struct nakedUnion *naked = nakedUnionInit ( );
+		arrayListAddEndPointer ( var->eles, naked );
+		nakedUnionTypeChange0 ( naked, Text );
+
+//		nakedUnionTypeChange0 ( var, 0 );
+		*strPtr = "text";
+		void **retPtr = ret;
+		*retPtr = &naked->text;
 		return jxnPtr;
 
 	}

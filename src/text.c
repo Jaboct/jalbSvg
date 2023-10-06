@@ -104,6 +104,24 @@ int textNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
 		void **ptrPtr = (void**)ret;
 		*ptrPtr = var->spanList;
 		return jxnAlPtr;
+	} else if ( strcmp ( body, "tspan" ) == 0 ) {
+		struct tspan *span = tspanInit ( );
+		arrayListAddEndPointer ( var->spanList, span );
+
+		printf ( "span: %p\n", span );
+		printf ( "ret: %p\n", ret );
+
+		*strPtr = "tspan";
+		void **retPtr = ret;
+//		*retPtr = &span;
+		*retPtr = span;
+
+		printf ( "&span: %p\n", &span );
+		printf ( "retPtr: %p\n", retPtr );
+		printf ( "*retPtr: %p\n", *retPtr );
+
+//		return jxnPtr;
+		return jxnPtrActual;
 	}
 	return -1;
 }
@@ -176,12 +194,30 @@ void tspanBodyToVal ( void *varPass, int nameI, char *body ) {
 	} else if ( nameI == 5 ) {
 		strcpy ( var->body, body );
 	} else if ( nameI == 6 ) {
+		// 
+	} else if ( nameI == -1 ) {
+		// load this string into the body.
+
+		printf ( "copy to body\n" );
+		printf ( "(%s)\n", body );
+
+		strcpy ( var->body, body );
+
+		int i;
+		int len;
+		i = 0;
+		len = strlen ( body );
+		while ( i < len ) {
+			char *c = arrayListGetNext ( var->stringBuilder );
+			*c = body[i];
+			i += 1;
+		}
 	}
 }
 
 int tspanNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
 
-	struct tspan *var = data;
+//	struct tspan *var = data;
 	if ( strcmp ( body, "role" ) == 0 ) {
 		return 0;
 	} else if ( strcmp ( body, "id" ) == 0 ) {

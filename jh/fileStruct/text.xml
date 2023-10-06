@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fileStruct>
-  <name>svg</name>
+  <name>text</name>
   <colors>0</colors>
   <getters>0</getters>
   <modFuncts>0</modFuncts>
@@ -8,15 +8,10 @@
   <drawCutString>0</drawCutString>
   <scrollHandle>0</scrollHandle>
   <preInc></preInc>
-  <postInc>
-#include &quot;text.h&quot;
-#include &quot;hand.h&quot;
-</postInc>
+  <postInc></postInc>
   <structIds>
-    0,
-    1,
-    2,
-    3,
+    10,
+    11,
   </structIds>
   <functIds>
   </functIds>

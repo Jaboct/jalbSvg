@@ -5,3 +5,5 @@
 
 #include "mod.h"
 #include "svg.h"
+#include "path.h"
+#include "text.h"

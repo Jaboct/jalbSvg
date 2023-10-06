@@ -21,7 +21,7 @@ void load_global_svg ( char *dir );
 void say_svg ( struct svg *svg );
 
 void sayEleList ( ArrayList *eles );
-
+void say_svgText ( struct text *text );
 
 
 
@@ -54,6 +54,6 @@ void expandSvg ( struct svg *svg );
 void expandEleList ( ArrayList *eles );
 
 
-
+void hand_load ( );
 
 

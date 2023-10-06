@@ -69,11 +69,17 @@ void say_svg ( struct svg *svg ) {
 
 	printf ( "svg->eles.len: %d\n", arrayListGetLength ( svg->eles ) );
 
+	sayEleList ( svg->eles );
+
 	printf ( "say_svg ( ) OVER\n" );
 }
 
 
-
+char *nakedUni_str[] = {
+	"g",
+	"path",
+	"text"
+};
 
 void sayEleList ( ArrayList *eles ) {
 	int i;
@@ -82,10 +88,18 @@ void sayEleList ( ArrayList *eles ) {
 	i = 0;
 	len = arrayListGetLength ( eles );
 
+
+	printf ( "eles.len: %d\n", len );
+
+
 	while ( i < len ) {
 		struct nakedUnion *uni = arrayListGetPointer ( eles, i );
 
-		printf ( "uni->type: %d\n", uni->type );
+		if ( uni->type >= 0 ) {
+			printf ( "%s\n", nakedUni_str[uni->type] );
+		} else {
+			printf ( "uni->type: %d\n", uni->type );
+		}
 
 		if ( uni->type == G ) {
 			struct g *g = uni->g;
@@ -93,17 +107,43 @@ void sayEleList ( ArrayList *eles ) {
 			printf ( "numEles: %d\n", arrayListGetLength ( g->eles ) );
 
 			sayEleList ( g->eles );
+
 		} else if ( uni->type == Path ) {
 			struct path *path = uni->path;
 			printf ( "style: %s\n", path->style );
 			printf ( "d: %s\n", path->d );
 			printf ( "id: %s\n", path->id );
+
+		} else if ( uni->type == Text ) {
+			struct text *text = uni->text;
+			say_svgText ( text );
+
 		}
 
 		i += 1;
 	}
 }
 
+void say_svgText ( struct text *text ) {
+	int i;
+	int len;
+
+	i = 0;
+	len = arrayListGetLength ( text->spanList );
+
+	printf ( "spanList.len: %d\n", len );
+
+	while ( i < len ) {
+
+		struct tspan *span = arrayListGetPointer ( text->spanList, i );
+
+//		printf ( "span: %p\n", span );
+		printf ( "span: %s\n", span->body );
+		printf ( "{ %f, %f }\n", span->x, span->y );
+
+		i += 1;
+	}
+}
 
 void pathPostInit ( void *data ) {
 	printf ( "pathPostInit ( )\n" );
@@ -848,3 +888,31 @@ void expandEleList ( ArrayList *eles ) {
 		i += 1;
 	}
 }
+
+/** Other */
+
+void hand_load ( char *dir ) {
+	printf ( "hand_load ( )\n" );
+	printf ( "dir: %s\n", dir );
+
+	struct svg *svgEle = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbSvg, num_structStruct_jalbSvg );
+	say_svg ( svgEle );
+
+
+	printf ( "hand_load ( ) OVER\n" );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

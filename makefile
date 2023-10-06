@@ -58,7 +58,7 @@ SPECIFICSO = $(patsubst %,$(LDIR)%.so,$(SPECIFIC))
 libSpecific: $(SPECIFICSO)
 
 # jalbSvg
-jalbSvgFiles = mod mod_ext svg path \
+jalbSvgFiles = mod mod_ext svg path text \
  hand proof \
  backbone_jalbSvg xmlFunctGrouper_jalbSvg
 

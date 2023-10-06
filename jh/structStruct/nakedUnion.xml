@@ -67,6 +67,23 @@
             <saveFlag>1</saveFlag>
             <naked>0</naked>
           </subVar>
+          <subVar>
+            <name>text</name>
+            <type>1</type>
+            <typeIndex>10</typeIndex>
+            <initType>0</initType>
+            <initTypeData>
+              <>-1</>
+            </initTypeData>
+            <closeType>0</closeType>
+            <length>0</length>
+            <literal>0</literal>
+            <>-1</>
+            <external>0</external>
+            <attribute>0</attribute>
+            <saveFlag>1</saveFlag>
+            <naked>0</naked>
+          </subVar>
         </list>
         <prefix></prefix>
       </subComplex>

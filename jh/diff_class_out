@@ -1,83 +1,73 @@
-89,90d88
-< 	printf ( "svgNameToIndex ( )\n" );
+93,94d92
+< 	printf ( "textNameToIndex ( )\n" );
 < 	printf ( "body: %s\n", body );
-97,125d94
-< 	} else if ( strcmp ( body, "eles" ) == 0 ) {
-< 		void **ptrPtr = (void**)ret;
-< 		*ptrPtr = var->eles;
-< 		return jxnAlPtr;
+105d102
 < 
+110,128d106
 < 
-< 	// this should be able to be handled by a function, where i return the union struct? or null, im not sure.
-< 	} else if ( strcmp ( body, "g" ) == 0 ) {
-< 		struct nakedUnion *naked = nakedUnionInit ( );
-< 		arrayListAddEndPointer ( var->eles, naked );
-< 		nakedUnionTypeChange0 ( naked, G );
+< 	} else if ( strcmp ( body, "tspan" ) == 0 ) {
+< 		struct tspan *span = tspanInit ( );
+< 		arrayListAddEndPointer ( var->spanList, span );
 < 
-< //		nakedUnionTypeChange0 ( var, 0 );
-< 		*strPtr = "g";
+< 		printf ( "span: %p\n", span );
+< 		printf ( "ret: %p\n", ret );
+< 
+< 		*strPtr = "tspan";
 < 		void **retPtr = ret;
-< //		*retPtr = &var->g;
-< 		*retPtr = &naked->g;
-< 		return jxnPtr;
+< //		*retPtr = &span;
+< 		*retPtr = span;
 < 
-< 	} else if ( strcmp ( body, "path" ) == 0 ) {
-< 		struct nakedUnion *naked = nakedUnionInit ( );
-< 		arrayListAddEndPointer ( var->eles, naked );
-< 		nakedUnionTypeChange0 ( naked, Path );
+< 		printf ( "&span: %p\n", &span );
+< 		printf ( "retPtr: %p\n", retPtr );
+< 		printf ( "*retPtr: %p\n", *retPtr );
 < 
-< //		nakedUnionTypeChange0 ( var, 0 );
-< 		*strPtr = "path";
-< 		void **retPtr = ret;
-< 		*retPtr = &naked->path;
-< 		return jxnPtr;
-127,129d95
+< //		return jxnPtr;
+< 		return jxnPtrActual;
+146c124
+< //	if ( debugPrint_projectName_init ) {
+---
+> 	if ( debugPrint_projectName_init ) {
+148c126
+< //	}
+---
+> 	}
+150,152d127
 < 
-< 	printf ( "svgNameToIndex ( ) UNHANDLED\n" );
+< 	printf ( "var: %p\n", var );
 < 
-279,280d244
-< 	printf ( "gNameToIndex ( )\n" );
-< 	printf ( "body: %s\n", body );
-289,315d252
-< 
-< 
-< 
-< 	// this should be able to be handled by a function, where i return the union struct? or null, im not sure.
-< 	} else if ( strcmp ( body, "g" ) == 0 ) {
-< 		struct nakedUnion *naked = nakedUnionInit ( );
-< 		arrayListAddEndPointer ( var->eles, naked );
-< 		nakedUnionTypeChange0 ( naked, G );
-< 
-< //		nakedUnionTypeChange0 ( var, 0 );
-< 		*strPtr = "g";
-< 		void **retPtr = ret;
-< //		*retPtr = &var->g;
-< 		*retPtr = &naked->g;
-< 		return jxnPtr;
-< 
-< 	} else if ( strcmp ( body, "path" ) == 0 ) {
-< 		struct nakedUnion *naked = nakedUnionInit ( );
-< 		arrayListAddEndPointer ( var->eles, naked );
-< 		nakedUnionTypeChange0 ( naked, Path );
-< 
-< //		nakedUnionTypeChange0 ( var, 0 );
-< 		*strPtr = "path";
-< 		void **retPtr = ret;
-< 		*retPtr = &naked->path;
-< 		return jxnPtr;
-< 
-343a281
-> 	var->eles = initArrayList ( 0, sizeof ( out of range (type: -1) (typeIndex: -1)* ), 0 );
-358a297
+162a138
+> 	var->stringBuilder = initArrayList ( 200, sizeof ( char ), 160 );
+170a147,149
+> 	if ( var->stringBuilder ) {
+> 		freeArrayList ( var->stringBuilder );
+> 	}
+180a160
 > 	0,
-369a309
-> 	} else if ( nameI == 3 ) {
-374a315
-> 	struct path *var = data;
-380a322,325
-> 	} else if ( strcmp ( body, "eles" ) == 0 ) {
-> 		void **ptrPtr = (void**)ret;
-> 		*ptrPtr = var->eles;
-> 		return jxnAlPtr;
-390d334
-< 	.postInit = pathPostInit,
+183,185d162
+< 	printf ( "tspanBodyToVal ( )\n" );
+< 	printf ( "body: %s\n", body );
+< 	printf ( "nameI: %d\n", nameI );
+189,190d165
+< 	printf ( "var: %p\n", var );
+< 
+203,209c178
+< 
+< 	} else if ( nameI == -1 ) {
+< 		// load this string into the body.
+< 
+< printf ( "copy to body\n" );
+< 
+< 		strcpy ( var->body, body );
+---
+> 	} else if ( nameI == 6 ) {
+211,212d179
+< 
+< 	printf ( "tspanBodyToVal ( ) OVER\n" );
+216,217d182
+< 	printf ( "tspanNameToIndex ( )\n" );
+< 	printf ( "body: %s\n", body );
+218a184
+> 	struct tspan *var = data;
+230a197,198
+> 	} else if ( strcmp ( body, "stringBuilder" ) == 0 ) {
+> 		return 6;

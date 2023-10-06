@@ -1,2 +1,2 @@
-47a48
-> 	ArrayList *eles;	// (out of range (type: -1) (typeIndex: -1)*)
+37a38
+> 	ArrayList *stringBuilder;	// (char)

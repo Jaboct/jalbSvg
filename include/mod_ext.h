@@ -7,8 +7,22 @@
 #include <GL/glew.h>
 
 #include <jalb/jama.h>
+#include <jalb/jalbSb.h>
 
 #include "svg.h"
+
+
+/** Structs */
+
+/*
+struct slimText {
+	ArrayList *sb;	// (char)
+	int cursorStartMem[3];
+	int cursorEndMem[3];
+//	struct undoRedo undoMem;
+//	struct textSearch *search;
+};
+*/
 
 
 /** Functions */
@@ -42,16 +56,10 @@ void cubicBez_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1,
 
 void segScale ( float *p0, float *p1, float *pSet, float scale, int len );
 
-/** Screenshot */
-void set_window ( void *window );
-void screenshot_02 ( char *dir );
-void window_screenshot_bmp ( char *dir );
 
+void textRender ( int *screenDims, GLuint *glBuffers, int *XYWH, struct text *text );
 
-int screenShot( char *dir );
-
-
-
+void spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyphWH, float *fXYWH, ArrayList *sb );
 
 
 

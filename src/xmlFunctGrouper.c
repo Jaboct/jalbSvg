@@ -2,13 +2,21 @@
 
 
 
-int num_structStruct = 4;
+int num_structStruct = 12;
 
 
 extern struct xmlFuncts svgXml;
 extern struct xmlFuncts nakedUnionXml;
 extern struct xmlFuncts gXml;
 extern struct xmlFuncts pathXml;
+extern struct xmlFuncts pathUniXml;
+extern struct xmlFuncts moveToXml;
+extern struct xmlFuncts lineToXml;
+extern struct xmlFuncts cubicBezXml;
+extern struct xmlFuncts quadBezXml;
+extern struct xmlFuncts ellipArcXml;
+extern struct xmlFuncts textXml;
+extern struct xmlFuncts tspanXml;
 
 
 struct xmlFuncts *xmlFuncts_arr[] = {
@@ -16,6 +24,14 @@ struct xmlFuncts *xmlFuncts_arr[] = {
 	&nakedUnionXml,
 	&gXml,
 	&pathXml,
+	&pathUniXml,
+	&moveToXml,
+	&lineToXml,
+	&cubicBezXml,
+	&quadBezXml,
+	&ellipArcXml,
+	&textXml,
+	&tspanXml,
 };
 
 

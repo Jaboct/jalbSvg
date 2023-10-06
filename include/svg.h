@@ -31,11 +31,13 @@ struct nakedUnion {
 	union  {
 		struct g *g;
 		struct path *path;
+		struct text *text;
 	};
 };
 enum nakedUnionEnum {
 	G = 0,
 	Path,
+	Text,
 };
 struct g {
 	char id[256];
@@ -46,11 +48,16 @@ struct path {
 	char d[256];
 	char id[256];
 	ArrayList *eles;	// (char*)
+
+	// hand
+	int fill;
+	int stroke;
 };
 
 
 /** Post Includes */
 
+#include "text.h"
 #include "hand.h"
 
 
