@@ -8,7 +8,8 @@
   <drawCutString>0</drawCutString>
   <scrollHandle>0</scrollHandle>
   <preInc></preInc>
-  <postInc></postInc>
+  <postInc>
+#include &quot;hand.h&quot;</postInc>
   <structIds>
     10,
     11,

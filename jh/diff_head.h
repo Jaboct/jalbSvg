@@ -16,48 +16,88 @@
 
 
 
-void text_preInit ( );
+void svg_preInit ( );
 
 
 /** Structs */
 
-struct text {
-	char space[256];
-	char style[256];
-	float x;
-	float y;
-	ArrayList *spanList;	// (struct text*)
+struct svg {
+	char width[256];
+	char height[256];
+	ArrayList *eles;	// (struct nakedUnion*)
 };
-struct tspan {
-	char role[256];
+struct nakedUnion {
+	int type;
+	union  {
+		struct g *g;
+		struct path *path;
+		struct text *text;
+		struct rect *rect;
+		struct circle *circle;
+		struct ellipse *ellipse;
+	};
+};
+enum nakedUnionEnum {
+	G = 0,
+	Path,
+	Text,
+	Rect,
+	Circle,
+	Ellipse,	// 5
+};
+struct g {
 	char id[256];
+	ArrayList *eles;	// (struct nakedUnion*)
+};
+struct path {
 	char style[256];
-	float x;
-	float y;
-	char body[256];
-	ArrayList *stringBuilder;	// (char)
+	char d[256];
+	char id[256];
+	ArrayList *eles;	// (struct pathUni*)
+	char fill[256];
+	char stroke[256];
 };
 
 
 /** Post Includes */
 
+#include "text.h"
+#include "hand.h"
+
 
 /** Functions */
 
-/** text */
-struct text *textInit ( );
-void textFill ( struct text *var );
-void *textInitMask ( );
-void textClose ( struct text *var );
-void textBodyToVal ( void *varPass, int nameI, char *body );
-int textNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+/** svg */
+struct svg *svgInit ( );
+void svgFill ( struct svg *var );
+void *svgInitMask ( );
+void svgClose ( struct svg *var );
+void svgBodyToVal ( void *varPass, int nameI, char *body );
+int svgNameToIndex ( char *body, void *data, void *ret, char **strPtr );
 
-/** tspan */
-struct tspan *tspanInit ( );
-void tspanFill ( struct tspan *var );
-void *tspanInitMask ( );
-void tspanClose ( struct tspan *var );
-void tspanBodyToVal ( void *varPass, int nameI, char *body );
-int tspanNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+/** nakedUnion */
+struct nakedUnion *nakedUnionInit ( );
+void nakedUnionFill ( struct nakedUnion *var );
+void nakedUnionTypeChange0 ( struct nakedUnion *var, int type );
+void *nakedUnionInitMask ( );
+void nakedUnionClose ( struct nakedUnion *var );
+void nakedUnionBodyToVal ( void *varPass, int nameI, char *body );
+int nakedUnionNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+
+/** g */
+struct g *gInit ( );
+void gFill ( struct g *var );
+void *gInitMask ( );
+void gClose ( struct g *var );
+void gBodyToVal ( void *varPass, int nameI, char *body );
+int gNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+
+/** path */
+struct path *pathInit ( );
+void pathFill ( struct path *var );
+void *pathInitMask ( );
+void pathClose ( struct path *var );
+void pathBodyToVal ( void *varPass, int nameI, char *body );
+int pathNameToIndex ( char *body, void *data, void *ret, char **strPtr );
 
 /** Other Functs */

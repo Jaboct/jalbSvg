@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <structStruct>
-  <name>tspan</name>
+  <name>rect</name>
   <vars>
     <subVar>
-      <name>role</name>
+      <name>style</name>
       <type>0</type>
       <typeIndex>4</typeIndex>
       <initType>0</initType>
@@ -22,7 +22,7 @@
     <subVar>
       <name>id</name>
       <type>0</type>
-      <typeIndex>4</typeIndex>
+      <typeIndex>3</typeIndex>
       <initType>0</initType>
       <initTypeData>
         <>-1</>
@@ -30,24 +30,16 @@
       <closeType>0</closeType>
       <length>-1</length>
       <literal>1</literal>
-      <>-1</>
-      <external>0</external>
-      <attribute>0</attribute>
-      <saveFlag>1</saveFlag>
-      <naked>0</naked>
-    </subVar>
-    <subVar>
-      <name>style</name>
-      <type>0</type>
-      <typeIndex>4</typeIndex>
-      <initType>0</initType>
-      <initTypeData>
-        <>-1</>
-      </initTypeData>
-      <closeType>0</closeType>
-      <length>-1</length>
-      <literal>1</literal>
-      <>-1</>
+      <subAl>
+        <curEles>0</curEles>
+        <eleSize>0</eleSize>
+        <overflow>0</overflow>
+        <literal>0</literal>
+        <type>-1</type>
+        <typeIndex>-1</typeIndex>
+        <length>-1</length>
+        <naked>0</naked>
+      </subAl>
       <external>0</external>
       <attribute>0</attribute>
       <saveFlag>1</saveFlag>
@@ -88,24 +80,7 @@
       <naked>0</naked>
     </subVar>
     <subVar>
-      <name>body</name>
-      <type>0</type>
-      <typeIndex>4</typeIndex>
-      <initType>0</initType>
-      <initTypeData>
-        <>-1</>
-      </initTypeData>
-      <closeType>0</closeType>
-      <length>-1</length>
-      <literal>1</literal>
-      <>-1</>
-      <external>0</external>
-      <attribute>0</attribute>
-      <saveFlag>1</saveFlag>
-      <naked>0</naked>
-    </subVar>
-    <subVar>
-      <name>fontSize</name>
+      <name>width</name>
       <type>0</type>
       <typeIndex>1</typeIndex>
       <initType>0</initType>
@@ -122,26 +97,17 @@
       <naked>0</naked>
     </subVar>
     <subVar>
-      <name>stringBuilder</name>
+      <name>height</name>
       <type>0</type>
-      <typeIndex>3</typeIndex>
+      <typeIndex>1</typeIndex>
       <initType>0</initType>
       <initTypeData>
         <>-1</>
       </initTypeData>
       <closeType>0</closeType>
-      <length>0</length>
+      <length>-1</length>
       <literal>1</literal>
-      <subAl>
-        <curEles>200</curEles>
-        <eleSize>0</eleSize>
-        <overflow>160</overflow>
-        <literal>1</literal>
-        <type>0</type>
-        <typeIndex>2</typeIndex>
-        <length>-1</length>
-        <naked>0</naked>
-      </subAl>
+      <>-1</>
       <external>0</external>
       <attribute>0</attribute>
       <saveFlag>1</saveFlag>

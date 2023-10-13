@@ -23,9 +23,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="1.5554293"
-     inkscape:cx="-35.038558"
-     inkscape:cy="97.400763"
+     inkscape:zoom="3.1108586"
+     inkscape:cx="98.525854"
+     inkscape:cy="145.13678"
      inkscape:window-width="1551"
      inkscape:window-height="1082"
      inkscape:window-x="925"
@@ -62,17 +62,19 @@
          sodipodi:role="line"
          style="stroke-width:0.264583"
          x="5.2913027"
-         y="25.341467"
-         id="tspan3441">line 4</tspan><tspan
+         y="27.214228"
+         id="tspan3441">line 4 <tspan
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+   id="tspan6008">font 16</tspan></tspan><tspan
          sodipodi:role="line"
          style="stroke-width:0.264583"
          x="5.2913027"
-         y="29.751179"
+         y="32.397022"
          id="tspan3443" /><tspan
          sodipodi:role="line"
          style="stroke-width:0.264583"
          x="5.2913027"
-         y="34.160892"
+         y="36.806736"
          id="tspan3445">line 6</tspan></text>
   </g>
 </svg>

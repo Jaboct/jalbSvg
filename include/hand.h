@@ -3,15 +3,25 @@
 #include <jalbXml/jalbXml_02.h>
 #include <jalb/jalbStr.h>
 
+#include <jalb/jalbScreenshot.h>
+
 #include "svg.h"
 #include "path.h"
 
+
 /** Structs */
 
+/*
 enum pathTypes {
 	path_moveTo = 0,
 	path_lineTo,
 	path_
+};
+*/
+
+enum {
+	path_moveto_rel = 0,
+	path_moveto_abs,
 };
 
 /** Functions */
@@ -54,6 +64,19 @@ void expandSvg ( struct svg *svg );
 void expandEleList ( ArrayList *eles );
 
 
+/** Other */
+
 void hand_load ( );
+
+void hand_p ( char *dir );
+
+
+
+/** postInit */
+
+void text_postInit ( struct text *text );
+void tspan_postInit ( struct tspan *tspan );
+void tspan_style_handle ( struct tspan *tspan, char *name, char *value );
+void text_style_handle ( struct text *text, char *name, char *value );
 
 

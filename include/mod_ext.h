@@ -11,6 +11,8 @@
 
 #include "svg.h"
 
+#include "proof.h"
+
 
 /** Structs */
 

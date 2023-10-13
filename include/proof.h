@@ -5,6 +5,7 @@
 
 #include <jalbXml/jalbXml_02.h>
 
+#include <jalb/jalbScreenshot.h>
 
 #include "hand.h"
 
@@ -28,6 +29,21 @@ void extra_test ( );
 
 void proof_parseD ( );
 
+
+
+/** Render Proof */
+
+void set_onTest ( int i );
+
+void handle_render_proof ( );
+
+void render_proof_00 ( int stage );
+void render_proof_01 ( int stage );
+
+
+void test_viewLoc_00 ( );
+void test_viewLoc_01 ( );
+void test_viewScale_00 ( );
 
 
 

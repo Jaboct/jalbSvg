@@ -257,11 +257,13 @@ void parseD ( char *d, ArrayList *eles ) {
 					i -= 1;
 				}
 
+/*
 				if ( thisType == 18 ||
 				     thisType == 19 ) {
 					// got a 'Z' or 'z'.
 					break;
 				}
+*/
 
 				if ( thisType >= 0 ) {
 					arrayListAddEndPointer ( eles, uni );
@@ -383,6 +385,7 @@ int charToPathUni2 ( char c, struct pathUni **uniPass ) {
 	printf ( "charToPathUni2 ( )\n" );
 	printf ( "c: %c\n", c );
 
+/*
 	// put this before the alloc.
 	switch ( c ) {
 		case 'Z':
@@ -392,6 +395,7 @@ int charToPathUni2 ( char c, struct pathUni **uniPass ) {
 			return 19;
 			break;
 	}
+*/
 
 //	struct pathUni *uni = pathUniInit ( );
 	*uniPass = pathUniInit ( );
@@ -489,9 +493,11 @@ int charToPathUni2 ( char c, struct pathUni **uniPass ) {
 			return 17;
 			break;
 		case 'Z':
+			pathUniTypeChange0 ( uni, path_PathEnd );
 			return 18;
 			break;
 		case 'z':
+			pathUniTypeChange0 ( uni, path_PathEnd );
 			return 19;
 			break;
 		default:
@@ -771,7 +777,8 @@ void eleListToD ( ArrayList *eleList, char *d ) {
 /** to paste
 
 // svgNameToIndex
-// pathNameToIndex
+// gNameToIndex
+// pathNameToIndex // path doesnt belong...
 
 	// this should be able to be handled by a function, where i return the union struct? or null, im not sure.
 	} else if ( strcmp ( body, "g" ) == 0 ) {
@@ -797,37 +804,22 @@ void eleListToD ( ArrayList *eleList, char *d ) {
 		*retPtr = &naked->path;
 		return jxnPtr;
 
-
-
-
-	// this should be able to be handled by a function, where i return the union struct? or null, im not sure.
-	} else if ( strcmp ( body, "g" ) == 0 ) {
+	} else if ( strcmp ( body, "text" ) == 0 ) {
 		struct nakedUnion *naked = nakedUnionInit ( );
 		arrayListAddEndPointer ( var->eles, naked );
-		nakedUnionTypeChange0 ( naked, G );
+		nakedUnionTypeChange0 ( naked, Text );
 
 //		nakedUnionTypeChange0 ( var, 0 );
-		*strPtr = "g";
+		*strPtr = "text";
 		void **retPtr = ret;
-//		*retPtr = &var->g;
-		*retPtr = &naked->g;
+		*retPtr = &naked->text;
 		return jxnPtr;
-
-	} else if ( strcmp ( body, "path" ) == 0 ) {
-		struct nakedUnion *naked = nakedUnionInit ( );
-		arrayListAddEndPointer ( var->eles, naked );
-		nakedUnionTypeChange0 ( naked, Path );
-
-//		nakedUnionTypeChange0 ( var, 0 );
-		*strPtr = "path";
-		void **retPtr = ret;
-		*retPtr = &naked->path;
-		return jxnPtr;
-
 
 	.postInit = pathPostInit,
 
 */
+
+
 
 
 void save_svg ( char *dir, struct svg *svg ) {
@@ -908,6 +900,123 @@ void hand_load ( char *dir ) {
 
 
 
+void hand_p ( char *dir ) {
+	printf ( "hand_p ( )\n" );
+
+	jalbScreenshot_ppm ( dir );
+
+	printf ( "hand_p ( ) OVER\n" );
+}
+
+/** postInit */
+
+void text_postInit ( struct text *text ) {
+	printf ( "text_postInit ( )\n" );
+	printf ( "text->style: %s\n", text->style );
+
+	int i;
+	int len;
+
+	char *style = text->style;
+
+	int type = 0;
+	int s = 0;
+	char name[256];
+	char value[256];
+
+	i = 0;
+	len = strlen ( style );
+	while ( i < len ) {
+		char c = style[i];
+
+		if ( c == ':' ) {
+			name[s] = '\0';
+			type = 1;
+			s = 0;
+		} else if ( c == ';' ) {
+			// handle.
+			value[s] = '\0';
+			type = 0;
+			s = 0;
+
+			text_style_handle ( text, name, value );
+
+		} else if ( type == 0 ) {
+			name[s] = c;
+			s += 1;
+		} else if ( type == 1 ) {
+			value[s] = c;
+			s += 1;
+		}
+
+		i += 1;
+	}
+}
+
+void tspan_postInit ( struct tspan *tspan ) {
+	printf ( "tspan_postInit ( )\n" );
+	printf ( "tspan->style: %s\n", tspan->style );
+
+	int i;
+	int len;
+
+	char *style = tspan->style;
+
+	int type = 0;
+	int s = 0;
+	char name[256];
+	char value[256];
+
+	i = 0;
+	len = strlen ( style );
+	while ( i < len ) {
+		char c = style[i];
+
+		if ( c == ':' ) {
+			name[s] = '\0';
+			type = 1;
+			s = 0;
+		} else if ( c == ';' ) {
+			// handle.
+			value[s] = '\0';
+			type = 0;
+			s = 0;
+
+			tspan_style_handle ( tspan, name, value );
+
+		} else if ( type == 0 ) {
+			name[s] = c;
+			s += 1;
+		} else if ( type == 1 ) {
+			value[s] = c;
+			s += 1;
+		}
+
+		i += 1;
+	}
+}
+
+void tspan_style_handle ( struct tspan *tspan, char *name, char *value ) {
+	printf ( "tspan_style_handle ( )\n" );
+	printf ( "name: %s\n", name );
+	printf ( "value: %s\n", value );
+
+	if ( strcmp ( name, "font-size" ) == 0 ) {
+		tspan->fontSize = atof ( value );
+		printf ( "tspan->fontSize: %f\n", tspan->fontSize );
+	}
+}
+
+void text_style_handle ( struct text *text, char *name, char *value ) {
+	printf ( "text_style_handle ( )\n" );
+	printf ( "name: %s\n", name );
+	printf ( "value: %s\n", value );
+
+	if ( strcmp ( name, "font-size" ) == 0 ) {
+		text->fontSize = atof ( value );
+		printf ( "text->fontSize: %f\n", text->fontSize );
+	}
+}
 
 
 

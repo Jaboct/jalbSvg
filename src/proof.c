@@ -201,5 +201,168 @@ void proof_parseD ( ) {
 
 
 
+/** Render Proof */
+
+
+
+int onTest = -1;
+int testStage = 0;
+
+
+extern float *viewLoc_ptr;
+extern void (*setViewScale) (float s);
+
+
+void set_onTest ( int i ) {
+	printf ( "set_onTest ( )\n" );
+	printf ( "i: %d\n", i );
+
+	onTest = i;
+}
+
+
+struct render_proof {
+	int numStages;
+	void (*f)(int stage);
+};
+
+int num_render_proofs = 2;
+struct render_proof render_proofs[2] = {
+	{
+		6,
+		render_proof_00,
+	},
+	{
+		6,
+		render_proof_01,
+	}
+};
+
+void handle_render_proof ( ) {
+/*
+	printf ( "handle_render_proof ( )\n" );
+	printf ( "onTest: %d\n", onTest );
+	printf ( "testStage: %d\n", testStage );
+*/
+
+	if ( onTest >= 0 && onTest < num_render_proofs ) {
+		struct render_proof *proof = &render_proofs[onTest];
+		proof->f ( testStage );
+		testStage += 1;
+
+		if ( testStage == proof->numStages ) {
+			testStage = 0;
+			onTest = -1;
+
+//			exit ( -12 );
+		}
+	}
+}
+
+
+void render_proof_00 ( int stage ) {
+//	printf ( "render_proof_00 ( )\n" );
+//	printf ( "stage: %d\n", stage );
+
+	char *folder = "/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/proof/";
+	char dir[256];
+
+	if ( !setViewScale ) {
+		printf ( "!setViewScale, ERROR\n" );
+		return;
+	}
+
+	// load the square
+	if ( stage == 0 ) {
+		viewLoc_ptr[0] = 0;
+		viewLoc_ptr[1] = 0;
+		setViewScale ( 1.0 );
+
+	} else if ( stage == 1 ) {
+		sprintf ( dir, "%s%s", folder, "t0.ppm" );
+		jalbScreenshot_ppm ( dir );
+
+	} else if ( stage == 2 ) {
+		viewLoc_ptr[0] = 0;
+		viewLoc_ptr[1] = 0;
+		setViewScale ( 0.5 );
+
+	} else if ( stage == 3 ) {
+		sprintf ( dir, "%s%s", folder, "t1.ppm" );
+		jalbScreenshot_ppm ( dir );
+
+	} else if ( stage == 4 ) {
+		viewLoc_ptr[0] = 0;
+		viewLoc_ptr[1] = 0;
+		setViewScale ( 0.1 );
+
+	} else if ( stage == 5 ) {
+		sprintf ( dir, "%s%s", folder, "t2.ppm" );
+		jalbScreenshot_ppm ( dir );
+
+	}
+}
+
+void render_proof_01 ( int stage ) {
+	printf ( "render_proof_001( )\n" );
+	printf ( "stage: %d\n", stage );
+
+	char *folder = "/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/proof/t1_";
+	char dir[256];
+
+	if ( !setViewScale ) {
+		printf ( "!setViewScale, ERROR\n" );
+		return;
+	}
+
+	float setXY[2] = { 10, 0 };
+
+	// load the square
+	if ( stage == 0 ) {
+		viewLoc_ptr[0] = setXY[0];
+		viewLoc_ptr[1] = setXY[1];
+		setViewScale ( 1.0 );
+
+	} else if ( stage == 1 ) {
+		sprintf ( dir, "%s%d.ppm", folder, stage );
+		jalbScreenshot_ppm ( dir );
+
+	} else if ( stage == 2 ) {
+		viewLoc_ptr[0] = setXY[0];
+		viewLoc_ptr[1] = setXY[1];
+		setViewScale ( 0.5 );
+
+	} else if ( stage == 3 ) {
+		sprintf ( dir, "%s%d.ppm", folder, stage );
+		jalbScreenshot_ppm ( dir );
+
+	} else if ( stage == 4 ) {
+		viewLoc_ptr[0] = setXY[0];
+		viewLoc_ptr[1] = setXY[1];
+		setViewScale ( 0.1 );
+
+	} else if ( stage == 5 ) {
+		sprintf ( dir, "%s%d.ppm", folder, stage );
+		jalbScreenshot_ppm ( dir );
+
+	}
+}
+
+
+void test_viewLoc_00 ( ) {
+	viewLoc_ptr[0] = -10;
+	viewLoc_ptr[1] = -10;
+}
+
+void test_viewLoc_01 ( ) {
+	viewLoc_ptr[0] = 5;
+	viewLoc_ptr[1] = 5;
+
+	setViewScale ( 0.5 );
+}
+
+void test_viewScale_00 ( ) {
+	setViewScale ( 1.0 );
+}
 
 

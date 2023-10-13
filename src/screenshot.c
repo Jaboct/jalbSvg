@@ -430,6 +430,13 @@ glClearColor( 0.0f, 1.0f, 0.0f, 0.0f );
         return 0;
 }
 
+void hand_p ( dhar *dir ) {
+	printf ( "hand_p ( )\n" );
+
+	jalbScreenshot_ppm ( dir );
+
+	printf ( "hand_p ( ) OVER\n" );
+}
 
 
 

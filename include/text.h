@@ -14,8 +14,6 @@
 
 #include <jalbXml/jalbXml_02.h>
 
-
-
 void text_preInit ( );
 
 
@@ -26,6 +24,7 @@ struct text {
 	char style[256];
 	float x;
 	float y;
+	float fontSize;
 	ArrayList *spanList;	// (struct text*)
 };
 struct tspan {
@@ -35,12 +34,14 @@ struct tspan {
 	float x;
 	float y;
 	char body[256];
+	float fontSize;
 	ArrayList *stringBuilder;	// (char)
 };
 
 
 /** Post Includes */
 
+#include "hand.h"
 
 /** Functions */
 

@@ -24,10 +24,14 @@ LIBS = -lmingw32 -lSDL2main -lSDL2 -lSOIL -lfreetype \
 Dep = dep\\
 else
 LIBS = \
- -lGLEW -lGL -lSOIL -lfreetype \
+ -lfreetype \
  -ljalb_xml -ljalbDraw -ljalb \
+ -lGLEW -lGL -lSOIL \
  -lSDL2 \
  -lm
+# inorder to get jalb/jalbScreenshot to work i need to putin the second call of GLEW, GL, and SOIL.
+# i want to set up unit tests of this, so i can figure out the right way to order my libs.
+# well i had the 3 before freetype, but now its only after and that is no problem.
 Dep = dep/
 endif
 # -ldl // for dlsym stuff.

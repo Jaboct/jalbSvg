@@ -12,11 +12,17 @@ extern float colorWhite[];
 extern float colorBlack[];
 
 
-
+float *viewLoc_ptr;
 float glob_viewLoc[2] = { 0.0, 0.0 };
 float glob_viewScale = 1.0;;
 
 int glob_screenDims[2];
+
+
+void (*setViewScale) (float s) = NULL;
+
+int svg_debugPrint_render = 0;
+
 
 /** Functions */
 
@@ -35,21 +41,38 @@ void jalbSvg_render ( int *screenDims, GLuint *glBuffers, int *XYWH, void *data 
 
 void jalbSvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void *data,
 		float *viewLoc, float viewScale ) {
-	printf ( "jalbSvg_renderDyn ( )\n" );
+	if ( svg_debugPrint_render ) {
+		printf ( "jalbSvg_renderDyn ( )\n" );
+	}
 
-	sayFloatArray ( "viewLoc", viewLoc, 2 );
-	printf ( "viewScale: %f\n", viewScale );
+/*
+	viewLoc[0] = 10;
+	if ( setViewScale ) {
+//		setViewScale ( 4.0 );
+		setViewScale ( 0.5 );
+	} else {
+		printf ( "!setViewScale ( ) error\n" );
+	}
+*/
+
+	if ( svg_debugPrint_render ) {
+		sayFloatArray ( "viewLoc", viewLoc, 2 );
+		printf ( "viewScale: %f\n", viewScale );
+	}
 
 	glob_screenDims[0] = screenDims[0];
 	glob_screenDims[1] = screenDims[1];
 
+	viewLoc_ptr = viewLoc;
 	glob_viewLoc[0] = viewLoc[0];
 	glob_viewLoc[1] = viewLoc[1];
-	glob_viewScale = viewScale;
+	glob_viewScale = 1.0 / viewScale;
 
 	if ( global_svg ) {
 		svg_render ( screenDims, glBuffers, XYWHpass, global_svg );
 	}
+
+	handle_render_proof ( );
 }
 
 int jalbSvg_event ( SDL_Event *e, int *clickXY, int *eleWH, void *data ) {
@@ -71,13 +94,32 @@ void jalbSvg_close ( void *data ) {
 
 
 void point_to_loc ( float *p0, float *pSet ) {
-	pSet[0] = p0[0] * glob_viewScale - glob_viewLoc[0];
-	pSet[1] = p0[1] * glob_viewScale - glob_viewLoc[1];
+/*
+	printf ( "point_to_loc ( )\n" );
+	sayFloatArray ( "glob_viewLoc", glob_viewLoc, 2 );
+	printf ( "glob_viewScale: %f\n", glob_viewScale );
+	sayFloatArray ( "p0", p0, 2 );
+*/
+
+//	pSet[0] = p0[0] * glob_viewScale - glob_viewLoc[0];
+//	pSet[1] = p0[1] * glob_viewScale - glob_viewLoc[1];
+
+//	pSet[0] = p0[0];
+//	pSet[1] = p0[1];
+
+
+	pSet[0] = ( p0[0] - glob_viewLoc[0] ) / glob_viewScale;
+	pSet[1] = ( p0[1] - glob_viewLoc[1] ) / glob_viewScale;
+
+
+//	sayFloatArray ( "pSet", pSet, 2 );
 }
 
 
 void svg_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct svg *svg ) {
-	printf ( "svg_render ( )\n" );
+	if ( svg_debugPrint_render ) {
+		printf ( "svg_render ( )\n" );
+	}
 
 	eles_render ( screenDims, glBuffers, XYWH, svg->eles );
 }
@@ -89,12 +131,16 @@ void eles_render ( int *screenDims, GLuint *glBuffers, int *XYWH, ArrayList *ele
 	i = 0;
 	len = arrayListGetLength ( eles );
 
-	printf ( "eles.len: %d\n", len );
+	if ( svg_debugPrint_render ) {
+		printf ( "eles.len: %d\n", len );
+	}
 
 	while ( i < len ) {
 		struct nakedUnion *uni = arrayListGetPointer ( eles, i );
 
-		printf ( "uni->type: %d\n", uni->type );
+		if ( svg_debugPrint_render ) {
+			printf ( "uni->type: %d\n", uni->type );
+		}
 
 		if ( uni->type == G ) {
 			struct g *g = uni->g;
@@ -116,7 +162,9 @@ void eles_render ( int *screenDims, GLuint *glBuffers, int *XYWH, ArrayList *ele
 }
 
 void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *path ) {
-	printf ( "path_render ( )\n" );
+	if ( svg_debugPrint_render ) {
+		printf ( "path_render ( )\n" );
+	}
 
 	int i;
 	int len;
@@ -125,10 +173,19 @@ void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *p
 	// some times lastC will not be set, i should mark this as error checking. but for now just trust what i load.
 	float lastC[2] = { 0, 0 };
 
+	int start = 1;
+	// does z maybe need a C?
+	float startP[2];
+
 	i = 0;
 	len = arrayListGetLength ( path->eles );
 	while ( i < len ) {
 		struct pathUni *uni = arrayListGetPointer ( path->eles, i );
+
+		if ( svg_debugPrint_render ) {
+			printf ( "uni->type: %d\n", uni->type );
+		}
+
 		float thisP[2];
 		float thisC[2];
 		if ( uni->type == path_MoveTo ) {
@@ -171,7 +228,26 @@ void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *p
 				lastC[1] += lastP[1];
 			}
 			cubicBez_render ( screenDims, glBuffers, lastP, thisP, lastC, thisC );
+		} else if ( uni->type == path_CubicBez ) {
+		} else if ( path_PathEnd ) {
+
+
+			float t0[2];
+			float t1[2];
+
+			point_to_loc ( lastP, t0 );
+			point_to_loc ( startP, t1 );
+
+			draw2dApi->drawSeg ( screenDims, glBuffers, t0, t1, colorWhite );
 		}
+
+		if ( start ) {
+			startP[0] = thisP[0];
+			startP[1] = thisP[1];
+
+			start = 0;
+		}
+
 		lastP[0] = thisP[0];
 		lastP[1] = thisP[1];
 
@@ -183,9 +259,10 @@ void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *p
 }
 
 void seg_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1 ) {
-
-	sayFloatArray ( "p0", p0, 2 );
-	sayFloatArray ( "p1", p1, 2 );
+	if ( svg_debugPrint_render ) {
+		sayFloatArray ( "p0", p0, 2 );
+		sayFloatArray ( "p1", p1, 2 );
+	}
 
 	float t0[2];
 	float t1[2];
@@ -279,6 +356,7 @@ void cubicBez_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1,
 */
 //		f[0] -= glob_viewLoc[0];
 //		f[1] -= glob_viewLoc[1];
+
 		point_to_loc ( f, f );
 
 		draw2dApi->drawSeg ( screenDims, glBuffers, last, f, colorWhite );
@@ -321,7 +399,9 @@ void segScale ( float *p0, float *p1, float *pSet, float scale, int len ) {
 ArrayList *testString = NULL;
 
 void textRender ( int *screenDims, GLuint *glBuffers, int *XYWH, struct text *text ) {
-	printf ( "textRender ( )\n" );
+	if ( svg_debugPrint_render ) {
+		printf ( "textRender ( )\n" );
+	}
 
 	// idk what text->x,y is for, when the spans just have their own.
 	// maybe for outline and shit? idk.
@@ -336,8 +416,13 @@ void textRender ( int *screenDims, GLuint *glBuffers, int *XYWH, struct text *te
 	}
 
 	float glyphWH[2];
-	glyphWH[0] = fonts[0]->atlasInfo.glyphW * glob_viewScale;
-	glyphWH[1] = fonts[0]->atlasInfo.glyphH * glob_viewScale;
+//	glyphWH[0] = fonts[0]->atlasInfo.glyphW / glob_viewScale;
+//	glyphWH[1] = fonts[0]->atlasInfo.glyphH / glob_viewScale;
+
+	float ratio = text->fontSize / fonts[0]->atlasInfo.glyphH;
+
+	glyphWH[0] = fonts[0]->atlasInfo.glyphW * ratio / glob_viewScale;
+	glyphWH[1] = fonts[0]->atlasInfo.glyphH * ratio / glob_viewScale;
 
 	float fXYWH[4];
 	fXYWH[2] = XYWH[2];
@@ -351,8 +436,10 @@ void textRender ( int *screenDims, GLuint *glBuffers, int *XYWH, struct text *te
 	while ( i < len ) {
 		struct tspan *span = arrayListGetPointer ( text->spanList, i );
 
-		fXYWH[0] = XYWH[0] + span->x - glob_viewLoc[0];
-		fXYWH[1] = XYWH[1] + span->y - glob_viewLoc[1];
+//		fXYWH[0] = XYWH[0] + span->x - glob_viewLoc[0];
+//		fXYWH[1] = XYWH[1] + span->y - glob_viewLoc[1];
+		float tXY[2] = { XYWH[0] + span->x, XYWH[1] + span->y };
+		point_to_loc ( tXY, fXYWH );
 
 /*
 		int XY[2] = { span->x, span->y };
@@ -371,9 +458,11 @@ void textRender ( int *screenDims, GLuint *glBuffers, int *XYWH, struct text *te
 }
 
 void spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyphWH, float *fXYWH, ArrayList *sb ) {
-	printf ( "spanRender ( )\n" );
+	if ( svg_debugPrint_render ) {
+		printf ( "spanRender ( )\n" );
+	}
 
-	float viewScale = glob_viewScale;
+	float viewScale = 1.0 / glob_viewScale;
 
 	float desiredH = glyphWH[1];
 
@@ -397,6 +486,7 @@ void spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyp
 		XYWH[1] = fXYWH[1];
 
 		draw2dApi->drawCharPre ( fonts[0], colorWhite );
+
 //		draw2dApi->drawStringBuilder ( start, startIndex, end, endIndex, screenDims, glBuffers, font16, subXYWH, tabW );
 //		draw2dApi->drawStringBuilderCut ( start, startIndex, end, endIndex, screenDims, glBuffers, fonts[0], XYWH, indentXY, tabW );
 
@@ -418,6 +508,7 @@ void spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyp
 		start = end;
 		startIndex = endIndex;
 
+		// should this just be XYWH += ?
 		fXYWH[1] += glyphWH[1];
 
 /*
@@ -439,7 +530,11 @@ void spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyp
 }
 
 
+/** Api Setter */
 
+void set_set_viewScale ( void *f ) {
+	setViewScale = f;
+}
 
 
 

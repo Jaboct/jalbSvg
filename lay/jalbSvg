@@ -94,13 +94,24 @@ window	getLastWindow	jalbSvg	set_window
 
 
 Hotkey:
+jalbSvg	1	set_onTest	0
+jalbSvg	2	set_onTest	1
+#jalbSvg	q	test_viewLoc_00
+jalbSvg	q	test_viewLoc_01
+jalbSvg	w	test_viewScale_00
+
 jalbSvg	1	hand_stru_00
 jalbSvg	2	hand_test
 jalbSvg	3	hand_test_load
 #jalbSvg	p	screenshot_02	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/ss.ppm"
 #jalbSvg	p	window_screenshot_bmp	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/ss.bmp"
 #jalbSvg	p	screenShot	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/ss.tga"
-jalbSvg	p	saveBmp	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/ss.bmp"
+#jalbSvg	p	saveBmp	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/ss.bmp"
+
+
+Hotkey:
+jalbSvg	p	hand_p	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/ss.ppm"
+
 
 Append:
 lay/ui/uiGen_hotkey
@@ -121,7 +132,7 @@ font	getFontFirst	jalbSvg	setFont16
 
 Getter:
 layoutUi	addCanvasEle	jalbSvg	setAddCanvas
-
+layoutUi	JLUI_setViewScale	jalbSvg	set_set_viewScale
 
 
 
@@ -141,6 +152,9 @@ jalbSvg	hand_test_01
 #jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/curve_line_trim.svg"
 #jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/proof_text_00_trim.svg"
 jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/curve_line_text_trim.svg"
+#jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/10_10_square.svg"
+
+
 
 Run:
 jalbSvg	set_debugPrint_jalbXml_macro	1

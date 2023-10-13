@@ -15,6 +15,9 @@ jh/structStruct/quadBez.xml
 jh/structStruct/ellipArc.xml
 jh/structStruct/text.xml
 jh/structStruct/tspan.xml
+jh/structStruct/rect.xml
+jh/structStruct/circle.xml
+jh/structStruct/ellipse.xml
 
 # fileStructs
 jh/fileStruct/mod.xml

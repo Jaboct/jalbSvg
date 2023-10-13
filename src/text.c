@@ -131,6 +131,8 @@ struct xmlFuncts textXml = {
 	textInitMask,
 	textNameToIndex,
 	textBodyToVal,
+
+	.postInit = (void (*)(void*)) text_postInit,
 };
 
 void text_print ( struct text *stru ) {
@@ -195,7 +197,7 @@ void tspanBodyToVal ( void *varPass, int nameI, char *body ) {
 		strcpy ( var->body, body );
 	} else if ( nameI == 6 ) {
 		// 
-	} else if ( nameI == -1 ) {
+	} else if ( nameI == -2 ) {
 		// load this string into the body.
 
 		printf ( "copy to body\n" );
@@ -241,6 +243,8 @@ struct xmlFuncts tspanXml = {
 	tspanInitMask,
 	tspanNameToIndex,
 	tspanBodyToVal,
+
+	.postInit = (void (*)(void*)) tspan_postInit,
 };
 
 void tspan_print ( struct tspan *stru ) {
