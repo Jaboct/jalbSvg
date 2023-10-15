@@ -99,6 +99,9 @@ jalbSvg	2	set_onTest	1
 #jalbSvg	q	test_viewLoc_00
 jalbSvg	q	test_viewLoc_01
 jalbSvg	w	test_viewScale_00
+jalbSvg	e	hand_errand_00
+
+
 
 jalbSvg	1	hand_stru_00
 jalbSvg	2	hand_test
@@ -111,6 +114,8 @@ jalbSvg	3	hand_test_load
 
 Hotkey:
 jalbSvg	p	hand_p	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/ss.ppm"
+jalbSvg	s	save_global_xml	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/saveProof/save_00.xml"
+jalbSvg	s	save_global_svg	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/saveProof/save_00.svg"
 
 
 Append:
@@ -143,18 +148,22 @@ Run:
 jalbSvg	set_debugPrint_jalbXml_macro	1
 
 
-Run:
+#Run:
 jalbSvg	line_1_test
 jalbSvg	extra_test
 jalbSvg	proof_parseD
 jalbSvg	hand_test_01
+
+Run:
 #jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/1_line_trim.svg"
 #jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/curve_line_trim.svg"
 #jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/proof_text_00_trim.svg"
-jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/curve_line_text_trim.svg"
+#jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/curve_line_text_trim.svg"
 #jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/10_10_square.svg"
-
-
+#jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/shapes_00_trim.svg"
+#jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/shapes_01_trim.svg"
+#jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/shapes_02_trim.svg"
+jalbSvg	empty_global_svg
 
 Run:
 jalbSvg	set_debugPrint_jalbXml_macro	1

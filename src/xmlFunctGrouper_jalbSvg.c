@@ -2,7 +2,7 @@
 
 
 
-int num_structStruct_jalbSvg = 12;
+int num_structStruct_jalbSvg = 15;
 
 
 extern struct xmlFuncts svgXml;
@@ -17,6 +17,9 @@ extern struct xmlFuncts quadBezXml;
 extern struct xmlFuncts ellipArcXml;
 extern struct xmlFuncts textXml;
 extern struct xmlFuncts tspanXml;
+extern struct xmlFuncts rectXml;
+extern struct xmlFuncts circleXml;
+extern struct xmlFuncts ellipseXml;
 
 
 struct xmlFuncts *xmlFuncts_arr_jalbSvg[] = {
@@ -32,6 +35,9 @@ struct xmlFuncts *xmlFuncts_arr_jalbSvg[] = {
 	&ellipArcXml,
 	&textXml,
 	&tspanXml,
+	&rectXml,
+	&circleXml,
+	&ellipseXml,
 };
 
 

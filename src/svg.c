@@ -128,6 +128,39 @@ int svgNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
 		*retPtr = &naked->text;
 		return jxnPtr;
 
+	} else if ( strcmp ( body, "rect" ) == 0 ) {
+		struct nakedUnion *naked = nakedUnionInit ( );
+		arrayListAddEndPointer ( var->eles, naked );
+		nakedUnionTypeChange0 ( naked, Rect );
+
+//		nakedUnionTypeChange0 ( var, 0 );
+		*strPtr = "rect";
+		void **retPtr = ret;
+		*retPtr = &naked->rect;
+		return jxnPtr;
+
+	} else if ( strcmp ( body, "circle" ) == 0 ) {
+		struct nakedUnion *naked = nakedUnionInit ( );
+		arrayListAddEndPointer ( var->eles, naked );
+		nakedUnionTypeChange0 ( naked, Circle );
+
+//		nakedUnionTypeChange0 ( var, 0 );
+		*strPtr = "circle";
+		void **retPtr = ret;
+		*retPtr = &naked->circle;
+		return jxnPtr;
+
+	} else if ( strcmp ( body, "ellipse" ) == 0 ) {
+		struct nakedUnion *naked = nakedUnionInit ( );
+		arrayListAddEndPointer ( var->eles, naked );
+		nakedUnionTypeChange0 ( naked, Ellipse );
+
+//		nakedUnionTypeChange0 ( var, 0 );
+		*strPtr = "ellipse";
+		void **retPtr = ret;
+		*retPtr = &naked->ellipse;
+		return jxnPtr;
+
 	}
 	return -1;
 }
@@ -162,6 +195,10 @@ void nakedUnionTypeChange0 ( struct nakedUnion *var, int type ) {
 	}
 	if ( var->type == 0 ) {
 	} else if ( var->type == 1 ) {
+	} else if ( var->type == 2 ) {
+	} else if ( var->type == 3 ) {
+	} else if ( var->type == 4 ) {
+	} else if ( var->type == 5 ) {
 	}
 	if ( type == 0 ) {
 		var->g = gInit ( );
@@ -169,6 +206,12 @@ void nakedUnionTypeChange0 ( struct nakedUnion *var, int type ) {
 		var->path = pathInit ( );
 	} else if ( type == 2 ) {
 		var->text = textInit ( );
+	} else if ( type == 3 ) {
+		var->rect = rectInit ( );
+	} else if ( type == 4 ) {
+		var->circle = circleInit ( );
+	} else if ( type == 5 ) {
+		var->ellipse = ellipseInit ( );
 	}
 	var->type = type;
 }
@@ -188,6 +231,22 @@ void nakedUnionClose ( struct nakedUnion *var ) {
 		if ( var->path ) {
 			pathClose ( var->path );
 		}
+	} else if ( var->type == 2 ) {
+		if ( var->text ) {
+			textClose ( var->text );
+		}
+	} else if ( var->type == 3 ) {
+		if ( var->rect ) {
+			rectClose ( var->rect );
+		}
+	} else if ( var->type == 4 ) {
+		if ( var->circle ) {
+			circleClose ( var->circle );
+		}
+	} else if ( var->type == 5 ) {
+		if ( var->ellipse ) {
+			ellipseClose ( var->ellipse );
+		}
 	}
 	free ( var );
 
@@ -204,6 +263,14 @@ void nakedUnionBodyToVal ( void *varPass, int nameI, char *body ) {
 			// wont get called?
 		} else if ( var->type == 1 ) {
 			// wont get called?
+		} else if ( var->type == 2 ) {
+			// wont get called?
+		} else if ( var->type == 3 ) {
+			// wont get called?
+		} else if ( var->type == 4 ) {
+			// wont get called?
+		} else if ( var->type == 5 ) {
+			// wont get called?
 		}
 	}
 }
@@ -217,14 +284,36 @@ int nakedUnionNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
 		void **retPtr = ret;
 		*retPtr = &var->g;
 		return jxnPtr;
-
 	} else if ( strcmp ( body, "path" ) == 0 ) {
 		nakedUnionTypeChange0 ( var, 1 );
 		*strPtr = "path";
 		void **retPtr = ret;
 		*retPtr = &var->path;
 		return jxnPtr;
-
+	} else if ( strcmp ( body, "text" ) == 0 ) {
+		nakedUnionTypeChange0 ( var, 2 );
+		*strPtr = "text";
+		void **retPtr = ret;
+		*retPtr = &var->text;
+		return jxnPtr;
+	} else if ( strcmp ( body, "rect" ) == 0 ) {
+		nakedUnionTypeChange0 ( var, 3 );
+		*strPtr = "rect";
+		void **retPtr = ret;
+		*retPtr = &var->rect;
+		return jxnPtr;
+	} else if ( strcmp ( body, "circle" ) == 0 ) {
+		nakedUnionTypeChange0 ( var, 4 );
+		*strPtr = "circle";
+		void **retPtr = ret;
+		*retPtr = &var->circle;
+		return jxnPtr;
+	} else if ( strcmp ( body, "ellipse" ) == 0 ) {
+		nakedUnionTypeChange0 ( var, 5 );
+		*strPtr = "ellipse";
+		void **retPtr = ret;
+		*retPtr = &var->ellipse;
+		return jxnPtr;
 	}
 	return -1;
 }
@@ -311,9 +400,6 @@ int gNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
 		arrayListAddEndPointer ( var->eles, naked );
 		nakedUnionTypeChange0 ( naked, Path );
 
-		printf ( "naked->path: %p\n", naked->path );
-		printf ( "&naked->path: %p\n", &naked->path );
-
 //		nakedUnionTypeChange0 ( var, 0 );
 		*strPtr = "path";
 		void **retPtr = ret;
@@ -331,8 +417,40 @@ int gNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
 		*retPtr = &naked->text;
 		return jxnPtr;
 
-	}
+	} else if ( strcmp ( body, "rect" ) == 0 ) {
+		struct nakedUnion *naked = nakedUnionInit ( );
+		arrayListAddEndPointer ( var->eles, naked );
+		nakedUnionTypeChange0 ( naked, Rect );
 
+//		nakedUnionTypeChange0 ( var, 0 );
+		*strPtr = "rect";
+		void **retPtr = ret;
+		*retPtr = &naked->rect;
+		return jxnPtr;
+
+	} else if ( strcmp ( body, "circle" ) == 0 ) {
+		struct nakedUnion *naked = nakedUnionInit ( );
+		arrayListAddEndPointer ( var->eles, naked );
+		nakedUnionTypeChange0 ( naked, Circle );
+
+//		nakedUnionTypeChange0 ( var, 0 );
+		*strPtr = "circle";
+		void **retPtr = ret;
+		*retPtr = &naked->circle;
+		return jxnPtr;
+
+	} else if ( strcmp ( body, "ellipse" ) == 0 ) {
+		struct nakedUnion *naked = nakedUnionInit ( );
+		arrayListAddEndPointer ( var->eles, naked );
+		nakedUnionTypeChange0 ( naked, Ellipse );
+
+//		nakedUnionTypeChange0 ( var, 0 );
+		*strPtr = "ellipse";
+		void **retPtr = ret;
+		*retPtr = &naked->ellipse;
+		return jxnPtr;
+
+	}
 	return -1;
 }
 
@@ -360,7 +478,9 @@ void pathFill ( struct path *var ) {
 	var->style[0] = '\0';
 	var->d[0] = '\0';
 	var->id[0] = '\0';
-	var->eles = initArrayList ( 10, sizeof ( char* ), 10 );
+	var->eles = initArrayList ( 10, sizeof ( struct pathUni* ), 10 );
+	var->fill[0] = '\0';
+	var->stroke[0] = '\0';
 }
 
 void *pathInitMask ( ) {
@@ -370,12 +490,14 @@ void *pathInitMask ( ) {
 }
 void pathClose ( struct path *var ) {
 	if ( var->eles ) {
-		freeArrayListPointer ( var->eles );
+		freeArrayListPointerFunction ( var->eles, (void (*)(void*))pathUniClose );
 	}
 	free ( var );
 
 }
 int path_attrib_arr[] = {
+	0,
+	0,
 	0,
 	0,
 	0,
@@ -392,7 +514,10 @@ void pathBodyToVal ( void *varPass, int nameI, char *body ) {
 	} else if ( nameI == 2 ) {
 		strcpy ( var->id, body );
 	} else if ( nameI == 3 ) {
-		consumeStdAl ( body, 4, 0, var->eles );
+	} else if ( nameI == 4 ) {
+		strcpy ( var->fill, body );
+	} else if ( nameI == 5 ) {
+		strcpy ( var->stroke, body );
 	}
 }
 
@@ -406,43 +531,13 @@ int pathNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
 	} else if ( strcmp ( body, "id" ) == 0 ) {
 		return 2;
 	} else if ( strcmp ( body, "eles" ) == 0 ) {
-		return 3;
-
-	// this should be able to be handled by a function, where i return the union struct? or null, im not sure.
-	} else if ( strcmp ( body, "g" ) == 0 ) {
-		struct nakedUnion *naked = nakedUnionInit ( );
-		arrayListAddEndPointer ( var->eles, naked );
-		nakedUnionTypeChange0 ( naked, G );
-
-//		nakedUnionTypeChange0 ( var, 0 );
-		*strPtr = "g";
-		void **retPtr = ret;
-//		*retPtr = &var->g;
-		*retPtr = &naked->g;
-		return jxnPtr;
-
-	} else if ( strcmp ( body, "path" ) == 0 ) {
-		struct nakedUnion *naked = nakedUnionInit ( );
-		arrayListAddEndPointer ( var->eles, naked );
-		nakedUnionTypeChange0 ( naked, Path );
-
-//		nakedUnionTypeChange0 ( var, 0 );
-		*strPtr = "path";
-		void **retPtr = ret;
-		*retPtr = &naked->path;
-		return jxnPtr;
-
-	} else if ( strcmp ( body, "text" ) == 0 ) {
-		struct nakedUnion *naked = nakedUnionInit ( );
-		arrayListAddEndPointer ( var->eles, naked );
-		nakedUnionTypeChange0 ( naked, Text );
-
-//		nakedUnionTypeChange0 ( var, 0 );
-		*strPtr = "text";
-		void **retPtr = ret;
-		*retPtr = &naked->text;
-		return jxnPtr;
-
+		void **ptrPtr = (void**)ret;
+		*ptrPtr = var->eles;
+		return jxnAlPtr;
+	} else if ( strcmp ( body, "fill" ) == 0 ) {
+		return 4;
+	} else if ( strcmp ( body, "stroke" ) == 0 ) {
+		return 5;
 	}
 	return -1;
 }
@@ -452,6 +547,7 @@ struct xmlFuncts pathXml = {
 	pathInitMask,
 	pathNameToIndex,
 	pathBodyToVal,
+
 	.postInit = pathPostInit,
 };
 

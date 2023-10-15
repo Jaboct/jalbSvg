@@ -90,6 +90,9 @@ int nakedUnion__attributes[] = {
 	0,
 	0,
 	0,
+	0,
+	0,
+	0,
 };
 struct backbone_subVar nakedUnion__g = {
 	.name = "g",
@@ -133,16 +136,61 @@ struct backbone_subVar nakedUnion__text = {
 	.saveFlag = 1,
 	.naked = 0,
 };
+struct backbone_subVar nakedUnion__rect = {
+	.name = "rect",
+	.type = 1,
+	.typeIndex = 12,
+	.initType = 0,
+	.length = 0,
+	.literal = 0,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct nakedUnion, rect ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar nakedUnion__circle = {
+	.name = "circle",
+	.type = 1,
+	.typeIndex = 13,
+	.initType = 0,
+	.length = 0,
+	.literal = 0,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct nakedUnion, circle ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar nakedUnion__ellipse = {
+	.name = "ellipse",
+	.type = 1,
+	.typeIndex = 14,
+	.initType = 0,
+	.length = 0,
+	.literal = 0,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct nakedUnion, ellipse ),
+	.saveFlag = 1,
+	.naked = 0,
+};
 struct backbone_subVar *nakedUnion__varArr[] = {
 	&nakedUnion__g,
 	&nakedUnion__path,
 	&nakedUnion__text,
+	&nakedUnion__rect,
+	&nakedUnion__circle,
+	&nakedUnion__ellipse,
 };
 struct backbone_subComplex nakedUnion__complex = {
 	{
 	},
 	0,
-	3,
+	6,
 	nakedUnion__varArr,
 	""
 };
@@ -1046,6 +1094,7 @@ int tspan_attributes[] = {
 	0,
 	0,
 	0,
+	0,
 };
 struct backbone_subVar tspan_role = {
 	.name = "role",
@@ -1131,6 +1180,20 @@ struct backbone_subVar tspan_body = {
 	.saveFlag = 1,
 	.naked = 0,
 };
+struct backbone_subVar tspan_fontSize = {
+	.name = "fontSize",
+	.type = 0,
+	.typeIndex = 1,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct tspan, fontSize ),
+	.saveFlag = 1,
+	.naked = 0,
+};
 struct backbone_subAl tspan_stringBuilder_subAl = {
 	.overflow = 160,
 	.literal = 1,
@@ -1161,11 +1224,12 @@ struct backbone_subVar *tspan_varArr[] = {
 	&tspan_x,
 	&tspan_y,
 	&tspan_body,
+	&tspan_fontSize,
 	&tspan_stringBuilder,
 };
 struct backbone_structStruct tspan = {
 	"tspan",
-	7,
+	8,
 	tspan_varArr,
 	"",
 	"",
@@ -1178,7 +1242,340 @@ struct backbone_structStruct tspan = {
 
 
 
-int len_backbone_arr = 12;
+
+
+/** shapes */
+
+int rect_attributes[] = {
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+};
+struct backbone_subVar rect_style = {
+	.name = "style",
+	.type = 0,
+	.typeIndex = 4,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct rect, style ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar rect_id = {
+	.name = "id",
+	.type = 0,
+	.typeIndex = 4,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct rect, id ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar rect_x = {
+	.name = "x",
+	.type = 0,
+	.typeIndex = 1,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct rect, x ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar rect_y = {
+	.name = "y",
+	.type = 0,
+	.typeIndex = 1,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct rect, y ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar rect_width = {
+	.name = "width",
+	.type = 0,
+	.typeIndex = 1,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct rect, width ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar rect_height = {
+	.name = "height",
+	.type = 0,
+	.typeIndex = 1,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct rect, height ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar *rect_varArr[] = {
+	&rect_style,
+	&rect_id,
+	&rect_x,
+	&rect_y,
+	&rect_width,
+	&rect_height,
+};
+struct backbone_structStruct rect = {
+	"rect",
+	6,
+	rect_varArr,
+	"",
+	"",
+	0,
+	0, // len?
+	.structSize = sizeof ( struct rect ),
+	rect_attributes,
+};
+
+
+
+
+int circle_attributes[] = {
+	0,
+	0,
+	0,
+	0,
+	0,
+};
+struct backbone_subVar circle_style = {
+	.name = "style",
+	.type = 0,
+	.typeIndex = 4,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct circle, style ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar circle_id = {
+	.name = "id",
+	.type = 0,
+	.typeIndex = 4,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct circle, id ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar circle_cx = {
+	.name = "cx",
+	.type = 0,
+	.typeIndex = 1,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct circle, cx ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar circle_cy = {
+	.name = "cy",
+	.type = 0,
+	.typeIndex = 1,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct circle, cy ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar circle_r = {
+	.name = "r",
+	.type = 0,
+	.typeIndex = 1,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct circle, r ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar *circle_varArr[] = {
+	&circle_style,
+	&circle_id,
+	&circle_cx,
+	&circle_cy,
+	&circle_r,
+};
+struct backbone_structStruct circle = {
+	"circle",
+	5,
+	circle_varArr,
+	"",
+	"",
+	0,
+	0, // len?
+	.structSize = sizeof ( struct circle ),
+	circle_attributes,
+};
+
+
+
+
+int ellipse_attributes[] = {
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+};
+struct backbone_subVar ellipse_style = {
+	.name = "style",
+	.type = 0,
+	.typeIndex = 4,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct ellipse, style ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar ellipse_id = {
+	.name = "id",
+	.type = 0,
+	.typeIndex = 4,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct ellipse, id ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar ellipse_cx = {
+	.name = "cx",
+	.type = 0,
+	.typeIndex = 1,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct ellipse, cx ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar ellipse_cy = {
+	.name = "cy",
+	.type = 0,
+	.typeIndex = 1,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct ellipse, cy ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar ellipse_rx = {
+	.name = "rx",
+	.type = 0,
+	.typeIndex = 1,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct ellipse, rx ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar ellipse_ry = {
+	.name = "ry",
+	.type = 0,
+	.typeIndex = 1,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct ellipse, ry ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar *ellipse_varArr[] = {
+	&ellipse_style,
+	&ellipse_id,
+	&ellipse_cx,
+	&ellipse_cy,
+	&ellipse_rx,
+	&ellipse_ry,
+};
+struct backbone_structStruct ellipse = {
+	"ellipse",
+	6,
+	ellipse_varArr,
+	"",
+	"",
+	0,
+	0, // len?
+	.structSize = sizeof ( struct ellipse ),
+	ellipse_attributes,
+};
+
+
+
+
+int len_backbone_arr = 15;
 struct backbone_structStruct *backbone_arr[] = {
 	&svg,
 	&nakedUnion,
@@ -1192,4 +1589,7 @@ struct backbone_structStruct *backbone_arr[] = {
 	&ellipArc,
 	&text,
 	&tspan,
+	&rect,
+	&circle,
+	&ellipse,
 };

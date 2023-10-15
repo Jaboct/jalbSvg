@@ -75,10 +75,14 @@ void say_svg ( struct svg *svg ) {
 }
 
 
+int nakedUni_str_len = 6;
 char *nakedUni_str[] = {
 	"g",
 	"path",
-	"text"
+	"text",
+	"rect",
+	"circ",
+	"ellipse",
 };
 
 void sayEleList ( ArrayList *eles ) {
@@ -95,8 +99,14 @@ void sayEleList ( ArrayList *eles ) {
 	while ( i < len ) {
 		struct nakedUnion *uni = arrayListGetPointer ( eles, i );
 
+//		printf ( "uni->type: %d\n", uni->type );
+
 		if ( uni->type >= 0 ) {
-			printf ( "%s\n", nakedUni_str[uni->type] );
+			if ( uni->type < nakedUni_str_len ) {
+				printf ( "%s\n", nakedUni_str[uni->type] );
+			} else {
+				printf ( "uni->type >= nakedUni_str_len: %d >= %d\n", uni->type, nakedUni_str_len );
+			}
 		} else {
 			printf ( "uni->type: %d\n", uni->type );
 		}
@@ -216,6 +226,76 @@ int isBlankSpace( char c ) {
 	return 0;
 }
 
+void pathUni_set_type ( struct pathUni *uni, int type ) {
+	if ( type == path_moveTo_abs ) {
+		pathUniTypeChange0 ( uni, path_MoveTo );
+	} else if ( type == path_moveTo_rel ) {
+		pathUniTypeChange0 ( uni, path_MoveTo );
+		uni->lineTo->rel = 1;
+
+	} else if ( type == path_lineTo_abs ) {
+		pathUniTypeChange0 ( uni, path_LineTo );
+	} else if ( type == path_lineTo_rel ) {
+		pathUniTypeChange0 ( uni, path_LineTo );
+		uni->lineTo->rel = 1;
+
+	} else if ( type == path_lineTo_vert_abs ) {
+		pathUniTypeChange0 ( uni, path_LineTo );
+		uni->lineTo->type = lineTo_vert;
+	} else if ( type == path_lineTo_vert_rel ) {
+		pathUniTypeChange0 ( uni, path_LineTo );
+		uni->lineTo->type = lineTo_vert;
+		uni->lineTo->rel = 1;
+
+	} else if ( type == path_lineTo_hor_abs ) {
+		pathUniTypeChange0 ( uni, path_LineTo );
+		uni->lineTo->type = lineTo_hor;
+	} else if ( type == path_lineTo_hor_rel ) {
+		pathUniTypeChange0 ( uni, path_LineTo );
+		uni->lineTo->type = lineTo_hor;
+		uni->lineTo->rel = 1;
+
+	} else if ( type == path_cubicBez_abs ) {
+		pathUniTypeChange0 ( uni, path_CubicBez );
+	} else if ( type == path_cubicBez_rel ) {
+		pathUniTypeChange0 ( uni, path_CubicBez );
+		uni->cubicBez->rel = 1;
+
+	} else if ( type == path_cubicBez_s_abs ) {
+		pathUniTypeChange0 ( uni, path_CubicBez );
+		uni->cubicBez->type = 1;
+	} else if ( type == path_cubicBez_s_rel ) {
+		pathUniTypeChange0 ( uni, path_CubicBez );
+		uni->cubicBez->type = 1;
+		uni->cubicBez->rel = 1;
+
+	} else if ( type == path_quadBez_abs ) {
+		pathUniTypeChange0 ( uni, path_QuadBez );
+	} else if ( type == path_quadBez_rel ) {
+		pathUniTypeChange0 ( uni, path_QuadBez );
+		uni->quadBez->rel = 1;
+
+	} else if ( type == path_quadBez_t_abs ) {
+		pathUniTypeChange0 ( uni, path_QuadBez );
+		uni->quadBez->type = 1;
+	} else if ( type == path_quadBez_t_rel ) {
+		pathUniTypeChange0 ( uni, path_QuadBez );
+		uni->quadBez->type = 1;
+		uni->quadBez->rel = 1;
+
+	} else if ( type == path_ellipArc_abs ) {
+		pathUniTypeChange0 ( uni, path_EllipArc );
+	} else if ( type == path_ellipArc_rel ) {
+		pathUniTypeChange0 ( uni, path_EllipArc );
+		uni->ellipArc->rel = 1;
+
+	} else if ( type == path_pathEnd_abs ) {
+		pathUniTypeChange0 ( uni, path_PathEnd );
+	} else if ( type == path_pathEnd_rel ) {
+		pathUniTypeChange0 ( uni, path_PathEnd );
+
+	}
+}
 
 void parseD ( char *d, ArrayList *eles ) {
 	printf ( "parseD ( )\n" );
@@ -233,6 +313,7 @@ void parseD ( char *d, ArrayList *eles ) {
 	len = strlen ( d );
 
 	int thisType = -1;
+	int lastType = -1;
 	int numI = 0;
 
 	struct pathUni *uni = NULL;
@@ -249,11 +330,35 @@ void parseD ( char *d, ArrayList *eles ) {
 				thisType = charToPathUni2 ( str[i], &uni );
 				printf ( "parsed thisType: %d\n", thisType );
 
+				// Incase there is not a char preceding it.
+				// assume its a de-facto 'l'.
 				if ( thisType == -1 ) {
-					// assume its a de-facto L.
 					uni = pathUniInit ( );
-					pathUniTypeChange0 ( uni, path_LineTo );
-					thisType = 2;
+
+					printf ( "lastType: %d\n", lastType );
+
+					if ( lastType == -1 ) {
+						printf ( "ERROR, thisType -1, lastType -1\n" );
+exit ( -12 );
+
+					} else if ( lastType == path_moveTo_abs ) {
+						pathUniTypeChange0 ( uni, path_LineTo );
+
+						thisType = path_lineTo_abs;
+
+					} else if ( lastType == path_moveTo_rel ) {
+						pathUniTypeChange0 ( uni, path_LineTo );
+						uni->lineTo->rel = 1;
+
+						thisType = path_lineTo_rel;
+
+					} else {
+						thisType = lastType;
+						pathUni_set_type ( uni, thisType );
+
+					}
+
+//					thisType = 2;
 					i -= 1;
 				}
 
@@ -274,6 +379,7 @@ void parseD ( char *d, ArrayList *eles ) {
 				thisType = charToPathUni ( str[i] );
 
 				if ( thisType >= 0 ) {
+
 					uni = pathUniInit ( );
 					arrayListAddEndPointer ( eles, uni );
 					if ( thisType < 1 * 2 ) {
@@ -309,6 +415,7 @@ void parseD ( char *d, ArrayList *eles ) {
 				}
 */
 			} else {
+				lastType = thisType;
 //				set_debugPrint_jalbStr ( 1 );
 				// expect numbers and spaces.
 				float f = strToFloatIndex ( str, &i );
@@ -423,24 +530,24 @@ int charToPathUni2 ( char c, struct pathUni **uniPass ) {
 			break;
 		case 'V':
 			pathUniTypeChange0 ( uni, path_LineTo );
-			uni->lineTo->type = 1;
+			uni->lineTo->type = lineTo_vert;
 			return 4;
 			break;
 		case 'v':
 			pathUniTypeChange0 ( uni, path_LineTo );
 			uni->lineTo->rel = 1;
-			uni->lineTo->type = 1;
+			uni->lineTo->type = lineTo_vert;
 			return 5;
 			break;
 		case 'H':
 			pathUniTypeChange0 ( uni, path_LineTo );
-			uni->lineTo->type = 2;
+			uni->lineTo->type = lineTo_hor;
 			return 6;
 			break;
 		case 'h':
 			pathUniTypeChange0 ( uni, path_LineTo );
 			uni->lineTo->rel = 1;
-			uni->lineTo->type = 2;
+			uni->lineTo->type = lineTo_hor;
 			return 7;
 			break;
 		case 'C':
@@ -550,6 +657,7 @@ int lineTo_dFill ( struct lineTo *lineTo, int i, float val ) {
 
 int cubicBez_dFill ( struct cubicBez *cubicBez, int i, float val ) {
 	printf ( "cubicBez_dFill ( )\n" );
+	printf ( "i: %d\n", i );
 
 	if ( cubicBez->type == 0 ) {
 		if ( i == 0 ) {
@@ -778,7 +886,7 @@ void eleListToD ( ArrayList *eleList, char *d ) {
 
 // svgNameToIndex
 // gNameToIndex
-// pathNameToIndex // path doesnt belong...
+// pathNameToIndex // path have subs like this?
 
 	// this should be able to be handled by a function, where i return the union struct? or null, im not sure.
 	} else if ( strcmp ( body, "g" ) == 0 ) {
@@ -815,7 +923,49 @@ void eleListToD ( ArrayList *eleList, char *d ) {
 		*retPtr = &naked->text;
 		return jxnPtr;
 
+	} else if ( strcmp ( body, "rect" ) == 0 ) {
+		struct nakedUnion *naked = nakedUnionInit ( );
+		arrayListAddEndPointer ( var->eles, naked );
+		nakedUnionTypeChange0 ( naked, Rect );
+
+//		nakedUnionTypeChange0 ( var, 0 );
+		*strPtr = "rect";
+		void **retPtr = ret;
+		*retPtr = &naked->rect;
+		return jxnPtr;
+
+	} else if ( strcmp ( body, "circle" ) == 0 ) {
+		struct nakedUnion *naked = nakedUnionInit ( );
+		arrayListAddEndPointer ( var->eles, naked );
+		nakedUnionTypeChange0 ( naked, Circle );
+
+//		nakedUnionTypeChange0 ( var, 0 );
+		*strPtr = "circle";
+		void **retPtr = ret;
+		*retPtr = &naked->circle;
+		return jxnPtr;
+
+	} else if ( strcmp ( body, "ellipse" ) == 0 ) {
+		struct nakedUnion *naked = nakedUnionInit ( );
+		arrayListAddEndPointer ( var->eles, naked );
+		nakedUnionTypeChange0 ( naked, Ellipse );
+
+//		nakedUnionTypeChange0 ( var, 0 );
+		*strPtr = "ellipse";
+		void **retPtr = ret;
+		*retPtr = &naked->ellipse;
+		return jxnPtr;
+
+
+
+struct xmlFuncts pathXml = {
+	"path",
+	pathInitMask,
+	pathNameToIndex,
+	pathBodyToVal,
+
 	.postInit = pathPostInit,
+};
 
 */
 
@@ -956,6 +1106,7 @@ void text_postInit ( struct text *text ) {
 void tspan_postInit ( struct tspan *tspan ) {
 	printf ( "tspan_postInit ( )\n" );
 	printf ( "tspan->style: %s\n", tspan->style );
+	printf ( "tspan->body: %s\n", tspan->body );
 
 	int i;
 	int len;
@@ -994,6 +1145,15 @@ void tspan_postInit ( struct tspan *tspan ) {
 
 		i += 1;
 	}
+
+
+	i = 0;
+	len = strlen ( tspan->body );
+	while ( i < len ) {
+		char *c = arrayListGetNext ( tspan->stringBuilder );
+		*c = tspan->body[i];
+		i += 1;
+	}
 }
 
 void tspan_style_handle ( struct tspan *tspan, char *name, char *value ) {
@@ -1019,9 +1179,207 @@ void text_style_handle ( struct text *text, char *name, char *value ) {
 }
 
 
+/** Errand Manager */
+
+void empty_global_svg ( ) {
+	printf ( "empty_global_svg ( )\n" );
+
+	if ( global_svg ) {
+		printf ( "global_svg not null, return\n" );
+		return;
+	}
+	global_svg = svgInit ( );
+
+	struct nakedUnion *naked = nakedUnionInit ( );
+	arrayListAddEndPointer ( global_svg->eles, naked );
+	nakedUnionTypeChange0 ( naked, G );
+
+	printf ( "empty_global_svg ( ) OVER\n" );
+}
+
+void hand_errand_00 ( ) {
+	printf ( "hand_errand_00 ( )\n" );
+
+	if ( !global_svg ) {
+		printf ( "!global_svg, return\n" );
+		return;
+	}
+
+	char *name = "eleName";
+	char *desc = "element description";
+
+	struct svg *svg = global_svg;
+
+	struct nakedUnion *naked = arrayListGetPointer ( svg->eles, 0 );
+	printf ( "naked: %p\n", naked );
+
+	struct g *g = naked->g;
+	printf ( "g: %p\n", g );
+
+	float XY[2] = { 100, 100 };
+	int indent = 10;
+	float WH[2] = { 200, 100 };
+	add_errand ( g, XY, name, desc );
+
+	{
+		// if ele->hasChild
+
+		// Path to fist child.
+		struct nakedUnion *naked = nakedUnionInit ( );
+		arrayListAddEndPointer ( g->eles, naked );
+		nakedUnionTypeChange0 ( naked, Path );
+		struct path *path = naked->path;
+
+		struct pathUni *puni = pathUniInit ( );
+		arrayListAddEndPointer ( path->eles, puni );
+		pathUniTypeChange0 ( puni, path_MoveTo );
+		puni->moveTo->XY[0] = XY[0] + indent;
+		puni->moveTo->XY[1] = XY[1] + WH[1];
+
+		puni = pathUniInit ( );
+		arrayListAddEndPointer ( path->eles, puni );
+		pathUniTypeChange0 ( puni, path_LineTo );
+
+		float joint[2];
+		joint[0] = XY[0] + indent;
+		joint[1] = XY[1] + WH[1] + indent * 2 + indent;
+
+//		puni->lineTo->XY[0] = XY[0] + indent;
+//		puni->lineTo->XY[1] = XY[1] + WH[1] + indent * 2 + indent;
+		puni->lineTo->XY[0] = joint[0];
+		puni->lineTo->XY[1] = joint[1];
+
+		puni = pathUniInit ( );
+		arrayListAddEndPointer ( path->eles, puni );
+		pathUniTypeChange0 ( puni, path_LineTo );
+		puni->lineTo->XY[0] = XY[0] + indent + indent;
+		puni->lineTo->XY[1] = XY[1] + WH[1] + indent * 2 + indent;
+
+		char *name = "Child Name";
+		char *desc = "the description of the child";
+
+		XY[0] += indent * 2;
+		XY[1] += WH[1] + 20;
+
+		add_errand ( g, XY, name, desc );
+
+		XY[0] -= indent * 2;
 
 
+		// Path to second child.
+		naked = nakedUnionInit ( );
+		arrayListAddEndPointer ( g->eles, naked );
+		nakedUnionTypeChange0 ( naked, Path );
+		path = naked->path;
+
+		puni = pathUniInit ( );
+		arrayListAddEndPointer ( path->eles, puni );
+		pathUniTypeChange0 ( puni, path_MoveTo );
+		puni->moveTo->XY[0] = joint[0];
+		puni->moveTo->XY[1] = joint[1];
+
+		puni = pathUniInit ( );
+		arrayListAddEndPointer ( path->eles, puni );
+		pathUniTypeChange0 ( puni, path_LineTo );
+		puni->lineTo->XY[0] = XY[0] + indent;
+		puni->lineTo->XY[1] = XY[1] + WH[1] + indent * 2 + indent;
+
+		puni = pathUniInit ( );
+		arrayListAddEndPointer ( path->eles, puni );
+		pathUniTypeChange0 ( puni, path_LineTo );
+		puni->lineTo->XY[0] = XY[0] + indent + indent;
+		puni->lineTo->XY[1] = XY[1] + WH[1] + indent * 2 + indent;
+
+		{
+		char name[256];
+		strcpy ( name, "Second Childs Name" );
+		char desc[256];
+		strcpy ( desc, "the description of the OTHER child" );
+
+		XY[0] += indent * 2;
+		XY[1] += WH[1] + 20;
+
+		add_errand ( g, XY, name, desc );
+		}
+	}
+}
+
+void add_errand ( struct g *g, float *XY, char *name, char *desc ) {
+	int indent = 10;
+	int WH[2] = { 200, 100 };
+
+	struct nakedUnion *uniRect = nakedUnionInit ( );
+	arrayListAddEndPointer ( g->eles, uniRect );
+
+	nakedUnionTypeChange0 ( uniRect, Rect );
+	struct rect *rect = uniRect->rect;
+	rect->x = XY[0];
+	rect->y = XY[1];
+	rect->width = WH[0];
+	rect->height = WH[1];
+
+	struct nakedUnion *uni = nakedUnionInit ( );
+	arrayListAddEndPointer ( g->eles, uni );
+
+	nakedUnionTypeChange0 ( uni, Text );
+	struct text *text = uni->text;
+	text->fontSize = 8;
+
+	float fontSize = 8.0;
+	float gap = 2.0;
+
+	struct tspan *span = tspanInit ( );
+	arrayListAddEndPointer ( text->spanList, span );
+	span->fontSize = fontSize;
+	span->x = XY[0] + indent;
+	span->y = XY[1] + indent;
+	strcpy ( span->body, name );
+	tspan_postInit ( span );
+	printSb ( span->stringBuilder );
 
 
+	span = tspanInit ( );
+	arrayListAddEndPointer ( text->spanList, span );
+	span->fontSize = fontSize;
+	span->x = XY[0] + indent;
+	span->y = XY[1] + indent + fontSize + gap;
+	strcpy ( span->body, desc );
+	tspan_postInit ( span );
+	printSb ( span->stringBuilder );
+}
 
+
+extern int num_structStruct_jalbSvg;
+extern struct xmlFuncts *xmlFuncts_arr_jalbSvg[];
+
+extern int len_backbone_arr_jalbSvg;
+extern struct backbone_structStruct *backbone_arr_jalbSvg[];
+
+extern int svg_attributes[];
+extern struct backbone_structStruct svg;
+
+void save_global_xml ( char *dir ) {
+	printf ( "save_global_xml ( )\n" );
+	printf ( "dir: %s\n", dir );
+
+	struct svg *svgEle = global_svg;
+
+	// fwriteXml_backbone
+	fwriteXml_backbone ( dir, &svg, svgEle,
+		svg_attributes, backbone_arr_jalbSvg, len_backbone_arr_jalbSvg );
+
+	printf ( "save_global_xml ( ) OVER\n" );
+}
+
+void save_global_svg ( char *dir ) {
+	printf ( "save_global_svg ( )\n" );
+
+	printf ( "dir: %s\n", dir );
+
+	printf ( "save_global_svg ( ) OVER\n" );
+}
+
+void svg_preSave ( struct svg *svg ) {
+	
+}
 

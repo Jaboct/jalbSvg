@@ -21,7 +21,9 @@ int glob_screenDims[2];
 
 void (*setViewScale) (float s) = NULL;
 
-int svg_debugPrint_render = 0;
+
+int svg_debugPrint_render = 1;
+int svg_debugPrint_render_text = 0;
 
 
 /** Functions */
@@ -124,6 +126,9 @@ void svg_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct svg *svg
 	eles_render ( screenDims, glBuffers, XYWH, svg->eles );
 }
 
+extern int nakedUni_str_len;
+extern char *nakedUni_str[];
+
 void eles_render ( int *screenDims, GLuint *glBuffers, int *XYWH, ArrayList *eles ) {
 	int i;
 	int len;
@@ -139,7 +144,15 @@ void eles_render ( int *screenDims, GLuint *glBuffers, int *XYWH, ArrayList *ele
 		struct nakedUnion *uni = arrayListGetPointer ( eles, i );
 
 		if ( svg_debugPrint_render ) {
-			printf ( "uni->type: %d\n", uni->type );
+			if ( uni->type >= 0 ) {
+				if ( uni->type < nakedUni_str_len ) {
+					printf ( "%s\n", nakedUni_str[uni->type] );
+				} else {
+					printf ( "uni->type >= nakedUni_str_len: %d >= %d\n", uni->type, nakedUni_str_len );
+				}
+			} else {
+				printf ( "uni->type: %d\n", uni->type );
+			}
 		}
 
 		if ( uni->type == G ) {
@@ -154,6 +167,18 @@ void eles_render ( int *screenDims, GLuint *glBuffers, int *XYWH, ArrayList *ele
 		} else if ( uni->type == Text ) {
 			struct text *text = uni->text;
 			textRender ( screenDims, glBuffers, XYWH, text );
+
+		} else if ( uni->type == Rect ) {
+			struct rect *rect = uni->rect;
+			rectRender ( screenDims, glBuffers, XYWH, rect );
+
+		} else if ( uni->type == Circle ) {
+			struct circle *circle = uni->circle;
+			circleRender ( screenDims, glBuffers, XYWH, circle );
+
+		} else if ( uni->type == Ellipse ) {
+			struct ellipse *ellipse = uni->ellipse;
+			ellipseRender ( screenDims, glBuffers, XYWH, ellipse );
 
 		}
 
@@ -399,7 +424,8 @@ void segScale ( float *p0, float *p1, float *pSet, float scale, int len ) {
 ArrayList *testString = NULL;
 
 void textRender ( int *screenDims, GLuint *glBuffers, int *XYWH, struct text *text ) {
-	if ( svg_debugPrint_render ) {
+	if ( svg_debugPrint_render ||
+	     svg_debugPrint_render_text ) {
 		printf ( "textRender ( )\n" );
 	}
 
@@ -454,12 +480,19 @@ void textRender ( int *screenDims, GLuint *glBuffers, int *XYWH, struct text *te
 
 		i += 1;
 	}
-
+	if ( svg_debugPrint_render ||
+	     svg_debugPrint_render_text ) {
+		printf ( "textRender ( ) OVER\n" );
+	}
 }
 
 void spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyphWH, float *fXYWH, ArrayList *sb ) {
-	if ( svg_debugPrint_render ) {
+	if ( svg_debugPrint_render ||
+	     svg_debugPrint_render_text ) {
 		printf ( "spanRender ( )\n" );
+//		printf ( "span->body: (%s)\n", span->body );
+		sayFloatArray ( "glyphWH", glyphWH, 2 );
+		printSb ( sb );
 	}
 
 	float viewScale = 1.0 / glob_viewScale;
@@ -527,7 +560,128 @@ void spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyp
 	XYWH[3] = glyphWH[1];
 
 //	drawWhiteCursor ( screenDims, glBuffers, XYWH, slim->cursorStartMem, slim->cursorEndMem, indentXY, glyphWH, colorWhite, firstLine );
+
+	if ( svg_debugPrint_render ||
+	     svg_debugPrint_render_text ) {
+		printf ( "spanRender ( ) OVER\n" );
+	}
 }
+
+void rectRender ( int *screenDims, GLuint *glBuffers, int *XYWH, struct rect *rect ) {
+
+	float *color = colorWhite;
+
+	float p0[2];
+	float p1[2];
+
+	p0[0] = rect->x;
+	p0[1] = rect->y;
+
+	p1[0] = p0[0] + rect->width;
+	p1[1] = p0[1];
+
+	float t0[2];
+	float t1[2];
+
+	point_to_loc ( p0, t0 );
+	point_to_loc ( p1, t1 );
+	draw2dApi->drawSeg ( screenDims, glBuffers, t0, t1, color );
+
+	p0[0] = p1[0];
+	p0[1] = p1[1] + rect->height;
+	point_to_loc ( p0, t0 );
+	draw2dApi->drawSeg ( screenDims, glBuffers, t0, t1, color );
+
+	p1[0] = rect->x;
+	p1[1] = rect->y + rect->height;
+	point_to_loc ( p1, t1 );
+	draw2dApi->drawSeg ( screenDims, glBuffers, t0, t1, color );
+
+	p0[0] = rect->x;
+	p0[1] = rect->y;
+	point_to_loc ( p0, t0 );
+	draw2dApi->drawSeg ( screenDims, glBuffers, t0, t1, color );
+}
+
+void circleRender ( int *screenDims, GLuint *glBuffers, int *XYWH, struct circle *circle ) {
+//	printf ( "circle->r: %f\n", circle->r );
+
+	float p0[2];
+	float p1[2];
+	float c0[2];
+	float c1[2];
+
+//	float ratio = 0.5;
+//	float ratio = 0.66;
+	float ratio = 0.5522;
+
+	// top left
+	p0[0] = circle->cx - circle->r;
+	p0[1] = circle->cy;
+
+	p1[0] = circle->cx;
+	p1[1] = circle->cy - circle->r;
+
+	c0[0] = circle->cx - circle->r;
+	c0[1] = circle->cy - circle->r * ratio;
+
+	c1[0] = circle->cx - circle->r * ratio;
+	c1[1] = circle->cy - circle->r;
+
+	cubicBez_render ( screenDims, glBuffers, p0, p1, c0, c1 );
+
+	// top right (+x)
+	p0[0] = circle->cx + circle->r;
+	p0[1] = circle->cy;
+
+	p1[0] = circle->cx;
+	p1[1] = circle->cy - circle->r;
+
+	c0[0] = circle->cx + circle->r;
+	c0[1] = circle->cy - circle->r * ratio;
+
+	c1[0] = circle->cx + circle->r * ratio;
+	c1[1] = circle->cy - circle->r;
+
+	cubicBez_render ( screenDims, glBuffers, p0, p1, c0, c1 );
+
+
+	// bottom right (+x +y)
+	p0[0] = circle->cx + circle->r;
+	p0[1] = circle->cy;
+
+	p1[0] = circle->cx;
+	p1[1] = circle->cy + circle->r;
+
+	c0[0] = circle->cx + circle->r;
+	c0[1] = circle->cy + circle->r * ratio;
+
+	c1[0] = circle->cx + circle->r * ratio;
+	c1[1] = circle->cy + circle->r;
+
+	cubicBez_render ( screenDims, glBuffers, p0, p1, c0, c1 );
+
+
+	// bottom left (-x +y)
+	p0[0] = circle->cx - circle->r;
+	p0[1] = circle->cy;
+
+	p1[0] = circle->cx;
+	p1[1] = circle->cy + circle->r;
+
+	c0[0] = circle->cx - circle->r;
+	c0[1] = circle->cy + circle->r * ratio;
+
+	c1[0] = circle->cx - circle->r * ratio;
+	c1[1] = circle->cy + circle->r;
+
+	cubicBez_render ( screenDims, glBuffers, p0, p1, c0, c1 );
+}
+
+void ellipseRender ( int *screenDims, GLuint *glBuffers, int *XYWH, struct ellipse *ellipse ) {
+}
+
+
 
 
 /** Api Setter */

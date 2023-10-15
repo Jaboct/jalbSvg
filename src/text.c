@@ -204,16 +204,6 @@ void tspanBodyToVal ( void *varPass, int nameI, char *body ) {
 		printf ( "(%s)\n", body );
 
 		strcpy ( var->body, body );
-
-		int i;
-		int len;
-		i = 0;
-		len = strlen ( body );
-		while ( i < len ) {
-			char *c = arrayListGetNext ( var->stringBuilder );
-			*c = body[i];
-			i += 1;
-		}
 	}
 }
 

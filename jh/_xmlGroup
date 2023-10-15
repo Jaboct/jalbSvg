@@ -24,6 +24,7 @@ jh/fileStruct/mod.xml
 jh/fileStruct/svg.xml
 jh/fileStruct/path.xml
 jh/fileStruct/text.xml
+jh/fileStruct/shapes.xml
 
 # functions
 jh/function/funct.xml

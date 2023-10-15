@@ -32,12 +32,18 @@ struct nakedUnion {
 		struct g *g;
 		struct path *path;
 		struct text *text;
+		struct rect *rect;
+		struct circle *circle;
+		struct ellipse *ellipse;
 	};
 };
 enum nakedUnionEnum {
 	G = 0,
 	Path,
 	Text,
+	Rect,
+	Circle,
+	Ellipse,	// 5
 };
 struct g {
 	char id[256];
@@ -47,11 +53,9 @@ struct path {
 	char style[256];
 	char d[256];
 	char id[256];
-	ArrayList *eles;	// (char*)
-
-	// hand
-	int fill;
-	int stroke;
+	ArrayList *eles;	// (struct pathUni*)
+	char fill[256];
+	char stroke[256];
 };
 
 
@@ -59,6 +63,7 @@ struct path {
 
 #include "text.h"
 #include "hand.h"
+#include "shapes.h"
 
 
 /** Functions */

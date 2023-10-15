@@ -55,17 +55,19 @@ void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *p
 void seg_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1 );
 void cubicBez_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1, float *c0, float *c1 );
 
-
 void segScale ( float *p0, float *p1, float *pSet, float scale, int len );
 
-
 void textRender ( int *screenDims, GLuint *glBuffers, int *XYWH, struct text *text );
-
 void spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyphWH, float *fXYWH, ArrayList *sb );
 
+void rectRender ( int *screenDims, GLuint *glBuffers, int *XYWH, struct rect *rect );
+void circleRender ( int *screenDims, GLuint *glBuffers, int *XYWH, struct circle *circle );
+void ellipseRender ( int *screenDims, GLuint *glBuffers, int *XYWH, struct ellipse *ellipse );
 
 
+/** Api Setter */
 
+void set_set_viewScale ( void *f );
 
 
 
