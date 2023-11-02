@@ -52,6 +52,8 @@ void textFill ( struct text *var ) {
 	var->x = 0.0;
 	var->y = 0.0;
 	var->spanList = initArrayList ( 10, sizeof ( struct text* ), 10 );
+
+	printf ( "var->spanList: %p\n", var->spanList );
 }
 
 void *textInitMask ( ) {

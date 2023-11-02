@@ -53,6 +53,9 @@ struct svg *svgInit ( ) {
 void svgFill ( struct svg *var ) {
 	var->width[0] = '\0';
 	var->height[0] = '\0';
+	var->viewBox[0] = '\0';
+	var->version[0] = '\0';
+	var->id[0] = '\0';
 	var->eles = initArrayList ( 10, sizeof ( struct nakedUnion* ), 10 );
 }
 
@@ -69,8 +72,11 @@ void svgClose ( struct svg *var ) {
 
 }
 int svg_attrib_arr[] = {
-	0,
-	0,
+	1,
+	1,
+	1,
+	1,
+	1,
 	0,
 };
 void svgBodyToVal ( void *varPass, int nameI, char *body ) {
@@ -82,6 +88,12 @@ void svgBodyToVal ( void *varPass, int nameI, char *body ) {
 	} else if ( nameI == 1 ) {
 		strcpy ( var->height, body );
 	} else if ( nameI == 2 ) {
+		strcpy ( var->viewBox, body );
+	} else if ( nameI == 3 ) {
+		strcpy ( var->version, body );
+	} else if ( nameI == 4 ) {
+		strcpy ( var->id, body );
+	} else if ( nameI == 5 ) {
 	}
 }
 
@@ -92,6 +104,12 @@ int svgNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
 		return 0;
 	} else if ( strcmp ( body, "height" ) == 0 ) {
 		return 1;
+	} else if ( strcmp ( body, "viewBox" ) == 0 ) {
+		return 2;
+	} else if ( strcmp ( body, "version" ) == 0 ) {
+		return 3;
+	} else if ( strcmp ( body, "id" ) == 0 ) {
+		return 4;
 	}
 	return -1;
 }
@@ -288,7 +306,7 @@ void gClose ( struct g *var ) {
 
 }
 int g_attrib_arr[] = {
-	0,
+	1,
 	0,
 };
 void gBodyToVal ( void *varPass, int nameI, char *body ) {
@@ -306,10 +324,6 @@ int gNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
 	struct g *var = data;
 	if ( strcmp ( body, "id" ) == 0 ) {
 		return 0;
-	} else if ( strcmp ( body, "eles" ) == 0 ) {
-		void **ptrPtr = (void**)ret;
-		*ptrPtr = var->eles;
-		return jxnAlPtr;
 	}
 	return -1;
 }
@@ -341,6 +355,10 @@ void pathFill ( struct path *var ) {
 	var->eles = initArrayList ( 10, sizeof ( struct pathUni* ), 10 );
 	var->fill[0] = '\0';
 	var->stroke[0] = '\0';
+	var->stroke_width[0] = '\0';
+	var->stroke_linecap[0] = '\0';
+	var->stroke_linejoin[0] = '\0';
+	var->stroke_opacity[0] = '\0';
 }
 
 void *pathInitMask ( ) {
@@ -356,6 +374,10 @@ void pathClose ( struct path *var ) {
 
 }
 int path_attrib_arr[] = {
+	1,
+	1,
+	1,
+	0,
 	0,
 	0,
 	0,
@@ -378,6 +400,14 @@ void pathBodyToVal ( void *varPass, int nameI, char *body ) {
 		strcpy ( var->fill, body );
 	} else if ( nameI == 5 ) {
 		strcpy ( var->stroke, body );
+	} else if ( nameI == 6 ) {
+		strcpy ( var->stroke_width, body );
+	} else if ( nameI == 7 ) {
+		strcpy ( var->stroke_linecap, body );
+	} else if ( nameI == 8 ) {
+		strcpy ( var->stroke_linejoin, body );
+	} else if ( nameI == 9 ) {
+		strcpy ( var->stroke_opacity, body );
 	}
 }
 
@@ -398,6 +428,14 @@ int pathNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
 		return 4;
 	} else if ( strcmp ( body, "stroke" ) == 0 ) {
 		return 5;
+	} else if ( strcmp ( body, "stroke_width" ) == 0 ) {
+		return 6;
+	} else if ( strcmp ( body, "stroke_linecap" ) == 0 ) {
+		return 7;
+	} else if ( strcmp ( body, "stroke_linejoin" ) == 0 ) {
+		return 8;
+	} else if ( strcmp ( body, "stroke_opacity" ) == 0 ) {
+		return 9;
 	}
 	return -1;
 }

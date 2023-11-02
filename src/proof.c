@@ -66,7 +66,8 @@ void hand_test_01 ( ) {
 
 	say_svg ( svgEle );
 
-	prepair_d ( svgEle->eles );
+//	prepair_d ( svgEle->eles );
+	preSave_nakedList ( svgEle->eles );
 
 	fwriteXml_backbone ( dirSave, &svg, svgEle,
 		svg_attributes, backbone_arr_jalbSvg, len_backbone_arr_jalbSvg );

@@ -8,8 +8,11 @@
 /** svg */
 
 int svg_attributes[] = {
-	0,
-	0,
+	1,
+	1,
+	1,
+	1,
+	1,
 	0,
 };
 struct backbone_subVar svg_width = {
@@ -40,6 +43,48 @@ struct backbone_subVar svg_height = {
 	.saveFlag = 1,
 	.naked = 0,
 };
+struct backbone_subVar svg_viewBox = {
+	.name = "viewBox",
+	.type = 0,
+	.typeIndex = 4,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct svg, viewBox ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar svg_version = {
+	.name = "version",
+	.type = 0,
+	.typeIndex = 4,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct svg, version ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar svg_id = {
+	.name = "id",
+	.type = 0,
+	.typeIndex = 4,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct svg, id ),
+	.saveFlag = 1,
+	.naked = 0,
+};
 struct backbone_subAl svg_eles_subAl = {
 	.overflow = 10,
 	.literal = 0,
@@ -66,11 +111,14 @@ struct backbone_subVar svg_eles = {
 struct backbone_subVar *svg_varArr[] = {
 	&svg_width,
 	&svg_height,
+	&svg_viewBox,
+	&svg_version,
+	&svg_id,
 	&svg_eles,
 };
 struct backbone_structStruct svg = {
 	"svg",
-	3,
+	6,
 	svg_varArr,
 	"",
 	"",
@@ -228,7 +276,7 @@ struct backbone_structStruct nakedUnion = {
 
 
 int g_attributes[] = {
-	0,
+	1,
 	0,
 };
 struct backbone_subVar g_id = {
@@ -251,7 +299,7 @@ struct backbone_subAl g_eles_subAl = {
 	.type = 1,
 	.typeIndex = 1,
 	.length = -1,
-	.naked = 0,
+	.naked = 1,
 };
 struct backbone_subVar g_eles = {
 	.name = "eles",
@@ -266,7 +314,7 @@ struct backbone_subVar g_eles = {
 	},
 	.external = offsetof ( struct g, eles ),
 	.saveFlag = 1,
-	.naked = 0,
+	.naked = 1,
 };
 struct backbone_subVar *g_varArr[] = {
 	&g_id,
@@ -288,6 +336,10 @@ struct backbone_structStruct g = {
 
 
 int path_attributes[] = {
+	1,
+	1,
+	1,
+	0,
 	0,
 	0,
 	0,
@@ -314,7 +366,7 @@ struct backbone_subVar path_d = {
 	.type = 0,
 	.typeIndex = 4,
 	.initType = 0,
-	.length = -1,
+	.length = 1024,
 	.literal = 1,
 	.data = {
 		0,
@@ -371,7 +423,7 @@ struct backbone_subVar path_fill = {
 		0,
 	},
 	.external = offsetof ( struct path, fill ),
-	.saveFlag = 1,
+	.saveFlag = 99,
 	.naked = 0,
 };
 struct backbone_subVar path_stroke = {
@@ -385,7 +437,63 @@ struct backbone_subVar path_stroke = {
 		0,
 	},
 	.external = offsetof ( struct path, stroke ),
-	.saveFlag = 1,
+	.saveFlag = 99,
+	.naked = 0,
+};
+struct backbone_subVar path_stroke_width = {
+	.name = "stroke_width",
+	.type = 0,
+	.typeIndex = 4,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct path, stroke_width ),
+	.saveFlag = 99,
+	.naked = 0,
+};
+struct backbone_subVar path_stroke_linecap = {
+	.name = "stroke_linecap",
+	.type = 0,
+	.typeIndex = 4,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct path, stroke_linecap ),
+	.saveFlag = 99,
+	.naked = 0,
+};
+struct backbone_subVar path_stroke_linejoin = {
+	.name = "stroke_linejoin",
+	.type = 0,
+	.typeIndex = 4,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct path, stroke_linejoin ),
+	.saveFlag = 99,
+	.naked = 0,
+};
+struct backbone_subVar path_stroke_opacity = {
+	.name = "stroke_opacity",
+	.type = 0,
+	.typeIndex = 4,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct path, stroke_opacity ),
+	.saveFlag = 99,
 	.naked = 0,
 };
 struct backbone_subVar *path_varArr[] = {
@@ -395,10 +503,14 @@ struct backbone_subVar *path_varArr[] = {
 	&path_eles,
 	&path_fill,
 	&path_stroke,
+	&path_stroke_width,
+	&path_stroke_linecap,
+	&path_stroke_linejoin,
+	&path_stroke_opacity,
 };
 struct backbone_structStruct path = {
 	"path",
-	6,
+	10,
 	path_varArr,
 	"",
 	"",
@@ -980,9 +1092,9 @@ struct backbone_structStruct ellipArc = {
 
 int text_attributes[] = {
 	0,
-	0,
-	0,
-	0,
+	1,
+	1,
+	1,
 	0,
 };
 struct backbone_subVar text_space = {
@@ -996,7 +1108,7 @@ struct backbone_subVar text_space = {
 		0,
 	},
 	.external = offsetof ( struct text, space ),
-	.saveFlag = 1,
+	.saveFlag = 99,
 	.naked = 0,
 };
 struct backbone_subVar text_style = {
@@ -1045,7 +1157,7 @@ struct backbone_subAl text_spanList_subAl = {
 	.overflow = 10,
 	.literal = 0,
 	.type = 1,
-	.typeIndex = 10,
+	.typeIndex = 11,
 	.length = -1,
 	.naked = 0,
 };
@@ -1062,7 +1174,7 @@ struct backbone_subVar text_spanList = {
 	},
 	.external = offsetof ( struct text, spanList ),
 	.saveFlag = 1,
-	.naked = 0,
+	.naked = 1,
 };
 struct backbone_subVar *text_varArr[] = {
 	&text_space,
@@ -1087,11 +1199,11 @@ struct backbone_structStruct text = {
 
 
 int tspan_attributes[] = {
-	0,
-	0,
-	0,
-	0,
-	0,
+	1,
+	1,
+	1,
+	1,
+	1,
 	0,
 	0,
 	0,
@@ -1178,7 +1290,7 @@ struct backbone_subVar tspan_body = {
 	},
 	.external = offsetof ( struct tspan, body ),
 	.saveFlag = 1,
-	.naked = 0,
+	.naked = 1,
 };
 struct backbone_subVar tspan_fontSize = {
 	.name = "fontSize",
@@ -1191,7 +1303,7 @@ struct backbone_subVar tspan_fontSize = {
 		0,
 	},
 	.external = offsetof ( struct tspan, fontSize ),
-	.saveFlag = 1,
+	.saveFlag = 99,
 	.naked = 0,
 };
 struct backbone_subAl tspan_stringBuilder_subAl = {
@@ -1214,7 +1326,7 @@ struct backbone_subVar tspan_stringBuilder = {
 		&tspan_stringBuilder_subAl,
 	},
 	.external = offsetof ( struct tspan, stringBuilder ),
-	.saveFlag = 1,
+	.saveFlag = 99,
 	.naked = 0,
 };
 struct backbone_subVar *tspan_varArr[] = {
@@ -1247,12 +1359,12 @@ struct backbone_structStruct tspan = {
 /** shapes */
 
 int rect_attributes[] = {
-	0,
-	0,
-	0,
-	0,
-	0,
-	0,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
 };
 struct backbone_subVar rect_style = {
 	.name = "style",
@@ -1362,11 +1474,11 @@ struct backbone_structStruct rect = {
 
 
 int circle_attributes[] = {
-	0,
-	0,
-	0,
-	0,
-	0,
+	1,
+	1,
+	1,
+	1,
+	1,
 };
 struct backbone_subVar circle_style = {
 	.name = "style",

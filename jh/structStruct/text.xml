@@ -16,7 +16,7 @@
       <>-1</>
       <external>0</external>
       <attribute>0</attribute>
-      <saveFlag>1</saveFlag>
+      <saveFlag>99</saveFlag>
       <naked>0</naked>
     </subVar>
     <subVar>
@@ -32,7 +32,7 @@
       <literal>1</literal>
       <>-1</>
       <external>0</external>
-      <attribute>0</attribute>
+      <attribute>1</attribute>
       <saveFlag>1</saveFlag>
       <naked>0</naked>
     </subVar>
@@ -49,7 +49,7 @@
       <literal>1</literal>
       <>-1</>
       <external>0</external>
-      <attribute>0</attribute>
+      <attribute>1</attribute>
       <saveFlag>1</saveFlag>
       <naked>0</naked>
     </subVar>
@@ -66,7 +66,7 @@
       <literal>1</literal>
       <>-1</>
       <external>0</external>
-      <attribute>0</attribute>
+      <attribute>1</attribute>
       <saveFlag>1</saveFlag>
       <naked>0</naked>
     </subVar>
@@ -87,14 +87,14 @@
         <overflow>10</overflow>
         <literal>0</literal>
         <type>1</type>
-        <typeIndex>10</typeIndex>
+        <typeIndex>11</typeIndex>
         <length>-1</length>
         <naked>0</naked>
       </subAl>
       <external>0</external>
       <attribute>0</attribute>
       <saveFlag>1</saveFlag>
-      <naked>0</naked>
+      <naked>1</naked>
     </subVar>
   </vars>
   <overloadRenderEdit></overloadRenderEdit>

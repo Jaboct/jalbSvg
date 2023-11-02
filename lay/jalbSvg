@@ -102,7 +102,6 @@ jalbSvg	w	test_viewScale_00
 jalbSvg	e	hand_errand_00
 
 
-
 jalbSvg	1	hand_stru_00
 jalbSvg	2	hand_test
 jalbSvg	3	hand_test_load
@@ -116,6 +115,10 @@ Hotkey:
 jalbSvg	p	hand_p	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/ss.ppm"
 jalbSvg	s	save_global_xml	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/saveProof/save_00.xml"
 jalbSvg	s	save_global_svg	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/saveProof/save_00.svg"
+
+
+Hotkey:
+#jalbSvg	0	hand_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/proof_text_00_trim.svg"
 
 
 Append:
@@ -145,7 +148,7 @@ layoutUi	JLUI_setViewScale	jalbSvg	set_set_viewScale
 all
 
 Run:
-jalbSvg	set_debugPrint_jalbXml_macro	1
+#jalbSvg	set_debugPrint_jalbXml_macro	1
 
 
 #Run:
@@ -165,9 +168,11 @@ Run:
 #jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/shapes_02_trim.svg"
 jalbSvg	empty_global_svg
 
+
 Run:
-jalbSvg	set_debugPrint_jalbXml_macro	1
-jalbSvg	hand_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/proof_text_00_trim.svg"
+#jalbSvg	set_debugPrint_jalbXml_macro	1
+#jalbSvg	jalbXml_02_set_debug	1
+#jalbSvg	set_jalbXml_debugPrint_top	1
 
 
 

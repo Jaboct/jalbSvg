@@ -6,21 +6,84 @@
       <name>width</name>
       <type>0</type>
       <typeIndex>4</typeIndex>
-      <initType>0</initType>
+      <initType>4</initType>
       <initTypeData>
-        <>-1</>
+        <std>
+          <str>210mm</str>
+          <useData>0</useData>
+        </std>
       </initTypeData>
       <closeType>0</closeType>
       <length>-1</length>
       <literal>1</literal>
       <>-1</>
       <external>0</external>
-      <attribute>0</attribute>
+      <attribute>1</attribute>
       <saveFlag>1</saveFlag>
       <naked>0</naked>
     </subVar>
     <subVar>
       <name>height</name>
+      <type>0</type>
+      <typeIndex>4</typeIndex>
+      <initType>4</initType>
+      <initTypeData>
+        <std>
+          <str>297mm</str>
+          <useData>0</useData>
+        </std>
+      </initTypeData>
+      <closeType>0</closeType>
+      <length>-1</length>
+      <literal>1</literal>
+      <>-1</>
+      <external>0</external>
+      <attribute>1</attribute>
+      <saveFlag>1</saveFlag>
+      <naked>0</naked>
+    </subVar>
+    <subVar>
+      <name>viewBox</name>
+      <type>0</type>
+      <typeIndex>4</typeIndex>
+      <initType>4</initType>
+      <initTypeData>
+        <std>
+          <str>0 0 210 297</str>
+          <useData>0</useData>
+        </std>
+      </initTypeData>
+      <closeType>0</closeType>
+      <length>-1</length>
+      <literal>1</literal>
+      <>-1</>
+      <external>0</external>
+      <attribute>1</attribute>
+      <saveFlag>1</saveFlag>
+      <naked>0</naked>
+    </subVar>
+    <subVar>
+      <name>version</name>
+      <type>0</type>
+      <typeIndex>4</typeIndex>
+      <initType>4</initType>
+      <initTypeData>
+        <std>
+          <str>1.1</str>
+          <useData>0</useData>
+        </std>
+      </initTypeData>
+      <closeType>0</closeType>
+      <length>-1</length>
+      <literal>1</literal>
+      <>-1</>
+      <external>0</external>
+      <attribute>1</attribute>
+      <saveFlag>1</saveFlag>
+      <naked>0</naked>
+    </subVar>
+    <subVar>
+      <name>id</name>
       <type>0</type>
       <typeIndex>4</typeIndex>
       <initType>0</initType>
@@ -32,7 +95,7 @@
       <literal>1</literal>
       <>-1</>
       <external>0</external>
-      <attribute>0</attribute>
+      <attribute>1</attribute>
       <saveFlag>1</saveFlag>
       <naked>0</naked>
     </subVar>

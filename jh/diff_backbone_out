@@ -1,0 +1,91 @@
+328a329,332
+> 	0,
+> 	0,
+> 	0,
+> 	0,
+349c353
+< 	.length = -1,
+---
+> 	.length = 1024,
+406c410
+< 	.saveFlag = 1,
+---
+> 	.saveFlag = 99,
+419a424,479
+> 	.saveFlag = 99,
+> 	.naked = 0,
+> };
+> struct backbone_subVar path_stroke_width = {
+> 	.name = "stroke_width",
+> 	.type = 0,
+> 	.typeIndex = 4,
+> 	.initType = 0,
+> 	.length = -1,
+> 	.literal = 1,
+> 	.data = {
+> 		0,
+> 	},
+> 	.external = offsetof ( struct path, stroke_width ),
+> 	.saveFlag = 1,
+> 	.naked = 0,
+> };
+> struct backbone_subVar path_stroke_linecap = {
+> 	.name = "stroke_linecap",
+> 	.type = 0,
+> 	.typeIndex = 4,
+> 	.initType = 0,
+> 	.length = -1,
+> 	.literal = 1,
+> 	.data = {
+> 		0,
+> 	},
+> 	.external = offsetof ( struct path, stroke_linecap ),
+> 	.saveFlag = 1,
+> 	.naked = 0,
+> };
+> struct backbone_subVar path_stroke_linejoin = {
+> 	.name = "stroke_linejoin",
+> 	.type = 0,
+> 	.typeIndex = 4,
+> 	.initType = 0,
+> 	.length = -1,
+> 	.literal = 1,
+> 	.data = {
+> 		0,
+> 	},
+> 	.external = offsetof ( struct path, stroke_linejoin ),
+> 	.saveFlag = 1,
+> 	.naked = 0,
+> };
+> struct backbone_subVar path_stroke_opacity = {
+> 	.name = "stroke_opacity",
+> 	.type = 0,
+> 	.typeIndex = 4,
+> 	.initType = 0,
+> 	.length = -1,
+> 	.literal = 1,
+> 	.data = {
+> 		0,
+> 	},
+> 	.external = offsetof ( struct path, stroke_opacity ),
+429a490,493
+> 	&path_stroke_width,
+> 	&path_stroke_linecap,
+> 	&path_stroke_linejoin,
+> 	&path_stroke_opacity,
+433c497
+< 	6,
+---
+> 	10,
+1397,1401c1461,1465
+< 	0,
+< 	0,
+< 	0,
+< 	0,
+< 	0,
+---
+> 	1,
+> 	1,
+> 	1,
+> 	1,
+> 	1,

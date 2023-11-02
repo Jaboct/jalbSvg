@@ -8,6 +8,7 @@
 
 #include "svg.h"
 #include "path.h"
+#include "parse.h"
 
 
 /** Structs */
@@ -69,31 +70,16 @@ void say_svgText ( struct text *text );
 
 
 void pathPostInit ( void *data );
+void path_style_handle ( struct path *path, char *name, char *value );
+
 void sayPath ( struct path *path );
 void sayPathUni ( struct pathUni *uni );
 
 int isBlankSpace ( char c );
 
-void pathUni_set_type ( struct pathUni *uni, int type );
+/** to paste **/
 
-void parseD ( char *d, ArrayList *eles );
-
-int charToPathUni ( char c );
-int charToPathUni2 ( char c, struct pathUni **uniPass );
-
-int moveTo_dFill ( struct moveTo *moveTo, int i, float val );
-int lineTo_dFill ( struct lineTo *lineTo, int i, float val );
-int cubicBez_dFill ( struct cubicBez *cubicBez, int i, float val );
-int quadBez_dFill ( struct quadBez *quadBez, int i, float val );
-int ellipArc_dFill ( struct ellipArc *ellipArc, int i, float val );
-
-
-void eleListToD ( ArrayList *eleList, char *d );
-
-
-void save_svg ( char *dir, struct svg *svg );
-void prepair_d ( ArrayList *eles );
-
+/** Saving */
 
 void expandSvg ( struct svg *svg );
 void expandEleList ( ArrayList *eles );
@@ -124,9 +110,23 @@ void add_errand ( struct g *g, float *XY, char *name, char *desc );
 void save_global_xml ( char *dir );
 void save_global_svg ( char *dir );
 
+void svg_preSave ( struct svg *svg );
+void preSave_nakedList ( ArrayList *eles );
 
+void preSave_nakedUnion ( struct nakedUnion *uni );
+void preSave_g ( struct g *g );
+void preSave_path ( struct path *path );
+void preSave_text ( struct text *text );
+void preSave_tspan ( struct tspan *tspan );
+void preSave_rect ( struct rect *rect );
 
+/** Style Stuff */
 
+void compile_path_style ( struct path *path );
+
+/** should be auto generated for the naked structs */
+
+int nakedStru_nameToIndex ( char *body, ArrayList *eles, void *ret, char **strPtr );
 
 
 

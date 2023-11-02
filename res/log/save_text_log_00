@@ -1,0 +1,2087 @@
+
+jadoo@jadoo:~/workspace/jHigh/testEnv$ ./modCore.exe lay/jh/jalbSvg
+new_main ( )
+handle: 0x55da18ebd6d0
+funct: 0x7f3cfe46b889
+dynamic_main ( )
+secondLoad: 0
+modCore (default) "./modCore.exe"
+modLog_enabled: 1
+modLog_file: 0x55da18ebe710
+exeDir: .
+modCore (0) "lay/jh/jalbSvg"
+coreMem: 0x55da18ebdde0
+coreMem->modList: 0x55da18ebfa00
+coreMem->keyList: 0x55da18ebfa70
+hopperParser ( )
+coreMem: 0x55da18ebdde0
+secondLoad: 0
+i: 0
+resume hopEle
+hopEle->offset: 0
+hopperParser ( ) "lay/jh/jalbSvg"
+seek offset: 0
+seek to: 0
+file: 0x55da18ec00a0
+	Append:
+	lay/layoutFile_default
+
+
+appendLine: lay/layoutFile_default
+
+errno: 0
+file: 0x55da18ec00a0
+onto append
+hopEle->offset: 32
+i: 1
+resume hopEle
+hopEle->offset: 0
+hopperParser ( ) "lay/layoutFile_default"
+seek offset: 0
+seek to: 0
+file: 0x55da18ec00a0
+	Lib:
+	window	jalbWindow
+keyLib ( ) "window	jalbWindow"
+keyLib_small ( )
+preInit (./lib/jalbWindow.so)
+jalbWindowPreInit ( )
+initJalbWindow ( )
+screenDims { 240, 180}
+SDL_INIT_VIDEO successful
+SDL_INIT_EVENTS succeeded
+SDL_GL_SetAttribute ret: 0
+set major and minor version
+about to SDL_CreateWindow ( )
+window != null, good
+context != null, good
+initJalbWindow ( ) OVER, successful!
+windowData: 0x55da18ed8b60
+windowData->window: 0x55da190f0590
+about to SDL_GetWindowSurface ( )
+jalbWindowPreInit ( ) OVER
+kl->nick: window
+kl->handle: 0x55da18ec2430
+add to modList
+coreMem: 0x55da18ebdde0
+coreMem->modList: 0x55da18ebfa00
+keyLib ( ) OVER
+	shaderHead	jalbShaderHead
+keyLib ( ) "shaderHead	jalbShaderHead"
+keyLib_small ( )
+preInit (./lib/jalbShaderHead.so)
+shaderHead preInit()
+kl->nick: shaderHead
+kl->handle: 0x55da194f56d0
+add to modList
+coreMem: 0x55da18ebdde0
+coreMem->modList: 0x55da18ebfa00
+keyLib ( ) OVER
+	draw2d	jalbDraw2dWrap
+keyLib ( ) "draw2d	jalbDraw2dWrap"
+keyLib_small ( )
+preInit (./lib/jalbDraw2dWrap.so)
+preInit() NULL. (./lib/jalbDraw2dWrap.so: undefined symbol: preInit)
+kl->nick: draw2d
+kl->handle: 0x55da194f5f20
+add to modList
+coreMem: 0x55da18ebdde0
+coreMem->modList: 0x55da18ebfa00
+keyLib ( ) OVER
+	font	jalbFont
+keyLib ( ) "font	jalbFont"
+keyLib_small ( )
+preInit (./lib/jalbFont.so)
+preInit ( ) (jalbFont.so jalbFont.c)
+kl->nick: font
+kl->handle: 0x55da1950bc70
+add to modList
+coreMem: 0x55da18ebdde0
+coreMem->modList: 0x55da18ebfa00
+keyLib ( ) OVER
+	menu	jalbMenu
+keyLib ( ) "menu	jalbMenu"
+keyLib_small ( )
+preInit (./lib/jalbMenu.so)
+modData: 0x55da1950fa30
+
+
+MENU PROPERTIES
+
+kl->nick: menu
+kl->handle: 0x55da1950f380
+add to modList
+coreMem: 0x55da18ebdde0
+coreMem->modList: 0x55da18ebfa00
+keyLib ( ) OVER
+	layoutUi	jluiMod
+keyLib ( ) "layoutUi	jluiMod"
+		on jluiMod.
+
+
+keyLib_special ( )
+preInit (./lib/jluiMod.so)
+handle: 0x55da19510f60
+get_num: 0x7f3cf94fdbb8
+preInit ( ) (jluiMod.so mod.c)
+hand_preInit ( ) (hand_mod.c)
+jalbLayoutUi preInit ( )
+JLUIlastMod: 0x55da19511c00
+JLUIlastMod->canvas: 0
+ret: 0x55da19511c00
+kl->nick: layoutUi
+kl->handle: 0x55da19510f60
+add to modList
+coreMem: 0x55da18ebdde0
+coreMem->modList: 0x55da18ebfa00
+keyLib ( ) OVER
+	console	jalbConsole
+keyLib ( ) "console	jalbConsole"
+keyLib_small ( )
+preInit (./lib/jalbConsole.so)
+kl->nick: console
+kl->handle: 0x55da19512150
+add to modList
+coreMem: 0x55da18ebdde0
+coreMem->modList: 0x55da18ebfa00
+keyLib ( ) OVER
+	Dims:
+	1080, 660
+jalbWindowKeyDims() (1080, 660)
+	Name:
+	( layoutFile_default )
+jalbWindowKeyName() (( layoutFile_default ))
+	Append:
+	lay/largeApp
+
+
+appendLine: lay/largeApp
+
+errno: 11
+file: 0x55da18ec00a0
+onto append
+hopEle->offset: 422
+i: 2
+resume hopEle
+hopEle->offset: 0
+hopperParser ( ) "lay/largeApp"
+seek offset: 0
+seek to: 0
+file: 0x55da18ec00a0
+	Dims:
+	1600, 1320
+jalbWindowKeyDims() (1600, 1320)
+	Font:
+	res/UbuntuMono-R.ttf	20
+keyFont ( ) (res/UbuntuMono-R.ttf	20)
+jalbAtlasMakeRowAtlas ( )
+FONT TEXTURE: 1 (jalbFont.c, modCore)
+freeJalbAtlasFT2 ( )
+freeJalbAtlasFT2 ( ) OVER
+	TextProperties:
+	tabWidth	200
+	scrollWidth	18
+	searchBarWidth	200
+	DirProperties:
+	tabWidth	140
+	MenuProperties:
+	buttonH	80
+keyWordMenuList(buttonH	80): 0x55da1950fa30
+i: 1
+resume hopEle
+hopEle->offset: 422
+hopperParser ( ) "lay/layoutFile_default"
+seek offset: 422
+seek to: 422
+file: 0x55da18edf5d0
+	Position:
+	center
+keyPosition() "center"
+	draw2d	FlatColorShader	../res/shaders/flatColor.vs	../res/shaders/flatColor.fs
+	draw2d	BmpColorShader	../res/shaders/bmpColor.vs	../res/shaders/bmpColor.fs
+	draw2d	BmpShader	../res/shaders/bmpColor.vs	../res/shaders/bmp.fs
+	Shader:
+	draw2d	FlatColorShader	res/shaders/flatColor.vs	res/shaders/flatColor.fs
+keyShader() (draw2d	FlatColorShader	res/shaders/flatColor.vs	res/shaders/flatColor.fs)
+initFlatColorShader()
+InfoLogLength: 0
+InfoLogLength: 0
+GL_LINK_STATUS: 1
+	draw2d	BmpColorShader	res/shaders/bmpColor.vs	res/shaders/bmpColor.fs
+keyShader() (draw2d	BmpColorShader	res/shaders/bmpColor.vs	res/shaders/bmpColor.fs)
+InfoLogLength: 0
+InfoLogLength: 0
+GL_LINK_STATUS: 1
+	draw2d	BmpShader	res/shaders/bmpColor.vs	res/shaders/bmp.fs
+keyShader() (draw2d	BmpShader	res/shaders/bmpColor.vs	res/shaders/bmp.fs)
+initBmpShader ( )
+InfoLogLength: 0
+InfoLogLength: 0
+GL_LINK_STATUS: 1
+localBmpS: 0x55da19563440
+	Setter:
+	draw2d	getFunctWrap	menu	setDraw2dApi
+keySetter() (draw2d	getFunctWrap	menu	setDraw2dApi)
+getFunctWrap()
+jalbToolbar.c setDraw2dApi(0x7f3cfd27e260)
+	font	getFontFirst	menu	setFont16
+keySetter() (font	getFontFirst	menu	setFont16)
+jalbMenu.c setFont16(): 0x55da19513d90
+	draw2d	getFunctWrap	layoutUi	setDraw2dApi
+keySetter() (draw2d	getFunctWrap	layoutUi	setDraw2dApi)
+getFunctWrap()
+setDraw2dApi(0x7f3cfd27e260)
+	font	getFontFirst	layoutUi	setFont16
+keySetter() (font	getFontFirst	layoutUi	setFont16)
+setFont16(): 0x55da19513d90
+	JLUI:
+	canvas
+keyJLUI() (canvas)
+keyJLUI: 0x55da19511c00
+i: 0
+resume hopEle
+hopEle->offset: 32
+hopperParser ( ) "lay/jh/jalbSvg"
+seek offset: 32
+seek to: 32
+file: 0x55da1953c330
+	Lib:
+	jalbSvg	jalbSvg
+keyLib ( ) "jalbSvg	jalbSvg"
+keyLib_small ( )
+preInit (./lib/jalbSvg.so)
+kl->nick: jalbSvg
+kl->handle: 0x55da195656d0
+add to modList
+coreMem: 0x55da18ebdde0
+coreMem->modList: 0x55da18ebfa00
+keyLib ( ) OVER
+	Append:
+	lay/ui/uiGen_default
+
+
+appendLine: lay/ui/uiGen_default
+
+errno: 39
+file: 0x55da1953c330
+onto append
+hopEle->offset: 86
+i: 1
+resume hopEle
+hopEle->offset: 0
+hopperParser ( ) "lay/ui/uiGen_default"
+hopperParser ( ): error opening file "lay/ui/uiGen_default"
+i: 1
+i: 0
+resume hopEle
+hopEle->offset: 86
+hopperParser ( ) "lay/jh/jalbSvg"
+seek offset: 86
+seek to: 86
+file: 0x55da1953c330
+	Dims:
+	1600, 900
+jalbWindowKeyDims() (1600, 900)
+	LayLib:
+	menu	menu	layEleInit	layEleRender	layEleEvent	layEleClose
+jalbLayoutUi.c keyLayLib ( ) (menu	menu	layEleInit	layEleRender	layEleEvent	layEleClose)
+load_to_canvas: 0
+keyLayLib() OVER
+	00	stru_00Edit	stru_00InitEdit	stru_00RenderEdit	stru_00EventEdit	stru_00CloseEdit	stru_00EditNumber
+jalbLayoutUi.c keyLayLib ( ) (00	stru_00Edit	stru_00InitEdit	stru_00RenderEdit	stru_00EventEdit	stru_00CloseEdit	stru_00EditNumber)
+load_to_canvas: 0
+!mod
+	LayLibDynamic:
+	jalbSvg	jalbSvg	jalbSvg_init	jalbSvg_renderDyn	tic	jalbSvg_mEvent	jalbSvg_mEventjalbSvg_close
+jalbLayoutUi.c keyLayLibDynamic() (jalbSvg	jalbSvg	jalbSvg_init	jalbSvg_renderDyn	tic	jalbSvg_mEvent	jalbSvg_mEvent	jalbSvg_close)
+layEle->tic NULL. (./lib/jalbSvg.so: undefined symbol: tic)
+	LayLib:
+	layoutUi	canvasEleEdit	canvasEleInitEdit	canvasEleRenderEdit	canvasEleEventEdit	canvasEleCloseEdit	canvasEleEditNumber
+jalbLayoutUi.c keyLayLib ( ) (layoutUi	canvasEleEdit	canvasEleInitEdit	canvasEleRenderEdit	canvasEleEventEdit	canvasEleCloseEdit	canvasEleEditNumber)
+load_to_canvas: 0
+layEle->init NULL. (./lib/jluiMod.so: undefined symbol: canvasEleInitEdit)
+layEle->render NULL. (./lib/jluiMod.so: undefined symbol: canvasEleRenderEdit)
+layEle->event NULL. (./lib/jluiMod.so: undefined symbol: canvasEleEventEdit)
+layEle->free NULL. (./lib/jluiMod.so: undefined symbol: canvasEleCloseEdit)
+setId NULL. (./lib/jluiMod.so: undefined symbol: canvasEleEditNumber)
+keyLayLib() OVER
+	Lib:
+	loop	jalbLoop
+keyLib ( ) "loop	jalbLoop"
+keyLib_small ( )
+preInit (./lib/jalbLoop.so)
+jalbLoop preInit ( )
+debug_print_jalbLoop: 0
+kl->nick: loop
+kl->handle: 0x55da19565ba0
+add to modList
+coreMem: 0x55da18ebdde0
+coreMem->modList: 0x55da18ebfa00
+keyLib ( ) OVER
+	Setter:
+	loop	getSetStage	menu	setSetStage
+keySetter() (loop	getSetStage	menu	setSetStage)
+jalbMenu.c setSetStage(): 0x7f3cf9837917
+	Name:
+	jHigh/testEnv/ ( jHigh_jalbSvg )
+jalbWindowKeyName() (jHigh/testEnv/ ( jHigh_jalbSvg ))
+	JLUI:
+	canvas
+keyJLUI() (canvas)
+keyJLUI: 0x55da19511c00
+	renderAlways
+keyJLUI() (renderAlways)
+keyJLUI: 0x55da19511c00
+	Loop:
+	layoutUi	render	event
+jalbLoop.c KeyLoop() (layoutUi	render	event)
+	Lay:
+	cent	400	400
+keyLay ( ) jalbLayoutUi.c (cent	400	400)
+load_to_canvas: 0
+strToKeyIndex ( ): (cent	400	400)
+keyLibs.len: 4
+ip->id c: 0
+nick: (blank)
+ip->id c: 0
+nick: (menu)
+ip->id c: 1
+nick: (jalbSvg)
+ip->id c: 0
+nick: (canvasEleEdit)
+ret: -1
+JLUIdata->top: (nil)
+&line[bi]: cent	400	400
+its a cent
+JLUIdata: 0x55da19511c00
+JLUIdata->top: (nil)
+initJLUItop ( )
+top: 0x55da19566b30
+setTop_c (JLUIdata: 0x55da19511c00) (top: 0x55da19566b30)
+this: 0x55da19566b30
+mask: 0x55da195668c0
+mask->WH { 400, 400}
+	  menu
+keyLay ( ) jalbLayoutUi.c (  menu)
+load_to_canvas: 0
+strToKeyIndex ( ): (menu)
+keyLibs.len: 4
+ip->id c: 0
+nick: (blank)
+ip->id c: 0
+nick: (menu)
+ret: 1
+JLUIdata->top: 0x55da19566b30
+ip: 0x55da195428f0
+ip->ptr: 0x55da19519680
+layStruct->init: 0x7f3cf99508aa
+jalbMenu layEleInit
+JLUIdata: 0x55da19511c00
+JLUIdata->top: 0x55da19566b30
+finish
+	Menu:
+	menu	buttonRender12	buttonEvent12	1
+keyWordMenu ( menu	buttonRender12	buttonEvent12	1 ): 0x55da1950fa30
+	MenuList:
+	Singleplayer	1
+keyWordMenuList ( ) (Singleplayer	1): 0x55da1950fa30
+modEle: 0x55da1950fa30
+layData: 0x55da19542950
+keyWordMenuList ( ) OVER
+	Multiplayer	2
+keyWordMenuList ( ) (Multiplayer	2): 0x55da1950fa30
+modEle: 0x55da1950fa30
+layData: 0x55da19542950
+keyWordMenuList ( ) OVER
+	Mods	3
+keyWordMenuList ( ) (Mods	3): 0x55da1950fa30
+modEle: 0x55da1950fa30
+layData: 0x55da19542950
+keyWordMenuList ( ) OVER
+	Settings	0
+keyWordMenuList ( ) (Settings	0): 0x55da1950fa30
+modEle: 0x55da1950fa30
+layData: 0x55da19542950
+keyWordMenuList ( ) OVER
+	Quit	-1
+keyWordMenuList ( ) (Quit	-1): 0x55da1950fa30
+modEle: 0x55da1950fa30
+layData: 0x55da19542950
+keyWordMenuList ( ) OVER
+	Setter:
+	layoutUi	takeTop	loop	setLastStageData
+keySetter() (layoutUi	takeTop	loop	setLastStageData)
+takeTop ( ): 0x55da19511c00
+temp: 0x55da19566b30
+setLastStageData ( )!! 0x55da19566b30
+	Loop:
+	layoutUi	render	event
+jalbLoop.c KeyLoop() (layoutUi	render	event)
+	Lay:
+	jalbSvg
+keyLay ( ) jalbLayoutUi.c (jalbSvg)
+load_to_canvas: 0
+strToKeyIndex ( ): (jalbSvg)
+keyLibs.len: 4
+ip->id c: 0
+nick: (blank)
+ip->id c: 0
+nick: (menu)
+ip->id c: 1
+nick: (jalbSvg)
+ret: 2
+JLUIdata->top: (nil)
+initJLUItop ( )
+top: 0x55da19542bd0
+setTop_d (JLUIdata: 0x55da19511c00) (top: 0x55da19542bd0)
+ip: 0x55da195668e0
+ip->ptr: 0x55da19512ee0
+JLUIdata: 0x55da19511c00
+JLUIdata->top: 0x55da19542bd0
+finish
+	Setter:
+	window	getLastWindow	jalbSvg	set_window
+keySetter() (window	getLastWindow	jalbSvg	set_window)
+setFunct() NULL. (./lib/jalbSvg.so: undefined symbol: set_window)
+	Hotkey:
+	jalbSvg	1	set_onTest	0
+keyHotkey: "jalbSvg	1	set_onTest	0"
+mod: 0x55da19542310
+ele->key: 1
+parseUnknownType ( )
+parseUnknownType ( ) OVER
+parsed, ele->type: 0
+	jalbSvg	2	set_onTest	1
+keyHotkey: "jalbSvg	2	set_onTest	1"
+mod: 0x55da19542310
+ele->key: 2
+parseUnknownType ( )
+parseUnknownType ( ) OVER
+parsed, ele->type: 0
+	jalbSvg	q	test_viewLoc_01
+keyHotkey: "jalbSvg	q	test_viewLoc_01"
+mod: 0x55da19542310
+ele->key: q
+parseUnknownType ( )
+parsed, ele->type: -1
+	jalbSvg	w	test_viewScale_00
+keyHotkey: "jalbSvg	w	test_viewScale_00"
+mod: 0x55da19542310
+ele->key: w
+parseUnknownType ( )
+parseUnknownType ( ) OVER
+parsed, ele->type: 0
+	jalbSvg	e	hand_errand_00
+keyHotkey: "jalbSvg	e	hand_errand_00"
+mod: 0x55da19542310
+ele->key: e
+parseUnknownType ( )
+parseUnknownType ( ) OVER
+parsed, ele->type: 0
+	jalbSvg	1	hand_stru_00
+	jalbSvg	2	hand_test
+	jalbSvg	3	hand_test_load
+	Hotkey:
+	jalbSvg	p	hand_p	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/ss.ppm"
+keyHotkey: "jalbSvg	p	hand_p	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/ss.ppm""
+mod: 0x55da19542310
+ele->key: p
+parseUnknownType ( )
+ele->pass_str: (/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/ss.ppm)
+parseUnknownType ( ) OVER
+parsed, ele->type: 2
+	jalbSvg	s	save_global_xml	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/saveProof/save_00.xml"
+keyHotkey: "jalbSvg	s	save_global_xml	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/saveProof/save_00.xml""
+mod: 0x55da19542310
+ele->key: s
+parseUnknownType ( )
+ele->pass_str: (/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/saveProof/save_00.xml)
+parseUnknownType ( ) OVER
+parsed, ele->type: 2
+	jalbSvg	s	save_global_svg	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/saveProof/save_00.svg"
+keyHotkey: "jalbSvg	s	save_global_svg	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/saveProof/save_00.svg""
+mod: 0x55da19542310
+ele->key: s
+parseUnknownType ( )
+ele->pass_str: (/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/saveProof/save_00.svg)
+parseUnknownType ( ) OVER
+parsed, ele->type: 2
+	Hotkey:
+	Append:
+	lay/ui/uiGen_hotkey
+
+
+appendLine: lay/ui/uiGen_hotkey
+
+errno: 2
+file: 0x55da1953c330
+onto append
+hopEle->offset: 2135
+i: 1
+resume hopEle
+hopEle->offset: 0
+hopperParser ( ) "lay/ui/uiGen_hotkey"
+hopperParser ( ): error opening file "lay/ui/uiGen_hotkey"
+i: 1
+i: 0
+resume hopEle
+hopEle->offset: 2135
+hopperParser ( ) "lay/jh/jalbSvg"
+seek offset: 2135
+seek to: 2135
+file: 0x55da1953c330
+	Setter:
+	layoutUi	takeTop	loop	setLastStageData
+keySetter() (layoutUi	takeTop	loop	setLastStageData)
+takeTop ( ): 0x55da19511c00
+temp: 0x55da19542bd0
+setLastStageData ( )!! 0x55da19542bd0
+	Ctrl:
+	" \n\t.,/\\<>{}[]():;\"\'|_-+=~`!@#$%^&*?"
+	Setter:
+	draw2d	getFunctWrap	jalbSvg	setDraw2dApi
+keySetter() (draw2d	getFunctWrap	jalbSvg	setDraw2dApi)
+getFunctWrap()
+setDraw2dApi ( 0x7f3cfd27e260 )
+	font	getFontFirst	jalbSvg	setFont16
+keySetter() (font	getFontFirst	jalbSvg	setFont16)
+setFont16 ( ): 0x55da19513d90
+	Getter:
+	layoutUi	addCanvasEle	jalbSvg	setAddCanvas
+keyGetter() (layoutUi	addCanvasEle	jalbSvg	setAddCanvas)
+setAddCanvas ( ): 0x7f3cf94fd49e
+	layoutUi	JLUI_setViewScale	jalbSvg	set_set_viewScale
+keyGetter() (layoutUi	JLUI_setViewScale	jalbSvg	set_set_viewScale)
+	all
+	Run:
+	jalbSvg	set_debugPrint_jalbXml_macro	1
+keyRun ( ) (jalbSvg	set_debugPrint_jalbXml_macro	1)
+modName: jalbSvg
+functName: set_debugPrint_jalbXml_macro
+runFunct: 0x7f3cf94ba92b
+parse a param, &line[bi]: (1)
+parse an int
+pre i
+set_debugPrint_jalbXml_macro ( )
+i: 1
+post s
+	jalbSvg	line_1_test
+	jalbSvg	extra_test
+	jalbSvg	proof_parseD
+	jalbSvg	hand_test_01
+	Run:
+	jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/proof_text_00_trim.svg"
+keyRun ( ) (jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/proof_text_00_trim.svg")
+modName: jalbSvg
+functName: load_global_svg
+runFunct: 0x7f3cf94b7b43
+parse a param, &line[bi]: ("/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/proof_text_00_trim.svg")
+parse a string
+pres
+load_global_svg ( )
+dir: /home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/proof_text_00_trim.svg
+loadXmlFile_03 ( )
+xmlArrLen_pass: 15
+not bom_utf_8
+ret success, 1
+after_header: 54
+len zero!!! type: 0
+body: svg
+
+FIND_NAME ( )
+body: svg
+found: 0
+FIND_NAME added to list, new len: 1
+xmlF->typeName: svg
+xmlF->init: 0x7f3cf94b34b2
+next->parentType: 0
+len == 0 return
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: 0
+ret: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: 1
+ret: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: 2
+ret: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: 3
+ret: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -1
+justOpened
+stack->openCount: 1
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: 3
+ret: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 1
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 1
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 1
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 1
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 1
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 1
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 1
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 1
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 1
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 1
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 1
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 1
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 1
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 1
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 1
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 1
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 1
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -1
+justOpened
+stack->openCount: 1
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: (nil)
+stack->nameI: 3
+ret: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 0
+xmlF->name: svg
+xmlF->nameToIndex: 0x7f3cf94b35bf
+strPtr: 0x7f3cf94ce8a7
+stack->nameI: -3
+ret: 0x55da19566728
+FIND_NAME_2 ( )
+name: g
+found2: 2
+_2, postLen: 2
+FIND_NAME_2 added to list, new len: 2
+set next->parentType: 2
+stack: 0x55da19519130
+if ( stack->nameI: -3
+next->ele: (nil)
+xmlF->init: 0x7f3cf94b3ca8
+setter: 0x55da19566728
+change1
+*setter: 0x55da1949ca10
+init just ran, this was returned: 0x55da1949ca10
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 2
+xmlF->name: g
+xmlF->nameToIndex: 0x7f3cf94b3d4f
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 2
+xmlF->name: g
+xmlF->nameToIndex: 0x7f3cf94b3d4f
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 2
+xmlF->name: g
+xmlF->nameToIndex: 0x7f3cf94b3d4f
+strPtr: (nil)
+stack->nameI: 0
+ret: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 2
+xmlF->name: g
+xmlF->nameToIndex: 0x7f3cf94b3d4f
+var->spanList: 0x55da1953ef30
+strPtr: 0x7f3cf94ce8ae
+stack->nameI: -3
+ret: 0x55da19566a38
+FIND_NAME_2 ( )
+name: text
+found2: 10
+_2, postLen: 3
+FIND_NAME_2 added to list, new len: 3
+set next->parentType: 10
+stack: 0x55da19566a50
+if ( stack->nameI: -3
+next->ele: (nil)
+xmlF->init: 0x7f3cf94b537d
+setter: 0x55da19566a38
+change1
+*setter: 0x55da1956a860
+init just ran, this was returned: 0x55da1956a860
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 10
+xmlF->name: text
+xmlF->nameToIndex: 0x7f3cf94b548e
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 10
+xmlF->name: text
+xmlF->nameToIndex: 0x7f3cf94b548e
+strPtr: (nil)
+stack->nameI: 1
+ret: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 10
+xmlF->name: text
+xmlF->nameToIndex: 0x7f3cf94b548e
+strPtr: (nil)
+stack->nameI: 2
+ret: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 10
+xmlF->name: text
+xmlF->nameToIndex: 0x7f3cf94b548e
+strPtr: (nil)
+stack->nameI: 3
+ret: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 10
+xmlF->name: text
+xmlF->nameToIndex: 0x7f3cf94b548e
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 10
+xmlF->name: text
+xmlF->nameToIndex: 0x7f3cf94b548e
+span: 0x55da1953efa0
+ret: 0x7ffdadf4c600
+&span: 0x7ffdadf4c568
+retPtr: 0x7ffdadf4c600
+*retPtr: 0x55da1953efa0
+strPtr: 0x7f3cf94ce400
+stack->nameI: -10
+ret: 0x55da1953efa0
+FIND_NAME_2 ( )
+name: tspan
+found2: 11
+_2, postLen: 4
+FIND_NAME_2 added to list, new len: 4
+set next->parentType: 11
+stack: 0x55da19513b10
+if ( stack->nameI: -10
+next->ele: (nil)
+xmlF->init: 0x7f3cf94b5786
+setter: 0x55da1953efa0
+change1
+*setter: 0x7f3cfe21a300
+init just ran, this was returned: 0x55da1953efa0
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 11
+xmlF->name: tspan
+xmlF->nameToIndex: 0x7f3cf94b592f
+strPtr: (nil)
+stack->nameI: -1
+ret: (nil)
+stack->subVar: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 11
+xmlF->name: tspan
+xmlF->nameToIndex: 0x7f3cf94b592f
+strPtr: (nil)
+stack->nameI: 1
+ret: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 11
+xmlF->name: tspan
+xmlF->nameToIndex: 0x7f3cf94b592f
+strPtr: (nil)
+stack->nameI: 2
+ret: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 11
+xmlF->name: tspan
+xmlF->nameToIndex: 0x7f3cf94b592f
+strPtr: (nil)
+stack->nameI: 3
+ret: (nil)
+READ_NAME ( )
+stack->subVar: (nil)
+stack->nameI: -2
+justOpened
+stack->openCount: 0
+about to nameToIndex, stack->parentType: 11
+xmlF->name: tspan
+xmlF->nameToIndex: 0x7f3cf94b592f
+strPtr: (nil)
+stack->nameI: 4
+ret: (nil)
+copy to body
+(proof_text_00)
+removed ele stack len - 1
+stack: 0x55da19512890
+stack->parentType: 11
+tspan_postInit ( )
+tspan->style: stroke-width:0.264583
+tspan->body: proof_text_00
+text_postInit ( )
+str: stroke-width:0.264583
+tspan_style_handle ( )
+name: stroke-width
+value: 0.264583
+removed ele stack len - 1
+stack: 0x55da19513b10
+stack->parentType: 10
+text_postInit ( )
+text->style: font-size:3.52777px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';stroke-width:0.264583
+text_postInit ( )
+str: font-size:3.52777px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';stroke-width:0.264583
+text_style_handle ( )
+name: font-size
+value: 3.52777px
+text->fontSize: 3.527770
+text_style_handle ( )
+name: line-height
+value: 1.25
+text_style_handle ( )
+name: font-family
+value: sans-serif
+text_style_handle ( )
+name: -inkscape-font-specification
+value: 'sans-serif, Normal'
+text_style_handle ( )
+name: stroke-width
+value: 0.264583
+removed ele stack len - 1
+stack: 0x55da19566a50
+stack->parentType: 2
+xmlF or ->postInit null
+removed ele stack len - 1
+stack: 0x55da19519130
+stack->parentType: 0
+xmlF or ->postInit null
+len <= 1, am i at the bottom?
+firstType: 0
+first: 0x55da18f29590
+second: (nil)
+say_svg ( )
+svg: 0x55da18f29590
+svg->eles.len: 1
+eles.len: 1
+g
+id: layer1
+numEles: 1
+eles.len: 1
+text
+spanList.len: 1
+span: proof_text_00
+{ 5.291303, 12.112329 }
+say_svg ( ) OVER
+load_global_svg ( ) OVER
+post s
+	jalbSvg	empty_global_svg
+keyRun ( ) (jalbSvg	empty_global_svg)
+modName: jalbSvg
+functName: empty_global_svg
+runFunct: 0x7f3cf94b8901
+parse a param, &line[bi]: ("/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/shapes_02_trim.svg")
+parse a string
+pres
+empty_global_svg ( )
+global_svg not null, return
+post s
+	Run:
+	jalbSvg	set_debugPrint_jalbXml_macro	1
+keyRun ( ) (jalbSvg	set_debugPrint_jalbXml_macro	1)
+modName: jalbSvg
+functName: set_debugPrint_jalbXml_macro
+runFunct: 0x7f3cf94ba92b
+parse a param, &line[bi]: (1)
+parse an int
+pre i
+set_debugPrint_jalbXml_macro ( )
+i: 1
+post s
+	jalbSvg	jalbXml_02_set_debug	1
+keyRun ( ) (jalbSvg	jalbXml_02_set_debug	1)
+modName: jalbSvg
+functName: jalbXml_02_set_debug
+runFunct: 0x7f3cf94bb585
+parse a param, &line[bi]: (1)
+parse an int
+pre i
+jalbXml_02_set_debug ( )
+i: 1
+post s
+endFunctions
+end functions numMods: 10
+secondLoad: 0
+i: 0
+secondLoad: 0
+postInit I: 0
+post post I: 0
+i: 1
+secondLoad: 0
+postInit I: 1
+jalbWindowPostInit ( )
+windowData->dims { 1600, 900}
+windowData->window: 0x55da190f0590
+jalbWindow_secondLoad: 0
+jalbWindowPostInit ( ) OVER
+post post I: 1
+i: 2
+secondLoad: 0
+postInit I: 2
+shaderHead postInit()
+post post I: 2
+i: 3
+secondLoad: 0
+postInit I: 3
+post post I: 3
+i: 4
+secondLoad: 0
+postInit I: 4
+post post I: 4
+i: 5
+secondLoad: 0
+postInit I: 5
+post post I: 5
+i: 6
+secondLoad: 0
+postInit I: 6
+post post I: 6
+i: 7
+secondLoad: 0
+postInit I: 7
+jalbConsole postInit ( )
+post post I: 7
+i: 8
+secondLoad: 0
+postInit I: 8
+post post I: 8
+i: 9
+secondLoad: 0
+postInit I: 9
+jalbLoop postInit ( )
+Ticks this second: 14
+jalbLoop.c setStage: 1
+jalbSvg_renderDyn ( )
+viewLoc { 2.000000, 0.000000}
+viewScale: 1.000000
+svg_render ( )
+eles.len: 1
+g
+eles.len: 1
+text
+textRender ( )
+spanRender ( )
+glyphWH { 2.075159, 3.527770}
+proof_text_00
+spanRender ( ) OVER
+textRender ( ) OVER
+jalbSvg_renderDyn ( )
+viewLoc { 3.000000, -1.000000}
+viewScale: 1.000000
+svg_render ( )
+eles.len: 1
+g
+eles.len: 1
+text
+textRender ( )
+spanRender ( )
+glyphWH { 2.075159, 3.527770}
+proof_text_00
+spanRender ( ) OVER
+textRender ( ) OVER
+jalbSvg_renderDyn ( )
+viewLoc { 3.000000, -1.000000}
+viewScale: 1.000000
+svg_render ( )
+eles.len: 1
+g
+eles.len: 1
+text
+textRender ( )
+spanRender ( )
+glyphWH { 2.075159, 3.527770}
+proof_text_00
+spanRender ( ) OVER
+textRender ( ) OVER
+jalbSvg_renderDyn ( )
+viewLoc { 3.000000, -1.000000}
+viewScale: 1.000000
+svg_render ( )
+eles.len: 1
+g
+eles.len: 1
+text
+textRender ( )
+spanRender ( )
+glyphWH { 2.075159, 3.527770}
+proof_text_00
+spanRender ( ) OVER
+textRender ( ) OVER
+jalbSvg_renderDyn ( )
+viewLoc { 3.000000, -1.000000}
+viewScale: 1.000000
+svg_render ( )
+eles.len: 1
+g
+eles.len: 1
+text
+textRender ( )
+spanRender ( )
+glyphWH { 2.075159, 3.527770}
+proof_text_00
+spanRender ( ) OVER
+textRender ( ) OVER
+jalbSvg_renderDyn ( )
+viewLoc { 3.000000, -1.000000}
+viewScale: 1.000000
+svg_render ( )
+eles.len: 1
+g
+eles.len: 1
+text
+textRender ( )
+spanRender ( )
+glyphWH { 2.075159, 3.527770}
+proof_text_00
+spanRender ( ) OVER
+textRender ( ) OVER
+jalbSvg_renderDyn ( )
+viewLoc { 3.000000, -1.000000}
+viewScale: 1.000000
+svg_render ( )
+eles.len: 1
+g
+eles.len: 1
+text
+textRender ( )
+spanRender ( )
+glyphWH { 2.075159, 3.527770}
+proof_text_00
+spanRender ( ) OVER
+textRender ( ) OVER
+jalbSvg_renderDyn ( )
+viewLoc { 3.000000, -1.000000}
+viewScale: 1.000000
+svg_render ( )
+eles.len: 1
+g
+eles.len: 1
+text
+textRender ( )
+spanRender ( )
+glyphWH { 2.075159, 3.527770}
+proof_text_00
+spanRender ( ) OVER
+textRender ( ) OVER
+jalbSvg_renderDyn ( )
+viewLoc { 3.000000, -1.000000}
+viewScale: 1.000000
+svg_render ( )
+eles.len: 1
+g
+eles.len: 1
+text
+textRender ( )
+spanRender ( )
+glyphWH { 2.075159, 3.527770}
+proof_text_00
+spanRender ( ) OVER
+textRender ( ) OVER
+jalbSvg_renderDyn ( )
+viewLoc { 3.000000, -1.000000}
+viewScale: 1.000000
+svg_render ( )
+eles.len: 1
+g
+eles.len: 1
+text
+textRender ( )
+spanRender ( )
+glyphWH { 2.075159, 3.527770}
+proof_text_00
+spanRender ( ) OVER
+textRender ( ) OVER
+keyFound, running: 0x7f3cf94b9464
+hk->type: 2
+hk->pass_str: (/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/saveProof/save_00.xml)
+save_global_xml ( )
+dir: /home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/saveProof/save_00.xml
+fwriteXml_backbone ( )
+backbone->name: svg
+debugPrint_jalbXml is enabled.
+backbone->varsLen: 5
+jlui_hasBom: 0
+hasHeader: 1
+fwriteXml_backbone_file ( )
+backbone: 0x7f3cf94e0280
+backbone->name: svg
+name: (nil)
+data: 0x55da18f29590
+file: 0x55da1956a5a0
+vars[0]
+backbone->vars[i]: 0x7f3cf94d9a20
+attrib str
+mask: 210mm
+writeSubSpaces_replace ( )
+format: %s
+temp: (%s)
+temp2: (%s)
+after va_ args. s: (210mm)
+newStr: (210mm)
+after amp replace
+newerStr: 210mm
+vars[1]
+backbone->vars[i]: 0x7f3cf94d9b80
+attrib str
+mask: 297mm
+writeSubSpaces_replace ( )
+format: %s
+temp: (%s)
+temp2: (%s)
+after va_ args. s: (297mm)
+newStr: (297mm)
+after amp replace
+newerStr: 297mm
+vars[2]
+backbone->vars[i]: 0x7f3cf94d9ce0
+attrib str
+mask: 1.1
+writeSubSpaces_replace ( )
+format: %s
+temp: (%s)
+temp2: (%s)
+after va_ args. s: (1.1)
+newStr: (1.1)
+after amp replace
+newerStr: 1.1
+vars[3]
+backbone->vars[i]: 0x7f3cf94d9e40
+attrib str
+mask: defs2
+writeSubSpaces_replace ( )
+format: %s
+temp: (%s)
+temp2: (%s)
+after va_ args. s: (defs2)
+newStr: (defs2)
+after amp replace
+newerStr: defs2
+vars[4]
+backbone->vars[i]: 0x7f3cf94e00e0
+    fwriteXml_subVar_body ( )
+    var->name: width
+attribFlag: 1
+var->type: 0
+var->typeIndex: 4
+var->length: -1
+data: 0x55da18f29590
+attrib flag, return fwriteXmlsubVar_body ( )
+        fwriteXml_subVar_body ( )
+        var->name: height
+attribFlag: 1
+var->type: 0
+var->typeIndex: 4
+var->length: -1
+data: 0x55da18f29590
+attrib flag, return fwriteXmlsubVar_body ( )
+            fwriteXml_subVar_body ( )
+            var->name: version
+attribFlag: 1
+var->type: 0
+var->typeIndex: 4
+var->length: -1
+data: 0x55da18f29590
+attrib flag, return fwriteXmlsubVar_body ( )
+                fwriteXml_subVar_body ( )
+                var->name: id
+attribFlag: 1
+var->type: 0
+var->typeIndex: 4
+var->length: -1
+data: 0x55da18f29590
+attrib flag, return fwriteXmlsubVar_body ( )
+                    fwriteXml_subVar_body ( )
+                    var->name: eles
+attribFlag: 0
+var->type: 0
+var->typeIndex: 3
+var->length: 0
+data: 0x55da18f29590
+about to write name
+var: 0x7f3cf94e00e0
+var->name: eles
+file: 0x55da1956a5a0
+numSpaces: 2
+done writing name
+data: 0x55da18f29590
+var->external: 1024
+cmask: 0x55da18f29990
+fwriteXml_subVar_body_arrayList ( )
+
+
+write type arraylist
+
+
+var->name: eles
+eles is naked
+ptrMask: 0x55da18f29990
+*ptrMask: 0x55da1956a780
+mask: 0x55da1956a780
+var: 0x7f3cf94e00e0
+var->data.ptr: 0x7f3cf94d9f90
+eles subAl is naked
+subLen: 1
+j: 0
+al->overflow: 10
+al->literal: 0
+al->type: 1
+al->typeIndex: 1
+al->length: -1
+data: 0x55da19566720
+subType: 1
+subTypeIndex: 1
+RECUR
+stru: 0x7f3cf94e0fc0
+stru->name: nakedUnion
+                        fwriteXml_backbone_file ( )
+backbone: 0x7f3cf94e0fc0
+                        backbone->name: nakedUnion
+name: (nil)
+data: 0x55da19566720
+file: 0x55da1956a5a0
+vars[0]
+backbone->vars[i]: 0x7f3cf94e0e60
+                            fwriteXml_subVar_body ( )
+                            var->name: 
+attribFlag: 0
+var->type: 0
+var->typeIndex: 6
+var->length: 0
+data: 0x55da19566720
+COMPLEX
+data: 0x55da19566720
+data: 0x55da19566720
+var->external: 0
+cmask: 0x55da19566720
+complex: 0x7f3cf94e0c00
+complex->prefx: 
+complex->listLen: 6
+cmask: 0x55da19566720
+union naked
+type: 0x55da19566720
+COMPLEX type: 0
+data: 0x55da19566720
+                                fwriteXml_subVar_body ( )
+                                var->name: g
+attribFlag: 0
+var->type: 1
+var->typeIndex: 2
+var->length: 0
+data: 0x55da19566720
+data: 0x55da19566720
+var->external: 8
+cmask: 0x55da19566728
+handling a struct
+cmask: 0x55da19566728
+var->length: 0
+var->typeIndex: 2
+backbone_arr_len: 15
+mask: 0x55da1949ca10
+RECUR 2
+                                    fwriteXml_backbone_file ( )
+backbone: 0x7f3cf94e1a60
+                                    backbone->name: g
+name: 0x7f3cf94d9fc0
+name: g
+data: 0x55da1949ca10
+file: 0x55da1956a5a0
+vars[0]
+backbone->vars[i]: 0x7f3cf94da800
+attrib str
+mask: layer1
+writeSubSpaces_replace ( )
+format: %s
+temp: (%s)
+temp2: (%s)
+after va_ args. s: (layer1)
+newStr: (layer1)
+after amp replace
+newerStr: layer1
+vars[1]
+backbone->vars[i]: 0x7f3cf94e1900
+                                        fwriteXml_subVar_body ( )
+                                        var->name: id
+attribFlag: 1
+var->type: 0
+var->typeIndex: 4
+var->length: -1
+data: 0x55da1949ca10
+attrib flag, return fwriteXmlsubVar_body ( )
+                                            fwriteXml_subVar_body ( )
+                                            var->name: eles
+attribFlag: 0
+var->type: 0
+var->typeIndex: 3
+var->length: 0
+data: 0x55da1949ca10
+about to write name
+var: 0x7f3cf94e1900
+var->name: eles
+file: 0x55da1956a5a0
+numSpaces: 4
+done writing name
+data: 0x55da1949ca10
+var->external: 256
+cmask: 0x55da1949cb10
+fwriteXml_subVar_body_arrayList ( )
+
+
+write type arraylist
+
+
+var->name: eles
+eles is naked
+ptrMask: 0x55da1949cb10
+*ptrMask: 0x55da1956a7f0
+mask: 0x55da1956a7f0
+var: 0x7f3cf94e1900
+var->data.ptr: 0x7f3cf94da950
+eles subAl is naked
+subLen: 1
+j: 0
+al->overflow: 0
+al->literal: 0
+al->type: 1
+al->typeIndex: 1
+al->length: -1
+data: 0x55da19566a30
+subType: 1
+subTypeIndex: 1
+RECUR
+stru: 0x7f3cf94e0fc0
+stru->name: nakedUnion
+                                                fwriteXml_backbone_file ( )
+backbone: 0x7f3cf94e0fc0
+                                                backbone->name: nakedUnion
+name: (nil)
+data: 0x55da19566a30
+file: 0x55da1956a5a0
+vars[0]
+backbone->vars[i]: 0x7f3cf94e0e60
+                                                    fwriteXml_subVar_body ( )
+                                                    var->name: 
+attribFlag: 0
+var->type: 0
+var->typeIndex: 6
+var->length: 0
+data: 0x55da19566a30
+COMPLEX
+data: 0x55da19566a30
+data: 0x55da19566a30
+var->external: 0
+cmask: 0x55da19566a30
+complex: 0x7f3cf94e0c00
+complex->prefx: 
+complex->listLen: 6
+cmask: 0x55da19566a30
+union naked
+type: 0x55da19566a30
+COMPLEX type: 2
+data: 0x55da19566a30
+                                                        fwriteXml_subVar_body ( )
+                                                        var->name: text
+attribFlag: 0
+var->type: 1
+var->typeIndex: 10
+var->length: 0
+data: 0x55da19566a30
+data: 0x55da19566a30
+var->external: 8
+cmask: 0x55da19566a38
+handling a struct
+cmask: 0x55da19566a38
+var->length: 0
+var->typeIndex: 10
+backbone_arr_len: 15
+mask: 0x55da1956a860
+RECUR 2
+                                                            fwriteXml_backbone_file ( )
+backbone: 0x7f3cf94e6c80
+                                                            backbone->name: text
+name: 0x7f3cf94da280
+name: text
+data: 0x55da1956a860
+file: 0x55da1956a5a0
+vars[0]
+backbone->vars[i]: 0x7f3cf94dda00
+vars[1]
+backbone->vars[i]: 0x7f3cf94ddb60
+vars[2]
+backbone->vars[i]: 0x7f3cf94ddcc0
+vars[3]
+backbone->vars[i]: 0x7f3cf94dde20
+vars[4]
+backbone->vars[i]: 0x7f3cf94e6ae0
+                                                                fwriteXml_subVar_body ( )
+                                                                var->name: space
+attribFlag: 0
+var->type: 0
+var->typeIndex: 4
+var->length: -1
+data: 0x55da1956a860
+about to write name
+var: 0x7f3cf94dda00
+var->name: space
+file: 0x55da1956a5a0
+numSpaces: 6
+done writing name
+data: 0x55da1956a860
+var->external: 0
+cmask: 0x55da1956a860
+var->typeIndex == typeStr
+mask: 0x55da1956a860
+mask: ()
+writeSubSpaces_replace ( )
+format: 
+temp: (%s)
+temp2: ()
+after va_ args. s: ()
+newStr: ()
+after amp replace
+newerStr: 
+string written
+                                                                fwriteXml_subVar_body ( ) OVER
+                                                                fwriteXml_subVar_body ( )
+                                                                var->name: style
+attribFlag: 0
+var->type: 0
+var->typeIndex: 4
+var->length: -1
+data: 0x55da1956a860
+about to write name
+var: 0x7f3cf94ddb60
+var->name: style
+file: 0x55da1956a5a0
+numSpaces: 6
+done writing name
+data: 0x55da1956a860
+var->external: 256
+cmask: 0x55da1956a960
+var->typeIndex == typeStr
+mask: 0x55da1956a960
+mask: (font-size:3.52777px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';stroke-width:0.264583)
+writeSubSpaces_replace ( )
+format: font-size:3.52777px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';stroke-width:0.264583
+temp: (%s)
+temp2: (font-size:3.52777px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';stroke-width:0.264583)
+after va_ args. s: (font-size:3.52777px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';stroke-width:0.264583)
+newStr: (font-size:3.52777px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';stroke-width:0.264583)
+after amp replace
+newerStr: font-size:3.52777px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:&apos;sans-serif, Normal&apos;;stroke-width:0.264583
+string written
+                                                                fwriteXml_subVar_body ( ) OVER
+                                                                fwriteXml_subVar_body ( )
+                                                                var->name: x
+attribFlag: 0
+var->type: 0
+var->typeIndex: 1
+var->length: -1
+data: 0x55da1956a860
+about to write name
+var: 0x7f3cf94ddcc0
+var->name: x
+file: 0x55da1956a5a0
+numSpaces: 6
+done writing name
+data: 0x55da1956a860
+var->external: 512
+cmask: 0x55da1956aa60
+                                                                fwriteXml_subVar_body ( ) OVER
+                                                                fwriteXml_subVar_body ( )
+                                                                var->name: y
+attribFlag: 0
+var->type: 0
+var->typeIndex: 1
+var->length: -1
+data: 0x55da1956a860
+about to write name
+var: 0x7f3cf94dde20
+var->name: y
+file: 0x55da1956a5a0
+numSpaces: 6
+done writing name
+data: 0x55da1956a860
+var->external: 516
+cmask: 0x55da1956aa64
+                                                                fwriteXml_subVar_body ( ) OVER
+                                                                fwriteXml_subVar_body ( )
+                                                                var->name: spanList
+attribFlag: 0
+var->type: 0
+var->typeIndex: 3
+var->length: 0
+data: 0x55da1956a860
+about to write name
+var: 0x7f3cf94e6ae0
+var->name: spanList
+file: 0x55da1956a5a0
+numSpaces: 6
+done writing name
+data: 0x55da1956a860
+var->external: 528
+cmask: 0x55da1956aa70
+fwriteXml_subVar_body_arrayList ( )
+
+
+write type arraylist
+
+
+var->name: spanList
+ptrMask: 0x55da1956aa70
+*ptrMask: 0x55da1953ef30
+mask: 0x55da1953ef30
+var: 0x7f3cf94e6ae0
+var->data.ptr: 0x7f3cf94ddf70
+subLen: 1
+j: 0
+al->overflow: 10
+al->literal: 0
+al->type: 1
+al->typeIndex: 10
+al->length: -1
+data: 0x55da1953efa0
+subType: 1
+subTypeIndex: 10
+RECUR
+stru: 0x7f3cf94e6c80
+stru->name: text
+                                                                    fwriteXml_backbone_file ( )
+backbone: 0x7f3cf94e6c80
+                                                                    backbone->name: text
+name: (nil)
+data: 0x55da1953efa0
+file: 0x55da1956a5a0
+vars[0]
+backbone->vars[i]: 0x7f3cf94dda00
+vars[1]
+backbone->vars[i]: 0x7f3cf94ddb60
+vars[2]
+backbone->vars[i]: 0x7f3cf94ddcc0
+vars[3]
+backbone->vars[i]: 0x7f3cf94dde20
+vars[4]
+backbone->vars[i]: 0x7f3cf94e6ae0
+                                                                        fwriteXml_subVar_body ( )
+                                                                        var->name: space
+attribFlag: 0
+var->type: 0
+var->typeIndex: 4
+var->length: -1
+data: 0x55da1953efa0
+about to write name
+var: 0x7f3cf94dda00
+var->name: space
+file: 0x55da1956a5a0
+numSpaces: 10
+done writing name
+data: 0x55da1953efa0
+var->external: 0
+cmask: 0x55da1953efa0
+var->typeIndex == typeStr
+mask: 0x55da1953efa0
+mask: ()
+writeSubSpaces_replace ( )
+format: 
+temp: (%s)
+temp2: ()
+after va_ args. s: ()
+newStr: ()
+after amp replace
+newerStr: 
+string written
+                                                                        fwriteXml_subVar_body ( ) OVER
+                                                                        fwriteXml_subVar_body ( )
+                                                                        var->name: style
+attribFlag: 0
+var->type: 0
+var->typeIndex: 4
+var->length: -1
+data: 0x55da1953efa0
+about to write name
+var: 0x7f3cf94ddb60
+var->name: style
+file: 0x55da1956a5a0
+numSpaces: 10
+done writing name
+data: 0x55da1953efa0
+var->external: 256
+cmask: 0x55da1953f0a0
+var->typeIndex == typeStr
+mask: 0x55da1953f0a0
+mask: (tspan3156)
+writeSubSpaces_replace ( )
+format: tspan3156
+temp: (%s)
+temp2: (tspan3156)
+after va_ args. s: (tspan3156)
+newStr: (tspan3156)
+after amp replace
+newerStr: tspan3156
+string written
+                                                                        fwriteXml_subVar_body ( ) OVER
+                                                                        fwriteXml_subVar_body ( )
+                                                                        var->name: x
+attribFlag: 0
+var->type: 0
+var->typeIndex: 1
+var->length: -1
+data: 0x55da1953efa0
+about to write name
+var: 0x7f3cf94ddcc0
+var->name: x
+file: 0x55da1956a5a0
+numSpaces: 10
+done writing name
+data: 0x55da1953efa0
+var->external: 512
+cmask: 0x55da1953f1a0
+                                                                        fwriteXml_subVar_body ( ) OVER
+                                                                        fwriteXml_subVar_body ( )
+                                                                        var->name: y
+attribFlag: 0
+var->type: 0
+var->typeIndex: 1
+var->length: -1
+data: 0x55da1953efa0
+about to write name
+var: 0x7f3cf94dde20
+var->name: y
+file: 0x55da1956a5a0
+numSpaces: 10
+done writing name
+data: 0x55da1953efa0
+var->external: 516
+cmask: 0x55da1953f1a4
+                                                                        fwriteXml_subVar_body ( ) OVER
+                                                                        fwriteXml_subVar_body ( )
+                                                                        var->name: spanList
+attribFlag: 0
+var->type: 0
+var->typeIndex: 3
+var->length: 0
+data: 0x55da1953efa0
+about to write name
+var: 0x7f3cf94e6ae0
+var->name: spanList
+file: 0x55da1956a5a0
+numSpaces: 10
+done writing name
+data: 0x55da1953efa0
+var->external: 528
+cmask: 0x55da1953f1b0
+fwriteXml_subVar_body_arrayList ( )
+
+
+write type arraylist
+
+
+var->name: spanList
+ptrMask: 0x55da1953f1b0
+*ptrMask: 0x3338353436
+mask: 0x3338353436
+var: 0x7f3cf94e6ae0
+var->data.ptr: 0x7f3cf94ddf70
+Segmentation fault (core dumped)
+jadoo@jadoo:~/workspace/jHigh/testEnv$ 
+

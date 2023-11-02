@@ -15,7 +15,7 @@
       <literal>1</literal>
       <>-1</>
       <external>0</external>
-      <attribute>0</attribute>
+      <attribute>1</attribute>
       <saveFlag>1</saveFlag>
       <naked>0</naked>
     </subVar>
@@ -30,8 +30,9 @@
       <closeType>0</closeType>
       <length>-1</length>
       <literal>1</literal>
+      <>-1</>
       <external>0</external>
-      <attribute>0</attribute>
+      <attribute>1</attribute>
       <saveFlag>1</saveFlag>
       <naked>0</naked>
     </subVar>
@@ -48,7 +49,7 @@
       <literal>1</literal>
       <>-1</>
       <external>0</external>
-      <attribute>0</attribute>
+      <attribute>1</attribute>
       <saveFlag>1</saveFlag>
       <naked>0</naked>
     </subVar>
@@ -65,7 +66,7 @@
       <literal>1</literal>
       <>-1</>
       <external>0</external>
-      <attribute>0</attribute>
+      <attribute>1</attribute>
       <saveFlag>1</saveFlag>
       <naked>0</naked>
     </subVar>
@@ -82,7 +83,7 @@
       <literal>1</literal>
       <>-1</>
       <external>0</external>
-      <attribute>0</attribute>
+      <attribute>1</attribute>
       <saveFlag>1</saveFlag>
       <naked>0</naked>
     </subVar>
@@ -99,7 +100,7 @@
       <literal>1</literal>
       <>-1</>
       <external>0</external>
-      <attribute>0</attribute>
+      <attribute>1</attribute>
       <saveFlag>1</saveFlag>
       <naked>0</naked>
     </subVar>

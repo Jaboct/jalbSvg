@@ -24,6 +24,9 @@ void svg_preInit ( );
 struct svg {
 	char width[256];
 	char height[256];
+	char viewBox[256];
+	char version[256];
+	char id[256];
 	ArrayList *eles;	// (struct nakedUnion*)
 };
 struct nakedUnion {
@@ -51,11 +54,15 @@ struct g {
 };
 struct path {
 	char style[256];
-	char d[256];
+	char d[1024];
 	char id[256];
 	ArrayList *eles;	// (struct pathUni*)
 	char fill[256];
 	char stroke[256];
+	char stroke_width[256];
+	char stroke_linecap[256];
+	char stroke_linejoin[256];
+	char stroke_opacity[256];
 };
 
 

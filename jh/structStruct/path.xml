@@ -15,7 +15,7 @@
       <literal>1</literal>
       <>-1</>
       <external>0</external>
-      <attribute>0</attribute>
+      <attribute>1</attribute>
       <saveFlag>1</saveFlag>
       <naked>0</naked>
     </subVar>
@@ -28,11 +28,11 @@
         <>-1</>
       </initTypeData>
       <closeType>0</closeType>
-      <length>-1</length>
+      <length>1024</length>
       <literal>1</literal>
       <>-1</>
       <external>0</external>
-      <attribute>0</attribute>
+      <attribute>1</attribute>
       <saveFlag>1</saveFlag>
       <naked>0</naked>
     </subVar>
@@ -49,7 +49,7 @@
       <literal>1</literal>
       <>-1</>
       <external>0</external>
-      <attribute>0</attribute>
+      <attribute>1</attribute>
       <saveFlag>1</saveFlag>
       <naked>0</naked>
     </subVar>
@@ -93,7 +93,7 @@
       <>-1</>
       <external>0</external>
       <attribute>0</attribute>
-      <saveFlag>1</saveFlag>
+      <saveFlag>99</saveFlag>
       <naked>0</naked>
     </subVar>
     <subVar>
@@ -110,7 +110,75 @@
       <>-1</>
       <external>0</external>
       <attribute>0</attribute>
-      <saveFlag>1</saveFlag>
+      <saveFlag>99</saveFlag>
+      <naked>0</naked>
+    </subVar>
+    <subVar>
+      <name>stroke_width</name>
+      <type>0</type>
+      <typeIndex>4</typeIndex>
+      <initType>0</initType>
+      <initTypeData>
+        <>-1</>
+      </initTypeData>
+      <closeType>0</closeType>
+      <length>-1</length>
+      <literal>1</literal>
+      <>-1</>
+      <external>0</external>
+      <attribute>0</attribute>
+      <saveFlag>99</saveFlag>
+      <naked>0</naked>
+    </subVar>
+    <subVar>
+      <name>stroke_linecap</name>
+      <type>0</type>
+      <typeIndex>4</typeIndex>
+      <initType>0</initType>
+      <initTypeData>
+        <>-1</>
+      </initTypeData>
+      <closeType>0</closeType>
+      <length>-1</length>
+      <literal>1</literal>
+      <>-1</>
+      <external>0</external>
+      <attribute>0</attribute>
+      <saveFlag>99</saveFlag>
+      <naked>0</naked>
+    </subVar>
+    <subVar>
+      <name>stroke_linejoin</name>
+      <type>0</type>
+      <typeIndex>4</typeIndex>
+      <initType>0</initType>
+      <initTypeData>
+        <>-1</>
+      </initTypeData>
+      <closeType>0</closeType>
+      <length>-1</length>
+      <literal>1</literal>
+      <>-1</>
+      <external>0</external>
+      <attribute>0</attribute>
+      <saveFlag>99</saveFlag>
+      <naked>0</naked>
+    </subVar>
+    <subVar>
+      <name>stroke_opacity</name>
+      <type>0</type>
+      <typeIndex>4</typeIndex>
+      <initType>0</initType>
+      <initTypeData>
+        <>-1</>
+      </initTypeData>
+      <closeType>0</closeType>
+      <length>-1</length>
+      <literal>1</literal>
+      <>-1</>
+      <external>0</external>
+      <attribute>0</attribute>
+      <saveFlag>99</saveFlag>
       <naked>0</naked>
     </subVar>
   </vars>
