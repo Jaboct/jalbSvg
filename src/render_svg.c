@@ -14,6 +14,7 @@ extern float colorOrange[];
 int thisSel = 0;
 
 extern float glob_viewScale;
+extern float glob_viewLoc[];
 
 extern char *nakedUni_str[];
 extern int nakedUni_str_len;
@@ -155,7 +156,8 @@ void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *p
 				thisP[1] += lastP[1];
 			}
 //			draw2dApi->drawSeg ( screenDims, glBuffers, lastP, thisP, colorWhite );
-			seg_render ( screenDims, glBuffers, lastP, thisP, path->stroke_w );
+			seg_render ( screenDims, glBuffers, lastP, thisP, path->stroke_w,
+				glob_viewLoc, glob_viewScale );
 		} else if ( uni->type == path_CubicBez ) {
 			struct cubicBez *cBez = uni->cubicBez;
 			thisP[0] = cBez->XY[0];
@@ -177,7 +179,8 @@ void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *p
 				lastC[0] += lastP[0];
 				lastC[1] += lastP[1];
 			}
-			cubicBez_render ( screenDims, glBuffers, lastP, thisP, lastC, thisC );
+			cubicBez_render ( screenDims, glBuffers, lastP, thisP, lastC, thisC,
+				glob_viewLoc, glob_viewScale );
 		} else if ( uni->type == path_CubicBez ) {
 		} else if ( path_PathEnd ) {
 
@@ -185,11 +188,12 @@ void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *p
 			float t0[2];
 			float t1[2];
 
-			point_to_loc ( lastP, t0 );
-			point_to_loc ( startP, t1 );
+			point_to_loc_glob ( lastP, t0 );
+			point_to_loc_glob ( startP, t1 );
 
 //			draw2dApi->drawSeg ( screenDims, glBuffers, t0, t1, colorWhite );
-			seg_render ( screenDims, glBuffers, t0, t1, path->stroke_w );
+			seg_render ( screenDims, glBuffers, t0, t1, path->stroke_w,
+				glob_viewLoc, glob_viewScale );
 		}
 
 		if ( start ) {
@@ -258,7 +262,7 @@ void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *p
 		}
 
 		float adjP[2];
-		point_to_loc ( thisP, adjP );
+		point_to_loc_glob ( thisP, adjP );
 		int iXYWH[4] = {
 			adjP[0],
 			adjP[1],
@@ -301,29 +305,30 @@ void rectRender_svg ( int *screenDims, GLuint *glBuffers, int *XYWH, struct rect
 	float t0[2];
 	float t1[2];
 
-	point_to_loc ( p0, t0 );
-	point_to_loc ( p1, t1 );
+	point_to_loc_glob ( p0, t0 );
+	point_to_loc_glob ( p1, t1 );
 	draw2dApi->drawSeg ( screenDims, glBuffers, t0, t1, color );
 
 	p0[0] = p1[0];
 	p0[1] = p1[1] + rect->height;
-	point_to_loc ( p0, t0 );
+	point_to_loc_glob ( p0, t0 );
 	draw2dApi->drawSeg ( screenDims, glBuffers, t0, t1, color );
 
 	p1[0] = rect->x;
 	p1[1] = rect->y + rect->height;
-	point_to_loc ( p1, t1 );
+	point_to_loc_glob ( p1, t1 );
 	draw2dApi->drawSeg ( screenDims, glBuffers, t0, t1, color );
 
 	p0[0] = rect->x;
 	p0[1] = rect->y;
-	point_to_loc ( p0, t0 );
+	point_to_loc_glob ( p0, t0 );
 	draw2dApi->drawSeg ( screenDims, glBuffers, t0, t1, color );
 }
 
 void circleRender_svg ( int *screenDims, GLuint *glBuffers, int *XYWH, struct circle *circle ) {
 	float XY[2] = { circle->cx, circle->cy };
-	circleRender ( screenDims, glBuffers, XYWH, XY, circle->r );
+	circleRender ( screenDims, glBuffers, XYWH, XY, circle->r,
+		glob_viewLoc, glob_viewScale );
 }
 
 void ellipseRender_svg ( int *screenDims, GLuint *glBuffers, int *XYWH, struct ellipse *ellipse ) {
@@ -372,7 +377,7 @@ void textRender ( int *screenDims, GLuint *glBuffers, int *XYWH, struct text *te
 //		fXYWH[0] = XYWH[0] + span->x - glob_viewLoc[0];
 //		fXYWH[1] = XYWH[1] + span->y - glob_viewLoc[1];
 		float tXY[2] = { XYWH[0] + span->x, XYWH[1] + span->y };
-		point_to_loc ( tXY, fXYWH );
+		point_to_loc_glob ( tXY, fXYWH );
 
 /*
 		int XY[2] = { span->x, span->y };
@@ -383,7 +388,8 @@ void textRender ( int *screenDims, GLuint *glBuffers, int *XYWH, struct text *te
 */
 
 //		spanRender ( screenDims, glBuffers, XYWH, glyphWH, fXYWH, testString );
-		spanRender ( screenDims, glBuffers, XYWH, glyphWH, fXYWH, span->stringBuilder );
+		spanRender ( screenDims, glBuffers, XYWH, glyphWH, fXYWH, span->stringBuilder,
+			glob_viewLoc, glob_viewScale );
 
 		i += 1;
 	}

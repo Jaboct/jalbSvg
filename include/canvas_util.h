@@ -7,6 +7,6 @@
 
 /** Functions */
 
-void point_to_loc ( float *p0, float *pSet );
+void point_to_loc ( float *p0, float *pSet, float *viewLoc, float viewScale );
 
 

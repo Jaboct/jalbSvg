@@ -255,6 +255,10 @@ void get_pathUni_XY ( struct pathUni *pUni, float *XY ) {
 	}
 }
 
+void point_to_loc_glob ( float *p0, float *pSet ) {
+	point_to_loc ( p0, pSet, glob_viewLoc, glob_viewScale );
+}
+
 /** Api Setter */
 
 void set_set_viewScale ( void *f ) {

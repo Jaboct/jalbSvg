@@ -12,6 +12,8 @@
 #include "svg.h"
 #include "render.h"
 
+#include "mod_ext.h"
+
 /** Functions */
 
 void svg_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct svg *svg );

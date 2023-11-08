@@ -90,10 +90,11 @@ void jalbSvg_close ( void *data );
 
 void move_pUni ( struct pathUni *pUni, float dx, float dy );
 
+
 /** Util */
 
 void get_pathUni_XY ( struct pathUni *pUni, float *XY );
-
+void point_to_loc_glob ( float *p0, float *pSet );
 
 /** Api Setter */
 

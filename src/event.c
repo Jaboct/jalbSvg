@@ -80,7 +80,7 @@ int path_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct path *path,
 		float XY[2];
 		get_pathUni_XY ( uni, XY );
 
-		point_to_loc ( XY, XY );
+		point_to_loc_glob ( XY, XY );
 
 		sayFloatArray ( "XY", XY, 2 );
 

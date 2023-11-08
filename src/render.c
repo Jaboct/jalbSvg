@@ -15,7 +15,7 @@ extern float colorOrange[];
 extern float colorGray[];
 
 // rendering var
-extern float glob_viewScale;
+//extern float glob_viewScale;
 
 // editing vars
 extern int selected;
@@ -32,7 +32,8 @@ extern int svg_debugPrint_render_text;
 /** Functions */
 
 
-void seg_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1, float lineW ) {
+void seg_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1, float lineW,
+		float *viewLoc, float viewScale ) {
 	if ( svg_debugPrint_render ) {
 		printf ( "seg_render ( )\n" );
 
@@ -43,8 +44,8 @@ void seg_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1, floa
 	float t0[2];
 	float t1[2];
 
-	point_to_loc ( p0, t0 );
-	point_to_loc ( p1, t1 );
+	point_to_loc ( p0, t0, viewLoc, viewScale );
+	point_to_loc ( p1, t1, viewLoc, viewScale );
 
 //	draw2dApi->drawSeg ( screenDims, glBuffers, t0, t1, colorWhite );
 
@@ -58,7 +59,7 @@ void seg_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1, floa
 	sayFloatArray ( "vect swap", vect, 2 );
 
 
-	lineW /= glob_viewScale;
+	lineW /= viewScale;
 	if ( lineW < 1.0 ) {
 		lineW = 1.0;
 	}
@@ -90,7 +91,8 @@ void seg_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1, floa
 	}
 }
 
-void cubicBez_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1, float *c0, float *c1 ) {
+void cubicBez_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1, float *c0, float *c1,
+		float *viewLoc, float viewScale ) {
 	int points = 10;
 
 	int len = 2;
@@ -127,7 +129,7 @@ void cubicBez_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1,
 //	last[0] -= glob_viewLoc[0];
 //	last[1] -= glob_viewLoc[1];
 
-	point_to_loc ( last, last );
+	point_to_loc ( last, last, viewLoc, viewScale );
 
 	while ( i < points ) {
 		float s = (1.0 / points) * i;
@@ -167,7 +169,7 @@ void cubicBez_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1,
 //		f[0] -= glob_viewLoc[0];
 //		f[1] -= glob_viewLoc[1];
 
-		point_to_loc ( f, f );
+		point_to_loc ( f, f, viewLoc, viewScale );
 
 		draw2dApi->drawSeg ( screenDims, glBuffers, last, f, colorWhite );
 		last[0] = f[0];
@@ -189,7 +191,7 @@ void cubicBez_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1,
 	float t1[2];
 //	t1[0] = p1[0] - glob_viewLoc[0];
 //	t1[1] = p1[1] - glob_viewLoc[1];
-	point_to_loc ( p1, t1 );
+	point_to_loc ( p1, t1, viewLoc, viewScale );
 	draw2dApi->drawSeg ( screenDims, glBuffers, last, t1, colorWhite );
 }
 
@@ -208,7 +210,8 @@ void segScale ( float *p0, float *p1, float *pSet, float scale, int len ) {
 
 ArrayList *testString = NULL;
 
-void spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyphWH, float *fXYWH, ArrayList *sb ) {
+void spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyphWH, float *fXYWH, ArrayList *sb,
+		float *viewLoc, float viewScale ) {
 	if ( svg_debugPrint_render ||
 	     svg_debugPrint_render_text ) {
 		printf ( "spanRender ( )\n" );
@@ -216,8 +219,6 @@ void spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyp
 		sayFloatArray ( "glyphWH", glyphWH, 2 );
 		printSb ( sb );
 	}
-
-	float viewScale = 1.0 / glob_viewScale;
 
 	float desiredH = glyphWH[1];
 
@@ -278,7 +279,7 @@ void spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyp
 
 	XYWH[0] = XYWHpass[0];
 	XYWH[1] = XYWHpass[1];
-	XYWH[2] = 4 * viewScale;
+	XYWH[2] = 4 / viewScale;
 	XYWH[3] = glyphWH[1];
 
 //	drawWhiteCursor ( screenDims, glBuffers, XYWH, slim->cursorStartMem, slim->cursorEndMem, indentXY, glyphWH, colorWhite, firstLine );
@@ -289,7 +290,8 @@ void spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyp
 	}
 }
 
-void rectRender ( int *screenDims, GLuint *glBuffers, int *XYWH, float *rXYWH ) {
+void rectRender ( int *screenDims, GLuint *glBuffers, int *XYWH, float *rXYWH,
+		float *viewLoc, float viewScale ) {
 
 	float *color = colorWhite;
 
@@ -305,27 +307,28 @@ void rectRender ( int *screenDims, GLuint *glBuffers, int *XYWH, float *rXYWH ) 
 	float t0[2];
 	float t1[2];
 
-	point_to_loc ( p0, t0 );
-	point_to_loc ( p1, t1 );
+	point_to_loc ( p0, t0, viewLoc, viewScale );
+	point_to_loc ( p1, t1, viewLoc, viewScale );
 	draw2dApi->drawSeg ( screenDims, glBuffers, t0, t1, color );
 
 	p0[0] = p1[0];
 	p0[1] = p1[1] + rXYWH[3];
-	point_to_loc ( p0, t0 );
+	point_to_loc ( p0, t0, viewLoc, viewScale );
 	draw2dApi->drawSeg ( screenDims, glBuffers, t0, t1, color );
 
 	p1[0] = rXYWH[0];
 	p1[1] = rXYWH[1] + rXYWH[3];
-	point_to_loc ( p1, t1 );
+	point_to_loc ( p1, t1, viewLoc, viewScale );
 	draw2dApi->drawSeg ( screenDims, glBuffers, t0, t1, color );
 
 	p0[0] = rXYWH[0];
 	p0[1] = rXYWH[1];
-	point_to_loc ( p0, t0 );
+	point_to_loc ( p0, t0, viewLoc, viewScale );
 	draw2dApi->drawSeg ( screenDims, glBuffers, t0, t1, color );
 }
 
-void circleRender ( int *screenDims, GLuint *glBuffers, int *XYWH, float *XY, float r ) {
+void circleRender ( int *screenDims, GLuint *glBuffers, int *XYWH, float *XY, float r,
+		float *viewLoc, float viewScale ) {
 //	printf ( "circle->r: %f\n", circle->r );
 
 	float p0[2];
@@ -350,7 +353,8 @@ void circleRender ( int *screenDims, GLuint *glBuffers, int *XYWH, float *XY, fl
 	c1[0] = XY[0] - r * ratio;
 	c1[1] = XY[1] - r;
 
-	cubicBez_render ( screenDims, glBuffers, p0, p1, c0, c1 );
+	cubicBez_render ( screenDims, glBuffers, p0, p1, c0, c1,
+		viewLoc, viewScale );
 
 	// top right (+x)
 	p0[0] = XY[0] + r;
@@ -365,7 +369,8 @@ void circleRender ( int *screenDims, GLuint *glBuffers, int *XYWH, float *XY, fl
 	c1[0] = XY[0] + r * ratio;
 	c1[1] = XY[1] - r;
 
-	cubicBez_render ( screenDims, glBuffers, p0, p1, c0, c1 );
+	cubicBez_render ( screenDims, glBuffers, p0, p1, c0, c1,
+		viewLoc, viewScale );
 
 
 	// bottom right (+x +y)
@@ -381,7 +386,8 @@ void circleRender ( int *screenDims, GLuint *glBuffers, int *XYWH, float *XY, fl
 	c1[0] = XY[0] + r * ratio;
 	c1[1] = XY[1] + r;
 
-	cubicBez_render ( screenDims, glBuffers, p0, p1, c0, c1 );
+	cubicBez_render ( screenDims, glBuffers, p0, p1, c0, c1,
+		viewLoc, viewScale );
 
 
 	// bottom left (-x +y)
@@ -397,7 +403,8 @@ void circleRender ( int *screenDims, GLuint *glBuffers, int *XYWH, float *XY, fl
 	c1[0] = XY[0] - r * ratio;
 	c1[1] = XY[1] + r;
 
-	cubicBez_render ( screenDims, glBuffers, p0, p1, c0, c1 );
+	cubicBez_render ( screenDims, glBuffers, p0, p1, c0, c1,
+		viewLoc, viewScale );
 }
 
 //void ellipseRender ( int *screenDims, GLuint *glBuffers, int *XYWH, struct ellipse *ellipse ) {
