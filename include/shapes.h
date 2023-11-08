@@ -28,6 +28,10 @@ struct rect {
 	float y;
 	float width;
 	float height;
+	char fill[256];
+	char stroke[256];
+	char stroke_width[256];
+	char stroke_opacity[256];
 };
 struct circle {
 	char style[256];

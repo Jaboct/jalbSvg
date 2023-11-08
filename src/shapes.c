@@ -55,6 +55,10 @@ void rectFill ( struct rect *var ) {
 	var->y = 0.0;
 	var->width = 0.0;
 	var->height = 0.0;
+	strcpy ( var->fill, "none" );
+	strcpy ( var->stroke, "#000000" );
+	strcpy ( var->stroke_width, "1.0px" );
+	strcpy ( var->stroke_opacity, "1" );
 }
 
 void *rectInitMask ( ) {
@@ -67,8 +71,12 @@ void rectClose ( struct rect *var ) {
 
 }
 int rect_attrib_arr[] = {
-	0,
-	0,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
 	0,
 	0,
 	0,
@@ -90,6 +98,14 @@ void rectBodyToVal ( void *varPass, int nameI, char *body ) {
 		var->width = atof ( body );
 	} else if ( nameI == 5 ) {
 		var->height = atof ( body );
+	} else if ( nameI == 6 ) {
+		strcpy ( var->fill, body );
+	} else if ( nameI == 7 ) {
+		strcpy ( var->stroke, body );
+	} else if ( nameI == 8 ) {
+		strcpy ( var->stroke_width, body );
+	} else if ( nameI == 9 ) {
+		strcpy ( var->stroke_opacity, body );
 	}
 }
 
@@ -107,6 +123,14 @@ int rectNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
 		return 4;
 	} else if ( strcmp ( body, "height" ) == 0 ) {
 		return 5;
+	} else if ( strcmp ( body, "fill" ) == 0 ) {
+		return 6;
+	} else if ( strcmp ( body, "stroke" ) == 0 ) {
+		return 7;
+	} else if ( strcmp ( body, "stroke_width" ) == 0 ) {
+		return 8;
+	} else if ( strcmp ( body, "stroke_opacity" ) == 0 ) {
+		return 9;
 	}
 	return -1;
 }
@@ -149,11 +173,11 @@ void circleClose ( struct circle *var ) {
 
 }
 int circle_attrib_arr[] = {
-	0,
-	0,
-	0,
-	0,
-	0,
+	1,
+	1,
+	1,
+	1,
+	1,
 };
 void circleBodyToVal ( void *varPass, int nameI, char *body ) {
 

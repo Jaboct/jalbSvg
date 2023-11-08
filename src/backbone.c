@@ -19,7 +19,7 @@ struct backbone_subVar svg_width = {
 	.name = "width",
 	.type = 0,
 	.typeIndex = 4,
-	.initType = 0,
+	.initType = 4,
 	.length = -1,
 	.literal = 1,
 	.data = {
@@ -33,7 +33,7 @@ struct backbone_subVar svg_height = {
 	.name = "height",
 	.type = 0,
 	.typeIndex = 4,
-	.initType = 0,
+	.initType = 4,
 	.length = -1,
 	.literal = 1,
 	.data = {
@@ -47,7 +47,7 @@ struct backbone_subVar svg_viewBox = {
 	.name = "viewBox",
 	.type = 0,
 	.typeIndex = 4,
-	.initType = 0,
+	.initType = 4,
 	.length = -1,
 	.literal = 1,
 	.data = {
@@ -61,7 +61,7 @@ struct backbone_subVar svg_version = {
 	.name = "version",
 	.type = 0,
 	.typeIndex = 4,
-	.initType = 0,
+	.initType = 4,
 	.length = -1,
 	.literal = 1,
 	.data = {
@@ -416,7 +416,7 @@ struct backbone_subVar path_fill = {
 	.name = "fill",
 	.type = 0,
 	.typeIndex = 4,
-	.initType = 0,
+	.initType = 4,
 	.length = -1,
 	.literal = 1,
 	.data = {
@@ -430,7 +430,7 @@ struct backbone_subVar path_stroke = {
 	.name = "stroke",
 	.type = 0,
 	.typeIndex = 4,
-	.initType = 0,
+	.initType = 4,
 	.length = -1,
 	.literal = 1,
 	.data = {
@@ -444,7 +444,7 @@ struct backbone_subVar path_stroke_width = {
 	.name = "stroke_width",
 	.type = 0,
 	.typeIndex = 4,
-	.initType = 0,
+	.initType = 4,
 	.length = -1,
 	.literal = 1,
 	.data = {
@@ -458,7 +458,7 @@ struct backbone_subVar path_stroke_linecap = {
 	.name = "stroke_linecap",
 	.type = 0,
 	.typeIndex = 4,
-	.initType = 0,
+	.initType = 4,
 	.length = -1,
 	.literal = 1,
 	.data = {
@@ -472,7 +472,7 @@ struct backbone_subVar path_stroke_linejoin = {
 	.name = "stroke_linejoin",
 	.type = 0,
 	.typeIndex = 4,
-	.initType = 0,
+	.initType = 4,
 	.length = -1,
 	.literal = 1,
 	.data = {
@@ -486,7 +486,7 @@ struct backbone_subVar path_stroke_opacity = {
 	.name = "stroke_opacity",
 	.type = 0,
 	.typeIndex = 4,
-	.initType = 0,
+	.initType = 4,
 	.length = -1,
 	.literal = 1,
 	.data = {
@@ -1365,6 +1365,10 @@ int rect_attributes[] = {
 	1,
 	1,
 	1,
+	0,
+	0,
+	0,
+	0,
 };
 struct backbone_subVar rect_style = {
 	.name = "style",
@@ -1450,6 +1454,62 @@ struct backbone_subVar rect_height = {
 	.saveFlag = 1,
 	.naked = 0,
 };
+struct backbone_subVar rect_fill = {
+	.name = "fill",
+	.type = 0,
+	.typeIndex = 4,
+	.initType = 4,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct rect, fill ),
+	.saveFlag = 99,
+	.naked = 0,
+};
+struct backbone_subVar rect_stroke = {
+	.name = "stroke",
+	.type = 0,
+	.typeIndex = 4,
+	.initType = 4,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct rect, stroke ),
+	.saveFlag = 99,
+	.naked = 0,
+};
+struct backbone_subVar rect_stroke_width = {
+	.name = "stroke_width",
+	.type = 0,
+	.typeIndex = 4,
+	.initType = 4,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct rect, stroke_width ),
+	.saveFlag = 99,
+	.naked = 0,
+};
+struct backbone_subVar rect_stroke_opacity = {
+	.name = "stroke_opacity",
+	.type = 0,
+	.typeIndex = 4,
+	.initType = 4,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct rect, stroke_opacity ),
+	.saveFlag = 99,
+	.naked = 0,
+};
 struct backbone_subVar *rect_varArr[] = {
 	&rect_style,
 	&rect_id,
@@ -1457,10 +1517,14 @@ struct backbone_subVar *rect_varArr[] = {
 	&rect_y,
 	&rect_width,
 	&rect_height,
+	&rect_fill,
+	&rect_stroke,
+	&rect_stroke_width,
+	&rect_stroke_opacity,
 };
 struct backbone_structStruct rect = {
 	"rect",
-	6,
+	10,
 	rect_varArr,
 	"",
 	"",

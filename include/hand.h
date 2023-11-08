@@ -10,6 +10,8 @@
 #include "path.h"
 #include "parse.h"
 
+#include "mod_ext.h"
+
 
 /** Structs */
 
@@ -62,20 +64,27 @@ enum {
 
 void load_global_svg ( char *dir );
 
+
+/** Post Init */
+
+void pathPostInit ( void *data );
+void path_style_handle ( struct path *path, char *name, char *value );
+
+void text_postInit ( struct text *text );
+
+
+/** Say */
+
 void say_svg ( struct svg *svg );
 
 void sayEleList ( ArrayList *eles );
 void say_svgText ( struct text *text );
 
-
-
-void pathPostInit ( void *data );
-void path_style_handle ( struct path *path, char *name, char *value );
-
 void sayPath ( struct path *path );
 void sayPathUni ( struct pathUni *uni );
 
 int isBlankSpace ( char c );
+
 
 /** to paste **/
 
@@ -90,7 +99,6 @@ void expandEleList ( ArrayList *eles );
 void hand_load ( );
 
 void hand_p ( char *dir );
-
 
 
 /** postInit */
@@ -110,6 +118,8 @@ void add_errand ( struct g *g, float *XY, char *name, char *desc );
 void save_global_xml ( char *dir );
 void save_global_svg ( char *dir );
 
+/** Pre Save */
+
 void svg_preSave ( struct svg *svg );
 void preSave_nakedList ( ArrayList *eles );
 
@@ -119,8 +129,6 @@ void preSave_path ( struct path *path );
 void preSave_text ( struct text *text );
 void preSave_tspan ( struct tspan *tspan );
 void preSave_rect ( struct rect *rect );
-
-/** Style Stuff */
 
 void compile_path_style ( struct path *path );
 

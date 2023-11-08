@@ -16,96 +16,67 @@
 
 
 
-void svg_preInit ( );
+void shapes_preInit ( );
 
 
 /** Structs */
 
-struct svg {
-	char width[256];
-	char height[256];
-	char viewBox[256];
-	char version[256];
-	char id[256];
-	ArrayList *eles;	// (struct nakedUnion*)
-};
-struct nakedUnion {
-	int type;
-	union  {
-		struct g *g;
-		struct path *path;
-		struct text *text;
-		struct rect *rect;
-		struct circle *circle;
-		struct ellipse *ellipse;
-	};
-};
-enum nakedUnionEnum {
-	G = 0,
-	Path,
-	Text,
-	Rect,
-	Circle,
-	Ellipse,	// 5
-};
-struct g {
-	char id[256];
-	ArrayList *eles;	// (struct nakedUnion*)
-};
-struct path {
+struct rect {
 	char style[256];
-	char d[1024];
 	char id[256];
-	ArrayList *eles;	// (struct pathUni*)
+	float x;
+	float y;
+	float width;
+	float height;
 	char fill[256];
 	char stroke[256];
 	char stroke_width[256];
-	char stroke_linecap[256];
-	char stroke_linejoin[256];
 	char stroke_opacity[256];
+};
+struct circle {
+	char style[256];
+	char id[256];
+	float cx;
+	float cy;
+	float r;
+};
+struct ellipse {
+	char style[256];
+	char id[256];
+	float cx;
+	float cy;
+	float rx;
+	float ry;
 };
 
 
 /** Post Includes */
 
-#include "text.h"
-#include "hand.h"
-#include "shapes.h"
-
 
 /** Functions */
 
-/** svg */
-struct svg *svgInit ( );
-void svgFill ( struct svg *var );
-void *svgInitMask ( );
-void svgClose ( struct svg *var );
-void svgBodyToVal ( void *varPass, int nameI, char *body );
-int svgNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+/** rect */
+struct rect *rectInit ( );
+void rectFill ( struct rect *var );
+void *rectInitMask ( );
+void rectClose ( struct rect *var );
+void rectBodyToVal ( void *varPass, int nameI, char *body );
+int rectNameToIndex ( char *body, void *data, void *ret, char **strPtr );
 
-/** nakedUnion */
-struct nakedUnion *nakedUnionInit ( );
-void nakedUnionFill ( struct nakedUnion *var );
-void nakedUnionTypeChange0 ( struct nakedUnion *var, int type );
-void *nakedUnionInitMask ( );
-void nakedUnionClose ( struct nakedUnion *var );
-void nakedUnionBodyToVal ( void *varPass, int nameI, char *body );
-int nakedUnionNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+/** circle */
+struct circle *circleInit ( );
+void circleFill ( struct circle *var );
+void *circleInitMask ( );
+void circleClose ( struct circle *var );
+void circleBodyToVal ( void *varPass, int nameI, char *body );
+int circleNameToIndex ( char *body, void *data, void *ret, char **strPtr );
 
-/** g */
-struct g *gInit ( );
-void gFill ( struct g *var );
-void *gInitMask ( );
-void gClose ( struct g *var );
-void gBodyToVal ( void *varPass, int nameI, char *body );
-int gNameToIndex ( char *body, void *data, void *ret, char **strPtr );
-
-/** path */
-struct path *pathInit ( );
-void pathFill ( struct path *var );
-void *pathInitMask ( );
-void pathClose ( struct path *var );
-void pathBodyToVal ( void *varPass, int nameI, char *body );
-int pathNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+/** ellipse */
+struct ellipse *ellipseInit ( );
+void ellipseFill ( struct ellipse *var );
+void *ellipseInitMask ( );
+void ellipseClose ( struct ellipse *var );
+void ellipseBodyToVal ( void *varPass, int nameI, char *body );
+int ellipseNameToIndex ( char *body, void *data, void *ret, char **strPtr );
 
 /** Other Functs */

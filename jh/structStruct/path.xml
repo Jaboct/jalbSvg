@@ -83,9 +83,12 @@
       <name>fill</name>
       <type>0</type>
       <typeIndex>4</typeIndex>
-      <initType>0</initType>
+      <initType>4</initType>
       <initTypeData>
-        <>-1</>
+        <std>
+          <str>none</str>
+          <useData>0</useData>
+        </std>
       </initTypeData>
       <closeType>0</closeType>
       <length>-1</length>
@@ -100,9 +103,12 @@
       <name>stroke</name>
       <type>0</type>
       <typeIndex>4</typeIndex>
-      <initType>0</initType>
+      <initType>4</initType>
       <initTypeData>
-        <>-1</>
+        <std>
+          <str>#000000</str>
+          <useData>0</useData>
+        </std>
       </initTypeData>
       <closeType>0</closeType>
       <length>-1</length>
@@ -117,9 +123,12 @@
       <name>stroke_width</name>
       <type>0</type>
       <typeIndex>4</typeIndex>
-      <initType>0</initType>
+      <initType>4</initType>
       <initTypeData>
-        <>-1</>
+        <std>
+          <str>1.0px</str>
+          <useData>0</useData>
+        </std>
       </initTypeData>
       <closeType>0</closeType>
       <length>-1</length>
@@ -134,9 +143,12 @@
       <name>stroke_linecap</name>
       <type>0</type>
       <typeIndex>4</typeIndex>
-      <initType>0</initType>
+      <initType>4</initType>
       <initTypeData>
-        <>-1</>
+        <std>
+          <str>butt</str>
+          <useData>0</useData>
+        </std>
       </initTypeData>
       <closeType>0</closeType>
       <length>-1</length>
@@ -151,9 +163,12 @@
       <name>stroke_linejoin</name>
       <type>0</type>
       <typeIndex>4</typeIndex>
-      <initType>0</initType>
+      <initType>4</initType>
       <initTypeData>
-        <>-1</>
+        <std>
+          <str>miter</str>
+          <useData>0</useData>
+        </std>
       </initTypeData>
       <closeType>0</closeType>
       <length>-1</length>
@@ -168,9 +183,12 @@
       <name>stroke_opacity</name>
       <type>0</type>
       <typeIndex>4</typeIndex>
-      <initType>0</initType>
+      <initType>4</initType>
       <initTypeData>
-        <>-1</>
+        <std>
+          <str>1</str>
+          <useData>0</useData>
+        </std>
       </initTypeData>
       <closeType>0</closeType>
       <length>-1</length>

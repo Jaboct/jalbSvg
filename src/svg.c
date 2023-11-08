@@ -51,10 +51,10 @@ struct svg *svgInit ( ) {
 	return var;
 }
 void svgFill ( struct svg *var ) {
-	var->width[0] = '\0';
-	var->height[0] = '\0';
-	var->viewBox[0] = '\0';
-	var->version[0] = '\0';
+	strcpy ( var->width, "210mm" );
+	strcpy ( var->height, "297mm" );
+	strcpy ( var->viewBox, "0 0 210 297" );
+	strcpy ( var->version, "1.1" );
 	var->id[0] = '\0';
 	var->eles = initArrayList ( 10, sizeof ( struct nakedUnion* ), 10 );
 }
@@ -363,12 +363,12 @@ void pathFill ( struct path *var ) {
 	var->d[0] = '\0';
 	var->id[0] = '\0';
 	var->eles = initArrayList ( 10, sizeof ( struct pathUni* ), 10 );
-	var->fill[0] = '\0';
-	var->stroke[0] = '\0';
-	var->stroke_width[0] = '\0';
-	var->stroke_linecap[0] = '\0';
-	var->stroke_linejoin[0] = '\0';
-	var->stroke_opacity[0] = '\0';
+	strcpy ( var->fill, "none" );
+	strcpy ( var->stroke, "#000000" );
+	strcpy ( var->stroke_width, "1.0px" );
+	strcpy ( var->stroke_linecap, "butt" );
+	strcpy ( var->stroke_linejoin, "miter" );
+	strcpy ( var->stroke_opacity, "1" );
 }
 
 void *pathInitMask ( ) {

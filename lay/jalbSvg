@@ -100,6 +100,7 @@ jalbSvg	2	set_onTest	1
 jalbSvg	q	test_viewLoc_01
 jalbSvg	w	test_viewScale_00
 jalbSvg	e	hand_errand_00
+jalbSvg	m	toggle_renderMode
 
 
 jalbSvg	1	hand_stru_00
@@ -119,7 +120,7 @@ jalbSvg	s	save_global_svg	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/saveP
 
 Hotkey:
 #jalbSvg	0	hand_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/proof_text_00_trim.svg"
-
+jalbSvg	0	load_global_svg	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/saveProof/save_00.svg"
 
 Append:
 lay/ui/uiGen_hotkey

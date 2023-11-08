@@ -16,6 +16,8 @@ extern int svg_attributes[];
 extern struct backbone_structStruct svg;
 */
 
+extern int renderMode;
+
 
 /** Functions */
 
@@ -59,6 +61,84 @@ int svgNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
 	return -1;
 }
 */
+
+
+/** Post Init */
+
+void pathPostInit ( void *data ) {
+	printf ( "pathPostInit ( )\n" );
+	struct path *path = data;
+
+	printf ( "pre\n" );
+	sayPath ( path );
+
+	// ok so i need to parse d.
+	// i can do this in the BodyToVal, i dont need to do it here.
+	// whatever.
+
+	parseD ( path->d, path->eles );
+
+//	printf ( "post parseD\n" );
+
+	generic_postInit ( path, path->style, (void (*)(void *, char *, char *))path_style_handle );
+
+	sayPath ( path );
+
+	printf ( "pathPostInit ( ) OVER\n" );
+}
+
+
+#define expand_preprocessor(funct) \
+	funct("fill", path->fill) \
+	funct("stroke", path->stroke) \
+	funct("stroke-width", path->stroke_width) \
+	funct("stroke-linecap", path->stroke_linecap) \
+	funct("stroke-linejoin", path->stroke_linejoin) \
+	funct("stroke-opacity", path->stroke_opacity)
+
+
+#define path_styleParse(strName,varName) \
+	if ( strcmp ( name, strName ) == 0 ) { \
+		strcpy ( varName, value ); \
+	} else
+
+
+int debugPrint_styleParse = 1;
+
+void path_style_handle ( struct path *path, char *name, char *value ) {
+	if ( debugPrint_styleParse ) {
+		printf ( "path_style_handle ( )\n" );
+		printf ( "name: %s\n", name );
+		printf ( "value: %s\n", value );
+	}
+
+/*
+	if ( strcmp ( name, "fill" ) == 0 ) {
+		strcpy ( path->fill, value );
+	} else if ( strcmp ( name, "stroke" ) == 0 ) {
+		strcpy ( path->stroke, value );
+	} else 
+*/
+	expand_preprocessor(path_styleParse)
+	{
+		printf ( "path_style_handle unhandled\n" );
+		printf ( "name: %s\n", name );
+		printf ( "value: %s\n", value );
+	}
+
+	if ( debugPrint_styleParse ) {
+		printf ( "path_style_handle ( ) OVER\n" );
+	}
+}
+
+
+
+
+
+
+
+
+/** Say */
 
 void say_svg ( struct svg *svg ) {
 	printf ( "say_svg ( )\n" );
@@ -152,72 +232,6 @@ void say_svgText ( struct text *text ) {
 		i += 1;
 	}
 }
-
-void pathPostInit ( void *data ) {
-	printf ( "pathPostInit ( )\n" );
-	struct path *path = data;
-
-	printf ( "pre\n" );
-	sayPath ( path );
-
-	// ok so i need to parse d.
-	// i can do this in the BodyToVal, i dont need to do it here.
-	// whatever.
-
-	parseD ( path->d, path->eles );
-
-//	printf ( "post parseD\n" );
-
-	generic_postInit ( path, path->style, (void (*)(void *, char *, char *))path_style_handle );
-
-	sayPath ( path );
-
-	printf ( "pathPostInit ( ) OVER\n" );
-}
-
-#define expand_preprocessor(funct) \
-	funct("fill", path->fill) \
-	funct("stroke", path->stroke) \
-	funct("stroke-width", path->stroke_width) \
-	funct("stroke-linecap", path->stroke_linecap) \
-	funct("stroke-linejoin", path->stroke_linejoin) \
-	funct("stroke-opacity", path->stroke_opacity)
-
-
-#define path_styleParse(strName,varName) \
-	if ( strcmp ( name, strName ) == 0 ) { \
-		strcpy ( varName, value ); \
-	} else
-
-
-int debugPrint_styleParse = 1;
-
-void path_style_handle ( struct path *path, char *name, char *value ) {
-	if ( debugPrint_styleParse ) {
-		printf ( "path_style_handle ( )\n" );
-		printf ( "name: %s\n", name );
-		printf ( "value: %s\n", value );
-	}
-
-/*
-	if ( strcmp ( name, "fill" ) == 0 ) {
-		strcpy ( path->fill, value );
-	} else if ( strcmp ( name, "stroke" ) == 0 ) {
-		strcpy ( path->stroke, value );
-	} else 
-*/
-	expand_preprocessor(path_styleParse)
-	{
-		printf ( "path_style_handle unhandled\n" );
-		printf ( "name: %s\n", name );
-		printf ( "value: %s\n", value );
-	}
-
-	if ( debugPrint_styleParse ) {
-		printf ( "path_style_handle ( ) OVER\n" );
-	}
-}
-
 
 void sayPath ( struct path *path ) {
 	printf ( "sayPath ( )\n" );
@@ -468,6 +482,8 @@ void text_postInit ( struct text *text ) {
 		i += 1;
 	}
 */
+
+//	strToFloatIndex
 }
 
 void tspan_postInit ( struct tspan *tspan ) {
@@ -591,7 +607,7 @@ void hand_errand_00 ( ) {
 	float WH[2] = { 200, 100 };
 	add_errand ( g, XY, name, desc );
 
-	int addChild = 0;
+	int addChild = 1;
 	if ( addChild ) {
 		// if ele->hasChild
 
@@ -755,6 +771,19 @@ void save_global_svg ( char *dir ) {
 	printf ( "save_global_svg ( ) OVER\n" );
 }
 
+
+/** Pre Save */
+
+#define path_styleFill(strName,varName) \
+	if ( varName[0] != '\0' ) { \
+		if ( i != 0 ) { \
+			buffer[i] = ';'; \
+			i += 1; \
+			buffer[i] = '\0'; \
+		} \
+		i += sprintf ( &buffer[i], strName":%s", varName ); \
+	}
+
 void svg_preSave ( struct svg *svg ) {
 	printf ( "svg_preSave ( )\n" );
 
@@ -812,6 +841,11 @@ void preSave_path ( struct path *path ) {
 void preSave_text ( struct text *text ) {
 	printf ( "preSave_text ( )\n" );
 
+	char *buffer = text->style;
+	int bi = 0;
+
+	sprintf ( &buffer[bi], "font-size:%fpx", text->fontSize );
+
 	int i;
 	int len;
 	i = 0;
@@ -829,23 +863,24 @@ void preSave_text ( struct text *text ) {
 
 void preSave_tspan ( struct tspan *tspan ) {
 	printf ( "tspan->body: %s\n", tspan->body );
+
+/*
+	char *buffer = tspan->style;
+	int i = 0;
+
+	strcpy ( &buffer[i], "font-size:%fpx", tspan->fontSize );
+*/
 }
 
 void preSave_rect ( struct rect *rect ) {
+	char *buffer = rect->style;
+	int i = 0;
+
+	path_styleFill("fill", rect->fill)
+	path_styleFill("stroke", rect->stroke)
+	path_styleFill("stroke-width", rect->stroke_width)
+	path_styleFill("stroke-opacity", rect->stroke_opacity)
 }
-
-/** Style Stuff */
-
-#define path_styleFill(strName,varName) \
-	if ( varName[0] != '\0' ) { \
-		if ( i != 0 ) { \
-			buffer[i] = ';'; \
-			i += 1; \
-			buffer[i] = '\0'; \
-		} \
-		i += sprintf ( &buffer[i], strName":%s", varName ); \
-	}
-
 
 void compile_path_style ( struct path *path ) {
 	char *buffer = path->style;
@@ -971,4 +1006,18 @@ int nakedStru_nameToIndex ( char *body, ArrayList *eles, void *ret, char **strPt
 		return jxnPtr;
 	}
 	return -1;
+}
+
+
+/** Toggle */
+
+void toggle_renderMode ( ) {
+	printf ( "toggle_renderMode ( )\n" );
+
+	renderMode += 1;
+	renderMode %= renderM_num;
+
+	printf ( "renderMode: %d\n", renderMode );
+
+	printf ( "toggle_renderMode ( )\n" );
 }

@@ -10,6 +10,8 @@ extern struct jalbFont *fonts[];
 
 extern float colorWhite[];
 extern float colorBlack[];
+extern float colorOrange[];
+extern float colorGray[];
 
 
 float *viewLoc_ptr;
@@ -22,9 +24,15 @@ int glob_screenDims[2];
 void (*setViewScale) (float s) = NULL;
 
 
-int svg_debugPrint_render = 1;
+int svg_debugPrint_render = 0;
 int svg_debugPrint_render_text = 0;
 
+int svg_debugPrint_event = 0;
+
+
+int renderMode = renderM_edit;
+
+int pointW = 10;
 
 /** Functions */
 
@@ -81,8 +89,140 @@ int jalbSvg_event ( SDL_Event *e, int *clickXY, int *eleWH, void *data ) {
 	return 1;
 }
 
+// this has recursion so needs an arraylist.
+int selected = 0;
+ArrayList *selList = NULL;
+
+int depth = 0;
+
 int jalbSvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 		float *viewLoc, float viewScale ) {
+	if ( svg_debugPrint_event ) {
+		printf ( "jalbSvg_mEvent ( )\n" );
+	}
+
+	if ( !selList ) {
+		selList = initArrayList ( 10, sizeof ( void* ), 10 );
+	}
+
+	if ( !global_svg ) {
+//		svg_event ( screenDims, glBuffers, XYWHpass, global_svg );
+		return 0;
+	}
+	struct svg *svg = global_svg;
+
+
+	if ( e->type == SDL_MOUSEMOTION ) {
+		if ( selected ) {
+			int i = 0;
+			int len = arrayListGetLength ( selList );
+			printf ( "selList.len: %d\n", len );
+
+			struct nakedUnion *uni = NULL;
+			ArrayList *nextList = svg->eles;
+			struct cursorMem *mem = NULL;
+
+			while ( i < len-1 ) {
+				mem = arrayListGetPointer ( selList, i );
+
+				printf ( "mem->selI: %d\n", mem->selI );
+
+				uni = arrayListGetPointer ( nextList, mem->selI );;
+				nextList = uni->g->eles;
+				i += 1;
+			}
+
+			printf ( "i: %d\n", i );
+
+			mem = arrayListGetPointer ( selList, i );
+
+			printf ( "mem->selI: %d\n", mem->selI );
+
+//			printf ( "nextList.len: %d\n", arrayListGetLength ( nextList ) );
+//			struct nakedUnion *uni = arrayListGetPointer ( nextList, mem->selI );
+
+			if ( uni->type == Path ) {
+				printf ( "uni->path->eles.len: %d\n", arrayListGetLength ( uni->path->eles ) );
+
+				struct pathUni *pUni = arrayListGetPointer ( uni->path->eles, mem->selI );
+
+				float dx = e->motion.xrel / viewScale;
+				float dy = e->motion.yrel / viewScale;
+				move_pUni ( pUni, dx, dy );
+			}
+			return 1;
+		}
+
+		return 0;
+	}
+
+	selected = 0;
+	if ( e->type == SDL_MOUSEBUTTONUP ) {
+	}
+
+	if ( e->type == SDL_MOUSEBUTTONDOWN ) {
+	int ret = nakedList_mEvent ( e, clickXYpass, eleWH, svg->eles,
+		viewLoc, viewScale );
+	if ( ret ) {
+		printf ( "finish set cursor\n" );
+		printf ( "selList.len: %d\n", arrayListGetLength ( selList ) );
+
+		int i = 0;
+		int len = arrayListGetLength ( selList );
+		while ( i < len ) {
+			struct cursorMem *mem = arrayListGetPointer ( selList, i );
+			printf ( "%d, ", mem->selI );
+			i += 1;
+		}
+		printf ( "\n" );
+	}
+	}
+
+	if ( svg_debugPrint_event ) {
+		printf ( "jalbSvg_mEvent ( ) OVER\n" );
+	}
+
+	return 0;
+}
+
+int nakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *eles,
+		float *viewLoc, float viewScale ) {
+	int i;
+	int len;
+
+	i = 0;
+	len = arrayListGetLength ( eles );
+	while ( i < len ) {
+		struct nakedUnion *uni = arrayListGetPointer ( eles, i );
+
+		if ( uni->type == G ) {
+//			printf ( "TODO\n" );
+			struct g *g = uni->g;
+
+			depth += 1;
+			int ret = nakedList_mEvent ( e, clickXYpass, eleWH, g->eles,
+				viewLoc, viewScale );
+			depth -= 1;
+			if ( ret == 1 ) {
+				handleCursor;
+				return ret;
+			}
+
+		} else if ( uni->type == Path ) {
+			struct path *path = uni->path;
+			depth += 1;
+			int ret = path_mEvent ( e, clickXYpass, eleWH, path,
+				viewLoc, viewScale );
+			depth -= 1;
+			if ( ret == 1 ) {
+//				selI = i;
+				handleCursor;
+				return ret;
+			}
+		}
+
+		i += 1;
+	}
 	return 0;
 }
 
@@ -91,31 +231,87 @@ void jalbSvg_close ( void *data ) {
 }
 
 
+void move_pUni ( struct pathUni *pUni, float dx, float dy ) {
+	if ( svg_debugPrint_event ) {
+		printf ( "move_pUni ( )\n" );
+	}
+
+	if ( pUni->type == path_MoveTo ) {
+		struct moveTo *ele = pUni->moveTo;
+		ele->XY[0] += dx;
+		ele->XY[1] += dy;
+	} else if ( pUni->type == path_LineTo ) {
+		struct lineTo *ele = pUni->lineTo;
+		ele->XY[0] += dx;
+		ele->XY[1] += dy;
+	} else if ( pUni->type == path_CubicBez ) {
+		struct cubicBez *ele = pUni->cubicBez;
+		ele->XY[0] += dx;
+		ele->XY[1] += dy;
+	} else if ( pUni->type == path_QuadBez ) {
+		struct quadBez *ele = pUni->quadBez;
+		ele->XY[0] += dx;
+		ele->XY[1] += dy;
+	} else if ( pUni->type == path_EllipArc ) {
+		struct ellipArc *ele = pUni->ellipArc;
+		ele->XY[0] += dx;
+		ele->XY[1] += dy;
+	} else if ( pUni->type == path_PathEnd ) {
+	}
+
+	if ( svg_debugPrint_event ) {
+		printf ( "move_pUni ( ) OVER\n" );
+	}
+}
+
+// return 1 if i select this ele
+int path_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct path *path,
+		float *viewLoc, float viewScale ) {
+	if ( svg_debugPrint_event ) {
+		printf ( "path_mEvent ( )\n" );
+		sayIntArray ( "clickXYpass", clickXYpass, 2 );
+	}
+
+	int i;
+	int len;
+
+	i = 0;
+	len = arrayListGetLength ( path->eles );
+	while ( i < len ) {
+		struct pathUni *uni = arrayListGetPointer ( path->eles, i );
+
+		float XY[2];
+		get_pathUni_XY ( uni, XY );
+
+		point_to_loc ( XY, XY );
+
+		sayFloatArray ( "XY", XY, 2 );
+
+		if ( clickXYpass[0] >= XY[0] &&
+		     clickXYpass[0] <= XY[0] + pointW ) {
+			if ( clickXYpass[1] >= XY[1] &&
+			     clickXYpass[1] <= XY[1] + pointW ) {
+				selected = 1;
+//				selP = i;
+
+				printf ( "SELECTED ELE\n" );
+				handleCursor_start;
+
+				return 1;
+			}
+		}
+
+		i += 1;
+	}
+
+	if ( svg_debugPrint_event ) {
+		printf ( "path_mEvent ( ) OVER\n" );
+	}
+
+	return 0;
+}
 
 // i need the dynamic canvas info.
-
-
-void point_to_loc ( float *p0, float *pSet ) {
-/*
-	printf ( "point_to_loc ( )\n" );
-	sayFloatArray ( "glob_viewLoc", glob_viewLoc, 2 );
-	printf ( "glob_viewScale: %f\n", glob_viewScale );
-	sayFloatArray ( "p0", p0, 2 );
-*/
-
-//	pSet[0] = p0[0] * glob_viewScale - glob_viewLoc[0];
-//	pSet[1] = p0[1] * glob_viewScale - glob_viewLoc[1];
-
-//	pSet[0] = p0[0];
-//	pSet[1] = p0[1];
-
-
-	pSet[0] = ( p0[0] - glob_viewLoc[0] ) / glob_viewScale;
-	pSet[1] = ( p0[1] - glob_viewLoc[1] ) / glob_viewScale;
-
-
-//	sayFloatArray ( "pSet", pSet, 2 );
-}
 
 
 void svg_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct svg *svg ) {
@@ -129,6 +325,8 @@ void svg_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct svg *svg
 extern int nakedUni_str_len;
 extern char *nakedUni_str[];
 
+int thisSel = 0;
+
 void eles_render ( int *screenDims, GLuint *glBuffers, int *XYWH, ArrayList *eles ) {
 	int i;
 	int len;
@@ -140,8 +338,18 @@ void eles_render ( int *screenDims, GLuint *glBuffers, int *XYWH, ArrayList *ele
 		printf ( "eles.len: %d\n", len );
 	}
 
+	int parentSel = thisSel;
 	while ( i < len ) {
 		struct nakedUnion *uni = arrayListGetPointer ( eles, i );
+
+		if ( selected &&
+		     parentSel ) {
+			struct cursorMem *mem = arrayListGetPointer ( selList, depth );
+			if ( mem->selI == i ) {
+				thisSel = 1;
+			}
+		}
+
 
 		if ( svg_debugPrint_render ) {
 			if ( uni->type >= 0 ) {
@@ -184,6 +392,7 @@ void eles_render ( int *screenDims, GLuint *glBuffers, int *XYWH, ArrayList *ele
 
 		i += 1;
 	}
+	thisSel = parentSel;
 }
 
 void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *path ) {
@@ -273,6 +482,25 @@ void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *p
 			start = 0;
 		}
 
+		if ( renderMode == renderM_edit ) {
+			float adjP[2];
+			point_to_loc ( thisP, adjP );
+			int iXYWH[4] = {
+				adjP[0],
+				adjP[1],
+				pointW,
+				pointW
+			};
+			float *color = colorGray;
+			if ( thisSel ) {
+				struct cursorMem *mem = arrayListGetPointer ( selList, depth );
+				if ( mem->selI == i ) {
+					color = colorOrange;
+				}
+			}
+			draw2dApi->fillRect ( iXYWH, color, screenDims, glBuffers );
+		}
+
 		lastP[0] = thisP[0];
 		lastP[1] = thisP[1];
 
@@ -295,14 +523,44 @@ void seg_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1 ) {
 	point_to_loc ( p0, t0 );
 	point_to_loc ( p1, t1 );
 
-//	t0[0] = p0[0] * glob_viewScale - glob_viewLoc[0];
-//	t0[1] = p0[1] * glob_viewScale  - glob_viewLoc[1];
+//	draw2dApi->drawSeg ( screenDims, glBuffers, t0, t1, colorWhite );
 
-//	t1[0] = p1[0] * glob_viewScale  - glob_viewLoc[0];
-//	t1[1] = p1[1] * glob_viewScale  - glob_viewLoc[1];
+	float vect[2];
+	vectSub ( t0, t1, vect, 2 );
 
-//	draw2dApi->drawSeg ( screenDims, glBuffers, p0, p1, colorWhite );
-	draw2dApi->drawSeg ( screenDims, glBuffers, t0, t1, colorWhite );
+
+	sayFloatArray ( "vect pre", vect, 2 );
+	float temp = vect[0];
+	vect[0] = -vect[1];
+	vect[1] = temp;
+	sayFloatArray ( "vect swap", vect, 2 );
+
+
+	int lineW = 10 / glob_viewScale;
+	if ( lineW < 1.0 ) {
+		lineW = 1.0;
+	}
+
+	vectNormalize ( vect, 2 );
+	vectMultScalar ( vect, lineW, 2 );
+
+	sayFloatArray ( "vect", vect, 2 );
+
+	float verts[2 * 4];
+	verts[0] = t0[0] + vect[0];
+	verts[1] = t0[1] + vect[1];
+
+	verts[2] = t0[0] - vect[0];
+	verts[3] = t0[1] - vect[1];
+
+	verts[4] = t1[0] + vect[0];
+	verts[5] = t1[1] + vect[1];
+
+	verts[6] = t1[0] - vect[0];
+	verts[7] = t1[1] - vect[1];
+
+	int numVerts = 4;
+	draw2dApi->drawTriangleStrip ( verts, numVerts, colorWhite, screenDims, glBuffers );
 }
 
 void cubicBez_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1, float *c0, float *c1 ) {
@@ -682,6 +940,59 @@ void ellipseRender ( int *screenDims, GLuint *glBuffers, int *XYWH, struct ellip
 }
 
 
+/** Util */
+
+void get_pathUni_XY ( struct pathUni *pUni, float *XY ) {
+	if ( pUni->type == path_MoveTo ) {
+		struct moveTo *ele = pUni->moveTo;
+		XY[0] = ele->XY[0];
+		XY[1] = ele->XY[1];
+
+	} else if ( pUni->type == path_LineTo ) {
+		struct lineTo *ele = pUni->lineTo;
+		XY[0] = ele->XY[0];
+		XY[1] = ele->XY[1];
+
+	} else if ( pUni->type == path_CubicBez ) {
+		struct cubicBez *ele = pUni->cubicBez;
+		XY[0] = ele->XY[0];
+		XY[1] = ele->XY[1];
+
+	} else if ( pUni->type == path_QuadBez ) {
+		struct quadBez *ele = pUni->quadBez;
+		XY[0] = ele->XY[0];
+		XY[1] = ele->XY[1];
+
+	} else if ( pUni->type == path_EllipArc ) {
+		struct ellipArc *ele = pUni->ellipArc;
+		XY[0] = ele->XY[0];
+		XY[1] = ele->XY[1];
+
+	} else if ( pUni->type == path_PathEnd ) {
+	}
+}
+
+void point_to_loc ( float *p0, float *pSet ) {
+/*
+	printf ( "point_to_loc ( )\n" );
+	sayFloatArray ( "glob_viewLoc", glob_viewLoc, 2 );
+	printf ( "glob_viewScale: %f\n", glob_viewScale );
+	sayFloatArray ( "p0", p0, 2 );
+*/
+
+//	pSet[0] = p0[0] * glob_viewScale - glob_viewLoc[0];
+//	pSet[1] = p0[1] * glob_viewScale - glob_viewLoc[1];
+
+//	pSet[0] = p0[0];
+//	pSet[1] = p0[1];
+
+
+	pSet[0] = ( p0[0] - glob_viewLoc[0] ) / glob_viewScale;
+	pSet[1] = ( p0[1] - glob_viewLoc[1] ) / glob_viewScale;
+
+
+//	sayFloatArray ( "pSet", pSet, 2 );
+}
 
 
 /** Api Setter */
