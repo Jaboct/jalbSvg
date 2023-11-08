@@ -82,6 +82,9 @@ void pathPostInit ( void *data ) {
 
 	generic_postInit ( path, path->style, (void (*)(void *, char *, char *))path_style_handle );
 
+	path->stroke_w = atof ( path->stroke_width );
+	printf ( "path->stroke_w: %f\n", path->stroke_w );
+
 	sayPath ( path );
 
 	printf ( "pathPostInit ( ) OVER\n" );

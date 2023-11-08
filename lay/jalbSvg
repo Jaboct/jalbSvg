@@ -159,7 +159,7 @@ jalbSvg	proof_parseD
 jalbSvg	hand_test_01
 
 Run:
-#jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/1_line_trim.svg"
+jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/1_line_trim.svg"
 #jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/curve_line_trim.svg"
 #jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/proof_text_00_trim.svg"
 #jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/curve_line_text_trim.svg"

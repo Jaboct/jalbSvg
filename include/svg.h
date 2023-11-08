@@ -63,6 +63,7 @@ struct path {
 	char stroke_linecap[256];
 	char stroke_linejoin[256];
 	char stroke_opacity[256];
+	float stroke_w;
 };
 
 
