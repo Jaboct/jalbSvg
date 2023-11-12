@@ -8,6 +8,7 @@ extern char *nakedUni_str[];
 
 extern struct draw2dStruct *draw2dApi;
 extern struct jalbFont *fonts[];
+extern int numFonts;
 
 extern float colorWhite[];
 extern float colorBlack[];
@@ -246,7 +247,6 @@ void spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyp
 //		draw2dApi->drawStringBuilder ( start, startIndex, end, endIndex, screenDims, glBuffers, font16, subXYWH, tabW );
 //		draw2dApi->drawStringBuilderCut ( start, startIndex, end, endIndex, screenDims, glBuffers, fonts[0], XYWH, indentXY, tabW );
 
-		int numFonts = 1;
 		draw2dApi->drawStringBuilderCut_scale ( start, startIndex, end, endIndex,
 			screenDims, glBuffers, fonts, numFonts, desiredH, XYWH,
 			indentXY, tabW );

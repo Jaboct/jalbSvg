@@ -23,10 +23,10 @@ int glob_screenDims[2];
 void (*setViewScale) (float s) = NULL;
 
 
-int svg_debugPrint_render = 1;
-int svg_debugPrint_render_text = 1;
+int svg_debugPrint_render = 0;
+int svg_debugPrint_render_text = 0;
 
-int svg_debugPrint_event = 1;
+int svg_debugPrint_event = 0;
 
 
 int renderMode = renderM_edit;
