@@ -367,3 +367,25 @@ void test_viewScale_00 ( ) {
 }
 
 
+/** Unit Tests */
+
+void fullTest ( ) {
+	printf ( "fullTest ( )\n" );
+
+//	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/out.png";
+//	char *pngDir = "/home/jadoo/workspace/jHigh/jalbSvg/res/firstproof/out.png";
+	char *svgDir = "/home/jadoo/workspace/jHigh/jalbSvg/res/firstproof/heart.svg";
+
+	// ok so load this first.
+	// then save it to a ppm.
+	// then use inkscape to convert it to a png (this doesnt need to happen everytime)
+
+	hand_load ( svgDir );
+
+//	glReadPixels ( XYWH[0], window_height - (XYWH[1]+height), width, height, FORMAT, GL_UNSIGNED_BYTE, pixels );
+
+	printf ( "fullTest ( ) OVER\n" );
+}
+
+
+

@@ -1,10 +1,14 @@
 #include "render.h"
 
+
 /** Vars */
+
+int textWrap = 1;
+
+
 
 extern int nakedUni_str_len;
 extern char *nakedUni_str[];
-
 
 extern struct draw2dStruct *draw2dApi;
 extern struct jalbFont *fonts[];
@@ -29,9 +33,11 @@ extern int pointW;
 // debug vars
 extern int svg_debugPrint_render;
 extern int svg_debugPrint_render_text;
+//int svg_debugPrint_render;
+//int svg_debugPrint_render_text;
+
 
 /** Functions */
-
 
 void seg_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1, float lineW,
 		float *viewLoc, float viewScale ) {
@@ -53,11 +59,15 @@ void seg_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1, floa
 	float vect[2];
 	vectSub ( t0, t1, vect, 2 );
 
-	sayFloatArray ( "vect pre", vect, 2 );
+	if ( svg_debugPrint_render ) {
+		sayFloatArray ( "vect pre", vect, 2 );
+	}
 	float temp = vect[0];
 	vect[0] = -vect[1];
 	vect[1] = temp;
-	sayFloatArray ( "vect swap", vect, 2 );
+	if ( svg_debugPrint_render ) {
+		sayFloatArray ( "vect swap", vect, 2 );
+	}
 
 
 	lineW /= viewScale;
@@ -209,10 +219,22 @@ void segScale ( float *p0, float *p1, float *pSet, float scale, int len ) {
 	}
 }
 
-ArrayList *testString = NULL;
+//ArrayList *testString = NULL;
 
-void spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyphWH, float *fXYWH, ArrayList *sb,
+//extern float colorDBlue[];
+float colorDBlue[4] = { 0.05, 0.15, 0.32, 1.0 };
+/*
+extern int cursorStartMem[];
+extern int cursorEndMem[];
+*/
+
+
+// XYWHpass doesnt get used.
+// i would like for this to return the number of lines i render im thinking?
+int spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyphWH, float *fXYWH, ArrayList *sb,
+		int selected, int *cursorStartMem, int *cursorEndMem,
 		float *viewLoc, float viewScale ) {
+//	printf ( "spanRender ( )\n" );
 	if ( svg_debugPrint_render ||
 	     svg_debugPrint_render_text ) {
 		printf ( "spanRender ( )\n" );
@@ -232,15 +254,54 @@ void spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyp
 	end = start;
 	endIndex = startIndex;
 
+	int numLines = 0;
+
+//	float XY[2];
+	point_to_loc ( fXYWH, fXYWH, viewLoc, viewScale );
+	fXYWH[2] /= viewScale;
+	fXYWH[3] /= viewScale;
 	int XYWH[4] = { fXYWH[0], fXYWH[1], fXYWH[2], fXYWH[3] };
+//	XYWH[0] = XY[0];
+//	XYWH[1] = XY[1];
 	int indentXY[2] = { 0, 0 };
 
 	int tabW = 8;
 
-	while ( 1 ) {
-		newSbLine ( start, startIndex, &end, &endIndex );
+	int firstLine = 0;
+	if ( selected ) {
+		XYWH[3] = desiredH;
+		draw2dApi->drawBlueCursor ( screenDims, glBuffers, XYWH, cursorStartMem, cursorEndMem, indentXY, glyphWH, colorDBlue, firstLine );
 
-		XYWH[1] = fXYWH[1];
+
+		// Render curor Highlight
+		draw2dApi->renderHighlight ( screenDims, glBuffers, XYWH, cursorStartMem, cursorEndMem, firstLine, indentXY, colorOrange, glyphWH );
+	}
+
+	XYWH[0] = fXYWH[0];
+	XYWH[1] = fXYWH[1];
+	XYWH[2] = fXYWH[2];
+	XYWH[3] = fXYWH[3];
+
+	// should this be passed?
+	int maxCols = fXYWH[2] / glyphWH[0];
+//	printf ( "maxCols: %d\n", maxCols );
+
+	while ( 1 ) {
+		if ( textWrap ) {
+			int retRend = 0;
+			newSbLine_wrap ( start, startIndex, &end, &endIndex, maxCols, &retRend );
+		} else {
+			newSbLine ( start, startIndex, &end, &endIndex );
+		}
+
+		if ( svg_debugPrint_render ||
+		     svg_debugPrint_render_text ) {
+			printf ( "start: %p\n", start );
+			printf ( "startIndex: %d\n", startIndex );
+			printf ( "end: %p\n", end );
+			printf ( "endIndex: %d\n", endIndex );
+		}
+
 
 		draw2dApi->drawCharPre ( fonts[0], colorWhite );
 
@@ -250,6 +311,8 @@ void spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyp
 		draw2dApi->drawStringBuilderCut_scale ( start, startIndex, end, endIndex,
 			screenDims, glBuffers, fonts, numFonts, desiredH, XYWH,
 			indentXY, tabW );
+
+		numLines += 1;
 
 		// [endIndex] is '\n'
 		endIndex += 1;
@@ -265,7 +328,8 @@ void spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyp
 		startIndex = endIndex;
 
 		// should this just be XYWH += ?
-		fXYWH[1] += glyphWH[1];
+//		fXYWH[1] += glyphWH[1];
+		XYWH[1] += glyphWH[1];
 
 /*
 		if(i > firstLine + numFullLines) {
@@ -277,10 +341,24 @@ void spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyp
 	}
 	afterText:;
 
-	XYWH[0] = XYWHpass[0];
-	XYWH[1] = XYWHpass[1];
+//	XYWH[0] = XYWHpass[0];
+//	XYWH[1] = XYWHpass[1];
+
+	XYWH[0] = fXYWH[0];
+	XYWH[1] = fXYWH[1];
+
 	XYWH[2] = 4 / viewScale;
-	XYWH[3] = glyphWH[1];
+//	XYWH[3] = glyphWH[1];
+	XYWH[3] = fonts[0]->atlasInfo.glyphH / viewScale;
+
+//	iXYWH[1] -= glyphWH[1];
+//	iXYWH[2] = 4 / viewScale;
+//	iXYWH[3] = fonts[0]->atlasInfo.glyphH / viewScale;
+	if ( selected ) {
+		draw2dApi->drawWhiteCursor ( screenDims, glBuffers, XYWH,
+			cursorStartMem, cursorEndMem, indentXY, glyphWH, colorWhite, firstLine );
+	}
+
 
 //	drawWhiteCursor ( screenDims, glBuffers, XYWH, slim->cursorStartMem, slim->cursorEndMem, indentXY, glyphWH, colorWhite, firstLine );
 
@@ -288,6 +366,8 @@ void spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyp
 	     svg_debugPrint_render_text ) {
 		printf ( "spanRender ( ) OVER\n" );
 	}
+
+	return numLines;
 }
 
 void rectRender ( int *screenDims, GLuint *glBuffers, int *XYWH, float *rXYWH,

@@ -25,7 +25,10 @@ void cubicBez_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1,
 void segScale ( float *p0, float *p1, float *pSet, float scale, int len );
 
 //void textRender ( int *screenDims, GLuint *glBuffers, int *XYWH, struct text *text );
-void spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyphWH, float *fXYWH, ArrayList *sb,
+//void spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyphWH, float *fXYWH, ArrayList *sb,
+//		float *viewLoc, float viewScale );
+int spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyphWH, float *fXYWH, ArrayList *sb,
+		int selected, int *cursorStartMem, int *cursorEndMem,
 		float *viewLoc, float viewScale );
 
 void rectRender ( int *screenDims, GLuint *glBuffers, int *XYWH, float *rXYWH,

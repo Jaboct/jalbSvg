@@ -122,6 +122,12 @@ Hotkey:
 #jalbSvg	0	hand_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/proof_text_00_trim.svg"
 jalbSvg	0	load_global_svg	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/saveProof/save_00.svg"
 
+Hotkey:
+jalbSvg	f	fullTest
+
+
+
+
 Append:
 lay/ui/uiGen_hotkey
 

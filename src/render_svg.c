@@ -387,8 +387,10 @@ void textRender ( int *screenDims, GLuint *glBuffers, int *XYWH, struct text *te
 		draw2dApi->drawString ( screenDims, glBuffers, XY, fonts[0], span->body );
 */
 
+		int selected = 0;
 //		spanRender ( screenDims, glBuffers, XYWH, glyphWH, fXYWH, testString );
 		spanRender ( screenDims, glBuffers, XYWH, glyphWH, fXYWH, span->stringBuilder,
+			selected, NULL, NULL,
 			glob_viewLoc, glob_viewScale );
 
 		i += 1;
