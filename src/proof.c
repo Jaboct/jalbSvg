@@ -380,7 +380,7 @@ void fullTest ( ) {
 	// then save it to a ppm.
 	// then use inkscape to convert it to a png (this doesnt need to happen everytime)
 
-	hand_load ( svgDir );
+	load_global_svg ( svgDir );
 
 //	glReadPixels ( XYWH[0], window_height - (XYWH[1]+height), width, height, FORMAT, GL_UNSIGNED_BYTE, pixels );
 

@@ -79,7 +79,9 @@ void seg_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1, floa
 	vectNormalize ( vect, 2 );
 	vectMultScalar ( vect, lineW, 2 );
 
-	sayFloatArray ( "vect", vect, 2 );
+	if ( svg_debugPrint_render ) {
+		sayFloatArray ( "vect", vect, 2 );
+	}
 
 	float verts[2 * 4];
 	verts[0] = t0[0] + vect[0];
