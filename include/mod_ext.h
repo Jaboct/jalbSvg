@@ -46,6 +46,14 @@ struct cursorMem {
 };
 
 
+/// enum
+
+enum cursorType {
+	c_object = 0,
+	c_vert,
+	c_control,
+};
+
 
 
 /** Functions */
@@ -62,8 +70,19 @@ int jalbSvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 
 void jalbSvg_close ( void *data );
 
-
 // other stuff
+
+// iterate to the object that cursor is selecting.
+/* return enum cursorType
+ * object:
+ *  the object itself, and its parent.
+ * vert:
+ *  the object and the vert index
+ * control:
+ *  the object, vert index, and control index.
+ */
+int iterateToSelected ( struct svg *svg, struct nakedUnion **parent, struct nakedUnion **ele, int *vertI, int *controlI, struct cursorMem **lastCursor );
+int shiftClick ( struct svg *svg, float *worldXY );
 
 void move_pUni ( struct pathUni *pUni,  struct pathUni *pUniNext, float dx, float dy );
 
@@ -72,6 +91,7 @@ void move_pUni ( struct pathUni *pUni,  struct pathUni *pUniNext, float dx, floa
 
 void get_pathUni_XY ( struct pathUni *pUni, float *XY );
 void point_to_loc_glob ( float *p0, float *pSet );
+void loc_to_point_glob ( float *p0, float *pSet );
 
 /** Api Setter */
 

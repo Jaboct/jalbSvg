@@ -152,7 +152,8 @@ void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *p
 		struct pathUni *uni = arrayListGetPointer ( path->eles, i );
 
 		if ( svg_debugPrint_render ) {
-//			printf ( "uni->type: %d\n", uni->type );
+			printf ( "uni: %p\n", uni );
+			printf ( "uni->type: %d\n", uni->type );
 			say_pathUni_type ( uni->type );
 		}
 
