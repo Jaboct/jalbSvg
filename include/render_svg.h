@@ -14,6 +14,8 @@
 
 #include "mod_ext.h"
 
+#include "recursiveCursor.h"
+
 /** Functions */
 
 void svg_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct svg *svg );
