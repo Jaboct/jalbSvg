@@ -1,4 +1,6 @@
 
+// TODO, unite with <jalb/jalb_cursor.h>
+
 /** Macros */
 
 #define handleCursor_start \

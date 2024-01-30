@@ -134,6 +134,7 @@ jalbSvg	h	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/test
 Hotkey:
 jalbSvg	f	fullTest
 jalbSvg	d	toggle_svg_debugPrint_render
+jalbSvg	t	toggle_svg_debugPrint_event
 jalbSvg	e	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/firstproof/ellipse.svg"
 jalbSvg	r	load_png
 jalbSvg	w	hand_screenshot

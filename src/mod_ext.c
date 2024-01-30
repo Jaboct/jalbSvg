@@ -143,14 +143,52 @@ int jalbSvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 			ArrayList *nextList = svg->eles;
 			struct cursorMem *mem = NULL;
 
-			while ( i < len-1 ) {
+			while ( i < len-2 ) {
 				mem = arrayListGetPointer ( cursorList, i );
 
 				printf ( "mem->selI: %d\n", mem->selI );
 
-				uni = arrayListGetPointer ( nextList, mem->selI );;
-				nextList = uni->g->eles;
+				uni = arrayListGetPointer ( nextList, mem->selI );
+				printf ( "[%d], uni->type: %d\n", i, uni->type );
+				if ( uni->type == G ) {
+					nextList = uni->g->eles;
+				} else {
+					// this should be the 2nd to last ele.
+					printf ( "ERROR\n" );
+					break;
+				}
 				i += 1;
+			}
+
+			if ( i < len-2 ) {
+				// i should be editing a control point.
+				printf ( "EDITING CONTROL\n" );
+
+				i += 1;
+				mem = arrayListGetPointer ( cursorList, i );
+				printf ( "mem->selI: %d\n", mem->selI );
+				if ( uni->type == Path ) {
+					struct pathUni *pUni = arrayListGetPointer ( uni->path->eles, mem->selI );
+
+					i += 1;
+					mem = arrayListGetPointer ( cursorList, i );
+
+					float dx = e->motion.xrel / viewScale;
+					float dy = e->motion.yrel / viewScale;
+					if ( pUni->type == path_CubicBez ) {
+						if ( mem->selI == 0 ) {
+							pUni->cubicBez->c0[0] += dx;
+							pUni->cubicBez->c0[1] += dy;
+						} else if ( mem->selI == 1 ) {
+							pUni->cubicBez->c1[0] += dx;
+							pUni->cubicBez->c1[1] += dy;
+						}
+					}
+				}
+
+				return 1;
+			} else {
+				printf ( "EDITING NORMAL POINT\n" );
 			}
 
 			printf ( "i: %d\n", i );
@@ -160,16 +198,26 @@ int jalbSvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 			printf ( "mem->selI: %d\n", mem->selI );
 
 //			printf ( "nextList.len: %d\n", arrayListGetLength ( nextList ) );
-//			struct nakedUnion *uni = arrayListGetPointer ( nextList, mem->selI );
+			uni = arrayListGetPointer ( nextList, mem->selI );
+
+			i += 1;
+			mem = arrayListGetPointer ( cursorList, i );
 
 			if ( uni->type == Path ) {
 				printf ( "uni->path->eles.len: %d\n", arrayListGetLength ( uni->path->eles ) );
 
 				struct pathUni *pUni = arrayListGetPointer ( uni->path->eles, mem->selI );
+				struct pathUni *pUniNext = NULL;
+				int numEles = arrayListGetLength ( uni->path->eles );
+				printf ( "numEles: %d\n", numEles );
+				printf ( "mem->selI: %d\n", mem->selI );
+				if ( numEles > mem->selI + 1 ) {
+					pUniNext = arrayListGetPointer ( uni->path->eles, mem->selI + 1 );
+				}
 
 				float dx = e->motion.xrel / viewScale;
 				float dy = e->motion.yrel / viewScale;
-				move_pUni ( pUni, dx, dy );
+				move_pUni ( pUni, pUniNext, dx, dy );
 			}
 			return 1;
 		}
@@ -182,21 +230,21 @@ int jalbSvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 	}
 
 	if ( e->type == SDL_MOUSEBUTTONDOWN ) {
-	int ret = nakedList_mEvent ( e, clickXYpass, eleWH, svg->eles,
-		viewLoc, viewScale );
-	if ( ret ) {
-		printf ( "finish set cursor\n" );
-		printf ( "cursorList.len: %d\n", arrayListGetLength ( cursorList ) );
+		int ret = nakedList_mEvent ( e, clickXYpass, eleWH, svg->eles,
+			viewLoc, viewScale );
+		if ( ret ) {
+			printf ( "finish set cursor\n" );
+			printf ( "cursorList.len: %d\n", arrayListGetLength ( cursorList ) );
 
-		int i = 0;
-		int len = arrayListGetLength ( cursorList );
-		while ( i < len ) {
-			struct cursorMem *mem = arrayListGetPointer ( cursorList, i );
-			printf ( "%d, ", mem->selI );
-			i += 1;
+			int i = 0;
+			int len = arrayListGetLength ( cursorList );
+			while ( i < len ) {
+				struct cursorMem *mem = arrayListGetPointer ( cursorList, i );
+				printf ( "%d, ", mem->selI );
+				i += 1;
+			}
+			printf ( "\n" );
 		}
-		printf ( "\n" );
-	}
 	}
 
 	if ( svg_debugPrint_event ) {
@@ -211,15 +259,23 @@ void jalbSvg_close ( void *data ) {
 }
 
 
-void move_pUni ( struct pathUni *pUni, float dx, float dy ) {
-	if ( svg_debugPrint_event ) {
+void move_pUni ( struct pathUni *pUni,  struct pathUni *pUniNext, float dx, float dy ) {
+//	if ( svg_debugPrint_event ) {
 		printf ( "move_pUni ( )\n" );
-	}
+		printf ( "pUni->type: %d\n", pUni->type );
+//	}
 
 	if ( pUni->type == path_MoveTo ) {
 		struct moveTo *ele = pUni->moveTo;
 		ele->XY[0] += dx;
 		ele->XY[1] += dy;
+
+		if ( pUniNext ) {
+			if ( pUniNext->type == path_CubicBez ) {
+				pUniNext->cubicBez->c0[0] += dx;
+				pUniNext->cubicBez->c0[1] += dy;
+			}
+		}
 	} else if ( pUni->type == path_LineTo ) {
 		struct lineTo *ele = pUni->lineTo;
 		ele->XY[0] += dx;
@@ -228,6 +284,19 @@ void move_pUni ( struct pathUni *pUni, float dx, float dy ) {
 		struct cubicBez *ele = pUni->cubicBez;
 		ele->XY[0] += dx;
 		ele->XY[1] += dy;
+
+//		ele->c0[0] += dx;
+//		ele->c0[1] += dy;
+
+		ele->c1[0] += dx;
+		ele->c1[1] += dy;
+
+		if ( pUniNext ) {
+			if ( pUniNext->type == path_CubicBez ) {
+				pUniNext->cubicBez->c0[0] += dx;
+				pUniNext->cubicBez->c0[1] += dy;
+			}
+		}
 	} else if ( pUni->type == path_QuadBez ) {
 		struct quadBez *ele = pUni->quadBez;
 		ele->XY[0] += dx;
@@ -239,14 +308,16 @@ void move_pUni ( struct pathUni *pUni, float dx, float dy ) {
 	} else if ( pUni->type == path_PathEnd ) {
 	}
 
-	if ( svg_debugPrint_event ) {
+//	if ( svg_debugPrint_event ) {
 		printf ( "move_pUni ( ) OVER\n" );
-	}
+//	}
 }
 
 
 /** Util */
 
+// this only works if they are not relative?
+// otherwise i need to keep track of the XY of prev ele.
 void get_pathUni_XY ( struct pathUni *pUni, float *XY ) {
 	if ( pUni->type == path_MoveTo ) {
 		struct moveTo *ele = pUni->moveTo;
@@ -313,5 +384,18 @@ void toggle_svg_debugPrint_render ( ) {
 	printf ( "toggle_svg_debugPrint_render ( ) OVER\n" );
 }
 
+void toggle_svg_debugPrint_event ( ) {
+	printf ( "toggle_svg_debugPrint_event ( )\n" );
+
+	if ( svg_debugPrint_event ) {
+		svg_debugPrint_event = 0;
+	} else {
+		svg_debugPrint_event = 1;
+	}
+
+	printf ( "svg_debugPrint_event: %d\n", svg_debugPrint_event );
+
+	printf ( "toggle_svg_debugPrint_event ( ) OVER\n" );
+}
 
 

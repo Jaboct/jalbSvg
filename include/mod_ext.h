@@ -65,7 +65,7 @@ void jalbSvg_close ( void *data );
 
 // other stuff
 
-void move_pUni ( struct pathUni *pUni, float dx, float dy );
+void move_pUni ( struct pathUni *pUni,  struct pathUni *pUniNext, float dx, float dy );
 
 
 /** Util */

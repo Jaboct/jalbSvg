@@ -12,6 +12,7 @@ float colorDGray2[4] = { 0.24, 0.24, 0.24, 1.0 };
 float colorBlack[4] = { 0.00, 0.00, 0.00, 1.0 };
 float colorGold[4] =  { 1.00, 0.80, 0.00, 1.0 };
 float colorOrange[4] = { .9, 0.5, 0.0, 1.0 };
+float colorBlue[4] = { 0.0, 0.0, 1.0, 1.0 };
 
 
 

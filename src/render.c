@@ -107,7 +107,7 @@ void seg_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1, floa
 void cubicBez_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1, float *c0, float *c1,
 		float *viewLoc, float viewScale ) {
 	if ( svg_debugPrint_render ) {
-		printf ( "cubicBez_rende ( )\n" );
+		printf ( "cubicBez_render ( )\n" );
 	}
 
 	int points = 10;

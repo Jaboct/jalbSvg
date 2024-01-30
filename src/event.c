@@ -16,6 +16,8 @@ extern int svg_debugPrint_event;
 
 #define DEBUGPRINT_JALB_CURSOR 0
 
+int controlPointR = 4;
+
 
 /** Functions */
 
@@ -73,6 +75,8 @@ int path_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct path *path,
 		sayIntArray ( "clickXYpass", clickXYpass, 2 );
 	}
 
+	// only check this path if it, or one of its sub eles is being edited.
+
 	int i;
 	int len;
 
@@ -97,6 +101,62 @@ int path_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct path *path,
 
 				printf ( "SELECTED ELE\n" );
 				handleCursor_start;
+
+				return 1;
+			}
+		}
+
+		printf ( "uni->type: %d\n", uni->type );
+
+		// eventually only check this in a few situations.
+		if ( uni->type == path_CubicBez ) {
+			printf ( "CHECK CONTROL\n" );
+
+			// check the control points.
+			float cXY[2];
+			cXY[0] = uni->cubicBez->c0[0];
+			cXY[1] = uni->cubicBez->c0[1];
+			point_to_loc_glob ( cXY, cXY );
+			cXY[0] -= clickXYpass[0];
+			cXY[1] -= clickXYpass[1];
+
+			sayFloatArray ( "cXY", cXY, 2 );
+
+			float delta = vectNorm ( cXY, 2 );
+			if ( delta < controlPointR ) {
+				selected = 1;
+				{
+					cursorDown;
+					int i = 0;
+					handleCursor_start;
+					cursorUp;
+				}
+
+				handleCursor;
+
+				return 1;
+			}
+
+			// check c1
+			cXY[0] = uni->cubicBez->c1[0];
+			cXY[1] = uni->cubicBez->c1[1];
+			point_to_loc_glob ( cXY, cXY );
+			cXY[0] -= clickXYpass[0];
+			cXY[1] -= clickXYpass[1];
+
+			sayFloatArray ( "cXY", cXY, 2 );
+
+			delta = vectNorm ( cXY, 2 );
+			if ( delta < controlPointR ) {
+				selected = 1;
+				{
+					cursorDown;
+					int i = 1;
+					handleCursor_start;
+					cursorUp;
+				}
+
+				handleCursor;
 
 				return 1;
 			}

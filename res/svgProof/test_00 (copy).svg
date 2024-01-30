@@ -3,7 +3,7 @@
    viewBox="0 0 100 100"
    version="1.1"
    id="svg4"
-   sodipodi:docname="test_00.svg"
+   sodipodi:docname="heart.svg"
    inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -20,21 +20,21 @@
      inkscape:pageopacity="0"
      inkscape:pagecheckerboard="0"
      showgrid="false"
-     inkscape:zoom="6.1730422"
-     inkscape:cx="32.074947"
-     inkscape:cy="54.187221"
+     inkscape:zoom="8.73"
+     inkscape:cx="67.353952"
+     inkscape:cy="47.365407"
      inkscape:window-width="1551"
      inkscape:window-height="1082"
-     inkscape:window-x="255"
-     inkscape:window-y="581"
+     inkscape:window-x="627"
+     inkscape:window-y="293"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg4" />
   <path
      fill="none"
      stroke="#ff0000"
-     d="M 10,30 C 10.154675,16.085662 16.97585,11.170411 26.141561,10.193014 27.387974,10.060102 28.677743,10.000009 30,10.000009"
+     d="M 10,30 C 10,18.954298 18.954305,10.000009 30,10.000009 41.045695,10.000009 50,18.954298 50,30 50,18.954298 58.954305,10.000009 70,10.000009 81.045695,10.000009 90,18.954298 90,30 90,50 76.154244,75.183066 50.0,90.0 22.820911,75.183066 10,50 10,30 Z"
      id="path2"
-     sodipodi:nodetypes="csc" />
+     sodipodi:nodetypes="sscsscs" />
   <text
      xml:space="preserve"
      style="font-size:13.3333px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal'"

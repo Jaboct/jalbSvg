@@ -10,6 +10,7 @@ extern float colorWhite[];
 extern float colorBlack[];
 extern float colorGray[];
 extern float colorOrange[];
+extern float colorBlue[];
 
 int thisSel = 0;
 
@@ -142,6 +143,11 @@ void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *p
 	// first iterate the eles
 	i = 0;
 	len = arrayListGetLength ( path->eles );
+
+	if ( svg_debugPrint_render ) {
+		printf ( "path->eles.len: %d\n", len );
+	}
+
 	while ( i < len ) {
 		struct pathUni *uni = arrayListGetPointer ( path->eles, i );
 
@@ -261,14 +267,28 @@ void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *p
 		i += 1;
 	}
 
+	if ( svg_debugPrint_render ) {
+		printf ( "renderMode: %d\n", renderMode );
+	}
+
 	if ( renderMode == renderM_edit ) {
 		// if i am in edit mode, then re-iterate the points, and render their edit points.
 
+		if ( svg_debugPrint_render ) {
+			printf ( "render edit mode\n" );
+		}
+
 	i = 0;
 	len = arrayListGetLength ( path->eles );
+	if ( svg_debugPrint_render ) {
+		printf ( "path->eles.len: %d\n", len );
+	}
 	while ( i < len ) {
 		struct pathUni *uni = arrayListGetPointer ( path->eles, i );
 
+		if ( svg_debugPrint_render ) {
+			say_pathUni_type ( uni->type );
+		}
 
 		float thisP[2];
 		float thisC[2];
@@ -319,9 +339,56 @@ void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *p
 			int radius = 8;
 			int icP0[2] = { cP0[0], cP0[1] };
 			int icP1[2] = { cP1[0], cP1[1] };
-			draw2dApi->drawCircle ( icP0, radius, colorOrange, screenDims, glBuffers );
 
-			draw2dApi->drawCircle ( icP1, radius, colorOrange, screenDims, glBuffers );
+			// if i have this selected (via cursor) then fillCircle. else just drawCircle
+			// TODO, super messy, clean this shit up.
+			// use macros. from jalb_macro
+			int drawn = 0;
+			if ( thisSel ) {
+				int cLen = arrayListGetLength ( cursorList );
+				if ( cLen > cursor_depth ) {
+					struct cursorMem *mem = arrayListGetPointer ( cursorList, cursor_depth );
+					if ( mem->selI == i ) {
+						cursorDown;
+						if ( cLen > cursor_depth ) {
+							struct cursorMem *mem = arrayListGetPointer ( cursorList, cursor_depth );
+							if ( mem->selI == 0 ) {
+								if ( cLen == cursor_depth + 1 ) {
+									draw2dApi->fillCircle ( icP0, radius, colorOrange, screenDims, glBuffers );
+								}
+							}
+						}
+						cursorUp;
+					}
+				}
+			}
+
+			if ( !drawn ) {
+				draw2dApi->drawCircle ( icP0, radius, colorOrange, screenDims, glBuffers );
+			}
+
+			drawn = 0;
+			if ( thisSel ) {
+				int cLen = arrayListGetLength ( cursorList );
+				if ( cLen > cursor_depth ) {
+					struct cursorMem *mem = arrayListGetPointer ( cursorList, cursor_depth );
+					if ( mem->selI == i ) {
+						cursorDown;
+						if ( cLen > cursor_depth ) {
+							struct cursorMem *mem = arrayListGetPointer ( cursorList, cursor_depth );
+							if ( mem->selI == 1 ) {
+								if ( cLen == cursor_depth + 1 ) {
+									draw2dApi->fillCircle ( icP1, radius, colorOrange, screenDims, glBuffers );
+								}
+							}
+						}
+						cursorUp;
+					}
+				}
+			}
+			if ( !drawn ) {
+				draw2dApi->drawCircle ( icP1, radius, colorOrange, screenDims, glBuffers );
+			}
 
 //			float t0[2];
 //			point_to_loc_glob ( thisP, t0 );
@@ -362,9 +429,12 @@ void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *p
 		};
 		float *color = colorGray;
 		if ( thisSel ) {
-			struct cursorMem *mem = arrayListGetPointer ( cursorList, cursor_depth );
-			if ( mem->selI == i ) {
-				color = colorOrange;
+			int cLen = arrayListGetLength ( cursorList );
+			if ( cLen == cursor_depth + 1 ) {
+				struct cursorMem *mem = arrayListGetPointer ( cursorList, cursor_depth );
+				if ( mem->selI == i ) {
+					color = colorOrange;
+				}
 			}
 		}
 		// conver this to like, drawPoint, drawEditPoint, or something.
