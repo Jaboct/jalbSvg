@@ -33,6 +33,14 @@ int renderMode = renderM_edit;
 
 int pointW = 10;
 
+GLuint *glob_glBuffers = NULL;
+
+
+/// proofs
+
+extern int doingTests;
+extern int testStage;
+
 /** Functions */
 
 void *jalbSvg_init ( ) {
@@ -51,8 +59,12 @@ void jalbSvg_render ( int *screenDims, GLuint *glBuffers, int *XYWH, void *data 
 void jalbSvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void *data,
 		float *viewLoc, float viewScale ) {
 	if ( svg_debugPrint_render ) {
+		printf ( "\n" );
+
 		printf ( "jalbSvg_renderDyn ( )\n" );
 	}
+
+	glob_glBuffers = glBuffers;
 
 /*
 	viewLoc[0] = 10;
@@ -81,7 +93,17 @@ void jalbSvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void
 		svg_render ( screenDims, glBuffers, XYWHpass, global_svg );
 	}
 
-	handle_render_proof ( );
+//	handle_render_proof ( );
+
+	if ( doingTests ) {
+		run_allTests ( testStage );
+		testStage += 1;
+	}
+
+
+	if ( svg_debugPrint_render ) {
+		printf ( "jalbSvg_renderDyn ( ) OVER\n" );
+	}
 }
 
 int jalbSvg_event ( SDL_Event *e, int *clickXY, int *eleWH, void *data ) {
@@ -90,9 +112,9 @@ int jalbSvg_event ( SDL_Event *e, int *clickXY, int *eleWH, void *data ) {
 
 // this has recursion so needs an arraylist.
 int selected = 0;
-ArrayList *selList = NULL;
+ArrayList *cursorList = NULL;
 
-int depth = 0;
+int cursor_depth = 0;
 
 int jalbSvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 		float *viewLoc, float viewScale ) {
@@ -100,8 +122,8 @@ int jalbSvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 		printf ( "jalbSvg_mEvent ( )\n" );
 	}
 
-	if ( !selList ) {
-		selList = initArrayList ( 10, sizeof ( void* ), 10 );
+	if ( !cursorList ) {
+		cursorList = initArrayList ( 10, sizeof ( void* ), 10 );
 	}
 
 	if ( !global_svg ) {
@@ -114,15 +136,15 @@ int jalbSvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 	if ( e->type == SDL_MOUSEMOTION ) {
 		if ( selected ) {
 			int i = 0;
-			int len = arrayListGetLength ( selList );
-			printf ( "selList.len: %d\n", len );
+			int len = arrayListGetLength ( cursorList );
+			printf ( "cursorList.len: %d\n", len );
 
 			struct nakedUnion *uni = NULL;
 			ArrayList *nextList = svg->eles;
 			struct cursorMem *mem = NULL;
 
 			while ( i < len-1 ) {
-				mem = arrayListGetPointer ( selList, i );
+				mem = arrayListGetPointer ( cursorList, i );
 
 				printf ( "mem->selI: %d\n", mem->selI );
 
@@ -133,7 +155,7 @@ int jalbSvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 
 			printf ( "i: %d\n", i );
 
-			mem = arrayListGetPointer ( selList, i );
+			mem = arrayListGetPointer ( cursorList, i );
 
 			printf ( "mem->selI: %d\n", mem->selI );
 
@@ -164,12 +186,12 @@ int jalbSvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 		viewLoc, viewScale );
 	if ( ret ) {
 		printf ( "finish set cursor\n" );
-		printf ( "selList.len: %d\n", arrayListGetLength ( selList ) );
+		printf ( "cursorList.len: %d\n", arrayListGetLength ( cursorList ) );
 
 		int i = 0;
-		int len = arrayListGetLength ( selList );
+		int len = arrayListGetLength ( cursorList );
 		while ( i < len ) {
-			struct cursorMem *mem = arrayListGetPointer ( selList, i );
+			struct cursorMem *mem = arrayListGetPointer ( cursorList, i );
 			printf ( "%d, ", mem->selI );
 			i += 1;
 		}
@@ -266,9 +288,30 @@ void set_set_viewScale ( void *f ) {
 }
 
 
+/** Debug */
 
+void set_svg_debugPrint_render ( int i ) {
+	printf ( "set_svg_debugPrint_render ( )\n" );
+	printf ( "i: %d\n", i );
 
+	svg_debugPrint_render = i;
 
+	printf ( "set_svg_debugPrint_render ( ) OVER\n" );
+}
+
+void toggle_svg_debugPrint_render ( ) {
+	printf ( "toggle_svg_debugPrint_render ( )\n" );
+
+	if ( svg_debugPrint_render ) {
+		svg_debugPrint_render = 0;
+	} else {
+		svg_debugPrint_render = 1;
+	}
+
+	printf ( "svg_debugPrint_render: %d\n", svg_debugPrint_render );
+
+	printf ( "toggle_svg_debugPrint_render ( ) OVER\n" );
+}
 
 
 

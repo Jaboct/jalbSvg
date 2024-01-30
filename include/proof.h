@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <SOIL/SOIL.h>
+
 #include <jalbXml/jalbXml_02.h>
 
 #include <jalb/jalbScreenshot.h>
@@ -47,5 +49,5 @@ void test_viewScale_00 ( );
 
 
 
-
+void screenshot_ppm_xywh ( char *dir, int *XYWHpass );
 

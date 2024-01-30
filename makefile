@@ -67,6 +67,7 @@ jalbSvgFiles = mod mod_ext \
  event \
  canvas_util \
  svg path text shapes parse \
+ autoTests \
  hand proof \
  backbone_jalbSvg xmlFunctGrouper_jalbSvg
 

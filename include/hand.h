@@ -81,6 +81,7 @@ void sayEleList ( ArrayList *eles );
 void say_svgText ( struct text *text );
 
 void sayPath ( struct path *path );
+void say_pathUni_type ( int i );
 void sayPathUni ( struct pathUni *uni );
 
 int isBlankSpace ( char c );
@@ -135,6 +136,12 @@ void compile_path_style ( struct path *path );
 /** should be auto generated for the naked structs */
 
 int nakedStru_nameToIndex ( char *body, ArrayList *eles, void *ret, char **strPtr );
+
+
+/** Toggle */
+
+void toggle_renderMode ( );
+void set_renderMode ( int i );
 
 
 

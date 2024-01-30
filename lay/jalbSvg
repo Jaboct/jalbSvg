@@ -94,14 +94,17 @@ window	getLastWindow	jalbSvg	set_window
 
 
 Hotkey:
+jalbSvg	m	toggle_renderMode
+jalbSvg	s	save_global
+
+
+#Hotkey:
 jalbSvg	1	set_onTest	0
 jalbSvg	2	set_onTest	1
 #jalbSvg	q	test_viewLoc_00
-jalbSvg	q	test_viewLoc_01
-jalbSvg	w	test_viewScale_00
+#jalbSvg	q	test_viewLoc_01
+#jalbSvg	w	test_viewScale_00
 jalbSvg	e	hand_errand_00
-jalbSvg	m	toggle_renderMode
-
 
 jalbSvg	1	hand_stru_00
 jalbSvg	2	hand_test
@@ -112,19 +115,29 @@ jalbSvg	3	hand_test_load
 #jalbSvg	p	saveBmp	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/ss.bmp"
 
 
-Hotkey:
+#Hotkey:
 jalbSvg	p	hand_p	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/ss.ppm"
-jalbSvg	s	save_global_xml	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/saveProof/save_00.xml"
-jalbSvg	s	save_global_svg	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/saveProof/save_00.svg"
+#jalbSvg	s	save_global_xml	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/saveProof/save_00.xml"
+#jalbSvg	s	save_global_svg	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/saveProof/save_00.svg"
 
 
-Hotkey:
+#Hotkey:
 #jalbSvg	0	hand_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/proof_text_00_trim.svg"
 jalbSvg	0	load_global_svg	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/saveProof/save_00.svg"
 
+
+
+Hotkey:
+jalbSvg	h	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/test_00.svg"
+
+
 Hotkey:
 jalbSvg	f	fullTest
-
+jalbSvg	d	toggle_svg_debugPrint_render
+jalbSvg	e	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/firstproof/ellipse.svg"
+jalbSvg	r	load_png
+jalbSvg	w	hand_screenshot
+jalbSvg	q	start_allTests
 
 
 

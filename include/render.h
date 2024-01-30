@@ -21,6 +21,10 @@ void seg_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1, floa
 		float *viewLoc, float viewScale );
 void cubicBez_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1, float *c0, float *c1,
 		float *viewLoc, float viewScale );
+void quadBez_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1, float *c0,
+		float *viewLoc, float viewScale );
+void ellipseArc_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1, float *c0, float *c1,
+		float *viewLoc, float viewScale );
 
 void segScale ( float *p0, float *p1, float *pSet, float scale, int len );
 
@@ -36,7 +40,8 @@ void rectRender ( int *screenDims, GLuint *glBuffers, int *XYWH, float *rXYWH,
 
 void circleRender ( int *screenDims, GLuint *glBuffers, int *XYWH, float *XY, float r,
 		float *viewLoc, float viewScale );
-
+void ellipseRender ( int *screenDims, GLuint *glBuffers, int *XYWH, float *XY, float rx, float ry,
+		float *viewLoc, float viewScale );
 
 
 

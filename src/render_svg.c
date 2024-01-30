@@ -21,8 +21,8 @@ extern int nakedUni_str_len;
 
 // editing vars
 extern int selected;
-extern ArrayList *selList;
-extern int depth;
+extern ArrayList *cursorList;
+extern int cursor_depth;
 
 extern int renderMode;
 extern int pointW;
@@ -40,6 +40,14 @@ void svg_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct svg *svg
 		printf ( "svg_render ( )\n" );
 	}
 
+	cursor_depth = 0;
+	thisSel = 0;
+	// check cursor
+	int cLen = arrayListGetLength ( cursorList );
+	if ( cLen > cursor_depth ) {
+		thisSel = 1;
+	}
+
 	eles_render ( screenDims, glBuffers, XYWH, svg->eles );
 }
 
@@ -55,17 +63,18 @@ void eles_render ( int *screenDims, GLuint *glBuffers, int *XYWH, ArrayList *ele
 	}
 
 	int parentSel = thisSel;
+	thisSel = 0;
 	while ( i < len ) {
 		struct nakedUnion *uni = arrayListGetPointer ( eles, i );
 
 		if ( selected &&
 		     parentSel ) {
-			struct cursorMem *mem = arrayListGetPointer ( selList, depth );
+			struct cursorMem *mem = arrayListGetPointer ( cursorList, cursor_depth );
 			if ( mem->selI == i ) {
 				thisSel = 1;
 			}
 		}
-
+		cursorDown;
 
 		if ( svg_debugPrint_render ) {
 			if ( uni->type >= 0 ) {
@@ -106,6 +115,8 @@ void eles_render ( int *screenDims, GLuint *glBuffers, int *XYWH, ArrayList *ele
 
 		}
 
+		cursorUp;
+
 		i += 1;
 	}
 	thisSel = parentSel;
@@ -128,13 +139,15 @@ void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *p
 	// does z maybe need a C?
 	float startP[2];
 
+	// first iterate the eles
 	i = 0;
 	len = arrayListGetLength ( path->eles );
 	while ( i < len ) {
 		struct pathUni *uni = arrayListGetPointer ( path->eles, i );
 
 		if ( svg_debugPrint_render ) {
-			printf ( "uni->type: %d\n", uni->type );
+//			printf ( "uni->type: %d\n", uni->type );
+			say_pathUni_type ( uni->type );
 		}
 
 		float thisP[2];
@@ -181,19 +194,55 @@ void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *p
 			}
 			cubicBez_render ( screenDims, glBuffers, lastP, thisP, lastC, thisC,
 				glob_viewLoc, glob_viewScale );
-		} else if ( uni->type == path_CubicBez ) {
-		} else if ( path_PathEnd ) {
+		} else if ( uni->type == path_QuadBez ) {
+			printf ( "TODO quadBez\n" );
 
+			struct quadBez *quad = uni->quadBez;
+
+			thisP[0] = quad->XY[0];
+			thisP[1] = quad->XY[1];
+
+			thisC[0] = quad->control[0];
+			thisC[1] = quad->control[1];
+
+			if ( quad->rel ) {
+				thisP[0] += lastP[0];
+				thisP[1] += lastP[1];
+
+				thisC[0] += lastP[0];
+				thisC[1] += lastP[1];
+
+//				lastC[0] += lastP[0];
+//				lastC[1] += lastP[1];
+			}
+			quadBez_render ( screenDims, glBuffers, lastP, thisP, thisC,
+				glob_viewLoc, glob_viewScale );
+
+		} else if ( uni->type == path_EllipArc ) {
+			printf ( "TODO ellipArc\n" );
+
+			struct ellipArc *ellip = uni->ellipArc;
+
+			thisP[0] = ellip->XY[0];
+			thisP[1] = ellip->XY[1];
+
+//			seg_render ( screenDims, glBuffers, thisP, lastP, 1,
+//				glob_viewLoc, glob_viewScale );
+
+		} else if ( uni->type == path_PathEnd ) {
 
 			float t0[2];
 			float t1[2];
 
+			// this doesnt need to be done becasue seg_render does it for me?
 			point_to_loc_glob ( lastP, t0 );
 			point_to_loc_glob ( startP, t1 );
 
 //			draw2dApi->drawSeg ( screenDims, glBuffers, t0, t1, colorWhite );
 			seg_render ( screenDims, glBuffers, t0, t1, path->stroke_w,
 				glob_viewLoc, glob_viewScale );
+		} else {
+			printf ( "TODO type unhandled (%d)\n", uni->type );
 		}
 
 		if ( start ) {
@@ -214,6 +263,7 @@ void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *p
 
 	if ( renderMode == renderM_edit ) {
 		// if i am in edit mode, then re-iterate the points, and render their edit points.
+
 	i = 0;
 	len = arrayListGetLength ( path->eles );
 	while ( i < len ) {
@@ -259,6 +309,47 @@ void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *p
 				lastC[0] += lastP[0];
 				lastC[1] += lastP[1];
 			}
+
+			float cP0[2];
+			float cP1[2];
+			point_to_loc_glob ( lastC, cP0 );
+			point_to_loc_glob ( thisC, cP1 );
+
+//			int radius = 4 / glob_viewScale;
+			int radius = 8;
+			int icP0[2] = { cP0[0], cP0[1] };
+			int icP1[2] = { cP1[0], cP1[1] };
+			draw2dApi->drawCircle ( icP0, radius, colorOrange, screenDims, glBuffers );
+
+			draw2dApi->drawCircle ( icP1, radius, colorOrange, screenDims, glBuffers );
+
+//			float t0[2];
+//			point_to_loc_glob ( thisP, t0 );
+
+			// viewScale as the width so it remains at 1 regardless of scale.
+			seg_render ( screenDims, glBuffers, lastP, lastC, glob_viewScale,
+				glob_viewLoc, glob_viewScale );
+
+			seg_render ( screenDims, glBuffers, thisP, thisC, glob_viewScale,
+				glob_viewLoc, glob_viewScale );
+		} else if ( uni->type == path_QuadBez ) {
+			struct quadBez *quad = uni->quadBez;
+			printf ( "TODO quadBez editMode\n" );
+
+			thisP[0] = quad->XY[0];
+			thisP[1] = quad->XY[1];
+
+		} else if ( uni->type == path_EllipArc ) {
+			printf ( "TODO ellipArc editMode\n" );
+
+			struct ellipArc *ellip = uni->ellipArc;
+
+			thisP[0] = ellip->XY[0];
+			thisP[1] = ellip->XY[1];
+		} else if ( uni->type == path_PathEnd ) {
+			// pathEnd, do nothing now, maybe draw control points.
+		} else {
+			printf ( "TODO edit mode type unhandled (%d)\n", uni->type );
 		}
 
 		float adjP[2];
@@ -271,13 +362,20 @@ void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *p
 		};
 		float *color = colorGray;
 		if ( thisSel ) {
-			struct cursorMem *mem = arrayListGetPointer ( selList, depth );
+			struct cursorMem *mem = arrayListGetPointer ( cursorList, cursor_depth );
 			if ( mem->selI == i ) {
 				color = colorOrange;
 			}
 		}
 		// conver this to like, drawPoint, drawEditPoint, or something.
 		draw2dApi->fillRect ( iXYWH, color, screenDims, glBuffers );
+
+
+		lastP[0] = thisP[0];
+		lastP[1] = thisP[1];
+
+		lastC[0] = thisC[0];
+		lastC[1] = thisC[1];
 
 		i += 1;
 	}
@@ -332,6 +430,17 @@ void circleRender_svg ( int *screenDims, GLuint *glBuffers, int *XYWH, struct ci
 }
 
 void ellipseRender_svg ( int *screenDims, GLuint *glBuffers, int *XYWH, struct ellipse *ellipse ) {
+	if ( svg_debugPrint_render ) {
+		printf ( "ellipseRender_svg ( )\n" );
+	}
+
+	float XY[2] = { ellipse->cx, ellipse->cy };
+	ellipseRender ( screenDims, glBuffers, XYWH, XY, ellipse->rx, ellipse->ry,
+		glob_viewLoc, glob_viewScale );
+
+	if ( svg_debugPrint_render ) {
+		printf ( "ellipseRender_svg ( ) OVER\n" );
+	}
 }
 
 void textRender ( int *screenDims, GLuint *glBuffers, int *XYWH, struct text *text ) {

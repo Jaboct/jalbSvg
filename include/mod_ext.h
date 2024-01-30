@@ -18,7 +18,7 @@
 
 #include "event.h"
 
-#include "recursiveCursor.h"
+#include "autoTests.h"
 
 /** Structs */
 

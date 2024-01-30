@@ -382,10 +382,220 @@ void fullTest ( ) {
 
 	load_global_svg ( svgDir );
 
+	int width = 20;
+	int height = 20;
+
 //	glReadPixels ( XYWH[0], window_height - (XYWH[1]+height), width, height, FORMAT, GL_UNSIGNED_BYTE, pixels );
+
+	char *outputDir = "/home/jadoo/workspace/jHigh/jalbSvg/res/firstproof/made.png";
+	FILE *file = jfopenWB ( outputDir );
+
+
+	/// handle header
+	char header[8];
+	header[0] = 0x89;
+
+	header[1] = 'P';
+	header[2] = 'N';
+	header[3] = 'G';
+
+	header[4] = 0x0D;
+	header[5] = 0x0A;
+
+	header[6] = 0x1A;
+
+	header[7] = 0x0A;
+	fwrite ( header, sizeof ( char ), 8, file );
+
+
+	/// onto chunks
+	// length (4 bytes, big edian)
+	// chunk type / name (4 bytes)
+	// chunk data (length bytes)
+	// CRC/checksum (4 bytes)
+
+	enum colorType_enum {
+		color_gray = 0,
+		color_true = 2,
+		color_index = 3,
+		color_gray_alpha = 4,
+		color_true_alpha = 6,
+	};
+
+	int colorType = color_true;
+
+	char buffer[64];
+	{
+		// IHDR chunk.
+		buffer[0] = 'I';
+		buffer[1] = 'H';
+		buffer[2] = 'D';
+		buffer[3] = 'R';
+
+//		char *w = (char*)width;
+//		printf ( "%d, %d, %d, %d\n", w[0], w[1], w[2], w[3] );
+
+		buffer[4] = 0;
+		buffer[5] = 0;
+		buffer[6] = 0;
+		buffer[7] = width;
+
+		buffer[8] = 0;
+		buffer[9] = 0;
+		buffer[10] = 0;
+		buffer[11] = height;
+
+		// bit depth
+		buffer[12] = 8;
+
+		// color type
+		buffer[13] = colorType;
+
+		// compression
+		buffer[14] = 0;
+
+		// filter
+		buffer[15] = 0;
+
+		// interlace
+		buffer[16] = 0;
+
+		fwrite ( buffer, sizeof ( char ), 17, file );
+
+		// CRC?
+	}
+	if ( colorType == 3 ) {
+		// optional for type true, and true alpha.
+
+		// PLTE chunk.
+		buffer[0] = 'P';
+		buffer[1] = 'L';
+		buffer[2] = 'T';
+		buffer[3] = 'E';
+
+		fwrite ( buffer, sizeof ( char ), 17, file );
+
+		// CRC?
+	}
+	{
+		// IDAT chunk.
+		buffer[0] = 'I';
+		buffer[1] = 'D';
+		buffer[2] = 'A';
+		buffer[3] = 'T';
+
+		fwrite ( buffer, sizeof ( char ), 17, file );
+
+		// CRC?
+	}
+	{
+		// IHDR chunk.
+		buffer[0] = 'I';
+		buffer[1] = 'E';
+		buffer[2] = 'N';
+		buffer[3] = 'D';
+
+		fwrite ( buffer, sizeof ( char ), 17, file );
+
+		// CRC?
+	}
 
 	printf ( "fullTest ( ) OVER\n" );
 }
+
+extern struct draw2dStruct *draw2dApi;
+extern GLuint *glob_glBuffers;
+extern int glob_screenDims[];
+
+void load_png ( ) {
+	printf ( "load_png ( )\n" );
+	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/firstproof/out.png";
+	char *saveDir = "/home/jadoo/workspace/jHigh/jalbSvg/res/firstproof/save.ppm";
+/*
+	GLuint texture;
+	SDL_Surface *surface;
+//	surface = IMG_Load("out.png");
+	glGenTextures(1,&texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,surface->w, surface->h, 0, GL_RGB, GL_UNSIGNED_BYTE, surface->pixels);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+	SDL_FreeSurface(surface);
+*/
+
+
+	GLuint texture = SOIL_load_OGL_texture (
+		dir,
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT );
+	printf ( "texture: %d\n", texture );
+
+
+	float fXYWH[4] = { 0, 0, 100, 100 };
+	draw2dApi->drawTexColRect ( glob_screenDims, glob_glBuffers, fXYWH, texture );
+
+
+/*
+	int width = 100;
+	int height = 100;
+
+	int buffSize = width * height * 3 * 1;
+	unsigned char pixels[buffSize];
+	memset ( pixels, 0, buffSize );
+
+	printf ( "bind\n" );
+
+	glBindTexture ( GL_TEXTURE_RECTANGLE, texture );
+	glActiveTexture ( GL_TEXTURE_RECTANGLE );
+
+	printf ( "glGetTexImage ( )\n" );
+//	glGetTexImage ( texture, 0, GL_RGB, GL_BYTE, pixels );
+	glGetTexImage ( GL_TEXTURE_RECTANGLE, 0, GL_RGB, GL_BYTE, pixels );
+//	glGetTextureImage ( texture, 0, GL_RGB, GL_BYTE, buffSize, pixels );
+
+	pixels_to_ppm ( saveDir, width, height, GL_RGB, 4, pixels );
+*/
+
+//	int byte = 3;
+//	int buffSize = XYWH[2] * XYWH[3] * byte;
+//	unsigned char pixels[buffSize];
+
+/*
+	int width = 100;
+	int height = 100;
+	int buffSize = width * height * byte;
+	unsigned char pixels[buffSize];
+	memset ( pixels, 0, buffSize );
+
+	int x = 1;
+	int y = 1;
+//	pixels[(y * height * byte) + (x * byte)] = 100;
+	pixels[(y * height * byte) + (x * byte)] = 255;
+	pixels[(y * height * byte) + (x * byte) + 1] = 255;
+	pixels[(y * height * byte) + (x * byte) + 2] = 255;
+	pixels_to_ppm ( saveDir, width, height, GL_RGB, 3, pixels );
+*/
+	int XYWH[4] = { 0, 0, 100, 100 };
+	jalbScreenshot_ppm_xywh ( saveDir, XYWH );
+
+	printf ( "load_png ( ) OVER\n" );
+}
+
+void hand_screenshot ( ) {
+	printf ( "hand_screenshot ( )\n" );
+
+	char *saveDir = "/home/jadoo/workspace/jHigh/jalbSvg/res/firstproof/save.ppm";
+
+//	jalbScreenshot_ppm ( saveDir );
+	int xywh[4] = { 0, 0, 100, 100 };
+//	screenshot_ppm_xywh ( saveDir, xywh );
+	jalbScreenshot_ppm_xywh ( saveDir, xywh );
+
+	printf ( "hand_screenshot ( ) OVER\n" );
+}
+
+
 
 
 

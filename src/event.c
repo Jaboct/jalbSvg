@@ -4,14 +4,18 @@
 
 // editing vars
 extern int selected;
-extern ArrayList *selList;
-extern int depth;
+extern ArrayList *cursorList;
+extern int cursor_depth;
 
 extern int renderMode;
 extern int pointW;
 
 // debug vars
 extern int svg_debugPrint_event;
+
+
+#define DEBUGPRINT_JALB_CURSOR 0
+
 
 /** Functions */
 
@@ -34,10 +38,10 @@ int nakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *el
 //			printf ( "TODO\n" );
 			struct g *g = uni->g;
 
-			depth += 1;
+			cursorDown;
 			int ret = nakedList_mEvent ( e, clickXYpass, eleWH, g->eles,
 				viewLoc, viewScale );
-			depth -= 1;
+			cursorUp;
 			if ( ret == 1 ) {
 				handleCursor;
 				return ret;
@@ -45,10 +49,10 @@ int nakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *el
 
 		} else if ( uni->type == Path ) {
 			struct path *path = uni->path;
-			depth += 1;
+			cursorDown;
 			int ret = path_mEvent ( e, clickXYpass, eleWH, path,
 				viewLoc, viewScale );
-			depth -= 1;
+			cursorUp;
 			if ( ret == 1 ) {
 //				selI = i;
 				handleCursor;

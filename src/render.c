@@ -106,6 +106,10 @@ void seg_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1, floa
 
 void cubicBez_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1, float *c0, float *c1,
 		float *viewLoc, float viewScale ) {
+	if ( svg_debugPrint_render ) {
+		printf ( "cubicBez_rende ( )\n" );
+	}
+
 	int points = 10;
 
 	int len = 2;
@@ -154,8 +158,11 @@ void cubicBez_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1,
 		float m0[2];
 		float m1[2];
 		float m2[2];
-
-		// 3 points 2 lines.
+		// 3 points that then form 2 lines.
+		// point on line from:
+		// m0: p0 - c0
+		// m1: c0 - c1
+		// m2: c1 - p1
 		segScale ( p0, c0, m0, s, len );
 		segScale ( c0, c1, m1, s, len );
 		segScale ( c1, p1, m2, s, len );
@@ -164,13 +171,16 @@ void cubicBez_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1,
 		sayFloatArray ( "m1", m1, len );
 		sayFloatArray ( "m2", m2, len );
 */
-		float c0[2];
-		float c1[2];
-		segScale ( m0, m1, c0, s, len );
-		segScale ( m1, m2, c1, s, len );
+		float n0[2];
+		float n1[2];
+		// point on line from:
+		// n0: m0 - m1
+		// n1: m1 - m2
+		segScale ( m0, m1, n0, s, len );
+		segScale ( m1, m2, n1, s, len );
 
 		float f[2];
-		segScale ( c0, c1, f, s, len );
+		segScale ( n0, n1, f, s, len );
 
 //		sayFloatArray ( "f", f, 2 );
 
@@ -206,6 +216,139 @@ void cubicBez_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1,
 //	t1[1] = p1[1] - glob_viewLoc[1];
 	point_to_loc ( p1, t1, viewLoc, viewScale );
 	draw2dApi->drawSeg ( screenDims, glBuffers, last, t1, colorWhite );
+
+
+	if ( svg_debugPrint_render ) {
+		printf ( "cubicBez_rende ( ) OVER\n" );
+	}
+}
+
+void quadBez_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1, float *c0,
+		float *viewLoc, float viewScale ) {
+	if ( svg_debugPrint_render ) {
+		printf ( "quadBez_rende ( )\n" );
+	}
+
+	int points = 10;
+
+	int len = 2;
+
+/*
+	float l0[2];
+	float l1[2];
+	float l2[2];
+
+	// final - initial
+	vectSub ( c0, p0, l0, len );	// from p to c
+	vectSub ( c1, c0, l1, len );	// from p to c
+	vectSub ( p1, c0, l2, len );	// from c to p
+*/
+
+	// take 4 points, 3 lines.
+	// convert it to 3 points 2 lines.
+	// then 2 points 1 line.
+	// then 1 point.
+
+	int i;
+	i = 0;
+
+/*
+	int rect[4];
+	rect[2] = 4;
+	rect[3] = 4;
+*/
+
+	float last[2];
+	last[0] = p0[0];
+	last[1] = p0[1];
+
+//	last[0] -= glob_viewLoc[0];
+//	last[1] -= glob_viewLoc[1];
+
+	point_to_loc ( last, last, viewLoc, viewScale );
+
+	while ( i < points ) {
+		float s = (1.0 / points) * i;
+
+//		printf ( "s: %f\n", s );
+
+//		sayFloatArray ( "p0", p0, len );
+
+/*
+		float m0[2];
+		float m1[2];
+		float m2[2];
+		// 3 points 2 lines.
+		// point on line from:
+		// m0: p0 - c0
+		// m1: c0 - c1
+		// m2: c1 - p1
+		segScale ( p0, c0, m0, s, len );
+		segScale ( c0, c1, m1, s, len );
+		segScale ( c1, p1, m2, s, len );
+*/
+/*
+		sayFloatArray ( "m0", m0, len );
+		sayFloatArray ( "m1", m1, len );
+		sayFloatArray ( "m2", m2, len );
+*/
+		float n0[2];
+		float n1[2];
+		// point on line from:
+		// n0: m0 - m1
+		// n1: m1 - m2
+//		segScale ( m0, m1, c0, s, len );
+//		segScale ( m1, m2, c1, s, len );
+
+		segScale ( p0, c0, n0, s, len );
+		segScale ( c0, p1, n1, s, len );
+
+		float f[2];
+		segScale ( n0, n1, f, s, len );
+
+//		sayFloatArray ( "f", f, 2 );
+
+/*
+		rect[0] = f[0];
+		rect[1] = f[1];
+		draw2dApi->fillRect ( rect, colorWhite, screenDims, glBuffers );
+*/
+//		f[0] -= glob_viewLoc[0];
+//		f[1] -= glob_viewLoc[1];
+
+		point_to_loc ( f, f, viewLoc, viewScale );
+
+		draw2dApi->drawSeg ( screenDims, glBuffers, last, f, colorWhite );
+		last[0] = f[0];
+		last[1] = f[1];
+
+/*
+		int p = 0;
+		while ( p < len ) {
+//			rect[0] = 
+			draw2dApi->fillRect ( screenDims, glBuffers, lastP, thisP, colorWhite );
+
+			p += 1;
+		}
+*/
+
+		i += 1;
+	}
+
+	float t1[2];
+//	t1[0] = p1[0] - glob_viewLoc[0];
+//	t1[1] = p1[1] - glob_viewLoc[1];
+	point_to_loc ( p1, t1, viewLoc, viewScale );
+	draw2dApi->drawSeg ( screenDims, glBuffers, last, t1, colorWhite );
+
+
+	if ( svg_debugPrint_render ) {
+		printf ( "quadBez_rende ( ) OVER\n" );
+	}
+}
+
+void ellipseArc_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1, float *c0, float *c1,
+		float *viewLoc, float viewScale ) {
 }
 
 void segScale ( float *p0, float *p1, float *pSet, float scale, int len ) {
@@ -489,8 +632,84 @@ void circleRender ( int *screenDims, GLuint *glBuffers, int *XYWH, float *XY, fl
 		viewLoc, viewScale );
 }
 
-//void ellipseRender ( int *screenDims, GLuint *glBuffers, int *XYWH, struct ellipse *ellipse ) {
-//}
+void ellipseRender ( int *screenDims, GLuint *glBuffers, int *XYWH, float *XY, float rx, float ry,
+		float *viewLoc, float viewScale ) {
+
+	float p0[2];
+	float p1[2];
+	float c0[2];
+	float c1[2];
+
+//	float ratio = 0.5;
+//	float ratio = 0.66;
+	float ratio = 0.5522;
+
+	// top left
+	p0[0] = XY[0] - rx;
+	p0[1] = XY[1];
+
+	p1[0] = XY[0];
+	p1[1] = XY[1] - ry;
+
+	c0[0] = XY[0] - rx;
+	c0[1] = XY[1] - ry * ratio;
+
+	c1[0] = XY[0] - rx * ratio;
+	c1[1] = XY[1] - ry;
+
+	cubicBez_render ( screenDims, glBuffers, p0, p1, c0, c1,
+		viewLoc, viewScale );
+
+	// top right (+x)
+	p0[0] = XY[0] + rx;
+	p0[1] = XY[1];
+
+	p1[0] = XY[0];
+	p1[1] = XY[1] - ry;
+
+	c0[0] = XY[0] + rx;
+	c0[1] = XY[1] - ry * ratio;
+
+	c1[0] = XY[0] + rx * ratio;
+	c1[1] = XY[1] - ry;
+
+	cubicBez_render ( screenDims, glBuffers, p0, p1, c0, c1,
+		viewLoc, viewScale );
+
+
+	// bottom right (+x +y)
+	p0[0] = XY[0] + rx;
+	p0[1] = XY[1];
+
+	p1[0] = XY[0];
+	p1[1] = XY[1] + ry;
+
+	c0[0] = XY[0] + rx;
+	c0[1] = XY[1] + ry * ratio;
+
+	c1[0] = XY[0] + rx * ratio;
+	c1[1] = XY[1] + ry;
+
+	cubicBez_render ( screenDims, glBuffers, p0, p1, c0, c1,
+		viewLoc, viewScale );
+
+
+	// bottom left (-x +y)
+	p0[0] = XY[0] - rx;
+	p0[1] = XY[1];
+
+	p1[0] = XY[0];
+	p1[1] = XY[1] + ry;
+
+	c0[0] = XY[0] - rx;
+	c0[1] = XY[1] + ry * ratio;
+
+	c1[0] = XY[0] - rx * ratio;
+	c1[1] = XY[1] + ry;
+
+	cubicBez_render ( screenDims, glBuffers, p0, p1, c0, c1,
+		viewLoc, viewScale );
+}
 
 
 

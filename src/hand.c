@@ -17,8 +17,18 @@ extern int svg_attributes[];
 extern struct backbone_structStruct svg;
 */
 
+char global_svg_dir[1024] = "\0";
+
 extern int renderMode;
 
+char *pathUnit_string[] = {
+	"moveTo",
+	"lineTo",
+	"cubicBez",
+	"quadBez",
+	"ellipArc",
+	"pathEnd",
+};
 
 /** Functions */
 
@@ -26,12 +36,25 @@ void load_global_svg ( char *dir ) {
 	printf ( "load_global_svg ( )\n" );
 	printf ( "dir: %s\n", dir );
 
+	strcpy ( global_svg_dir, dir );
+
 	struct svg *svgEle = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbSvg, num_structStruct_jalbSvg );
 	global_svg = svgEle;
 
 	say_svg ( svgEle );
 
 	printf ( "load_global_svg ( ) OVER\n" );
+}
+
+void save_global ( ) {
+	printf ( "save_global ( )\n" );
+	if ( global_svg_dir[0] == '\0' ) {
+		printf ( "globa_svg_dir empty, cant save.\n" );
+	}
+
+	save_global_svg ( global_svg_dir );
+
+	printf ( "save_global ( ) OVER\n" );
 }
 
 /*
@@ -147,6 +170,7 @@ void path_style_handle ( struct path *path, char *name, char *value ) {
 void say_svg ( struct svg *svg ) {
 	printf ( "say_svg ( )\n" );
 	printf ( "svg: %p\n", svg );
+
 	if ( !svg ) {
 		return;
 	}
@@ -170,6 +194,8 @@ char *nakedUni_str[] = {
 };
 
 void sayEleList ( ArrayList *eles ) {
+//	printf ( "sayEleList ( )\n" );
+
 	int i;
 	int len;
 
@@ -205,6 +231,10 @@ void sayEleList ( ArrayList *eles ) {
 			printf ( "style: %s\n", path->style );
 			printf ( "d: %s\n", path->d );
 			printf ( "id: %s\n", path->id );
+
+			printf ( "path->eles.len: %d\n", arrayListGetLength ( path->eles ) );
+
+			sayPath ( path );
 
 		} else if ( uni->type == Text ) {
 			struct text *text = uni->text;
@@ -263,10 +293,20 @@ void sayPath ( struct path *path ) {
 	printf ( "sayPath ( ) OVER\n" );
 }
 
-void sayPathUni ( struct pathUni *uni ) {
-	printf ( "sayPathUni ( )\n" );
+void say_pathUni_type ( int i ) {
+	if ( i >= 0 &&
+	     i <= path_PathEnd ) {
+		printf ( "uni->type: %s\n", pathUnit_string[i] );
+	} else {
+		printf ( "pathUni->type out of bounds. [%d]\n", i );
+	}
+}
 
-	printf ( "uni->type: %d\n", uni->type );
+void sayPathUni ( struct pathUni *uni ) {
+//	printf ( "sayPathUni ( )\n" );
+
+//	printf ( "uni->type: %d\n", uni->type );
+	say_pathUni_type ( uni->type );
 	if ( uni->type == path_MoveTo ) {
 		sayFloatArray ( "moveTo->XY", uni->moveTo->XY, 2 );
 	} else if ( uni->type == path_LineTo ) {
@@ -279,7 +319,7 @@ void sayPathUni ( struct pathUni *uni ) {
 		sayFloatArray ( "ellipArc->XY", uni->ellipArc->XY, 2 );
 	}
 
-	printf ( "sayPathUni ( ) OVER\n" );
+//	printf ( "sayPathUni ( ) OVER\n" );
 }
 
 int isBlankSpace( char c ) {
@@ -1025,3 +1065,14 @@ void toggle_renderMode ( ) {
 
 	printf ( "toggle_renderMode ( )\n" );
 }
+
+void set_renderMode ( int i ) {
+	printf ( "set_renderMode ( )\n" );
+
+	renderMode = i;
+
+	printf ( "renderMode: %d\n", renderMode );
+
+	printf ( "set_renderMode ( ) OVER\n" );
+}
+
