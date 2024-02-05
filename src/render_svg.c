@@ -169,8 +169,18 @@ void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *p
 			}
 		} else if ( uni->type == path_LineTo ) {
 			struct lineTo *line = uni->lineTo;
-			thisP[0] = line->XY[0];
-			thisP[1] = line->XY[1];
+
+			if ( line->type == 0 ) {
+				thisP[0] = line->XY[0];
+				thisP[1] = line->XY[1];
+			} else if ( line->type == lineTo_vert ) {
+				thisP[0] = lastP[0];
+				thisP[1] = line->XY[1];
+			} else if ( line->type == lineTo_hor ) {
+				thisP[0] = line->XY[0];
+				thisP[1] = lastP[1];
+			}
+
 			if ( line->rel ) {
 				thisP[0] += lastP[0];
 				thisP[1] += lastP[1];
@@ -303,8 +313,18 @@ void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *p
 			}
 		} else if ( uni->type == path_LineTo ) {
 			struct lineTo *line = uni->lineTo;
-			thisP[0] = line->XY[0];
-			thisP[1] = line->XY[1];
+
+			if ( line->type == 0 ) {
+				thisP[0] = line->XY[0];
+				thisP[1] = line->XY[1];
+			} else if ( line->type == lineTo_vert ) {
+				thisP[0] = lastP[0];
+				thisP[1] = line->XY[1];
+			} else if ( line->type == lineTo_hor ) {
+				thisP[0] = line->XY[0];
+				thisP[1] = lastP[1];
+			}
+
 			if ( line->rel ) {
 				thisP[0] += lastP[0];
 				thisP[1] += lastP[1];
@@ -556,8 +576,13 @@ void textRender ( int *screenDims, GLuint *glBuffers, int *XYWH, struct text *te
 
 //		fXYWH[0] = XYWH[0] + span->x - glob_viewLoc[0];
 //		fXYWH[1] = XYWH[1] + span->y - glob_viewLoc[1];
+
 		float tXY[2] = { XYWH[0] + span->x, XYWH[1] + span->y };
-		point_to_loc_glob ( tXY, fXYWH );
+//		sayFloatArray ( "tXY", tXY, 2 );
+
+//		point_to_loc_glob ( tXY, fXYWH );
+		fXYWH[0] = tXY[0];
+		fXYWH[1] = tXY[1];
 
 /*
 		int XY[2] = { span->x, span->y };

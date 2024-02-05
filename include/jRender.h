@@ -1,0 +1,40 @@
+#pragma once
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#include <jalb/jalbArrayList.h>
+
+#include "jGroup.h"
+#include "jPath.h"
+#include "jText.h"
+
+#include "path.h"	// for enums
+#include "mod_ext.h"	// for enums
+#include "render.h"
+
+/** Functions */
+
+void jNakedList_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, ArrayList *eles,
+		float *viewLoc, float viewScale );
+
+void jNaked_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jNakedUnion *uni,
+		float *viewLoc, float viewScale );
+
+void jPath_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jPath *path,
+		float *viewLoc, float viewScale );
+void jVerts_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, ArrayList *verts,
+		float *viewLoc, float viewScale );
+void controlPoints_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jPath *path,
+		float *viewLoc, float viewScale );
+
+void jText_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jText *text,
+		float *viewLoc, float viewScale );
+
+void jCircRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jCirc *circ,
+		float *viewLoc, float viewScale );
+
+
+
+

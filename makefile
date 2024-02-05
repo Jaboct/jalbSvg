@@ -16,7 +16,7 @@ LDIR = lib/
 SDIR = src/
 
 ifeq ($(CompType), win)
-LIBS = -lmingw32 -lSDL2main -lSDL2 -lSOIL -lfreetype \
+LIBS = -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSOIL -lfreetype \
  -ljalbDraw -ljalb_xml -ljalb \
  -lGLEW32 -lopengl32 -lglu32 -lm \
  -lSDL2main -lSDL2 \
@@ -27,7 +27,7 @@ LIBS = \
  -lfreetype \
  -ljalb_xml -ljalbDraw -ljalb \
  -lGLEW -lGL -lSOIL \
- -lSDL2 \
+ -lSDL2 -lSDL2_image \
  -lm
 # inorder to get jalb/jalbScreenshot to work i need to putin the second call of GLEW, GL, and SOIL.
 # i want to set up unit tests of this, so i can figure out the right way to order my libs.
@@ -54,9 +54,9 @@ $(libGenericData): $(LDIR)%.so: $(SDIR)%.c $(IDIR)%.h
 
 # Lib Shit for specific so's#
 
-jalbSvg: $(LDIR)jalbSvg.so
+#jalbSvg: $(LDIR)jalbSvg.so
 
-SPECIFIC = jalbSvg # mods with specific file lists (below) go here.
+SPECIFIC = jalbSvg jalbJvg # mods with specific file lists (below) go here.
 SPECIFICSO = $(patsubst %,$(LDIR)%.so,$(SPECIFIC))
 
 libSpecific: $(SPECIFICSO)
@@ -79,6 +79,22 @@ jalbSvgDeps = $(patsubst %,$(Dep)%.d,$(jalbSvgFiles))
 $(LDIR)jalbSvg.so: $(jalbSvgOs)
 	$(CC) $(CFLAGS) $(CFLAGS2) -o $@ $^ $(LIBS)
 
+# jalbJvg
+jalbJvgFiles = jMod \
+ jPath jText jShapes jGroup \
+ jHand jEvent jRender \
+ event_sb \
+ backbone_jalbJvg xmlFunctGrouper_jalbJvg
+
+# can i make these 2 generic, so i dont need to copy paste it for each mod.
+jalbJvgOs = $(patsubst %,$(ODIR)%.o,$(jalbJvgFiles))
+jalbJvgDeps = $(patsubst %,$(Dep)%.d,$(jalbJvgFiles))
+
+# can i make this generic, so i dont need to copy paste it for each mod?
+$(LDIR)jalbJvg.so: $(jalbJvgOs) $(LDIR)jalbSvg.so
+	$(CC) $(CFLAGS) $(CFLAGS2) -o $@ $^ $(LIBS)
+
+# -l$(LDIR)jalbSvg.so
 
 # this is generic.
 $(ODIR)%.o:
@@ -105,6 +121,7 @@ endif
 ifneq ($(MAKECMDGOALS),clean)
 # paste each modDeps here so they are generated when building.
 include $(jalbSvgDeps)
+include $(jalbJvgDeps)
 endif
 
 .PHONY: clean

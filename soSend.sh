@@ -6,7 +6,7 @@ testEnvDir=/home/jadoo/workspace/jHigh/testEnv/lib/
 
 #echo $testEnvDir
 
-modNames=(jalbSvg)
+modNames=(jalbSvg jalbJvg)
 
 #echo $modNames
 

@@ -1,0 +1,348 @@
+#include "jRender.h"
+
+
+/** Variables */
+
+/// modCore
+
+extern char altKeys[];
+
+extern float colorWhite[];
+
+extern struct draw2dStruct *draw2dApi;
+
+extern struct jalbFont *fonts[];
+extern int numFonts;
+
+/// normal vars
+
+extern int cStart[];
+extern int cEnd[];
+
+extern int renderMode;
+
+int vertWidth = 10;
+extern int controlPointR;
+
+
+extern ArrayList *cursorList;
+extern int cursor_depth;
+
+extern int selected;
+extern int thisSel;
+
+/// debug
+
+extern int debugPrint_jvg_render;
+
+
+/** Functions */
+
+void jNakedList_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, ArrayList *eles,
+		float *viewLoc, float viewScale ) {
+	int i;
+	int len;
+
+	i = 0;
+	len = arrayListGetLength ( eles );
+
+	if ( debugPrint_jvg_render ) {
+		printf ( "eles.len: %d\n", len );
+	}
+
+	int parentSel = thisSel;
+
+	while ( i < len ) {
+		struct jNakedUnion *uni = arrayListGetPointer ( eles, i );
+
+		if ( debugPrint_jvg_render ) {
+			printf ( "uni: %p\n", uni );
+			printf ( "uni->type: %d\n", uni->type );
+		}
+
+		thisSel = 0;
+		isThisSel;
+
+		cursorDown;
+		jNaked_render ( screenDims, glBuffers, XYWHpass, uni,
+			viewLoc, viewScale );
+		cursorUp;
+
+		i += 1;
+	}
+	thisSel = parentSel;
+}
+
+void jNaked_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jNakedUnion *uni,
+		float *viewLoc, float viewScale ) {
+	if ( uni->type == jNaked_G ) {
+	} else if ( uni->type == jNaked_Path ) {
+		struct jPath *path = uni->path;
+		jPath_render ( screenDims, glBuffers, XYWHpass, path,
+			viewLoc, viewScale );
+
+	} else if ( uni->type == jNaked_Text ) {
+		struct jText *text = uni->text;
+		jText_render ( screenDims, glBuffers, XYWHpass, text,
+			viewLoc, viewScale );
+
+	} else if ( uni->type == jNaked_Circ ) {
+		struct jCirc *circ = uni->circ;
+		jCircRender ( screenDims, glBuffers, XYWHpass, circ,
+			viewLoc, viewScale );
+	}
+}
+
+void jPath_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jPath *path,
+		float *viewLoc, float viewScale ) {
+	if ( debugPrint_jvg_render ) {
+		printf ( "jPath_render ( )\n" );
+	}
+
+	int i;
+	int len;
+
+	i = 0;
+	len = arrayListGetLength ( path->lines );
+
+	if ( debugPrint_jvg_render ) {
+		printf ( "lines.len: %d\n", len );
+	}
+
+	int endArrow = 1;
+
+	while ( i < len ) {
+		struct jLine *line = arrayListGetPointer ( path->lines, i );
+
+		struct jVert *v0 = arrayListGetPointer ( path->verts, line->v0 );
+		struct jVert *v1 = arrayListGetPointer ( path->verts, line->v1 );
+
+		if ( debugPrint_jvg_render ) {
+			sayFloatArray ( "v0->XY", v0->XY, 2 );
+			sayFloatArray ( "v1->XY", v1->XY, 2 );
+		}
+
+		float lineW = 1.0;
+		if ( line->type == path_LineTo ) {
+			seg_render ( screenDims, glBuffers, v0->XY, v1->XY, lineW,
+				viewLoc, viewScale );
+
+			if ( endArrow ) {
+				float vect[2];
+				vectSub ( v0->XY, v1->XY, vect, 2 );
+				float arrowLen = 10.0;	// maybe do 10 * lineW? so the thicker the line the larger the arrow.
+				vectScaleTo ( vect, arrowLen, 2 );
+				// rotate this by 15 deg?
+
+				float vFinal[2] = { vect[0], vect[1] };
+
+				rotateVectorXY ( vFinal, M_PI / 6.0 );
+
+				vFinal[0] += v1->XY[0];
+				vFinal[1] += v1->XY[1];
+				seg_render ( screenDims, glBuffers, v1->XY, vFinal, lineW,
+					viewLoc, viewScale );
+
+				vFinal[0] = vect[0];
+				vFinal[1] = vect[1];
+
+				rotateVectorXY ( vFinal, -M_PI / 6.0 );
+
+				vFinal[0] += v1->XY[0];
+				vFinal[1] += v1->XY[1];
+				seg_render ( screenDims, glBuffers, v1->XY, vFinal, lineW,
+					viewLoc, viewScale );
+			}
+
+		} else if ( line->type == path_CubicBez ) {
+			cubicBez_render ( screenDims, glBuffers, v0->XY, v1->XY, line->c0, line->c1,
+				viewLoc, viewScale );
+		} else if ( line->type == path_QuadBez ) {
+			quadBez_render ( screenDims, glBuffers, v0->XY, v1->XY, line->c0,
+				viewLoc, viewScale );
+		}
+
+		i += 1;
+	}
+
+	if ( renderMode == renderM_edit ) {
+//		int cursorLen = arrayListGetLength ( cursorList );
+//		printf ( "cursorLen: %d\n", cursorLen );
+//		printf ( "cursor_depth: %d\n", cursor_depth );
+
+		jVerts_render ( screenDims, glBuffers, XYWHpass, path->verts,
+			viewLoc, viewScale );
+		controlPoints_render ( screenDims, glBuffers, XYWHpass, path,
+			viewLoc, viewScale );
+	}
+}
+
+// i want to pass cursorInfo to this...
+void jVerts_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, ArrayList *verts,
+		float *viewLoc, float viewScale ) {
+	int i;
+	int len;
+
+	int parentSel = thisSel;
+
+	i = 0;
+	len = arrayListGetLength ( verts );
+
+	while ( i < len ) {
+		struct jVert *vert = arrayListGetPointer ( verts, i );
+
+		thisSel = 0;
+		isThisSel;
+		isThisIt;
+
+		float XYWH[4];
+		point_to_loc ( vert->XY, XYWH, viewLoc, viewScale );
+
+		XYWH[0] -= vertWidth / 2;
+		XYWH[1] -= vertWidth / 2;
+		XYWH[2] = vertWidth;
+		XYWH[3] = vertWidth;
+		int iXYWH[4] = { XYWH[0], XYWH[1], XYWH[2], XYWH[3] };
+
+		if ( thisSel ) {
+			draw2dApi->fillRect ( iXYWH, colorWhite, screenDims, glBuffers );
+		} else {
+			draw2dApi->drawRect ( iXYWH, colorWhite, screenDims, glBuffers );
+		}
+
+		i += 1;
+	}
+
+	thisSel = parentSel;
+}
+
+// should this be in the same funct as jVerts_render?
+void controlPoints_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jPath *path,
+		float *viewLoc, float viewScale ) {
+	int i;
+	int len;
+
+	int parentSel = thisSel;
+
+	i = 0;
+	len = arrayListGetLength ( path->lines );
+
+	while ( i < len ) {
+		struct jLine *line = arrayListGetPointer ( path->lines, i );
+
+		thisSel = 0;
+		isThisSel;
+		int parentSel = thisSel;
+		cursorDown;
+
+		struct jVert *v0 = arrayListGetPointer ( path->verts, line->v0 );
+		struct jVert *v1 = arrayListGetPointer ( path->verts, line->v1 );
+
+		if ( line->type == path_CubicBez ) {
+			// render 2 control points
+
+			thisSel = 0;
+			{
+				int i = 0;
+				isThisSel;
+				isThisIt;
+			}
+
+			float cp0[2];
+			point_to_loc ( line->c0, cp0, viewLoc, viewScale );
+			int icp0[2] = { cp0[0], cp0[1] };
+
+			float cp1[2];
+			point_to_loc ( line->c1, cp1, viewLoc, viewScale );
+			int icp1[2] = { cp1[0], cp1[1] };
+
+
+			int diameter = controlPointR * 2;
+
+			if ( thisSel ) {
+				draw2dApi->fillCircle ( icp0, diameter, colorWhite, screenDims, glBuffers );
+			} else {
+				draw2dApi->drawCircle ( icp0, diameter, colorWhite, screenDims, glBuffers );
+			}
+
+			// draw a line
+			seg_render ( screenDims, glBuffers, v0->XY, line->c0, viewScale,
+				viewLoc, viewScale );
+
+			thisSel = 0;
+			{
+				int i = 1;
+				isThisSel;
+				isThisIt;
+			}
+			if ( thisSel ) {
+				draw2dApi->fillCircle ( icp1, diameter, colorWhite, screenDims, glBuffers );
+			} else {
+				draw2dApi->drawCircle ( icp1, diameter, colorWhite, screenDims, glBuffers );
+			}
+
+			// draw a line
+			seg_render ( screenDims, glBuffers, v1->XY, line->c1, viewScale,
+				viewLoc, viewScale );
+		} else if ( line->type == path_QuadBez ) {
+			// render 1 control point.
+		}
+
+//		thisSel = parentSel;
+		cursorUp;
+
+		i += 1;
+	}
+}
+
+
+void jText_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jText *text,
+		float *viewLoc, float viewScale ) {
+	if ( debugPrint_jvg_render ) {
+		printf ( "jText_render ( )\n" );
+	}
+
+	float XYWH[4];
+	point_to_loc ( text->XYWH, XYWH, viewLoc, viewScale );
+	XYWH[0] += XYWHpass[0];
+	XYWH[1] += XYWHpass[1];
+
+	XYWH[2] = text->XYWH[2] / viewScale;
+	XYWH[3] = text->XYWH[3] / viewScale;
+
+	float glyphWH[2];
+	glyphWH[0] = fonts[0]->atlasInfo.glyphW / viewScale;
+	glyphWH[1] = fonts[0]->atlasInfo.glyphH / viewScale;
+
+	float tempXYWH[4] = { text->XYWH[0], text->XYWH[1], text->XYWH[2], text->XYWH[3] };
+
+	int drawCursor = 1;
+//	spanRender ( screenDims, glBuffers, XYWHpass, glyphWH, XYWH, text->sb,
+	spanRender ( screenDims, glBuffers, XYWHpass, glyphWH, tempXYWH, text->sb,
+		drawCursor, cStart, cEnd,
+		viewLoc, viewScale );
+
+
+	int iXYWH[4] = { XYWH[0], XYWH[1], XYWH[2], XYWH[3] };
+	draw2dApi->drawRect ( iXYWH, colorWhite, screenDims, glBuffers );
+
+	if ( debugPrint_jvg_render ) {
+		printf ( "jText_render ( ) OVER\n" );
+	}
+}
+
+void jCircRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jCirc *circ,
+		float *viewLoc, float viewScale ) {
+//	printf ( "jCircRender ( )\n" );
+
+	float screenXY[2];
+	point_to_loc ( circ->XY, screenXY, viewLoc, viewScale );
+
+	float diameter = circ->radius / viewScale * 2;
+
+	int iXY[2] = { screenXY[0], screenXY[1] };
+	draw2dApi->drawCircle ( iXY, diameter, colorWhite, screenDims, glBuffers );
+}
+
+
+

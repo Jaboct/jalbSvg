@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fileStruct>
+  <name>jGroup</name>
+  <colors>0</colors>
+  <getters>0</getters>
+  <modFuncts>0</modFuncts>
+  <typeValFuncts>0</typeValFuncts>
+  <drawCutString>0</drawCutString>
+  <scrollHandle>0</scrollHandle>
+  <preInc>
+#include &quot;jPath.h&quot;
+#include &quot;jText.h&quot;
+#include &quot;jShapes.h&quot;
+</preInc>
+  <postInc></postInc>
+  <structIds>
+    19,
+    20,
+    21,
+  </structIds>
+  <functIds>
+  </functIds>
+  <varIds>
+  </varIds>
+</fileStruct>

@@ -129,7 +129,8 @@ jalbSvg	0	load_global_svg	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/saveP
 
 Hotkey:
 jalbSvg	h	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/test_00.svg"
-
+#jalbSvg	h	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/proofs/svg/test_text_00.svg"
+#jalbSvg	h	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/proofs/svg/test_text_01.svg"
 
 Hotkey:
 jalbSvg	f	fullTest
@@ -139,7 +140,7 @@ jalbSvg	e	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/firstproof/el
 jalbSvg	r	load_png
 jalbSvg	w	hand_screenshot
 jalbSvg	q	start_allTests
-
+jalbSvg	i	changeCursor
 
 
 Append:

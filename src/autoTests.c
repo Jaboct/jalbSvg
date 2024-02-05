@@ -6,15 +6,21 @@
 
 /** Variables */
 
+extern float *viewLoc_ptr;
+extern void (*setViewScale) (float s);
+
+
 int doingTests = 0;
 //int testStage = 0;
 extern int testStage;
+
 
 char *outputDir = "/home/jadoo/workspace/jHigh/jalbSvg/res/proofs/autoTest_log.txt";
 char *xmlDir = "/home/jadoo/workspace/jHigh/jalbSvg/res/proofs/svg/";
 char *imgDir = "/home/jadoo/workspace/jHigh/jalbSvg/res/proofs/img/";
 
-#define NUM_TESTS 1
+
+#define NUM_TESTS 4
 int numTests = NUM_TESTS;
 struct autoTest render_tests[NUM_TESTS] = {
 	{
@@ -24,14 +30,47 @@ struct autoTest render_tests[NUM_TESTS] = {
 
 		.XYWH = { 0, 0, 100, 100 },
 
+		.viewLoc = { 0, 0 },
+		.viewScale = 1.0,
+
 //		.data = NULL,
 //		.dataInitFunct = (void *(*)())test_00Init,
 //		.dataSetFunct = (void (*)(void*,void*))run_event_00,
 	},
+	{
+		.testName = "text_test_01",
+		.xmlDir = "test_text_01.svg",
+		.imgDir = "text_test_01.ppm",
+
+		.XYWH = { 0, 100, 600, 200 },
+
+		.viewLoc = { 0, 0 },
+		.viewScale = 1.0 / 10.0,
+	},
+	{
+		.testName = "shapes_02",
+		.xmlDir = "shapes_02_trimer.svg",
+		.imgDir = "shapes_02.ppm",
+
+		.XYWH = { 0, 0, 600, 600 },
+
+		.viewLoc = { 40, 80 },
+		.viewScale = 1.0 / 10.0,
+	},
+	{
+		.testName = "shapes_01",
+		.xmlDir = "shapes_01_trim.svg",
+		.imgDir = "shapes_02.ppm",
+
+		.XYWH = { 0, 0, 600, 600 },
+
+		.viewLoc = { 0, 0 },
+		.viewScale = 1.0,
+	},
 };
 
-/** Functions */
 
+/** Functions */
 
 void start_allTests ( ) {
 	printf ( "start_allTests ( )\n" );
@@ -126,6 +165,10 @@ int render_autoTest ( struct autoTest *render_auto ) {
 	sprintf ( fullXmlDir, "%s%s", xmlDir, render_auto->xmlDir );
 
 	load_global_svg ( fullXmlDir );
+
+	viewLoc_ptr[0] = render_auto->viewLoc[0];
+	viewLoc_ptr[1] = render_auto->viewLoc[1];
+	setViewScale ( render_auto->viewScale );
 /*
 	// load the correct struct.
 	if ( render_auto->dataInitFunct ) {
@@ -177,6 +220,13 @@ int render_autoTest_end ( struct autoTest *render_auto ) {
 		printf ( "%s failure\n", testName );
 
 		// write this to a file, along with the time?
+
+		char buffer[512];
+		char *failDir = "/home/jadoo/workspace/jHigh/jalbSvg/res/proofs/fail";
+		sprintf ( buffer, "%s/%s.ppm", failDir, testName );
+
+		jalbScreenshot_ppm_xywh ( buffer, render_auto->XYWH );
+//		pixels_to_ppm ( char *dir, int w, int h, int format, int format_nbytes, unsigned char *pixels );
 
 		return 0;
 	}

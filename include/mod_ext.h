@@ -16,8 +16,6 @@
 #include "render_svg.h"
 #include "render.h"
 
-#include "event.h"
-
 #include "autoTests.h"
 
 /** Structs */
@@ -48,12 +46,27 @@ struct cursorMem {
 
 /// enum
 
-enum cursorType {
-	c_object = 0,
-	c_vert,
-	c_control,
+// for inputting data via the cursor.
+enum cursorTypes {
+	c_reg = 0,
+	c_text,
+	c_pen,
+	c_circ,
+	c_num,
 };
 
+// for whatever my cursor is currently selecting.
+enum cursorSelect {
+	cs_object = 0,
+	cs_vert,
+	cs_control,
+	cs_text,
+};
+
+
+/// More Includes
+
+#include "event.h"
 
 
 /** Functions */
@@ -72,19 +85,6 @@ void jalbSvg_close ( void *data );
 
 // other stuff
 
-// iterate to the object that cursor is selecting.
-/* return enum cursorType
- * object:
- *  the object itself, and its parent.
- * vert:
- *  the object and the vert index
- * control:
- *  the object, vert index, and control index.
- */
-int iterateToSelected ( struct svg *svg, struct nakedUnion **parent, struct nakedUnion **ele, int *vertI, int *controlI, struct cursorMem **lastCursor );
-int shiftClick ( struct svg *svg, float *worldXY );
-
-void move_pUni ( struct pathUni *pUni,  struct pathUni *pUniNext, float dx, float dy );
 
 
 /** Util */

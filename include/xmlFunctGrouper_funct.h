@@ -6,6 +6,11 @@
 #include "path.h"
 #include "text.h"
 #include "shapes.h"
+#include "jMod.h"
+#include "jPath.h"
+#include "jText.h"
+#include "jGroup.h"
+#include "jShapes.h"
 /** Functions */
 
 void *get_function_arr ( );

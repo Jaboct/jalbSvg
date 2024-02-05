@@ -49,12 +49,67 @@ body{
 <nav id="links">
   <ul>
     <li><a href="#links">links</a></li>
+<br>
+    <li><a href="#jsvg">svg vs jsvg</a></li>
     <li><a href="#xml">Xml Information</a></li>
     <li><a href="#proofs">proofs</a></li>
     <li><a href="#inkscape_export">Inkscape Export</a></li>
     <li><a href="#shared_code">Shared Code</a></li>
   </ul>
 </nav>
+</div>
+
+<br>
+<br>
+
+<div class="myParagraph" id="jsvg">
+<b>svg vs jsvg</b><br>
+(this is kinda like a white paper)<br>
+So there are a few goals to this.<br>
+<br>
+1: Make a good vector editor, that I enjoy using for <u>taking notes</u>.<br>
+inkscape is a good svg editor, but its not good for taking notes.<br>
+<br>
+2: be able to export what i make to svg.<br>
+for this project, and other projects like errandManager.<br>
+<br>
+3: be able to procedurally generate svg elements.<br>
+<br>
+4: have svg rendering tools, like line thickness and stuff.<br>
+probably stick this in draw2dApi.<br>
+<br>
+5: I want CAD tools, first make in 2d eventually bring to 3d.<br>
+<br>
+<br>
+moving forward.<br>
+I will keep working on improving loading, saving, rendering of true svg files.<br>
+But right now I am interested in svg editing, and for that i feel like the svg structs are a little lacking, so lets start working on jsvg.<br>
+
+<br>
+<br>
+
+<br>
+<br>
+
+Nomenclature:<br>
+jalbSvg is the name of this project.<br>
+the mod jalbSvg is my version of SVG (standard vector graphics).<br>
+<br>
+Then im going to make the mod jalbJvg (jalb vector graphics).<br>
+<br>
+
+jvg can be exported to svg.<br>
+ideally svg can be imported to jvg.<br>
+<br>
+<br>
+
+<b>Jvg mod</b><br>
+so having 2 mods in the jalbSvg project might get annoying.<br>
+It is definitly something I want to be able to do, but ill need a bunch of jHigh backend updating to make it work.<br>
+<br>
+lets take notes about this in /jHigh/modules
+
+<br>
 </div>
 
 <br>
@@ -183,12 +238,21 @@ So i share some code with errandManage project right now.<br>
 I dont know the right way to do this.<br>
 <br>
 
-
 <br>
 </div>
 
 <br>
 <br>
+
+<div class="myParagraph" id="event">
+<b>event</b><br>
+
+first figure out if i am clicking on an ele.<br>
+if not, then ahndle a fresh click.<br>
+<br>
+
+<br>
+</div>
 
 <br>
 <br>

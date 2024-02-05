@@ -18,6 +18,16 @@ jh/structStruct/tspan.xml
 jh/structStruct/rect.xml
 jh/structStruct/circle.xml
 jh/structStruct/ellipse.xml
+jh/structStruct/jPath.xml
+jh/structStruct/jVert.xml
+jh/structStruct/jLine.xml
+jh/structStruct/jText.xml
+jh/structStruct/jGroup.xml
+jh/structStruct/jNakedUnion.xml
+jh/structStruct/jvg.xml
+jh/structStruct/jRect.xml
+jh/structStruct/jCirc.xml
+jh/structStruct/jEllipse.xml
 
 # fileStructs
 jh/fileStruct/mod.xml
@@ -25,6 +35,11 @@ jh/fileStruct/svg.xml
 jh/fileStruct/path.xml
 jh/fileStruct/text.xml
 jh/fileStruct/shapes.xml
+jh/fileStruct/jMod.xml
+jh/fileStruct/jPath.xml
+jh/fileStruct/jText.xml
+jh/fileStruct/jGroup.xml
+jh/fileStruct/jShapes.xml
 
 # functions
 jh/function/funct.xml
@@ -37,5 +52,6 @@ jh/projectVar/projectVar.xml
 
 # modStructs
 jh/modStruct/jalbSvg.xml
+jh/modStruct/jalbJvg.xml
 
 

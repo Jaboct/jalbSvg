@@ -33,8 +33,8 @@ extern int pointW;
 // debug vars
 extern int svg_debugPrint_render;
 extern int svg_debugPrint_render_text;
-//int svg_debugPrint_render;
-//int svg_debugPrint_render_text;
+//int svg_debugPrint_render = 0;
+//int svg_debugPrint_render_text = 0;
 
 
 /** Functions */
@@ -408,6 +408,12 @@ int spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyph
 	int XYWH[4] = { fXYWH[0], fXYWH[1], fXYWH[2], fXYWH[3] };
 //	XYWH[0] = XY[0];
 //	XYWH[1] = XY[1];
+
+	if ( svg_debugPrint_render ||
+	     svg_debugPrint_render_text ) {
+		sayFloatArray ( "fXYWH", fXYWH, 4 );
+	}
+
 	int indentXY[2] = { 0, 0 };
 
 	int tabW = 8;

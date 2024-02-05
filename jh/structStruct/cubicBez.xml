@@ -18,6 +18,7 @@
       <attribute>0</attribute>
       <saveFlag>1</saveFlag>
       <naked>0</naked>
+      <comment></comment>
     </subVar>
     <subVar>
       <name>XY</name>
@@ -35,6 +36,7 @@
       <attribute>0</attribute>
       <saveFlag>1</saveFlag>
       <naked>0</naked>
+      <comment></comment>
     </subVar>
     <subVar>
       <name>c0</name>
@@ -52,6 +54,7 @@
       <attribute>0</attribute>
       <saveFlag>1</saveFlag>
       <naked>0</naked>
+      <comment></comment>
     </subVar>
     <subVar>
       <name>c1</name>
@@ -69,6 +72,7 @@
       <attribute>0</attribute>
       <saveFlag>1</saveFlag>
       <naked>0</naked>
+      <comment></comment>
     </subVar>
     <subVar>
       <name>type</name>
@@ -86,6 +90,7 @@
       <attribute>0</attribute>
       <saveFlag>1</saveFlag>
       <naked>0</naked>
+      <comment></comment>
     </subVar>
   </vars>
   <overloadRenderEdit></overloadRenderEdit>

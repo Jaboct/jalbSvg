@@ -21,6 +21,9 @@ struct autoTest {
 
 	int XYWH[4];
 
+	float viewLoc[2];
+	float viewScale;
+
 //	void *data;
 //	void *(*dataInitFunct)();
 	// maybe call this, event funct? welll it can do mroe than just uiGen events.

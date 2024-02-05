@@ -418,12 +418,12 @@ int lineTo_dFill ( struct lineTo *lineTo, int i, float val ) {
 			lineTo->XY[1] = val;
 			return 1;
 		}
-	} else if ( lineTo->type == 1 ) {	// path_lineToH - path_lineTo
+	} else if ( lineTo->type == lineTo_vert ) {	// path_lineToH - path_lineTo
 		if ( i == 0 ) {
 			lineTo->XY[0] = val;
 			return 1;
 		}
-	} else if ( lineTo->type == 2 ) { 
+	} else if ( lineTo->type == lineTo_hor ) { 
 		if ( i == 0 ) {
 			lineTo->XY[1] = val;
 			return 1;

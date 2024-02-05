@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<structStruct>
+  <name>jGroup</name>
+  <vars>
+    <subVar>
+      <name>eles</name>
+      <type>0</type>
+      <typeIndex>3</typeIndex>
+      <initType>0</initType>
+      <initTypeData>
+        <>-1</>
+      </initTypeData>
+      <closeType>0</closeType>
+      <length>0</length>
+      <literal>1</literal>
+      <subAl>
+        <curEles>10</curEles>
+        <eleSize>0</eleSize>
+        <overflow>10</overflow>
+        <literal>0</literal>
+        <type>1</type>
+        <typeIndex>20</typeIndex>
+        <length>-1</length>
+        <naked>0</naked>
+      </subAl>
+      <external>0</external>
+      <attribute>0</attribute>
+      <saveFlag>1</saveFlag>
+      <naked>0</naked>
+      <comment></comment>
+    </subVar>
+  </vars>
+  <overloadRenderEdit></overloadRenderEdit>
+  <overloadEventEdit></overloadEventEdit>
+  <structDeclaration>0</structDeclaration>
+  <hide_edit>1</hide_edit>
+  <isTypedef>0</isTypedef>
+  <typedefType>0</typedefType>
+  <typedefTypeIndex>0</typedefTypeIndex>
+</structStruct>
