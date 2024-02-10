@@ -547,17 +547,25 @@ int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *tex
 
 			sayIntArray ( "charXY", charXY, 2 );
 
-			int maxCols = 200;	// TODO
-			int textWrap = 0;
+			
+			int maxCols = text->XYWH[2] / fonts[0]->atlasInfo.glyphW;
+			int textWrap = 1;
 
+			printf ( "maxCols: %d\n", maxCols );
+
+set_debugPrint_jalbSb ( 1 );
 			int overClickLines = -1;
+			// determines the index of the click (this should also handle return the cursorXY...)
 			int ret = newSbClickToIndex_wrap ( charXY, text->sb, maxCols, tabW, &overClickLines );
+
+set_debugPrint_jalbSb ( 0 );
 
 			printf ( "ret: %d\n", ret );
 
 			cStart[0] = ret;
 			cEnd[0] = ret;
 
+			// takes the index and returnes the clickXY
 			newSbIndexToCoords ( cStart[0], &cStart[1], text->sb, textWrap, maxCols, tabW );
 
 			return 1;

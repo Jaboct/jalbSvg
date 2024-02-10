@@ -36,7 +36,8 @@ int isCtrlCharChange ( char *cPtr, ArrayList *charList );
 // I guess i just want alPartIndex, then i can add partI on my own.
 int arrayListPartToAbs ( ArrayList *al, ArrayList *part, int partI );
 
-
+int charLen_back ( ArrayList *sb, int index );
+int charLen_forward ( ArrayList *sb, int index );
 
 
 

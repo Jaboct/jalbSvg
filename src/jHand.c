@@ -31,7 +31,8 @@ ArrayList *global_jEles = NULL; // (struct jNakedUnion*)
 struct jNakedUnion *tempEle = NULL;
 
 
-int debugPrint_jvg_render = 1;
+int debugPrint_jvg_render = 0;
+extern int debugPrint_jvg_event;
 
 int tabW = 8;
 int ctrlMemLast = -1;
@@ -116,7 +117,16 @@ void jalbJvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void
 
 int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 		float *viewLoc, float viewScale ) {
-	printf ( "jalbJvg_mEvent ( )\n" );
+/*
+	if ( debugPrint_jvg_event ) {
+		printf ( "jalbJvg_mEvent ( )\n" );
+	}
+*/
+
+	if ( !glob_jvg ) {
+		glob_jvg = jvgInit ( );
+		global_jEles = glob_jvg->eles;
+	}
 
 	viewScale = 1.0 / viewScale;
 
@@ -125,7 +135,6 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 	if ( e->type == SDL_KEYDOWN ) {
 
 		if ( e->key.keysym.sym == SDLK_ESCAPE ) {
-
 			if ( tempEle ) {
 				jNakedUnionClose ( tempEle );
 				tempEle = NULL;
@@ -145,16 +154,26 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 		int selType = jIterateToSelected ( global_jEles, &parent, &ele, &vertI, &controlI, &lastCursor );
 		if ( selType == cs_text &&
 		     selected ) {
-			ArrayList *sb = ele->text->sb;
+			struct jText *text = ele->text;
+			ArrayList *sb = text->sb;
 			struct undoRedo *undoMem = NULL;
 			struct textSearch *search = NULL;
 			int searching = 0;
 
-			int textWrap = 0;
-			int maxCols = 200;
-//			int maxCols = task->maxWH[0] / glyphW;
+			int textWrap = 1;
+			int maxCols = text->XYWH[2] / fonts[0]->atlasInfo.glyphW;
+
+			printf ( "maxCols: %d\n", maxCols );
 
 			ArrayList *glob_ctrlKeys = NULL;
+
+
+			if ( altKeys[akCtrl] &&
+			     e->key.keysym.sym == SDLK_o ) {
+				 add_special ( sb, 0 );
+				return 1;
+			}
+
 
 			int ret = sbKey ( e->key.keysym.sym, sb, undoMem, cStart, cEnd,
 				&searching, search, altKeys,
@@ -163,7 +182,7 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 			if ( ret ) {
 				return 1;
 			}
-			printSb ( ele->text->sb );
+			printSb ( sb );
 		}
 	} else if ( e->type == SDL_MOUSEBUTTONDOWN ) {
 		mouseHeld = 1;
@@ -211,11 +230,11 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 
 		int ret = jNakedList_mEvent ( e, clickXYpass, eleWH, eles,
 			viewLoc, viewScale );
+		printf ( "naked list return: %d\n", ret );
 		if ( ret ) {
 			sayCursor;
 			return 1;
 		}
-
 
 
 		if ( cursorType == c_text ) {
@@ -249,8 +268,14 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 				handleCursor;
 			}
 
+			selected = 1;
+
 			cStart[0] = 0;
+			cEnd[0] = 0;
+			cStart[1] = 0;
+			cStart[2] = 0;
 			cEnd[1] = 0;
+			cEnd[2] = 0;
 
 			sayCursor;
 
@@ -344,7 +369,11 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 		}
 	}
 
-	printf ( "jalbJvg_mEvent ( ) OVER\n" );
+/*
+	if ( debugPrint_jvg_event ) {
+		printf ( "jalbJvg_mEvent ( ) OVER\n" );
+	}
+*/
 
 	return 0;
 }
@@ -631,3 +660,104 @@ void toggle_debugPrint_jvg_render ( ) {
 		debugPrint_jvg_render = 1;
 	}
 }
+
+/** Other stuff */
+
+
+void UTF_stuff ( ) {
+	printf ( "UTF_stuff ( )\n" );
+
+	// https://lists.freedesktop.org/archives/fontconfig/2013-September/004915.html
+
+	int val = 0x2202;
+	printf ( "val x: %x\n", val );
+	printf ( "val d: %d\n", val );
+
+	/// first astersik
+
+	int row = val / 0xff;
+	printf ( "row x: %x\n", row );
+
+	// ampersand to get remainder.
+	// could do val % 250 or val % 0x100 instead.
+	int remain = val & 0xff;
+	printf ( "remain x: %x\n", remain );
+	printf ( "remain d: %d\n", remain );
+
+	int map = 0x46260044;
+//	char mapStr[8] = "46260044";
+	/// second asterisk
+	// could do remain & 0x20 instead???
+	int remain2 = remain % 32;
+	printf ( "remain2 x: %x\n", remain2 );
+	printf ( "remain2 d: %d\n", remain2 );
+
+	// third asterisk
+	int remain3 = remain2 / 0xf;
+	printf ( "remain3 x: %x\n", remain3 );
+	printf ( "remain3 d: %d\n", remain3 );
+
+	// its 0 so its the least sig digit of the block.
+	int sigDig = map & 0xf;
+	printf ( "sigDig x: %x\n", sigDig );
+	printf ( "sigDig d: %d\n", sigDig );
+
+	// if it was 1, then what do i do?
+	int remain4 = remain2 % 0xf;
+	printf ( "remain4 x: %x\n", remain4 );
+	printf ( "remain4 d: %d\n", remain4 );
+
+	exit ( 12 );
+}
+
+void add_special ( ArrayList *sb, int index ) {
+	char str[] = { 0xCF, 0x89, 0x00 };
+//	char str[] = { 'a', 'b', 'c' };
+/*
+	if ( cursorStartMem[0] != -1 ) {
+			// ctrl is not pressed, and its a regular ascii character.
+
+			if ( altKeys[akShift] ) {
+				key = shiftKeys ( key );
+			}
+
+			highlightRemove ( sb, cursorStartMem, cursorEndMem, undoMem );
+
+			if ( undoMem ) {
+				undoCheck ( undoMem, key, 0, sb, cursorStartMem );
+			}
+
+			arrayListAdd ( sb, cursorStartMem[0], &key );
+			cursorStartMem[0] += 1;
+			cursorEndMem[0] = cursorStartMem[0];
+
+//			sbIndexToCoords ( cursorStartMem[0], &cursorStartMem[1], sb, eleWH );
+			newSbIndexToCoords ( cursorStartMem[0], &cursorStartMem[1], sb, wrap, maxCols, tabW );
+		}
+*/
+
+	int spot = cStart[0];
+
+	int len = strlen ( str );
+	int i;
+	i = 0;
+	while ( i < len ) {
+		arrayListAdd ( sb, spot, &str[i] );
+
+		spot += 1;
+
+		i += 1;
+	}
+
+	cStart[0] += len;
+	cStart[1] += 1;
+
+	cEnd[0] = cStart[0];
+}
+
+
+
+
+
+
+

@@ -11,7 +11,7 @@ extern int ctrlMemLast;
 
 /** coppied from jalbText */
 
-int debugPrint_newSb = 0;
+int debugPrint_newSb = 1;
 
 
 // return 0 regularly.
@@ -23,7 +23,7 @@ int debugPrint_newSb = 0;
 
 /// TODO do i want to care about newSbClickToIndex_wrap last param?
 
-
+// TODO, allow me to add UTF keys
 int sbKey ( SDL_Keycode key, ArrayList *sb, struct undoRedo *undoMem, int *cursorStartMem, int *cursorEndMem,
 	    int *searching, struct textSearch *search, char *altKeys,
 	    ArrayList *ctrlKeys, struct scrollMem *sm, int wrap, int maxCols ) {
@@ -195,8 +195,18 @@ int sbKey ( SDL_Keycode key, ArrayList *sb, struct undoRedo *undoMem, int *curso
 						undoMem->removeMem[undoMem->undoLength - 1] = *c;
 					}
 
-					arrayListRemove ( sb, cursorStartMem[0] - 1 );
-					cursorStartMem[0] -= 1;
+					// for ascii
+					int numChars = charLen_back ( sb, cursorStartMem[0] );
+					int i = 0;
+					while ( i < numChars ) {
+						arrayListRemove ( sb, cursorStartMem[0] - 1 );
+						cursorStartMem[0] -= 1;
+
+						i += 1;
+					}
+
+//					arrayListRemove ( sb, cursorStartMem[0] - 1 );
+//					cursorStartMem[0] -= 1;
 
 					cursorEndMem[0] = cursorStartMem[0];
 				}
@@ -254,7 +264,15 @@ int sbKey ( SDL_Keycode key, ArrayList *sb, struct undoRedo *undoMem, int *curso
 							}
 							undoMem->removeMem[undoMem->undoLength - 1] = *c;
 						}
-						arrayListRemove ( sb, cursorStartMem[0] );
+
+						int numChars = charLen_forward ( sb, cursorStartMem[0] );
+						int i = 0;
+						while ( i < numChars ) {
+							arrayListRemove ( sb, cursorStartMem[0] );
+							i += 1;
+						}
+
+//						arrayListRemove ( sb, cursorStartMem[0] );
 
 						cursorEndMem[0] = cursorStartMem[0];
 					}
@@ -286,7 +304,7 @@ int sbKey ( SDL_Keycode key, ArrayList *sb, struct undoRedo *undoMem, int *curso
 			arrayListAdd ( sb, cursorStartMem[0], &nl );
 			cursorStartMem[0] += 1;
 			cursorEndMem[0] = cursorStartMem[0];
-			//			sbIndexToCoords ( cursorStartMem[0], &cursorStartMem[1], sb, eleWH );
+//			sbIndexToCoords ( cursorStartMem[0], &cursorStartMem[1], sb, eleWH );
 			newSbIndexToCoords ( cursorStartMem[0], &cursorStartMem[1], sb, wrap, maxCols, tabW );
 		}
 	} else if ( key == SDLK_LEFT ) {
@@ -305,7 +323,7 @@ int sbKey ( SDL_Keycode key, ArrayList *sb, struct undoRedo *undoMem, int *curso
 				arrayListIterateBackList ( sb, setCursor[0] - 1, isCtrlCharChange, &lastP, &lastI, ctrlKeys );
 				printf ( "preCursor: %d\n", setCursor[0] );
 				setCursor[0] = arrayListPartToAbs ( sb, lastP, lastI );
-				//				setCursor[0] += 1;
+//				setCursor[0] += 1;
 				printf ( "setCursor: %d\n", setCursor[0] );
 
 				// So using the last index and and ptr lets set the cursor index, and xy.
@@ -313,7 +331,10 @@ int sbKey ( SDL_Keycode key, ArrayList *sb, struct undoRedo *undoMem, int *curso
 			}
 		} else {
 			if ( setCursor[0] > 0 ) {
-				setCursor[0] -= 1;
+				int len = charLen_back ( sb, setCursor[0] );
+				printf ( "LEFT ARROW len: %d\n", len );
+//				setCursor[0] -= 1;
+				setCursor[0] -= len;
 			}
 		}
 
@@ -322,6 +343,8 @@ int sbKey ( SDL_Keycode key, ArrayList *sb, struct undoRedo *undoMem, int *curso
 		}
 //		sbIndexToCoords ( setCursor[0], &setCursor[1], sb, eleWH );
 		newSbIndexToCoords ( setCursor[0], &setCursor[1], sb, wrap, maxCols, tabW );
+
+		sayIntArray ( "setCursor", setCursor, 3 );
 
 	} else if ( key == SDLK_RIGHT ) {
 		int numChars = arrayListGetLength ( sb );
@@ -345,20 +368,36 @@ int sbKey ( SDL_Keycode key, ArrayList *sb, struct undoRedo *undoMem, int *curso
 //				printf("setCursor: %d\n", setCursor[0]);
 			}
 		} else {
+			printf ( "cursorStartMem[0]: %d\n", cursorStartMem[0] );
+			printf ( "numChars: %d\n", numChars );
+
 //			if ( cursorStartMem[0] < numChars - 1 ) {
-			if ( setCursor[0] < numChars - 1 ) {
-				setCursor[0] += 1;
+//			if ( setCursor[0] < numChars - 1 ) {	// why is this numChars -1?
+			if ( setCursor[0] < numChars ) {
+				int len = charLen_forward ( sb, setCursor[0] );
+				printf ( "RIGHT charLen: %d\n", len );
+//				setCursor[0] += 1;
+				setCursor[0] += len;
 			}
+
 //			cursorEndMem[0] = cursorStartMem[0];
 //			sbIndexToCoords ( setCursor[0], &setCursor[1], sb, eleWH );
+
 			newSbIndexToCoords ( setCursor[0], &setCursor[1], sb, wrap, maxCols, tabW );
 		}
 
 		if ( !altKeys[akShift] ) {
 			cursorEndMem[0] = cursorStartMem[0];
 		}
+
+		set_debugPrint_jalbSb ( 1 );
+
+		// this is the 2nd time i run this???
 //		sbIndexToCoords ( setCursor[0], &setCursor[1], sb, eleWH );
 		newSbIndexToCoords ( setCursor[0], &setCursor[1], sb, wrap, maxCols, tabW );
+
+		set_debugPrint_jalbSb ( 0 );
+		sayIntArray ( "setCursor", setCursor, 3 );
 
 	} else if ( key == SDLK_UP ) {
 		if ( altKeys[akCtrl] ) {
@@ -402,7 +441,7 @@ int sbKey ( SDL_Keycode key, ArrayList *sb, struct undoRedo *undoMem, int *curso
 		}
 
 		setCursor[2] -= 1;
-		//		setCursor[0] = sbClickToIndex( &setCursor[1], sb, eleWH );
+//		setCursor[0] = sbClickToIndex( &setCursor[1], sb, eleWH );
 		if ( wrap ) {
 			setCursor[0] = newSbClickToIndex_wrap ( &setCursor[1], sb, maxCols, tabW, NULL );
 		} else {
@@ -485,7 +524,7 @@ int sbKey ( SDL_Keycode key, ArrayList *sb, struct undoRedo *undoMem, int *curso
 		}
 
 		setCursor[1] = 0;
-		//		setCursor[0] = sbClickToIndex( &setCursor[1], sb, eleWH );
+//		setCursor[0] = sbClickToIndex( &setCursor[1], sb, eleWH );
 		if ( wrap ) {
 			setCursor[0] = newSbClickToIndex_wrap ( &setCursor[1], sb, maxCols, tabW, NULL );
 		} else {
@@ -539,7 +578,7 @@ int sbKey ( SDL_Keycode key, ArrayList *sb, struct undoRedo *undoMem, int *curso
 // is this just a generic arraylist function?
 void arrayListIterateBackList ( ArrayList *al, int startIndex, int ( *funct ) ( char *, ArrayList * ), ArrayList **retPart, int *retIndex,
 		ArrayList *param ) {
-	// printf ( "arrayListIterateBackList ( )\n" );
+//	 printf ( "arrayListIterateBackList ( )\n" );
 
 	if ( !param ) {
 		/// TODO i should do a single iteration.
@@ -646,9 +685,9 @@ void arrayListIterateList ( ArrayList *al, int startIndex, int ( *funct ) ( char
 // So i want this to be accessable by
 int isCtrlCharChange ( char *cPtr, ArrayList *charList ) {
 	int numCtrl = arrayListGetLength ( charList );
-	//	printf("isCtrlCharChange()\n");
+//	printf("isCtrlCharChange()\n");
 
-	//	printf("numCtrl Change: %d\n", numCtrl);
+//	printf("numCtrl Change: %d\n", numCtrl);
 
 	int thisType = -1;
 
@@ -667,8 +706,10 @@ int isCtrlCharChange ( char *cPtr, ArrayList *charList ) {
 		goto typeCheck;
 	}
 	thisType = -3;
-typeCheck:;
-	//	printf("TypeCheck(mem, this) (%d, %d)\n", ctrlMemLast, thisType);
+
+	typeCheck:;
+
+//	printf("TypeCheck(mem, this) (%d, %d)\n", ctrlMemLast, thisType);
 	if ( ctrlMemLast == thisType ) {
 		return 0;
 	}
@@ -696,9 +737,125 @@ int arrayListPartToAbs ( ArrayList *al, ArrayList *part, int partI ) {
 	}
 }
 
+// look to the left of index, to see if its a unicode char, if so, figure how long it is.
+// right now i only need to iterate back 2 chars, cuz i dont handle unicode larger than that.
+// maybe one day i need to convert my string builders to ints to handle this?
+int charLen_back ( ArrayList *sb, int index ) {
+	printSb_x ( sb );
+	printf ( "index: %d\n", index );
 
+	int ret = 1;
 
+	while ( index > 0 ) {
+		index -= 1;
+		unsigned char *c = arrayListDataPointer ( sb, index );
+		printf ( "*c: %d\n", *c );
 
+		unsigned char max = 0b10000000;
+		printf ( "max: %d\n", max );
+
+		if ( *c >= 0b10000000 &&	// lowest possible non-first byte.
+		     *c <  0b11000000 ) { // lowest possible first byte (also 1 more than the highest possible non-first byte)
+			ret += 1;
+		} else {
+			break;
+		}
+		if ( ret > 4 ) {
+			printf ( "ERROR, charLen\n" );
+			return 1;
+		}
+	}
+	return ret;
+
+/*
+	if ( index > 1 ) {
+		unsigned char *c = arrayListDataPointer ( sb, index - 2 );
+		// this might be in the middle of a unicode char, so i needto go back farther.
+		// is the only right way to do this by going forward?
+		if ( *c > 126 ) {
+			// they are unicode.
+			return 2;
+		} else {
+			return 1;
+		}
+
+	} else {
+		return 1;
+	}
+*/
+}
+
+// this should use unsigned int nextCharRender_sb ( ArrayList *start, int *startI );?
+
+// if the next char is a firstChar, then iterate through.
+int charLen_forward ( ArrayList *sb, int index ) {
+	printSb_x ( sb );
+	printf ( "index: %d\n", index );
+
+	int len = arrayListGetLength ( sb );
+
+	int ret = 0;
+
+	while ( index < len ) {
+		unsigned char *c = arrayListDataPointer ( sb, index );
+		printf ( "*c: %d\n", *c );
+
+		if ( ret == 0 ) {
+			if ( *c >= 0b11000000 ) { // lowest possible first byte (also 1 more than the highest possible non-first byte)
+				// this is a first byte, so keep iterating.
+				ret += 1;
+//				index += 1;
+			} else {
+				// ther first char is just a regular char.
+				ret = 1;
+				break;
+			}
+		} else {
+			if ( *c >= 0b10000000 &&	// lowest possible none first byte, which is also less than every first byte
+			     *c <  0b11000000 ) { // lowest possible first byte (also 1 more than the highest possible non-first byte)
+				ret += 1;
+//				index += 1;
+			} else {
+				break;
+			}
+		}
+/*
+		unsigned char max = 0b10000000;
+		printf ( "max: %d\n", max );
+
+		if ( *c >= 0b10000000 &&	// lowest possible none first byte, which is also less than every first byte
+		     *c <  0b11000000 ) { // lowest possible first byte (also 1 more than the highest possible non-first byte)
+			ret += 1;
+		} else {
+			break;
+		}
+*/
+		if ( ret > 4 ) {
+			printf ( "ERROR, charLen\n" );
+			return 1;
+		}
+
+		index += 1;
+	}
+	return ret;
+
+/*
+	if ( index > 1 ) {
+		unsigned char *c = arrayListDataPointer ( sb, index - 2 );
+		// this might be in the middle of a unicode char, so i needto go back farther.
+		// is the only right way to do this by going forward?
+		if ( *c > 126 ) {
+			// they are unicode.
+			return 2;
+		} else {
+			return 1;
+		}
+
+	} else {
+		return 1;
+	}
+*/
+}
 
 
 

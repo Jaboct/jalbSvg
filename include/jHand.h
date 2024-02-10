@@ -63,7 +63,7 @@ void jalbJvg_load ( char *dir );
 
 void toggle_debugPrint_jvg_render ( );
 
-
+void add_special ( ArrayList *sb, int index );
 
 
 

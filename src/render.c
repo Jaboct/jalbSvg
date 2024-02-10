@@ -425,6 +425,7 @@ int spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyph
 
 
 		// Render curor Highlight
+		XYWH[3] = fXYWH[3];
 		draw2dApi->renderHighlight ( screenDims, glBuffers, XYWH, cursorStartMem, cursorEndMem, firstLine, indentXY, colorOrange, glyphWH );
 	}
 
@@ -467,9 +468,9 @@ int spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyph
 
 		// [endIndex] is '\n'
 		endIndex += 1;
-		if(endIndex >= end->curEles) {
+		if ( endIndex >= end->curEles ) {
 			end = end->next;
-			if(!end) {
+			if ( !end ) {
 				// End of string.
 				goto afterText;
 			}

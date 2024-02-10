@@ -316,15 +316,20 @@ void jText_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jT
 
 	float tempXYWH[4] = { text->XYWH[0], text->XYWH[1], text->XYWH[2], text->XYWH[3] };
 
-	int drawCursor = 1;
+	int drawCursor = 0;
+	if ( thisSel ) {
+		drawCursor = 1;
+	}
 //	spanRender ( screenDims, glBuffers, XYWHpass, glyphWH, XYWH, text->sb,
 	spanRender ( screenDims, glBuffers, XYWHpass, glyphWH, tempXYWH, text->sb,
 		drawCursor, cStart, cEnd,
 		viewLoc, viewScale );
 
-
-	int iXYWH[4] = { XYWH[0], XYWH[1], XYWH[2], XYWH[3] };
-	draw2dApi->drawRect ( iXYWH, colorWhite, screenDims, glBuffers );
+//	if ( thisSel ) {
+	if ( renderMode == renderM_edit ) {
+		int iXYWH[4] = { XYWH[0], XYWH[1], XYWH[2], XYWH[3] };
+		draw2dApi->drawRect ( iXYWH, colorWhite, screenDims, glBuffers );
+	}
 
 	if ( debugPrint_jvg_render ) {
 		printf ( "jText_render ( ) OVER\n" );

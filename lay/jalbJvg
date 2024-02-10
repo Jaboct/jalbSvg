@@ -98,9 +98,10 @@ window	getLastWindow	jalbJvg	set_window
 Hotkey:
 jalbJvg	e	toggle_renderMode
 jalbJvg	s	jHand_save
-#jalbJvg	l	jHand_load
+jalbJvg	l	jHand_load
 jalbJvg	1	jalbJvg_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/cscNotes.xml"
 jalbJvg	2	jalbJvg_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/phyNotes.xml"
+jalbJvg	3	jalbJvg_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/phyHW.xml"
 
 #Hotkey:
 jalbJvg	f	fullTest
@@ -122,6 +123,10 @@ jalbJvg	t	set_cursor_iconI	1
 jalbJvg	6	set_cursor_iconI	2
 jalbJvg	5	set_cursor_iconI	3
 jalbJvg	r	toggle_debugPrint_jvg_render
+
+Hotkey:
+#jalbJvg	q	UTF_stuff
+
 
 
 Append:
