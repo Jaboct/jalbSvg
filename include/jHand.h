@@ -66,5 +66,18 @@ void toggle_debugPrint_jvg_render ( );
 void add_special ( ArrayList *sb, int index );
 
 
+void make_spread_sheet ( );
+int ifThen ( int a, int b );
+
+void printVal ( int i );
+int getCol ( unsigned char *arr, int i );
+
+void comb ( int i, int n );
+void makeColumn ( int numVars, int thisColumn );
+
+// the arr should only be big enough to fit numVars, if its larger i need to change this function.
+void makeRow ( unsigned char *arr, int numVars );
+
+void iterateCharArr ( unsigned char *arr, int numChars );
 
 

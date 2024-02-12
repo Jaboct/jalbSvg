@@ -102,6 +102,7 @@ jalbJvg	l	jHand_load
 jalbJvg	1	jalbJvg_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/cscNotes.xml"
 jalbJvg	2	jalbJvg_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/phyNotes.xml"
 jalbJvg	3	jalbJvg_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/phyHW.xml"
+jalbJvg	4	jalbJvg_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/math_03.xml"
 
 #Hotkey:
 jalbJvg	f	fullTest
@@ -174,6 +175,13 @@ Run:
 #jalbJvg	set_debugPrint_jalbXml_macro	1
 #jalbJvg	jalbXml_02_set_debug	1
 #jalbJvg	set_jalbXml_debugPrint_top	1
+jalbJvg	make_spread_sheet
+
+
+Run:
+font	hand_test_utf
+
+
 
 
 

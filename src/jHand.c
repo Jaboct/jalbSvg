@@ -168,10 +168,20 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 			ArrayList *glob_ctrlKeys = NULL;
 
 
-			if ( altKeys[akCtrl] &&
-			     e->key.keysym.sym == SDLK_o ) {
-				 add_special ( sb, 0 );
-				return 1;
+			if ( altKeys[akCtrl] ) {
+				if ( e->key.keysym.sym == SDLK_o ) {
+					add_special ( sb, 0 );
+					return 1;
+				} else if ( e->key.keysym.sym == SDLK_i ) {
+					add_special ( sb, 1 );
+					return 1;
+				} else if ( e->key.keysym.sym == SDLK_7 ) {
+					add_special ( sb, 2 );
+					return 1;
+				} else if ( e->key.keysym.sym == SDLK_BACKSLASH ) {
+					add_special ( sb, 3 );
+					return 1;
+				}
 			}
 
 
@@ -711,7 +721,25 @@ void UTF_stuff ( ) {
 }
 
 void add_special ( ArrayList *sb, int index ) {
-	char str[] = { 0xCF, 0x89, 0x00 };
+	char *str = NULL;
+	if ( index == 0 ) {
+		// omega (lower)
+		char str1[] = { 0xCF, 0x89, 0x00 };
+		str = str1;
+	} else if ( index == 1 ) {
+		// therefore
+		char str1[] = { 0xE2, 0x88, 0xB4, 00 };
+		str = str1;
+	} else if ( index == 2 ) {
+		// and
+		char str1[] = { 0xE2, 0x88, 0xA7, 00 };
+		str = str1;
+	} else if ( index == 3 ) {
+		// or
+		char str1[] = { 0xE2, 0x88, 0xA8, 00 };
+		str = str1;
+	}
+
 //	char str[] = { 'a', 'b', 'c' };
 /*
 	if ( cursorStartMem[0] != -1 ) {
@@ -754,6 +782,320 @@ void add_special ( ArrayList *sb, int index ) {
 
 	cEnd[0] = cStart[0];
 }
+
+
+
+/** Spread sheet stuff */
+
+void make_spread_sheet ( ) {
+	printf ( "make_spread_sheet ( )\n" );
+
+//	int i = 2;
+
+//	makeColumn ( 1, 0 );
+//	makeColumn ( 3, 0 );
+
+//	int numVars = 9;
+//	unsigned char arr[2] = { 0, 0 };
+
+	int numVars = 3;
+	unsigned char arr[1] = { 0 };
+	int numChars = (numVars - 1) / 8 + 1;
+
+	int numRows = pow ( 2, numVars );
+/*
+	int i = 0;
+	int len = numRows;
+//	int len = 2;
+	while ( i < len ) {
+		makeRow ( arr, numVars );
+		printf ( "\n" );
+
+		iterateCharArr ( arr, numChars );
+//		sayUCharArray_hex ( "arr", arr, numChars );
+
+		i += 1;
+	}
+*/
+
+	printf ( "p\t" );
+	printf ( "q\t" );
+	printf ( "r\t" );
+	printf ( "~r\t" );
+	printf ( "q V ~r\t" );
+	printf ( "p ^ r\t" );
+	printf ( "p -> q V ~r\t" );
+	printf ( "q -> p ^ r\t" );
+	printf ( "p -> r\t" );
+	printf ( "\n" );
+
+	int i;
+	int len;
+
+	// sometimes for looking in the console i want extra tabs.
+	// if its going to a spreadsheet i dont want that.
+
+	// hand make shit table
+	i = 0;
+	len = numRows;
+	while ( i < len ) {
+		// print column of vars.
+
+		makeRow ( arr, numVars );
+		printf ( "\t" );
+
+		int p = !getCol ( arr, numVars - 0 );
+		int q = !getCol ( arr, numVars - 1 );
+		int r = !getCol ( arr, numVars - 2 );
+
+//		printf ( "r: %d", r );
+
+		// next column
+		printVal ( !r );
+
+		printVal ( q || !r );
+
+		printVal ( p && r );
+
+		// this is ifThen ( col0, col4 )
+		printVal ( ifThen ( p, (q || !r) ) );
+//		printf ( "\t" );
+
+		printVal ( ifThen ( q, (p && r) ) );
+//		printf ( "\t" );
+
+		printVal ( ifThen ( p, r ) );
+
+
+		iterateCharArr ( arr, numChars );
+
+		printf ( "\n" );
+
+		i += 1;
+	}
+
+	printf ( "make_spread_sheet ( ) OVER\n" );
+//	exit ( 12 );
+}
+
+int ifThen ( int a, int b ) {
+	if ( a ) {
+		return b;
+	} else {
+		return 1;
+	}
+}
+
+void printVal ( int i ) {
+	if ( i ) {
+		printf ( "T\t" );
+	} else {
+		printf ( "F\t" );
+	}
+}
+
+int getCol ( unsigned char *arr, int i ) {
+//	printf ( "getCol ( )\n" );
+//	printf ( "i: %d\n", i );
+	i -= 1;
+
+//	int numChars = (numVars - 1) / 8 + 1;
+	int c = i / 8;
+	int b = i % 8;
+
+	unsigned char copy = arr[c];
+	copy = copy << (7 - b);
+
+	if ( copy & 0x80 ) {
+		// the highest bit is 1.
+		return 1;
+	} else {
+		return 0;
+	}
+}
+
+void comb ( int i, int n ) {
+	printf ( "T\n" );
+	printf ( "F\n" );
+}
+
+
+void makeColumn ( int numVars, int thisColumn ) {
+	int numRows = pow ( 2, numVars );
+	int numSwaps = pow ( 2, thisColumn + 1 );
+
+	int range = 0;	// even range = true, odd range = false;
+
+	int rowsPerSwap = numRows / numSwaps;
+
+	int i = 0;
+//	int len = numRows;
+	while ( i < numSwaps ) {
+		int j = 0;
+		while ( j < rowsPerSwap ) {
+			if ( range % 2 == 0 ) {
+				printf ( "T\n" );
+			} else {
+				printf ( "F\n" );
+			}
+			j += 1;
+		}
+		range += 1;
+		i += 1;
+	}
+}
+
+
+
+void makeRowI ( int value, int numVars ) {
+	// i need to understand sizeof more, its not necessarily 8 
+	int bitsPerInt = 8 * sizeof ( int );
+}
+
+int debugPrint_makeRow = 0;
+
+// the arr should only be big enough to fit numVars, if its larger i need to change this function.
+void makeRow ( unsigned char *arr, int numVars ) {
+	if ( debugPrint_makeRow ) {
+		printf ( "makeRow ( )\n" );
+		printf ( "numVars: %d\n", numVars );
+	}
+
+
+	// instead of using 8 use CHAR_BIT? idk what a weird thing to care about.
+	int numChars = (numVars - 1) / 8 + 1;
+
+	if ( debugPrint_makeRow ) {
+		printf ( "numChars: %d\n", numChars );
+		sayUCharArray_hex ( "arr", arr, numChars );
+	}
+
+
+//	int c = numChars - 1;	// start by accessing the last char?
+	int c = 0;
+	// iterate char by char;
+
+	int b = (numVars - 1) % 8;
+	// iterate the char over, to the highest relevent bit of the last char.
+	unsigned char copy = arr[c];
+/*
+	for ( int i = 7; i < b; i -= 1 ) {
+		copy << 1
+	}
+*/
+	if ( debugPrint_makeRow ) {
+		printf ( "c: %d\n", c );
+		printf ( "b: %d\n", b );
+		printf ( "copy: %x\n", copy );
+	}
+
+	copy = copy << (7 - b);
+
+//	printf ( "copy: %x\n", copy );
+
+//	while ( c >= 0 ) {
+	while ( c < numChars ) {
+//		printf ( "copy: %x\n", copy );
+		while ( b >= 0 ) {
+			if ( copy & 0x80 ) {
+				// the highest bit is 1.
+				printf ( "F" );
+			} else {
+				printf ( "T" );
+			}
+
+			copy = copy << 1;
+
+			if ( b > 0 ) {
+				printf ( "\t" );
+			}
+
+			b -= 1;
+		}
+
+//		if ( c > 0 ) {
+		if ( c + 1 < numChars ) {
+			copy = arr[c + 1];
+			printf ( "\t" );
+		}
+
+//		c -= 1;
+		c += 1;
+		b = 7;
+	}
+}
+
+/*
+// unit test for iterateCharArray
+//	int numChars = 2;
+//	unsigned char arr[2] = { 0, 0 };
+	int numChars = 3;
+	unsigned char arr[3] = { 0, 0xFF, 0xF0 };
+
+	int i = 0;
+	while ( i < 300 ) {
+		printf ( "[%d] ", i );
+		sayUCharArray_hex ( "arr", arr, numChars );
+
+		iterateCharArr ( arr, numChars );
+
+		i += 1;
+	}
+*/
+
+// this seems to work well.
+void iterateCharArr ( unsigned char *arr, int numChars ) {
+	int i = 0;
+	int len = numChars;
+	while ( i < len ) {
+		if ( arr[numChars - i - 1] == 0xFF ) {
+			// it will overflow to the next char.
+			if ( i == len - 1 ) {
+				// it has reached max.
+				printf ( "Reached max\n" );
+			}
+
+			// iterate this and the next.
+			arr[numChars - i - 1] = 0;
+		} else {
+			// this bit isnt overflowing, so i am done.
+			arr[numChars - i - 1] += 1;
+			return;
+		}
+		i += 1;
+	}
+}
+
+// does -= 1;
+// this doesnt really work as simply... cuz the last char might not represnt 8 bits or 256 values.
+// i might want to only utilize a single bit of it.
+
+void decreaseCharArr ( unsigned char *arr, int numChars ) {
+	int i = 0;
+	int len = numChars;
+	while ( i < len ) {
+		if ( arr[numChars - i - 1] == 0xFF ) {
+			// it will overflow to the next char.
+			if ( i == len - 1 ) {
+				// it has reached max.
+				printf ( "Reached max\n" );
+			}
+
+			// iterate this and the next.
+			arr[numChars - i - 1] = 0;
+		} else {
+			// this bit isnt overflowing, so i am done.
+			arr[numChars - i - 1] += 1;
+			return;
+		}
+		i += 1;
+	}
+}
+
+
+
+
+
 
 
 
