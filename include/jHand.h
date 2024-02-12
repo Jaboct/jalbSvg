@@ -19,6 +19,19 @@
 #include "jRender.h"
 
 
+/** Structs */
+
+enum spec_keys {
+	spec_omegaL = 0,
+	spec_therefore,
+	spec_and,
+	spec_or,
+	spec_pi,
+	spec_thetaL,
+	spec_alphaL,
+	spec_emptySet,
+};
+
 /** Functions */
 
 //LayLibDynamic:

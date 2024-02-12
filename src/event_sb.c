@@ -11,7 +11,7 @@ extern int ctrlMemLast;
 
 /** coppied from jalbText */
 
-int debugPrint_newSb = 1;
+int debugPrint_newSb = 0;
 
 
 // return 0 regularly.
@@ -21,9 +21,9 @@ int debugPrint_newSb = 1;
 // wht about tickMarker? i think that means im supposed to re-render.
 
 
-/// TODO do i want to care about newSbClickToIndex_wrap last param?
-
+// TODO do i want to care about newSbClickToIndex_wrap last param?
 // TODO, allow me to add UTF keys
+// TODO, fix return type, it generally returns 0 when i want it to return 1?
 int sbKey ( SDL_Keycode key, ArrayList *sb, struct undoRedo *undoMem, int *cursorStartMem, int *cursorEndMem,
 	    int *searching, struct textSearch *search, char *altKeys,
 	    ArrayList *ctrlKeys, struct scrollMem *sm, int wrap, int maxCols ) {
@@ -390,14 +390,11 @@ int sbKey ( SDL_Keycode key, ArrayList *sb, struct undoRedo *undoMem, int *curso
 			cursorEndMem[0] = cursorStartMem[0];
 		}
 
-		set_debugPrint_jalbSb ( 1 );
-
 		// this is the 2nd time i run this???
 //		sbIndexToCoords ( setCursor[0], &setCursor[1], sb, eleWH );
 		newSbIndexToCoords ( setCursor[0], &setCursor[1], sb, wrap, maxCols, tabW );
 
-		set_debugPrint_jalbSb ( 0 );
-		sayIntArray ( "setCursor", setCursor, 3 );
+//		sayIntArray ( "setCursor", setCursor, 3 );
 
 	} else if ( key == SDLK_UP ) {
 		if ( altKeys[akCtrl] ) {

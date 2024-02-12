@@ -170,16 +170,28 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 
 			if ( altKeys[akCtrl] ) {
 				if ( e->key.keysym.sym == SDLK_o ) {
-					add_special ( sb, 0 );
+					add_special ( sb, spec_omegaL );
 					return 1;
 				} else if ( e->key.keysym.sym == SDLK_i ) {
-					add_special ( sb, 1 );
+					add_special ( sb, spec_therefore );
 					return 1;
 				} else if ( e->key.keysym.sym == SDLK_7 ) {
-					add_special ( sb, 2 );
+					add_special ( sb, spec_and );
 					return 1;
 				} else if ( e->key.keysym.sym == SDLK_BACKSLASH ) {
-					add_special ( sb, 3 );
+					add_special ( sb, spec_or );
+					return 1;
+				} else if ( e->key.keysym.sym == SDLK_p ) {
+					add_special ( sb, spec_pi );
+					return 1;
+				} else if ( e->key.keysym.sym == SDLK_y ) {
+					add_special ( sb, spec_thetaL );
+					return 1;
+				} else if ( e->key.keysym.sym == SDLK_k ) {
+					add_special ( sb, spec_alphaL );
+					return 1;
+				} else if ( e->key.keysym.sym == SDLK_j ) {
+					add_special ( sb, spec_emptySet );
 					return 1;
 				}
 			}
@@ -188,11 +200,11 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 			int ret = sbKey ( e->key.keysym.sym, sb, undoMem, cStart, cEnd,
 				&searching, search, altKeys,
 				glob_ctrlKeys, NULL, textWrap, maxCols );
-			printf ( "SB KEY RET: %d\n", ret );
+//			printf ( "SB KEY RET: %d\n", ret );
 			if ( ret ) {
 				return 1;
 			}
-			printSb ( sb );
+//			printSb ( sb );
 		}
 	} else if ( e->type == SDL_MOUSEBUTTONDOWN ) {
 		mouseHeld = 1;
@@ -722,22 +734,41 @@ void UTF_stuff ( ) {
 
 void add_special ( ArrayList *sb, int index ) {
 	char *str = NULL;
-	if ( index == 0 ) {
+	if ( index == spec_omegaL ) {
 		// omega (lower)
 		char str1[] = { 0xCF, 0x89, 0x00 };
 		str = str1;
-	} else if ( index == 1 ) {
+	} else if ( index == spec_therefore ) {
 		// therefore
 		char str1[] = { 0xE2, 0x88, 0xB4, 00 };
 		str = str1;
-	} else if ( index == 2 ) {
+	} else if ( index == spec_and ) {
 		// and
 		char str1[] = { 0xE2, 0x88, 0xA7, 00 };
 		str = str1;
-	} else if ( index == 3 ) {
+	} else if ( index == spec_or ) {
 		// or
 		char str1[] = { 0xE2, 0x88, 0xA8, 00 };
 		str = str1;
+	} else if ( index == spec_pi ) {
+		// or
+		char str1[] = { 0xCF, 0x80, 00 };
+		str = str1;
+	} else if ( index == spec_thetaL ) {
+		// or
+		char str1[] = { 0xCE, 0xB8, 00 };
+		str = str1;
+	} else if ( index == spec_alphaL ) {
+		// or
+		char str1[] = { 0xCE, 0xB1, 00 };
+		str = str1;
+	} else if ( index == spec_emptySet ) {
+		// or
+		char str1[] = { 0xE2, 0x88, 0x85, 00 };
+		str = str1;
+	}
+	if ( !str ) {
+		return;
 	}
 
 //	char str[] = { 'a', 'b', 'c' };
@@ -949,7 +980,7 @@ void makeColumn ( int numVars, int thisColumn ) {
 
 void makeRowI ( int value, int numVars ) {
 	// i need to understand sizeof more, its not necessarily 8 
-	int bitsPerInt = 8 * sizeof ( int );
+//	int bitsPerInt = 8 * sizeof ( int );
 }
 
 int debugPrint_makeRow = 0;
