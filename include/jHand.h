@@ -22,14 +22,20 @@
 /** Structs */
 
 enum spec_keys {
-	spec_omegaL = 0,
-	spec_therefore,
+	spec_therefore = 0,
 	spec_and,
 	spec_or,
-	spec_pi,
-	spec_thetaL,
-	spec_alphaL,
+	spec_micro,
 	spec_emptySet,
+	spec_alphaL,
+	spec_betaL,
+	spec_deltaU,
+	spec_deltaL,
+	spec_thetaL,
+	spec_lambdaL,
+	spec_pi,
+	spec_rhoL,
+	spec_omegaL,
 };
 
 /** Functions */
@@ -75,6 +81,7 @@ void jalbJvg_load ( char *dir );
 /** Debug */
 
 void toggle_debugPrint_jvg_render ( );
+void set_debugPrint_jvg_render ( int i );
 
 void add_special ( ArrayList *sb, int index );
 

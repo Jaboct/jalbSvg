@@ -373,7 +373,6 @@ extern int cursorStartMem[];
 extern int cursorEndMem[];
 */
 
-
 // XYWHpass doesnt get used.
 // i would like for this to return the number of lines i render im thinking?
 int spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyphWH, float *fXYWH, ArrayList *sb,
@@ -383,8 +382,10 @@ int spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyph
 	if ( svg_debugPrint_render ||
 	     svg_debugPrint_render_text ) {
 		printf ( "spanRender ( )\n" );
+		printf ( "textWrap: %d\n", textWrap );
 //		printf ( "span->body: (%s)\n", span->body );
 		sayFloatArray ( "glyphWH", glyphWH, 2 );
+
 		printSb ( sb );
 	}
 
@@ -438,6 +439,8 @@ int spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyph
 	int maxCols = fXYWH[2] / glyphWH[0];
 //	printf ( "maxCols: %d\n", maxCols );
 
+	float colY = fXYWH[1];
+
 	while ( 1 ) {
 		if ( textWrap ) {
 			int retRend = 0;
@@ -454,6 +457,10 @@ int spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyph
 			printf ( "endIndex: %d\n", endIndex );
 		}
 
+		if ( start == end && startIndex > endIndex ) {
+			printf ( "start->next: %p\n", start->next );
+			exit ( 12 );
+		}
 
 		draw2dApi->drawCharPre ( fonts[0], colorWhite );
 
@@ -463,6 +470,13 @@ int spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyph
 		draw2dApi->drawStringBuilderCut_scale ( start, startIndex, end, endIndex,
 			screenDims, glBuffers, fonts, numFonts, desiredH, XYWH,
 			indentXY, tabW );
+/*
+printf ( "after\n" );
+printf ( "start: %p\n", start );
+printf ( "startIndex: %d\n", startIndex );
+printf ( "end: %p\n", end );
+printf ( "endIndex: %d\n", endIndex );
+*/
 
 		numLines += 1;
 
@@ -481,7 +495,9 @@ int spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyph
 
 		// should this just be XYWH += ?
 //		fXYWH[1] += glyphWH[1];
-		XYWH[1] += glyphWH[1];
+//		XYWH[1] += glyphWH[1];
+		colY += glyphWH[1];
+		XYWH[1] = colY;
 
 /*
 		if(i > firstLine + numFullLines) {

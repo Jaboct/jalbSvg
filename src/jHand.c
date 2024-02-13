@@ -33,6 +33,7 @@ struct jNakedUnion *tempEle = NULL;
 
 int debugPrint_jvg_render = 0;
 extern int debugPrint_jvg_event;
+extern int svg_debugPrint_render_text;
 
 int tabW = 8;
 int ctrlMemLast = -1;
@@ -41,6 +42,9 @@ int ctrlMemLast = -1;
 extern int selected;
 extern int mouseHeld;
 extern int thisSel; // used during rendering to figure if the ele being rendered is currently selected.
+
+extern int renderMode;
+
 
 char saveDir[256] = "";
 
@@ -66,6 +70,7 @@ void jalbJvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void
 		float *viewLoc, float viewScale ) {
 	if ( debugPrint_jvg_render ) {
 		printf ( "jalbJvg_renderDyn ( )\n" );
+		svg_debugPrint_render_text = 1;
 	}
 
 	if ( !glob_jvg ) {
@@ -154,6 +159,8 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 		int selType = jIterateToSelected ( global_jEles, &parent, &ele, &vertI, &controlI, &lastCursor );
 		if ( selType == cs_text &&
 		     selected ) {
+			printf ( "editing text\n" );
+
 			struct jText *text = ele->text;
 			ArrayList *sb = text->sb;
 			struct undoRedo *undoMem = NULL;
@@ -169,10 +176,7 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 
 
 			if ( altKeys[akCtrl] ) {
-				if ( e->key.keysym.sym == SDLK_o ) {
-					add_special ( sb, spec_omegaL );
-					return 1;
-				} else if ( e->key.keysym.sym == SDLK_i ) {
+				if ( e->key.keysym.sym == SDLK_h ) {		// Math characters
 					add_special ( sb, spec_therefore );
 					return 1;
 				} else if ( e->key.keysym.sym == SDLK_7 ) {
@@ -181,17 +185,40 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 				} else if ( e->key.keysym.sym == SDLK_BACKSLASH ) {
 					add_special ( sb, spec_or );
 					return 1;
-				} else if ( e->key.keysym.sym == SDLK_p ) {
-					add_special ( sb, spec_pi );
+				} else if ( e->key.keysym.sym == SDLK_m ) {
+					add_special ( sb, spec_micro );
+					return 1;
+				} else if ( e->key.keysym.sym == SDLK_j ) {
+					add_special ( sb, spec_emptySet );
+					return 1;
+
+				} else if ( e->key.keysym.sym == SDLK_k ) {	// Greek Letters
+					add_special ( sb, spec_alphaL );
+					return 1;
+				} else if ( e->key.keysym.sym == SDLK_b ) {
+					add_special ( sb, spec_betaL );
+					return 1;
+				} else if ( e->key.keysym.sym == SDLK_d ) {
+					if ( altKeys[akShift] ) {
+						add_special ( sb, spec_deltaU );
+					} else {
+						add_special ( sb, spec_deltaL );
+					}
 					return 1;
 				} else if ( e->key.keysym.sym == SDLK_y ) {
 					add_special ( sb, spec_thetaL );
 					return 1;
-				} else if ( e->key.keysym.sym == SDLK_k ) {
-					add_special ( sb, spec_alphaL );
+				} else if ( e->key.keysym.sym == SDLK_u ) {
+					add_special ( sb, spec_lambdaL );
 					return 1;
-				} else if ( e->key.keysym.sym == SDLK_j ) {
-					add_special ( sb, spec_emptySet );
+				} else if ( e->key.keysym.sym == SDLK_p ) {
+					add_special ( sb, spec_pi );
+					return 1;
+				} else if ( e->key.keysym.sym == SDLK_i ) {
+					add_special ( sb, spec_rhoL );
+					return 1;
+				} else if ( e->key.keysym.sym == SDLK_o ) {
+					add_special ( sb, spec_omegaL );
 					return 1;
 				}
 			}
@@ -201,12 +228,16 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 				&searching, search, altKeys,
 				glob_ctrlKeys, NULL, textWrap, maxCols );
 //			printf ( "SB KEY RET: %d\n", ret );
+
 			if ( ret ) {
 				return 1;
 			}
 //			printSb ( sb );
 		}
 	} else if ( e->type == SDL_MOUSEBUTTONDOWN ) {
+		if ( renderMode != renderM_edit ) {
+			return 0;
+		}
 		mouseHeld = 1;
 
 		if ( cursorType == c_pen ) {
@@ -252,7 +283,8 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 
 		int ret = jNakedList_mEvent ( e, clickXYpass, eleWH, eles,
 			viewLoc, viewScale );
-		printf ( "naked list return: %d\n", ret );
+
+//		printf ( "naked list return: %d\n", ret );
 		if ( ret ) {
 			sayCursor;
 			return 1;
@@ -683,6 +715,26 @@ void toggle_debugPrint_jvg_render ( ) {
 	}
 }
 
+void set_debugPrint_jvg_render ( int i ) {
+	printf ( "set_debugPrint_jvg_render ( )\n" );
+	printf ( "i: %d\n", i );
+
+	debugPrint_jvg_render = i;
+
+	printf ( "set_debugPrint_jvg_render ( ) OVER\n" );
+}
+
+extern int debugPrint_jvg_event;
+
+void set_debugPrint_jvg_event ( int i ) {
+	printf ( "set_debugPrint_jvg_event ( )\n" );
+	printf ( "i: %d\n", i );
+
+	debugPrint_jvg_event = i;
+
+	printf ( "set_debugPrint_jvg_event ( ) OVER\n" );
+}
+
 /** Other stuff */
 
 
@@ -734,11 +786,8 @@ void UTF_stuff ( ) {
 
 void add_special ( ArrayList *sb, int index ) {
 	char *str = NULL;
-	if ( index == spec_omegaL ) {
-		// omega (lower)
-		char str1[] = { 0xCF, 0x89, 0x00 };
-		str = str1;
-	} else if ( index == spec_therefore ) {
+
+	if ( index == spec_therefore ) {	// Math Characters
 		// therefore
 		char str1[] = { 0xE2, 0x88, 0xB4, 00 };
 		str = str1;
@@ -750,21 +799,40 @@ void add_special ( ArrayList *sb, int index ) {
 		// or
 		char str1[] = { 0xE2, 0x88, 0xA8, 00 };
 		str = str1;
-	} else if ( index == spec_pi ) {
-		// or
-		char str1[] = { 0xCF, 0x80, 00 };
-		str = str1;
-	} else if ( index == spec_thetaL ) {
-		// or
-		char str1[] = { 0xCE, 0xB8, 00 };
-		str = str1;
-	} else if ( index == spec_alphaL ) {
-		// or
-		char str1[] = { 0xCE, 0xB1, 00 };
+	} else if ( index == spec_micro ) {
+		char str1[] = { 0xC2, 0xB5, 00 };
 		str = str1;
 	} else if ( index == spec_emptySet ) {
-		// or
 		char str1[] = { 0xE2, 0x88, 0x85, 00 };
+		str = str1;
+
+	} else if ( index == spec_alphaL ) {	// Greek characters
+		char str1[] = { 0xCE, 0xB1, 00 };
+		str = str1;
+	} else if ( index == spec_betaL ) {
+		char str1[] = { 0xCE, 0xB2, 00 };
+		str = str1;
+	} else if ( index == spec_deltaU ) {
+		char str1[] = { 0xCE, 0x94, 00 };
+		str = str1;
+	} else if ( index == spec_deltaL ) {
+		char str1[] = { 0xCE, 0xB4, 00 };
+		str = str1;
+	} else if ( index == spec_thetaL ) {
+		char str1[] = { 0xCE, 0xB8, 00 };
+		str = str1;
+	} else if ( index == spec_lambdaL ) {
+		char str1[] = { 0xCE, 0xBB, 00 };
+		str = str1;
+	} else if ( index == spec_pi ) {
+		char str1[] = { 0xCF, 0x80, 00 };
+		str = str1;
+	} else if ( index == spec_rhoL ) {
+		char str1[] = { 0xCF, 0x81, 00 };
+		str = str1;
+	} else if ( index == spec_omegaL ) {
+		// omega (lower)
+		char str1[] = { 0xCF, 0x89, 0x00 };
 		str = str1;
 	}
 	if ( !str ) {

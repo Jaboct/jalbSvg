@@ -21,7 +21,7 @@ extern int controlPointR;
 
 extern int selected;
 
-int debugPrint_jvg_event = 1;
+int debugPrint_jvg_event = 0;
 
 
 extern int cStart[];
@@ -100,7 +100,8 @@ int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct
 
 			*lastCursor = mem;
 
-			printf ( "EDITING TEXT\n" );
+			printf ( "SELECTED TEXT\n" );
+
 			return cs_text;
 		}
 
@@ -279,7 +280,7 @@ int jPath_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jPath *pat
 
 		point_to_loc ( vert->XY, screenXY, viewLoc,  viewScale );
 
-		sayFloatArray ( "screenXY", screenXY, 2 );
+//		sayFloatArray ( "screenXY", screenXY, 2 );
 
 		if ( clickXYpass[0] >= screenXY[0] - (vertWidth / 2.0) &&
 		     clickXYpass[0] <= screenXY[0] + (vertWidth / 2.0) ) {
@@ -494,7 +495,7 @@ void move_jPathVert ( struct jPath *path, int vertI, float dx, float dy ) {
 
 int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *text,
 		float *viewLoc, float viewScale ) {
-	printf ( "jText_mEvent ( )\n" );
+//	printf ( "jText_mEvent ( )\n" );
 
 	float screenXYWH[4];
 	point_to_loc ( text->XYWH, screenXYWH, viewLoc, viewScale );
@@ -502,8 +503,8 @@ int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *tex
 	screenXYWH[2] = text->XYWH[2] / viewScale;
 	screenXYWH[3] = text->XYWH[3] / viewScale;
 
-	sayIntArray ( "clickXYpass", clickXYpass, 2 );
-	sayFloatArray ( "screenXYWH", screenXYWH, 4 );
+//	sayIntArray ( "clickXYpass", clickXYpass, 2 );
+//	sayFloatArray ( "screenXYWH", screenXYWH, 4 );
 
 	if ( pointInsideI ( clickXYpass, screenXYWH ) ) {
 /*
@@ -553,12 +554,12 @@ int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *tex
 
 			printf ( "maxCols: %d\n", maxCols );
 
-set_debugPrint_jalbSb ( 1 );
+// set_debugPrint_jalbSb ( 1 );
 			int overClickLines = -1;
 			// determines the index of the click (this should also handle return the cursorXY...)
 			int ret = newSbClickToIndex_wrap ( charXY, text->sb, maxCols, tabW, &overClickLines );
 
-set_debugPrint_jalbSb ( 0 );
+// set_debugPrint_jalbSb ( 0 );
 
 			printf ( "ret: %d\n", ret );
 

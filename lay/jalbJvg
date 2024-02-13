@@ -103,6 +103,7 @@ jalbJvg	1	jalbJvg_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/cscNotes.xml
 jalbJvg	2	jalbJvg_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/phyNotes.xml"
 jalbJvg	3	jalbJvg_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/phyHW.xml"
 jalbJvg	4	jalbJvg_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/math_03.xml"
+jalbJvg	0	jalbJvg_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/jvgNotes.xml"
 
 #Hotkey:
 jalbJvg	f	fullTest
@@ -117,7 +118,7 @@ jalbJvg	i	changeCursor
 Hotkey:
 #jalbJvg	h	hand_doStuff2	"/home/jadoo/workspace/jHigh/jalbSvg/res/proofs/svg/test_00.svg"
 #jalbJvg	h	hand_doStuff2	"/home/jadoo/workspace/jHigh/jalbSvg/res/proofs/svg/test_text_01.svg"
-jalbJvg	h	hand_doStuff2	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/test_00.svg"
+#jalbJvg	h	hand_doStuff2	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/test_00.svg"
 jalbJvg	d	hand_doStuff
 //jalbJvg	t	changeCursor
 jalbJvg	t	set_cursor_iconI	1
@@ -175,13 +176,16 @@ Run:
 #jalbJvg	set_debugPrint_jalbXml_macro	1
 #jalbJvg	jalbXml_02_set_debug	1
 #jalbJvg	set_jalbXml_debugPrint_top	1
-jalbJvg	make_spread_sheet
+#jalbJvg	make_spread_sheet
+#jalbJvg	set_debugPrint_jvg_render	1
 
 
 Run:
 font	hand_test_utf
 
-
+Run:
+#draw2d	set_debugPrint_draw2d_sb	1
+#draw2d	set_debugPrint_jalbSb	1
 
 
 

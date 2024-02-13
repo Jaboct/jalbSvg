@@ -28,6 +28,8 @@ int sbKey ( SDL_Keycode key, ArrayList *sb, struct undoRedo *undoMem, int *curso
 	    int *searching, struct textSearch *search, char *altKeys,
 	    ArrayList *ctrlKeys, struct scrollMem *sm, int wrap, int maxCols ) {
 
+	printf ( "sbKey ( )\n" );
+
 //	return 0;
 
 	// i think i should always check undoMem before i use it?
@@ -568,6 +570,8 @@ int sbKey ( SDL_Keycode key, ArrayList *sb, struct undoRedo *undoMem, int *curso
 		printf ( "sbKey ( ) OVER\n" );
 	}
 
+
+	printf ( "sbKey ( ) OVER\n" );
 
 	return ret;
 }
