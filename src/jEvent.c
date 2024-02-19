@@ -34,11 +34,11 @@ extern int tabW;
 
 int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct jNakedUnion **ele,
 		int *vertI, int *controlI, struct cursorMem **lastCursor ) {
-	printf ( "iterateToSelected ( )\n" );
+//	printf ( "iterateToSelected ( )\n" );
 
 	int i = 0;
 	int len = arrayListGetLength ( cursorList );
-	printf ( "cursorList.len: %d\n", len );
+//	printf ( "cursorList.len: %d\n", len );
 
 	struct jNakedUnion *uni = NULL;
 //	ArrayList *nextList = svg->eles;
@@ -47,10 +47,10 @@ int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct
 
 	while ( i < len - 1) {
 		mem = arrayListGetPointer ( cursorList, i );
-		printf ( "mem->selI: %d\n", mem->selI );
+//		printf ( "mem->selI: %d\n", mem->selI );
 
 		uni = arrayListGetPointer ( nextList, mem->selI );
-		printf ( "[%d], uni->type: %d\n", i, uni->type );
+//		printf ( "[%d], uni->type: %d\n", i, uni->type );
 		if ( uni->type == G ) {
 			nextList = uni->g->eles;
 			*parent = uni;
@@ -63,7 +63,7 @@ int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct
 		}
 		i += 1;
 	}
-	printf ( "exited while: %d\n", i );
+//	printf ( "exited while: %d\n", i );
 /*
 	*parent = uni;
 
@@ -75,7 +75,7 @@ int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct
 */
 
 	*ele = uni;
-	printf ( "set ele\n" );
+//	printf ( "set ele\n" );
 	if ( i == len - 1 ) {	// == len, cuz i do i += 1 directly above
 		// that means an object is selected.
 		return cs_object;
@@ -100,7 +100,7 @@ int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct
 
 			*lastCursor = mem;
 
-			printf ( "SELECTED TEXT\n" );
+//			printf ( "SELECTED TEXT\n" );
 
 			return cs_text;
 		}
@@ -514,7 +514,7 @@ int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *tex
 		     clickXYpass[1] < screenXYWH[1] + screenXYWH[3] ) {
 */
 
-			printf ( "CLICKED IN TEXT\n" );
+//			printf ( "CLICKED IN TEXT\n" );
 
 			if ( altKeys[akCtrl] ) {
 				// i want to edit the box itself, not the text inside.
@@ -540,19 +540,19 @@ int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *tex
 				fonts[0]->atlasInfo.glyphW / viewScale,
 				fonts[0]->atlasInfo.glyphH / viewScale
 			};
-			sayFloatArray ( "glyphWH", glyphWH, 2 );
+//			sayFloatArray ( "glyphWH", glyphWH, 2 );
 
 			int charXY[2];
 			charXY[0] = (clickXYpass[0] - screenXYWH[0]) / glyphWH[0] + 0.5;
 			charXY[1] = (clickXYpass[1] - screenXYWH[1]) / glyphWH[1];
 
-			sayIntArray ( "charXY", charXY, 2 );
+//			sayIntArray ( "charXY", charXY, 2 );
 
 			
 			int maxCols = text->XYWH[2] / fonts[0]->atlasInfo.glyphW;
 			int textWrap = 1;
 
-			printf ( "maxCols: %d\n", maxCols );
+//			printf ( "maxCols: %d\n", maxCols );
 
 // set_debugPrint_jalbSb ( 1 );
 			int overClickLines = -1;
@@ -561,7 +561,7 @@ int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *tex
 
 // set_debugPrint_jalbSb ( 0 );
 
-			printf ( "ret: %d\n", ret );
+//			printf ( "ret: %d\n", ret );
 
 			cStart[0] = ret;
 			cEnd[0] = ret;

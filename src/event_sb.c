@@ -28,10 +28,6 @@ int sbKey ( SDL_Keycode key, ArrayList *sb, struct undoRedo *undoMem, int *curso
 	    int *searching, struct textSearch *search, char *altKeys,
 	    ArrayList *ctrlKeys, struct scrollMem *sm, int wrap, int maxCols ) {
 
-	printf ( "sbKey ( )\n" );
-
-//	return 0;
-
 	// i think i should always check undoMem before i use it?
 	// unless i check it in the subFuncts.
 
@@ -160,11 +156,15 @@ int sbKey ( SDL_Keycode key, ArrayList *sb, struct undoRedo *undoMem, int *curso
 			cursorEndMem[0] = cursorStartMem[0];
 			newSbIndexToCoords ( cursorStartMem[0], &cursorStartMem[1], sb, wrap, maxCols, tabW );
 		}
+
 		// Parse recheck.
-		if ( arrayListGetLength ( search->searchReturn ) > 0 ) {
-//			sbSearch(sb, search, eleWH);
-			newSbSearch ( sb, search, tabW );
+		if ( search ) {
+			if ( arrayListGetLength ( search->searchReturn ) > 0 ) {
+//				sbSearch(sb, search, eleWH);
+				newSbSearch ( sb, search, tabW );
+			}
 		}
+
 	} else if ( key == SDLK_BACKSPACE ) {
 		printf ( "SDLK_BACKSPACE\n" );
 /*
@@ -334,7 +334,7 @@ int sbKey ( SDL_Keycode key, ArrayList *sb, struct undoRedo *undoMem, int *curso
 		} else {
 			if ( setCursor[0] > 0 ) {
 				int len = charLen_back ( sb, setCursor[0] );
-				printf ( "LEFT ARROW len: %d\n", len );
+//				printf ( "LEFT ARROW len: %d\n", len );
 //				setCursor[0] -= 1;
 				setCursor[0] -= len;
 			}
@@ -346,7 +346,7 @@ int sbKey ( SDL_Keycode key, ArrayList *sb, struct undoRedo *undoMem, int *curso
 //		sbIndexToCoords ( setCursor[0], &setCursor[1], sb, eleWH );
 		newSbIndexToCoords ( setCursor[0], &setCursor[1], sb, wrap, maxCols, tabW );
 
-		sayIntArray ( "setCursor", setCursor, 3 );
+//		sayIntArray ( "setCursor", setCursor, 3 );
 
 	} else if ( key == SDLK_RIGHT ) {
 		int numChars = arrayListGetLength ( sb );
@@ -570,9 +570,6 @@ int sbKey ( SDL_Keycode key, ArrayList *sb, struct undoRedo *undoMem, int *curso
 		printf ( "sbKey ( ) OVER\n" );
 	}
 
-
-	printf ( "sbKey ( ) OVER\n" );
-
 	return ret;
 }
 
@@ -742,18 +739,18 @@ int arrayListPartToAbs ( ArrayList *al, ArrayList *part, int partI ) {
 // right now i only need to iterate back 2 chars, cuz i dont handle unicode larger than that.
 // maybe one day i need to convert my string builders to ints to handle this?
 int charLen_back ( ArrayList *sb, int index ) {
-	printSb_x ( sb );
-	printf ( "index: %d\n", index );
+//	printSb_x ( sb );
+//	printf ( "index: %d\n", index );
 
 	int ret = 1;
 
 	while ( index > 0 ) {
 		index -= 1;
 		unsigned char *c = arrayListDataPointer ( sb, index );
-		printf ( "*c: %d\n", *c );
+//		printf ( "*c: %d\n", *c );
 
-		unsigned char max = 0b10000000;
-		printf ( "max: %d\n", max );
+//		unsigned char max = 0b10000000;
+//		printf ( "max: %d\n", max );
 
 		if ( *c >= 0b10000000 &&	// lowest possible non-first byte.
 		     *c <  0b11000000 ) { // lowest possible first byte (also 1 more than the highest possible non-first byte)
@@ -790,8 +787,8 @@ int charLen_back ( ArrayList *sb, int index ) {
 
 // if the next char is a firstChar, then iterate through.
 int charLen_forward ( ArrayList *sb, int index ) {
-	printSb_x ( sb );
-	printf ( "index: %d\n", index );
+//	printSb_x ( sb );
+//	printf ( "index: %d\n", index );
 
 	int len = arrayListGetLength ( sb );
 
@@ -799,7 +796,7 @@ int charLen_forward ( ArrayList *sb, int index ) {
 
 	while ( index < len ) {
 		unsigned char *c = arrayListDataPointer ( sb, index );
-		printf ( "*c: %d\n", *c );
+//		printf ( "*c: %d\n", *c );
 
 		if ( ret == 0 ) {
 			if ( *c >= 0b11000000 ) { // lowest possible first byte (also 1 more than the highest possible non-first byte)

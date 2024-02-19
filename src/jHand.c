@@ -159,7 +159,7 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 		int selType = jIterateToSelected ( global_jEles, &parent, &ele, &vertI, &controlI, &lastCursor );
 		if ( selType == cs_text &&
 		     selected ) {
-			printf ( "editing text\n" );
+//			printf ( "editing text\n" );
 
 			struct jText *text = ele->text;
 			ArrayList *sb = text->sb;
@@ -170,7 +170,7 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 			int textWrap = 1;
 			int maxCols = text->XYWH[2] / fonts[0]->atlasInfo.glyphW;
 
-			printf ( "maxCols: %d\n", maxCols );
+//			printf ( "maxCols: %d\n", maxCols );
 
 			ArrayList *glob_ctrlKeys = NULL;
 
@@ -286,7 +286,7 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 
 //		printf ( "naked list return: %d\n", ret );
 		if ( ret ) {
-			sayCursor;
+//			sayCursor;
 			return 1;
 		}
 
@@ -331,7 +331,7 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 			cEnd[1] = 0;
 			cEnd[2] = 0;
 
-			sayCursor;
+//			sayCursor;
 
 			set_cursor_iconI ( c_reg );
 
@@ -376,7 +376,7 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 		struct cursorMem *lastCursor = NULL;
 
 		int selType = jIterateToSelected ( global_jEles, &parent, &ele, &vertI, &controlI, &lastCursor );
-
+/*
 		printf ( "selType: %d\n", selType );
 		printf ( "ele: %p\n", ele );
 		printf ( "vertI: %d\n", vertI );
@@ -385,6 +385,7 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 		if ( lastCursor ) {
 			printf ( "lastCursor->selI: %d\n", lastCursor->selI );
 		}
+*/
 
 		if ( selType == cs_vert ) {
 //			struct jVert *vert = arrayListGetPointer ( ele->path->verts, vertI );

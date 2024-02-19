@@ -320,6 +320,17 @@ void jText_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jT
 	if ( thisSel ) {
 		drawCursor = 1;
 	}
+
+/*
+	if ( tempXYWH[0] > XYWHpass[2] ||	// off to the right
+	     tempXYWH[1] > XYWHpass[1] ||	// off below
+	     tempXYWH[0] + tempXYWH[2] < 0 ||	// off to the left.
+	     tempXYWH[1] + tempXYWH[3] < 0 ) {	// off above
+		printf ( "text off screen\n" );
+		return;
+	}
+*/
+
 //	spanRender ( screenDims, glBuffers, XYWHpass, glyphWH, XYWH, text->sb,
 	spanRender ( screenDims, glBuffers, XYWHpass, glyphWH, tempXYWH, text->sb,
 		drawCursor, cStart, cEnd,

@@ -415,6 +415,16 @@ int spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyph
 		sayFloatArray ( "fXYWH", fXYWH, 4 );
 	}
 
+	// is this on the screen at all?
+	// well i still want a decent return value...
+	if ( fXYWH[0] > XYWHpass[2] ||	// off to the right
+	     fXYWH[1] > XYWHpass[3] ||	// off below
+	     fXYWH[0] + fXYWH[2] < 0 ||	// off to the left.
+	     fXYWH[1] + fXYWH[3] < 0 ) {	// off above
+//		printf ( "text cut\n");
+		return -1;
+	}
+
 	int indentXY[2] = { 0, 0 };
 
 	int tabW = 8;

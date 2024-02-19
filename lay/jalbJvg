@@ -99,7 +99,8 @@ Hotkey:
 jalbJvg	e	toggle_renderMode
 jalbJvg	s	jHand_save
 jalbJvg	l	jHand_load
-jalbJvg	1	jalbJvg_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/cscNotes.xml"
+#jalbJvg	1	jalbJvg_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/cscNotes.xml"
+jalbJvg	1	jalbJvg_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/phyLab2.xml"
 jalbJvg	2	jalbJvg_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/phyNotes.xml"
 jalbJvg	3	jalbJvg_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/phyHW.xml"
 jalbJvg	4	jalbJvg_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/math_03.xml"
