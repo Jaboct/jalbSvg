@@ -22,6 +22,10 @@ void mod_preInit ( ) {
 
 
 void *preInit ( ArrayList *keyList, ArrayList *modList ) {
+	printf ( "preInit ( ) jalbSvg.so\n" );
+
+	jSvg_preInit ( keyList, modList );
+
 	return NULL;
 }
 

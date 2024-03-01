@@ -165,6 +165,13 @@ void toggle_renderMode ( );
 void set_renderMode ( int i );
 
 
+/// Layout Keywords
+
+void jSvg_preInit ( ArrayList *keyList, ArrayList *modList );
+
+// This is from jalbText.
+void jKeyCtrl ( char *line, void *data );
+
 
 
 

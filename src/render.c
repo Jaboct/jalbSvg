@@ -429,6 +429,11 @@ int spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyph
 
 	int tabW = 8;
 
+	float orientXY[2] = {
+		fonts[0]->atlasInfo.orientX / viewScale,
+		fonts[0]->atlasInfo.orientY / viewScale,
+	};
+
 	int firstLine = 0;
 	if ( selected ) {
 		XYWH[3] = desiredH;
@@ -437,7 +442,8 @@ int spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyph
 
 		// Render curor Highlight
 		XYWH[3] = fXYWH[3];
-		draw2dApi->renderHighlight ( screenDims, glBuffers, XYWH, cursorStartMem, cursorEndMem, firstLine, indentXY, colorOrange, glyphWH );
+		draw2dApi->renderHighlight ( screenDims, glBuffers, XYWH, cursorStartMem, cursorEndMem,
+			firstLine, indentXY, colorOrange, glyphWH, orientXY );
 	}
 
 	XYWH[0] = fXYWH[0];
@@ -525,7 +531,8 @@ printf ( "endIndex: %d\n", endIndex );
 	XYWH[0] = fXYWH[0];
 	XYWH[1] = fXYWH[1];
 
-	XYWH[2] = 4 / viewScale;
+//	XYWH[2] = 4 / viewScale;
+	XYWH[2] = 2.0 / viewScale;
 //	XYWH[3] = glyphWH[1];
 	XYWH[3] = fonts[0]->atlasInfo.glyphH / viewScale;
 
@@ -534,7 +541,8 @@ printf ( "endIndex: %d\n", endIndex );
 //	iXYWH[3] = fonts[0]->atlasInfo.glyphH / viewScale;
 	if ( selected ) {
 		draw2dApi->drawWhiteCursor ( screenDims, glBuffers, XYWH,
-			cursorStartMem, cursorEndMem, indentXY, glyphWH, colorWhite, firstLine );
+			cursorStartMem, cursorEndMem, indentXY, glyphWH, orientXY,
+			colorWhite, firstLine );
 	}
 
 

@@ -1159,7 +1159,122 @@ void set_renderMode ( int i ) {
 	printf ( "set_renderMode ( ) OVER\n" );
 }
 
+/// Layout Keywords
 
+void jSvg_preInit ( ArrayList *keyList, ArrayList *modList ) {
+	printf ( "jSvg_preInit ( )\n" );
+
+	struct jalbLayKeyword *key = NULL;
+
+	// "svgCtrl:"
+	key = malloc ( sizeof ( struct jalbLayKeyword ) );
+	strcpy ( key->key, "svgCtrl:" );
+	key->funct = jKeyCtrl;
+	key->data = NULL;
+	arrayListAddEndPointer ( keyList, key );
+}
+
+//int debugPrint_ctrl = 0;
+ArrayList *glob_ctrlKeys = NULL;
+
+// This is from jalbText.
+void jKeyCtrl ( char *line, void *data ) {
+//	if ( debugPrint_ctrl ) {
+		printf ( "jKeyCtrl: (%s)\n", line );
+//	}
+
+//	struct layText *textData = lastTextEle;
+	if ( !glob_ctrlKeys ) {
+		glob_ctrlKeys = initArrayList ( 10, sizeof ( char ), 10 );
+	}
+
+	ArrayList *ctrlKeys = glob_ctrlKeys;
+
+//	if ( line[0] != '\"' ) {
+//		return;
+//	}
+
+	// this is a really weird way of handing a var, i never do it like this.
+	// this var's type of this enum?
+	enum { REG,
+	       SLASH } state = REG;
+
+	// I should ambiguate this loop?
+
+	char c;
+
+//	int i = 1;
+	int i = 0;
+	while ( 1 ) {
+//		printf("(%d): %c\n", i, line[i]);
+
+		switch ( state ) {
+		case REG:
+			switch ( line[i] ) {
+			case '\0':
+				return;
+				break;
+			case '\n':
+				return;
+				break;
+			case '\"': // End of string.
+				return;
+				break;
+			case '\'':
+				// should be preceded, doesnt really matter.
+				break;
+			case '\\':
+				state = SLASH;
+				break;
+			default:
+//				printf ( "&line[i]: %c\n", line[i] );
+				arrayListAddEnd ( ctrlKeys, &line[i] );
+				break;
+			}
+			break;
+		case SLASH:
+			switch ( line[i] ) {
+			case 'n':
+				c = '\n';
+//				printf("c: \\n\n");
+				arrayListAddEnd ( ctrlKeys, &c );
+				break;
+			case 't':
+				c = '\t';
+//				printf("c: \\t\n");
+				arrayListAddEnd ( ctrlKeys, &c );
+				break;
+			case '\"':
+				c = line[i];
+//				printf("c: \"\n");
+				arrayListAddEnd ( ctrlKeys, &c );
+				break;
+			case '\'':
+				c = line[i];
+//				printf("c: \'\n");
+				arrayListAddEnd ( ctrlKeys, &c );
+				break;
+			case '\\':
+				c = line[i];
+//				printf("c: \\\n");
+				arrayListAddEnd ( ctrlKeys, &c );
+				break;
+			default:
+				// unhandled.
+				break;
+			}
+			state = REG;
+
+			break;
+		default:
+			printf ( "bug\n" );
+			return;
+			break;
+		}
+		i += 1;
+	}
+	printf ( "jKeyCtrl ( ) OVER\n" );;
+}
 
 
 

@@ -54,18 +54,20 @@ int sbKey ( SDL_Keycode key, ArrayList *sb, struct undoRedo *undoMem, int *curso
 */
 		if ( altKeys[akCtrl] ) {
 			if ( key == 'z' ) {
-				if ( altKeys[akShift] ) {
-					if ( undoRedo ( undoMem, sb, cursorStartMem ) ) {
-//						sbIndexToCoords ( cursorStartMem[0], &cursorStartMem[1], sb, eleWH );
-						cursorEndMem[0] = cursorStartMem[0];
-						newSbIndexToCoords ( cursorStartMem[0], &cursorStartMem[1], sb, wrap, maxCols, tabW );
-					}
-				} else {
-					if ( undoUndo ( undoMem, sb, cursorStartMem ) ) {
-//						sbIndexToCoords ( cursorStartMem[0], &cursorStartMem[1], sb, eleWH );
-						cursorEndMem[0] = cursorStartMem[0];
-//						sbIndexToCoords ( cursorStartMem[0], &cursorStartMem[1], sb, eleWH );
-						newSbIndexToCoords ( cursorStartMem[0], &cursorStartMem[1], sb, wrap, maxCols, tabW );
+				if ( undoMem ) {
+					if ( altKeys[akShift] ) {
+						if ( undoRedo ( undoMem, sb, cursorStartMem ) ) {
+//							sbIndexToCoords ( cursorStartMem[0], &cursorStartMem[1], sb, eleWH );
+							cursorEndMem[0] = cursorStartMem[0];
+							newSbIndexToCoords ( cursorStartMem[0], &cursorStartMem[1], sb, wrap, maxCols, tabW );
+						}
+					} else {
+						if ( undoUndo ( undoMem, sb, cursorStartMem ) ) {
+//							sbIndexToCoords ( cursorStartMem[0], &cursorStartMem[1], sb, eleWH );
+							cursorEndMem[0] = cursorStartMem[0];
+//							sbIndexToCoords ( cursorStartMem[0], &cursorStartMem[1], sb, eleWH );
+							newSbIndexToCoords ( cursorStartMem[0], &cursorStartMem[1], sb, wrap, maxCols, tabW );
+						}
 					}
 				}
 

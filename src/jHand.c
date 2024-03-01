@@ -47,9 +47,11 @@ extern int renderMode;
 
 
 char saveDir[256] = "";
-
+extern ArrayList *glob_ctrlKeys;
 
 /** Functions */
+
+
 
 void *jalbJvg_init ( ) {
 	return NULL;
@@ -71,6 +73,13 @@ void jalbJvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void
 	if ( debugPrint_jvg_render ) {
 		printf ( "jalbJvg_renderDyn ( )\n" );
 		svg_debugPrint_render_text = 1;
+	}
+
+
+	if ( !glob_ctrlKeys ) {
+//		char *line = " \n\t.,/\\<>{}[]():;\"\'|_-+=~`!@#$%^&*?";
+		char *line = " \\n\\t.,/\\\\<>{}[]():;\\\"\\\'|_-+=~`!@#$%^&*?";
+		jKeyCtrl ( line, NULL );
 	}
 
 	if ( !glob_jvg ) {
@@ -171,9 +180,6 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 			int maxCols = text->XYWH[2] / fonts[0]->atlasInfo.glyphW;
 
 //			printf ( "maxCols: %d\n", maxCols );
-
-			ArrayList *glob_ctrlKeys = NULL;
-
 
 			if ( altKeys[akCtrl] ) {
 				if ( e->key.keysym.sym == SDLK_h ) {		// Math characters
@@ -704,6 +710,13 @@ void jalbJvg_load ( char *dir ) {
 }
 
 
+void *get_jalbJvg_load ( ) {
+	printf ( "get_jalbJvg_load ( )\n" );
+
+	return jalbJvg_load;
+}
+
+
 /** Debug */
 
 void toggle_debugPrint_jvg_render ( ) {
@@ -1191,7 +1204,6 @@ void decreaseCharArr ( unsigned char *arr, int numChars ) {
 		i += 1;
 	}
 }
-
 
 
 

@@ -135,6 +135,11 @@ int jNakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *e
 		return 0;
 	}
 
+	if ( e->button.button == SDL_BUTTON_MIDDLE ) {
+		// treat it like im just moving the camera around.
+		return 0;
+	}
+
 	if ( altKeys[akShift] ||
 	     altKeys[akCtrl] ) {
 		// if i currently have a vert seleted, the add to it the place i clicked.

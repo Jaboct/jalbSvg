@@ -4,7 +4,9 @@ lay/layoutFile_default
 
 
 Lib:
+jalbDir	jalbDir2
 jalbJvg	jalbJvg
+uiGen	uiGen
 
 
 Append:
@@ -105,6 +107,10 @@ jalbJvg	2	jalbJvg_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/phyNotes.xml
 jalbJvg	3	jalbJvg_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/phyHW.xml"
 jalbJvg	4	jalbJvg_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/math_03.xml"
 jalbJvg	0	jalbJvg_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/jvgNotes.xml"
+jalbJvg	9	jalbJvg_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/phyText_00.xml
+
+
+
 
 #Hotkey:
 jalbJvg	f	fullTest
@@ -120,7 +126,7 @@ Hotkey:
 #jalbJvg	h	hand_doStuff2	"/home/jadoo/workspace/jHigh/jalbSvg/res/proofs/svg/test_00.svg"
 #jalbJvg	h	hand_doStuff2	"/home/jadoo/workspace/jHigh/jalbSvg/res/proofs/svg/test_text_01.svg"
 #jalbJvg	h	hand_doStuff2	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/test_00.svg"
-jalbJvg	d	hand_doStuff
+#jalbJvg	d	hand_doStuff
 //jalbJvg	t	changeCursor
 jalbJvg	t	set_cursor_iconI	1
 jalbJvg	6	set_cursor_iconI	2
@@ -129,6 +135,10 @@ jalbJvg	r	toggle_debugPrint_jvg_render
 
 Hotkey:
 #jalbJvg	q	UTF_stuff
+
+
+Hotkey:
+jalbDir	d	hand_layDirTab_uiGen_dir	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/"
 
 
 
@@ -143,6 +153,8 @@ layoutUi	takeTop	loop	setLastStageData
 Ctrl:
 " \n\t.,/\\<>{}[]():;\"\'|_-+=~`!@#$%^&*?"
 
+svgCtrl:
+" \n\t.,/\\<>{}[]():;\"\'|_-+=~`!@#$%^&*?"
 
 
 Setter:
@@ -188,6 +200,31 @@ Run:
 #draw2d	set_debugPrint_draw2d_sb	1
 #draw2d	set_debugPrint_jalbSb	1
 
+
+
+
+
+#Hotkey:
+#jalbDir	d	hand_layDirTab_uiGen_dir	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/"
+
+LayLib:
+uiGen	uiGen	uiGenInit	uiGen_render	uiGen_event	uiGenClose 	set_uiGen_id
+uiGen	uiGenEdit	uiGenInitEdit	uiGenRenderEdit	uiGenEventEdit	uiGenCloseEdit	uiGenEditNumber
+
+Getter:
+layoutUi	addCanvasEle	uiGen	setAddCanvas
+layoutUi	addCanvasEle	jalbDir	setAddCanvas
+jalbJvg	jalbJvg_load	jalbDir	set_openFile_f
+
+Setter:
+draw2d	getFunctWrap	uiGen	setDraw2dApi
+font	getFontFirst	uiGen	setFont16
+draw2d	getFunctWrap	jalbDir	setDraw2dApi
+font	getFontFirst	jalbDir	setFont16
+uiGen	get_uiGen_api_void	jalbDir	set_uiGen_api
+
+Run:
+uiGen	assemble_appendMod_full_list
 
 
 

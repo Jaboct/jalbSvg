@@ -99,5 +99,6 @@ void makeColumn ( int numVars, int thisColumn );
 void makeRow ( unsigned char *arr, int numVars );
 
 void iterateCharArr ( unsigned char *arr, int numChars );
+void decreaseCharArr ( unsigned char *arr, int numChars );
 
 
