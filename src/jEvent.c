@@ -402,7 +402,7 @@ int jPath_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jPath *pat
 
 		float fXY[2] = { clickXYpass[0], clickXYpass[1] };
 		loc_to_point ( fXY, fXY, viewLoc, viewScale );
-		float dist = pointLineDist ( fXY, v0->XY, v1->XY );
+		float dist = pointSegDist ( fXY, v0->XY, v1->XY );
 
 //		printf ( "line dist: %f\n", dist );
 

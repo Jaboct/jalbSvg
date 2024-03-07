@@ -1342,7 +1342,7 @@ int isOnVert ( struct jPath *path, int *XY ) {
 
 		float fXY[2] = { XY[0], XY[1] };
 		loc_to_point ( fXY, fXY, viewLoc, viewScale );
-		float dist = pointLineDist ( fXY, v0->XY, v1->XY );
+		float dist = pointSegDist ( fXY, v0->XY, v1->XY );
 
 		if ( dist < pointDist ) {
 			return 1;
@@ -1373,6 +1373,7 @@ void dragJPath ( struct jPath *path, float *dXY ) {
 	int i;
 	int len;
 
+	// move verts
 	i = 0;
 	len = arrayListGetLength ( path->verts );
 	while ( i < len ) {
@@ -1380,6 +1381,28 @@ void dragJPath ( struct jPath *path, float *dXY ) {
 
 		vert->XY[0] += dXY[0];
 		vert->XY[1] += dXY[1];
+
+		i += 1;
+	}
+
+	// move control points aswell.
+	i = 0;
+	len = arrayListGetLength ( path->lines );
+	while ( i < len ) {
+		struct jLine *line = arrayListGetPointer ( path->lines, i );
+
+		if ( line->type == path_CubicBez ) {
+			line->c0[0] += dXY[0];
+			line->c0[1] += dXY[1];
+
+			line->c1[0] += dXY[0];
+			line->c1[1] += dXY[1];
+		} else if ( line->type == path_QuadBez ) {
+			line->c0[0] += dXY[0];
+			line->c0[1] += dXY[1];
+		}
+
+
 
 		i += 1;
 	}

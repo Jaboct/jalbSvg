@@ -44,8 +44,10 @@ extern int debugPrint_jvg_render;
 
 void jNakedList_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, ArrayList *eles,
 		float *viewLoc, float viewScale ) {
-	printf ( "jNakedList_render ( )\n" );
-	printf ( "thisSel: %d\n", thisSel );
+	if ( debugPrint_jvg_render ) {
+		printf ( "jNakedList_render ( )\n" );
+		printf ( "thisSel: %d\n", thisSel );
+	}
 
 	int i;
 	int len;
@@ -102,10 +104,10 @@ void jNaked_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct j
 
 void jPath_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jPath *path,
 		float *viewLoc, float viewScale ) {
-//	if ( debugPrint_jvg_render ) {
+	if ( debugPrint_jvg_render ) {
 		printf ( "jPath_render ( )\n" );
 		printf ( "thisSel: %d\n", thisSel );
-//	}
+	}
 
 	int i;
 	int len;
