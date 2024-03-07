@@ -15,7 +15,7 @@ extern ArrayList *cursorList;
 extern int cursor_depth;
 
 extern int renderMode;
-extern int cursorType;
+extern int cursorInputMode;
 
 extern int pointW;
 
@@ -94,6 +94,7 @@ int svg_event ( SDL_Event *e, int *clickXYpass, int *eleWH, struct svg *svg,
 
 		int ret = nakedList_mEvent ( e, clickXYpass, eleWH, svg->eles,
 			viewLoc, viewScale );
+
 		if ( ret ) {
 			printf ( "finish set cursor\n" );
 
@@ -124,9 +125,8 @@ int svg_event ( SDL_Event *e, int *clickXYpass, int *eleWH, struct svg *svg,
 				}
 			} else {
 				// if im in text mode, add a new text box.
-				if ( renderMode == renderM_edit ) {
-					if ( cursorType == c_text ) {
-
+				if ( renderMode == renderM_editAll ) {
+					if ( cursorInputMode == ci_text ) {
 						addText ( svg, clickXYpass,
 							viewLoc, viewScale );
 					}
@@ -206,7 +206,7 @@ void addText ( struct svg *svg, int *clickXY,
 int nakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *eles,
 		float *viewLoc, float viewScale ) {
 
-	if ( renderMode != renderM_edit ) {
+	if ( renderMode != renderM_editAll ) {
 		return 0;
 	}
 

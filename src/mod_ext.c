@@ -35,7 +35,7 @@ int svg_debugPrint_render_text = 0;
 int svg_debugPrint_event = 0;
 
 
-int renderMode = renderM_edit;
+int renderMode = renderM_editAll;
 
 int pointW = 10;
 
@@ -197,6 +197,20 @@ void point_to_loc_glob ( float *p0, float *pSet ) {
 
 void loc_to_point_glob ( float *p0, float *pSet ) {
 	loc_to_point ( p0, pSet, glob_viewLoc, glob_viewScale );
+}
+
+
+/** event util */
+
+int thisEdit ( int thisSel ) {
+	if ( renderMode == renderM_editAll ) {
+		return 1;
+	} else if ( renderMode == renderM_edit ) {
+		if ( thisSel ) {
+			return 1;
+		}
+	}
+	return 0;
 }
 
 

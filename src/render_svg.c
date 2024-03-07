@@ -282,7 +282,7 @@ void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *p
 		printf ( "renderMode: %d\n", renderMode );
 	}
 
-	if ( renderMode == renderM_edit ) {
+	if ( renderMode == renderM_editAll ) {
 		// if i am in edit mode, then re-iterate the points, and render their edit points.
 
 		if ( svg_debugPrint_render ) {

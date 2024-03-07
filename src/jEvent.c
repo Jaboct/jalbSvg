@@ -30,6 +30,10 @@ extern int cEnd[];
 
 extern int tabW;
 
+
+extern int pointDist;
+
+
 /** Functions */
 
 int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct jNakedUnion **ele,
@@ -44,6 +48,15 @@ int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct
 //	ArrayList *nextList = svg->eles;
 	ArrayList *nextList = eleList;
 	struct cursorMem *mem = NULL;
+
+	if ( len == 1 ) {
+		// its an object or group or something.
+		// TODO
+
+		mem = arrayListGetPointer ( cursorList, 0 );
+//		printf ( "mem->selI: %d\n", mem->selI );
+		uni = arrayListGetPointer ( nextList, mem->selI );
+	}
 
 	while ( i < len - 1) {
 		mem = arrayListGetPointer ( cursorList, i );
@@ -131,7 +144,8 @@ int jNakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *e
 		printf ( "jNakedList_mEvent ( )\n" );
 	}
 
-	if ( renderMode != renderM_edit ) {
+	if ( renderMode != renderM_editAll &&
+	     renderMode != renderM_edit ) {
 		return 0;
 	}
 
@@ -375,7 +389,44 @@ int jPath_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jPath *pat
 
 		i += 1;
 	}
+
+	// ok, i didnt click on a control point, now see if im trying to drag a line.
+
+	i = 0;
+	len = arrayListGetLength ( path->lines );
+	while ( i < len ) {
+		struct jLine *line = arrayListGetPointer ( path->lines, i );
+
+		struct jVert *v0 = arrayListGetPointer ( path->verts, line->v0 );
+		struct jVert *v1 = arrayListGetPointer ( path->verts, line->v1 );
+
+		float fXY[2] = { clickXYpass[0], clickXYpass[1] };
+		loc_to_point ( fXY, fXY, viewLoc, viewScale );
+		float dist = pointLineDist ( fXY, v0->XY, v1->XY );
+
+//		printf ( "line dist: %f\n", dist );
+
+		if ( dist < pointDist ) {
+			// im not effecting this line.
+
+			cursorUp;
+			// i dont want this specific line to be selected rn.
+			handleCursor_start;
+			cursorDown;
+
+//			printf ( "CLICK ON LINE\n" );
+			selected = 1;
+
+			return 1;
+		}
+
+		i += 1;
+	}
+
+
+
 /*
+	// what is this stuff?
 		float XY[2];
 		get_pathUni_XY ( uni, XY );
 

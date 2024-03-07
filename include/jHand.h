@@ -38,6 +38,7 @@ enum spec_keys {
 	spec_omegaL,
 };
 
+
 /** Functions */
 
 //LayLibDynamic:
@@ -78,6 +79,7 @@ void jalbJvg_save ( char *dir );
 void jHand_load ( );
 void jalbJvg_load ( char *dir );
 
+
 /** Debug */
 
 void toggle_debugPrint_jvg_render ( );
@@ -100,5 +102,21 @@ void makeRow ( unsigned char *arr, int numVars );
 
 void iterateCharArr ( unsigned char *arr, int numChars );
 void decreaseCharArr ( unsigned char *arr, int numChars );
+
+
+/** hover cursor */
+
+void onHoverCheck ( int *XY );
+int onHoverType ( int *XY );
+int isOnVert ( struct jPath *path, int *XY );
+int isOnLine ( struct jVert *v0, struct jVert *v1, int *XY );
+
+float pointLineDist ( float *p, float *v0, float *v1 );
+
+
+/** Dragging */
+
+void dragJPath ( struct jPath *path, float *dXY );
+
 
 

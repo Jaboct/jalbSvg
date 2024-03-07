@@ -14,6 +14,15 @@
 #include "mod_ext.h"	// for enums
 #include "render.h"
 
+/** Structs */
+
+enum vert_subModes {
+	vSubM_move = 0,
+	vSubM_rotate,
+	vSubM_verts,
+};
+
+
 /** Functions */
 
 void jNakedList_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, ArrayList *eles,
@@ -35,6 +44,8 @@ void jText_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jT
 void jCircRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jCirc *circ,
 		float *viewLoc, float viewScale );
 
+/** Util */
 
+void path_lrtb ( struct jPath *path, float *lrtb );
 
 

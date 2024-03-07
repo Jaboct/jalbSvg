@@ -154,7 +154,9 @@ int nakedStru_nameToIndex ( char *body, ArrayList *eles, void *ret, char **strPt
 
 /** Cursor Stuff */
 
-void changeCursor ( );
+//void changeCursor ( );
+
+void set_cursorInputMode ( int i );
 void set_cursor_iconI ( int i );
 void set_cursor_icon ( struct cursorIconInfo *icon );
 

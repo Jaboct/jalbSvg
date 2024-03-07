@@ -8,6 +8,8 @@
 extern char altKeys[];
 
 extern float colorWhite[];
+extern float colorOrange[];
+float colorGrayOpaque[4] = { 0.24, 0.24, 0.24, 0.6 };
 
 extern struct draw2dStruct *draw2dApi;
 
@@ -20,6 +22,7 @@ extern int cStart[];
 extern int cEnd[];
 
 extern int renderMode;
+extern int vert_subMode;
 
 int vertWidth = 10;
 extern int controlPointR;
@@ -31,6 +34,7 @@ extern int cursor_depth;
 extern int selected;
 extern int thisSel;
 
+
 /// debug
 
 extern int debugPrint_jvg_render;
@@ -40,6 +44,9 @@ extern int debugPrint_jvg_render;
 
 void jNakedList_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, ArrayList *eles,
 		float *viewLoc, float viewScale ) {
+	printf ( "jNakedList_render ( )\n" );
+	printf ( "thisSel: %d\n", thisSel );
+
 	int i;
 	int len;
 
@@ -95,9 +102,10 @@ void jNaked_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct j
 
 void jPath_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jPath *path,
 		float *viewLoc, float viewScale ) {
-	if ( debugPrint_jvg_render ) {
+//	if ( debugPrint_jvg_render ) {
 		printf ( "jPath_render ( )\n" );
-	}
+		printf ( "thisSel: %d\n", thisSel );
+//	}
 
 	int i;
 	int len;
@@ -109,7 +117,13 @@ void jPath_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jP
 		printf ( "lines.len: %d\n", len );
 	}
 
+	int thisObjEdit = thisEdit ( thisSel );
+
 	int endArrow = 1;
+
+	// left, right, top, bottom
+	float lrtb[4] = { 0, 0, 0, 0 };
+	path_lrtb ( path, lrtb );
 
 	while ( i < len ) {
 		struct jLine *line = arrayListGetPointer ( path->lines, i );
@@ -165,7 +179,48 @@ void jPath_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jP
 		i += 1;
 	}
 
-	if ( renderMode == renderM_edit ) {
+
+	if ( thisObjEdit ) {
+		// render a bounding box.
+		// scale the reft accordinly.
+
+//		sayFloatArray ( "lrtb", lrtb, 4 );
+
+		float XYWH[4] = { lrtb[0], lrtb[2] };
+		point_to_loc ( XYWH, XYWH, viewLoc, viewScale );
+		XYWH[2] = (lrtb[1] - lrtb[0]) / viewScale;
+		XYWH[3] = (lrtb[3] - lrtb[2]) / viewScale;
+
+		draw2dApi->drawRectF ( XYWH, colorGrayOpaque, screenDims, glBuffers );
+
+		if ( vert_subMode == vSubM_move ) {
+			// draw red for scale.
+			float subXYWH[4];
+			int boxW = 10;
+			subXYWH[0] = XYWH[0] - boxW / 2;
+			subXYWH[1] = XYWH[1] - boxW / 2;
+			subXYWH[2] = boxW;
+			subXYWH[3] = boxW;
+
+			// top left
+			draw2dApi->drawRectF ( subXYWH, colorOrange, screenDims, glBuffers );
+
+			// top right
+			subXYWH[0] += XYWH[2];
+			draw2dApi->drawRectF ( subXYWH, colorOrange, screenDims, glBuffers );
+
+			// bot right
+			subXYWH[1] += XYWH[3];
+			draw2dApi->drawRectF ( subXYWH, colorOrange, screenDims, glBuffers );
+
+			// bot left
+			subXYWH[0] = XYWH[0] - boxW / 2;
+			draw2dApi->drawRectF ( subXYWH, colorOrange, screenDims, glBuffers );
+		}
+	}
+
+
+	if ( thisObjEdit ) {
 //		int cursorLen = arrayListGetLength ( cursorList );
 //		printf ( "cursorLen: %d\n", cursorLen );
 //		printf ( "cursor_depth: %d\n", cursor_depth );
@@ -336,8 +391,10 @@ void jText_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jT
 		drawCursor, cStart, cEnd,
 		viewLoc, viewScale );
 
-//	if ( thisSel ) {
-	if ( renderMode == renderM_edit ) {
+	int thisObjEdit = thisEdit ( thisSel );
+
+//	if ( renderMode == renderM_editAll ) {
+	if ( thisObjEdit ) {
 		int iXYWH[4] = { XYWH[0], XYWH[1], XYWH[2], XYWH[3] };
 		draw2dApi->drawRect ( iXYWH, colorWhite, screenDims, glBuffers );
 	}
@@ -359,6 +416,45 @@ void jCircRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jCi
 	int iXY[2] = { screenXY[0], screenXY[1] };
 	draw2dApi->drawCircle ( iXY, diameter, colorWhite, screenDims, glBuffers );
 }
+
+
+/** Util */
+
+void path_lrtb ( struct jPath *path, float *lrtb ) {
+//	printf ( "path_lrtb ( )\n" );
+
+	int i;
+	int len;
+	i = 0;
+	len = arrayListGetLength ( path->verts );
+	while ( i < len ) {
+		struct jVert *v = arrayListGetPointer ( path->verts, i );
+
+		if ( i == 0 ) {
+			lrtb[0] = v->XY[0];
+			lrtb[1] = v->XY[0];
+			lrtb[2] = v->XY[1];
+			lrtb[3] = v->XY[1];
+		}
+
+		// check left right.
+		if ( v->XY[0] < lrtb[0] ) {
+			lrtb[0] = v->XY[0];
+		} else if ( v->XY[0] > lrtb[1] ) {
+			lrtb[1] = v->XY[0];
+		}
+
+		// check top bottom.
+		if ( v->XY[1] < lrtb[2] ) {
+			lrtb[2] = v->XY[1];
+		} else if ( v->XY[1] > lrtb[3] ) {
+			lrtb[3] = v->XY[1];
+		}
+
+		i += 1;
+	}
+}
+
 
 
 

@@ -22,8 +22,9 @@
 
 
 enum renderMode_e {
-	renderM_normal = 0,
+	renderM_view = 0,
 	renderM_edit,
+	renderM_editAll,
 	renderM_num,
 };
 
@@ -47,13 +48,23 @@ struct cursorMem {
 /// enum
 
 // for inputting data via the cursor.
-enum cursorTypes {
-	c_reg = 0,
-	c_text,
-	c_pen,
-	c_circ,
-	c_num,
+enum cursorInputTypes {
+	ci_reg = 0,
+	ci_text,
+	ci_pen,
+	ci_circ,
+	ci_num,
 };
+
+enum cursorRenderTypes {
+	cr_reg = 0,
+	cr_text,
+	cr_pen,
+	cr_circ,
+	cr_move,
+	cr_num,
+};
+
 
 // for whatever my cursor is currently selecting.
 enum cursorSelect {
@@ -92,6 +103,12 @@ void jalbSvg_close ( void *data );
 void get_pathUni_XY ( struct pathUni *pUni, float *XY );
 void point_to_loc_glob ( float *p0, float *pSet );
 void loc_to_point_glob ( float *p0, float *pSet );
+
+
+/** event util */
+
+int thisEdit ( int thisSel );
+
 
 /** Api Setter */
 

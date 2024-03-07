@@ -257,6 +257,34 @@ if not, then ahndle a fresh click.<br>
 <br>
 <br>
 
+<div class="myParagraph" id="cursor">
+<b>Cursor</b><br>
+<br>
+
+recursiveCursor.h<br>
+contains the macros for cursor.<br>
+<br>
+The cursor info isnt passed through the params, its instead global.<br>
+<br>
+
+ArrayList *cursorList;	// (struct cursorMem*)<br>
+int cursor_depth;<br>
+<br>
+int thisSel;<br>
+get set by the macro, it gets set to true if this and not its parent is selected?<br>
+
+<br>
+<br>
+Icon:<br>
+int cursorType;<br>
+enum cursorTypes; (mod_ext.h)<br>
+<br>
+set_cursor_iconI ( ) (hand.h)<br>
+
+
+<br>
+</div>
+
 <br>
 <br>
 

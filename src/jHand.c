@@ -17,7 +17,7 @@ extern int numFonts;
 extern ArrayList *cursorList;
 extern int cursor_depth;
 
-extern int cursorType;
+extern int cursorInputMode;
 
 
 
@@ -46,12 +46,21 @@ extern int thisSel; // used during rendering to figure if the ele being rendered
 extern int renderMode;
 
 
+int vert_subMode = 0;
+
+
 char saveDir[256] = "";
+
+// for text box ctrl jumping.
 extern ArrayList *glob_ctrlKeys;
 
+
+extern float glob_viewScale;
+extern float glob_viewLoc[];
+
+
+
 /** Functions */
-
-
 
 void *jalbJvg_init ( ) {
 	return NULL;
@@ -95,6 +104,11 @@ void jalbJvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void
 
 	viewScale = 1.0 / viewScale;
 
+	glob_viewLoc[0] = viewLoc[0];
+	glob_viewLoc[1] = viewLoc[1];
+
+	glob_viewScale = viewScale;
+
 	thisSel = selected;
 	cursor_depth = 0;
 	jNakedList_render ( screenDims, glBuffers, XYWHpass, glob_jvg->eles,
@@ -105,7 +119,7 @@ void jalbJvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void
 			viewLoc, viewScale );
 	}
 
-	// at the top render the save dir
+	/// at the top render the save dir
 	int XYWH[4] = {
 		XYWHpass[0],
 		XYWHpass[1],
@@ -118,10 +132,26 @@ void jalbJvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void
 	draw2dApi->drawCharPre ( fonts[0], colorWhite );
 	draw2dApi->drawString ( screenDims, glBuffers, XYWH, fonts[0], saveDir );
 
+	// on the right side, draw the current viewMode.
+	char *editStr = "";
+	if ( renderMode == renderM_view ) {
+		editStr = "view";
+	} else if ( renderMode == renderM_editAll ) {
+		editStr = "edit all";
+	} else if ( renderMode == renderM_edit ) {
+		editStr = "edit one";
+	}
+	XYWH[0] += XYWH[2] - fonts[0]->atlasInfo.glyphW * strlen ( editStr );
+	draw2dApi->drawCharPre ( fonts[0], colorWhite );
+	draw2dApi->drawString ( screenDims, glBuffers, XYWH, fonts[0], editStr );
+
 	// draw a white line
+	XYWH[0] = XYWHpass[0];
 	XYWH[1] += XYWH[3] - 1;
 	XYWH[3] = 1;
 	draw2dApi->fillRect ( XYWH, colorWhite, screenDims, glBuffers );
+
+
 
 
 	if ( debugPrint_jvg_render ) {
@@ -155,7 +185,7 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 				mouseHeld = 0;
 			}
 
-			set_cursor_iconI ( c_reg );
+			set_cursorInputMode ( ci_reg );
 			return 1;
 		}
 
@@ -241,12 +271,13 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 //			printSb ( sb );
 		}
 	} else if ( e->type == SDL_MOUSEBUTTONDOWN ) {
-		if ( renderMode != renderM_edit ) {
+		if ( renderMode != renderM_editAll &&
+		     renderMode != renderM_edit ) {
 			return 0;
 		}
 		mouseHeld = 1;
 
-		if ( cursorType == c_pen ) {
+		if ( cursorInputMode == ci_pen ) {
 			// create a new path.
 
 			float worldXY[2];
@@ -261,11 +292,11 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 			vert->XY[0] = worldXY[0];
 			vert->XY[1] = worldXY[1];
 
-			set_cursor_iconI ( c_reg );
+			set_cursorInputMode ( ci_reg );
 
 			return 1;
 
-		} else if ( cursorType == c_circ ) {
+		} else if ( cursorInputMode == ci_circ ) {
 			if ( tempEle ) {
 				printf ( "TEMP ELE ERROR\n" );
 			}
@@ -280,7 +311,7 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 			circ->XY[1] = worldXY[1];
 			circ->radius = 10;
 
-			set_cursor_iconI ( c_reg );
+			set_cursorInputMode ( ci_reg );
 
 			return 1;
 		}
@@ -292,12 +323,12 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 
 //		printf ( "naked list return: %d\n", ret );
 		if ( ret ) {
-//			sayCursor;
+			sayCursor;
 			return 1;
 		}
 
 
-		if ( cursorType == c_text ) {
+		if ( cursorInputMode == ci_text ) {
 			// create a new jText
 
 			int defaultWH[2] = { 300, 300 };
@@ -339,7 +370,7 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 
 //			sayCursor;
 
-			set_cursor_iconI ( c_reg );
+			set_cursorInputMode ( ci_reg );
 
 			return 1;
 		}
@@ -359,6 +390,7 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 
 		float dx = e->motion.xrel * viewScale;
 		float dy = e->motion.yrel * viewScale;
+		float dXY[2] = { dx, dy };
 
 		if ( tempEle ) {
 //			printf ( "tempEle->type: %d\n", tempEle->type );
@@ -367,6 +399,12 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 				circ->radius += dx;
 			}
 			return 1;
+		}
+
+
+		if ( renderMode == renderM_editAll ||
+		     renderMode == renderM_edit ) {
+			onHoverCheck ( clickXYpass );
 		}
 
 
@@ -384,6 +422,7 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 		int selType = jIterateToSelected ( global_jEles, &parent, &ele, &vertI, &controlI, &lastCursor );
 /*
 		printf ( "selType: %d\n", selType );
+		printf ( "parent: %p\n", parent );
 		printf ( "ele: %p\n", ele );
 		printf ( "vertI: %d\n", vertI );
 		printf ( "controlI: %d\n", controlI );
@@ -393,7 +432,12 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 		}
 */
 
-		if ( selType == cs_vert ) {
+		if ( selType == cs_object ) {
+			if ( ele->type == jNaked_Path ) {
+				// drag the entire path around.
+				dragJPath ( ele->path, dXY );
+			}
+		} else if ( selType == cs_vert ) {
 //			struct jVert *vert = arrayListGetPointer ( ele->path->verts, vertI );
 //			vert->XY[0] += dx;
 //			vert->XY[1] += dy;
@@ -427,6 +471,8 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 				text->XYWH[2] += dx;
 				text->XYWH[3] += dy;
 			}
+		} else {
+			printf ( "unhandled selType: %d\n", selType );
 		}
 	}
 
@@ -1206,9 +1252,138 @@ void decreaseCharArr ( unsigned char *arr, int numChars ) {
 }
 
 
+/** hover cursor */
+
+void onHoverCheck ( int *XY ) {
+//	printf ( "onHoverCheck ( )\n" );
+//	sayIntArray ( "XY", XY, 2 );
+
+	if ( cursorInputMode == ci_reg ) {
+		// see if my cursor is on a vert.
+
+		if ( onHoverType ( XY ) ) {
+			// TODO cr_move
+			set_cursor_iconI ( cr_move );
+		} else {
+			set_cursor_iconI ( cr_reg );
+		}
+	}
+}
+
+int onHoverType ( int *XY ) {
+	int i = 0;
+	int len = arrayListGetLength ( glob_jvg->eles );
+	while ( i < len ) {
+		struct jNakedUnion *uni = arrayListGetPointer ( glob_jvg->eles, i );
+
+		if ( uni->type == jNaked_Path ) {
+			struct jPath *path = uni->path;
+
+			if ( isOnVert ( path, XY ) ) {
+				return 1;
+			}
+		}
+
+		i += 1;
+	}
+
+	return 0;
+}
+
+int pointDist = 4.0;
+
+int isOnVert ( struct jPath *path, int *XY ) {
+//	printf ( "isOnVert ( )\n" );
+//	sayIntArray ( "XY", XY, 2 );
+
+	int boxW = 10;
+
+	float viewScale = glob_viewScale;
+	float *viewLoc = glob_viewLoc;
+
+//	printf ( "viewScale: %f\n", viewScale );
+//	sayFloatArray ( "viewLoc", viewLoc, 2 );
+
+	int i;
+	int len;
+/*
+	i = 0;
+	len = arrayListGetLength ( path->verts );
+	while ( i < len ) {
+		struct jVert *v = arrayListGetPointer ( path->verts, i );
+
+		float cXY[2];
+		point_to_loc ( v->XY, cXY, viewLoc,  viewScale );
+
+		sayFloatArray ( "cXY", cXY, 2 );
+
+		cXY[0] -= XY[0];
+		cXY[1] -= XY[1];
+
+		// this is a circular check, not rect
+		float d = vectNorm ( cXY, 2 );
+
+		if ( d < boxW ) {
+			return 1;
+		}
+
+		i += 1;
+	}
+*/
+
+	// ok now check if its on a line aswell.
+	i = 0;
+	len = arrayListGetLength ( path->lines );
+	while ( i < len ) {
+		struct jLine *l = arrayListGetPointer ( path->lines, i );
+
+		struct jVert *v0 = arrayListGetPointer ( path->verts, l->v0 );
+		struct jVert *v1 = arrayListGetPointer ( path->verts, l->v1 );
+
+		float fXY[2] = { XY[0], XY[1] };
+		loc_to_point ( fXY, fXY, viewLoc, viewScale );
+		float dist = pointLineDist ( fXY, v0->XY, v1->XY );
+
+		if ( dist < pointDist ) {
+			return 1;
+		}
+
+		i += 1;
+	}
 
 
+	return 0;
+}
 
+int isOnLine ( struct jVert *v0, struct jVert *v1, int *XY ) {
+	// TODO, rn this treats everything like a straight line, ignores curves.
+
+	
+
+	return 0;
+}
+
+
+/** Dragging */
+
+void dragJPath ( struct jPath *path, float *dXY ) {
+	// move all the verts.
+	// maybe one day ill want to just move some internal offset.
+
+	int i;
+	int len;
+
+	i = 0;
+	len = arrayListGetLength ( path->verts );
+	while ( i < len ) {
+		struct jVert *vert = arrayListGetPointer ( path->verts, i );
+
+		vert->XY[0] += dXY[0];
+		vert->XY[1] += dXY[1];
+
+		i += 1;
+	}
+}
 
 
 
