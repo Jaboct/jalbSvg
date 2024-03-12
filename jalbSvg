@@ -68,7 +68,7 @@ uiGen	assemble_appendMod_full_list
 
 Hotkey:
 tool	1	pressButtonI	3
-#jHigh	u	generate_structList_uiGen
+jHigh	u	generate_structList_uiGen
 
 
 Setter:
