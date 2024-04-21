@@ -59,6 +59,10 @@ extern float glob_viewScale;
 extern float glob_viewLoc[];
 
 
+/// uiGen
+struct uiGen_api *uiGen_api = NULL;
+
+
 
 /** Functions */
 
@@ -196,6 +200,25 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 		struct cursorMem *lastCursor;
 
 		int selType = jIterateToSelected ( global_jEles, &parent, &ele, &vertI, &controlI, &lastCursor );
+
+		if ( selected &&
+		     altKeys[akCtrl ]) {
+			if ( e->key.keysym.sym == SDLK_RETURN ) {
+				if ( selType == cs_text ) {
+				} else if ( selType == cs_object ) {
+					if ( ele->type == jNaked_Path ) {
+printf ( "load path uiGen\n" );
+
+						char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/uiGen_hand/jPath.xml";
+
+						uiGen_api->load_and_set_norm ( dir, ele->path );
+
+						return 0;
+					}
+				}
+			}
+		}
+
 		if ( selType == cs_text &&
 		     selected ) {
 //			printf ( "editing text\n" );
@@ -1407,6 +1430,26 @@ void dragJPath ( struct jPath *path, float *dXY ) {
 		i += 1;
 	}
 }
+
+
+/// uiGen
+
+void set_uiGen_api ( void *data ) {
+	printf ( "set_uiGen_api ( ) (consume)\n" );
+
+	uiGen_api = data;
+
+	printf ( "uiGen_api: %p\n", uiGen_api );
+	printf ( "uiGen_api->uiGen_init: %p\n", uiGen_api->uiGen_init );
+}
+
+
+
+
+
+
+
+
 
 
 

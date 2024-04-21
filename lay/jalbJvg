@@ -149,6 +149,11 @@ Hotkey:
 jalbDir	d	hand_layDirTab_uiGen_dir	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/"
 
 
+Hotkey:
+uiGen	u	set_uiGen_debug_event	1
+uiGen	r	set_uiGen_debug_render	1
+
+
 
 Append:
 lay/ui/uiGen_hotkey
@@ -212,9 +217,6 @@ Run:
 
 
 
-#Hotkey:
-#jalbDir	d	hand_layDirTab_uiGen_dir	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/"
-
 LayLib:
 uiGen	uiGen	uiGenInit	uiGen_render	uiGen_event	uiGenClose 	set_uiGen_id
 uiGen	uiGenEdit	uiGenInitEdit	uiGenRenderEdit	uiGenEventEdit	uiGenCloseEdit	uiGenEditNumber
@@ -233,6 +235,8 @@ uiGen	get_uiGen_api_void	jalbDir	set_uiGen_api
 
 Run:
 uiGen	assemble_appendMod_full_list
+
+
 
 
 

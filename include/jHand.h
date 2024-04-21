@@ -7,6 +7,7 @@
 #include <stdlib.h>
 
 #include <jalb/jalbArrayList.h>
+#include <jalbApi/api_uiGen.h>
 
 #include "jGroup.h"
 #include "jPath.h"
@@ -117,6 +118,12 @@ float pointLineDist ( float *p, float *v0, float *v1 );
 /** Dragging */
 
 void dragJPath ( struct jPath *path, float *dXY );
+
+
+/// uiGen
+
+void set_uiGen_api ( void *data );
+
 
 
 
