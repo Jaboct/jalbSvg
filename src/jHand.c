@@ -274,7 +274,8 @@ printf ( "load path uiGen\n" );
 					add_special ( sb, spec_pi );
 					return 1;
 				} else if ( e->key.keysym.sym == SDLK_i ) {
-					add_special ( sb, spec_rhoL );
+//					add_special ( sb, spec_rhoL );
+					add_special ( sb, spec_integral );
 					return 1;
 				} else if ( e->key.keysym.sym == SDLK_o ) {
 					add_special ( sb, spec_omegaL );
@@ -889,6 +890,11 @@ void add_special ( ArrayList *sb, int index ) {
 		char str1[] = { 0xE2, 0x88, 0x85, 00 };
 		str = str1;
 
+	} else if ( index == spec_integral ) {
+		// omega (lower)
+		char str1[] = { 0xE2, 0x88, 0xAB, 0x00 };
+		str = str1;
+
 	} else if ( index == spec_alphaL ) {	// Greek characters
 		char str1[] = { 0xCE, 0xB1, 00 };
 		str = str1;
@@ -918,6 +924,7 @@ void add_special ( ArrayList *sb, int index ) {
 		char str1[] = { 0xCF, 0x89, 0x00 };
 		str = str1;
 	}
+
 	if ( !str ) {
 		return;
 	}
