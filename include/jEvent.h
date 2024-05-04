@@ -5,6 +5,8 @@
 
 #include <jalb/jalbArrayList.h>
 
+#include <jalbApi/api_uiGen.h>
+
 #include "hand.h"
 #include "jGroup.h"
 
@@ -14,7 +16,8 @@
 int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct jNakedUnion **ele,
 		int *vertI, int *controlI, struct cursorMem **lastCursor );
 
-
+int jNakedList_mEvent_start ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *eles,
+		float *viewLoc, float viewScale );
 int jNakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *eles,
 		float *viewLoc, float viewScale );
 

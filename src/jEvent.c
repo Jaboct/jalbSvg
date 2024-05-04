@@ -34,6 +34,14 @@ extern int tabW;
 extern int pointDist;
 
 
+int jText_box_width = 10;
+
+
+// uiGen
+extern struct uiGen_api *uiGenApi;
+char *uiGen_jTextEdit = "/home/jadoo/workspace/jHigh/jalbSvg/res/uiGen_hand/jText.xml";
+
+
 /** Functions */
 
 int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct jNakedUnion **ele,
@@ -138,10 +146,10 @@ int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct
 }
 
 
-int jNakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *eles,
+int jNakedList_mEvent_start ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *eles,
 		float *viewLoc, float viewScale ) {
 	if ( debugPrint_jvg_event ) {
-		printf ( "jNakedList_mEvent ( )\n" );
+		printf ( "jNakedList_mEvent_start ( )\n" );
 	}
 
 	if ( renderMode != renderM_editAll &&
@@ -167,6 +175,7 @@ int jNakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *e
 
 		int selType = jIterateToSelected ( eles, &parent, &ele,
 			&vertI, &controlI, &lastCursor );
+
 		printf ( "vertI: %d\n", vertI );
 		if ( selType == cs_vert ) {
 			// see if im clicking on another vert.
@@ -188,6 +197,13 @@ int jNakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *e
 			return 1;
 		}
 	}
+	return jNakedList_mEvent ( e, clickXYpass, eleWH, eles,
+		viewLoc, viewScale );
+}
+
+int jNakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *eles,
+		float *viewLoc, float viewScale ) {
+	printf ( "jNakedList_mEvent ( )\n" );
 
 	int i;
 	int len;
@@ -570,6 +586,16 @@ int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *tex
 		     clickXYpass[1] < screenXYWH[1] + screenXYWH[3] ) {
 */
 
+		if ( altKeys[akCtrl] ) {
+			printf ( "spawn text edit\n" );
+
+			if ( uiGenApi ) {
+				uiGenApi->load_and_set_norm ( uiGen_jTextEdit, text );
+			} else {
+				printf ( "cant open, !uiGenApi\n" );
+			}
+		}
+
 //			printf ( "CLICKED IN TEXT\n" );
 
 			if ( altKeys[akCtrl] ) {
@@ -634,14 +660,37 @@ int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *tex
 	// 2 im editing top left corner? 3 top right.
 	// 4 bot left, 5 bot right.
 	// see if i click on the bottom right, so adjust the size.
-	int boxWidth = 10 / viewScale;
+
+	int boxWidth = jText_box_width / viewScale;
 	float boxXYWH[4] = {
-		screenXYWH[0] + screenXYWH[2],
-		screenXYWH[1] + screenXYWH[3],
-		boxWidth,
+		screenXYWH[0],
+		screenXYWH[1] - boxWidth,
+		screenXYWH[2],
 		boxWidth,
 	};
-	if ( pointInsideI ( clickXYpass, boxXYWH ) ){
+	if ( pointInsideI ( clickXYpass, boxXYWH ) ) {
+		printf ( "ADJUST top BAR\n" );
+
+		int i = 1;
+
+//		cursorDown;
+		handleCursor_start;
+//		cursorUp;
+
+		selected = 1;
+
+		return 1;
+	}
+
+	// check top bar for moving it around.
+
+	boxXYWH[0] = screenXYWH[0] + screenXYWH[2];
+	boxXYWH[1] = screenXYWH[1] + screenXYWH[3];
+	boxXYWH[2] = boxWidth;
+	boxXYWH[3] = boxWidth;
+
+	// check bottom right corner.
+	if ( pointInsideI ( clickXYpass, boxXYWH ) ) {
 		printf ( "ADJUST CORNER\n" );
 		printf ( "cursor_depth: %d\n", cursor_depth );
 

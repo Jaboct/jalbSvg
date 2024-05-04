@@ -49,12 +49,6 @@ body{
 <nav id="links">
   <ul>
     <li><a href="#links">links</a></li>
-<br>
-    <li><a href="#jsvg">svg vs jsvg</a></li>
-    <li><a href="#xml">Xml Information</a></li>
-    <li><a href="#proofs">proofs</a></li>
-    <li><a href="#inkscape_export">Inkscape Export</a></li>
-    <li><a href="#shared_code">Shared Code</a></li>
   </ul>
 </nav>
 </div>
@@ -66,6 +60,17 @@ body{
 <b>Rendering</b><br>
 <br>
 Both Jvg and Svg render from (render_svg.c).<br>
+<br>
+only Jvg uses (jRender.svg).<br>
+<br>
+Standard function looks like:<br>
+<div class="codeBox">void ELEMENT_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct ELEMENT *ele,
+		float *viewLoc, float viewScale );
+</div>
+With a few global varaibles:<br>
+int selected; says if this or an element beneith it is selected.<br>
+int thisSel; says if this specifically, and not something beneith it is selected.<br>
+<br>
 
 
 <br>

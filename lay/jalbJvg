@@ -232,6 +232,7 @@ font	getFontFirst	uiGen	setFont16
 draw2d	getFunctWrap	jalbDir	setDraw2dApi
 font	getFontFirst	jalbDir	setFont16
 uiGen	get_uiGen_api_void	jalbDir	set_uiGen_api
+uiGen	get_uiGen_api_void	jalbJvg	setUiGenApi
 
 Run:
 uiGen	assemble_appendMod_full_list

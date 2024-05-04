@@ -211,6 +211,8 @@ void cubicBez_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1,
 		i += 1;
 	}
 
+	// draw the final segment.
+
 	float t1[2];
 //	t1[0] = p1[0] - glob_viewLoc[0];
 //	t1[1] = p1[1] - glob_viewLoc[1];

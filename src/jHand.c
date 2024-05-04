@@ -13,13 +13,15 @@ extern struct draw2dStruct *draw2dApi;
 extern struct jalbFont *fonts[];
 extern int numFonts;
 
+// uiGen
+struct uiGen_api *uiGen_api = NULL;
 
+
+// cursor
 extern ArrayList *cursorList;
 extern int cursor_depth;
 
 extern int cursorInputMode;
-
-
 
 // text cursor info.
 int cStart[3];
@@ -30,37 +32,35 @@ struct jvg *glob_jvg = NULL;
 ArrayList *global_jEles = NULL; // (struct jNakedUnion*)
 struct jNakedUnion *tempEle = NULL;
 
+char saveDir[256] = "";
 
+extern float glob_viewScale;
+extern float glob_viewLoc[];
+
+
+// debug
 int debugPrint_jvg_render = 0;
 extern int debugPrint_jvg_event;
 extern int svg_debugPrint_render_text;
+
 
 int tabW = 8;
 int ctrlMemLast = -1;
 
 
+// more cursor
 extern int selected;
 extern int mouseHeld;
 extern int thisSel; // used during rendering to figure if the ele being rendered is currently selected.
 
 extern int renderMode;
 
-
 int vert_subMode = 0;
 
-
-char saveDir[256] = "";
 
 // for text box ctrl jumping.
 extern ArrayList *glob_ctrlKeys;
 
-
-extern float glob_viewScale;
-extern float glob_viewLoc[];
-
-
-/// uiGen
-struct uiGen_api *uiGen_api = NULL;
 
 
 
@@ -202,7 +202,7 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 		int selType = jIterateToSelected ( global_jEles, &parent, &ele, &vertI, &controlI, &lastCursor );
 
 		if ( selected &&
-		     altKeys[akCtrl ]) {
+		     altKeys[akCtrl] ) {
 			if ( e->key.keysym.sym == SDLK_RETURN ) {
 				if ( selType == cs_text ) {
 				} else if ( selType == cs_object ) {
@@ -342,7 +342,7 @@ printf ( "load path uiGen\n" );
 
 		selected = 0;
 
-		int ret = jNakedList_mEvent ( e, clickXYpass, eleWH, eles,
+		int ret = jNakedList_mEvent_start ( e, clickXYpass, eleWH, eles,
 			viewLoc, viewScale );
 
 //		printf ( "naked list return: %d\n", ret );
@@ -484,13 +484,14 @@ printf ( "load path uiGen\n" );
 
 			if ( vertI == 0 ) {
 				// TODO get rid of this, 0 should only mean editing text.
-				text->XYWH[0] += dx;
-				text->XYWH[1] += dy;
+//				text->XYWH[0] += dx;
+//				text->XYWH[1] += dy;
 			} else if ( vertI == 1 ) {
 				text->XYWH[0] += dx;
 				text->XYWH[1] += dy;
 			} else if ( vertI == 5 ) {
 				// TODO, have a minimum size.
+				// if i try to make it too small, do i want to move the XY position up and to the left?
 
 				text->XYWH[2] += dx;
 				text->XYWH[3] += dy;
@@ -1300,6 +1301,11 @@ void onHoverCheck ( int *XY ) {
 	}
 }
 
+// iterate throught all of the eles (rn it doesnt recur, todo)
+// sees if the passed XY is hovering over an ele.
+// i need to complcaite the return index.
+// either simply return the icon i want.
+// i think i should return something more complicated and then it gets translated into an icon.
 int onHoverType ( int *XY ) {
 	int i = 0;
 	int len = arrayListGetLength ( glob_jvg->eles );
@@ -1310,6 +1316,12 @@ int onHoverType ( int *XY ) {
 			struct jPath *path = uni->path;
 
 			if ( isOnVert ( path, XY ) ) {
+				return 1;
+			}
+		} else if ( uni->type == jNaked_Text ) {
+			struct jText *text = uni->text;
+
+			if ( isOnText ( text, XY ) ) {
 				return 1;
 			}
 		}
@@ -1326,7 +1338,7 @@ int isOnVert ( struct jPath *path, int *XY ) {
 //	printf ( "isOnVert ( )\n" );
 //	sayIntArray ( "XY", XY, 2 );
 
-	int boxW = 10;
+//	int boxW = 10;
 
 	float viewScale = glob_viewScale;
 	float *viewLoc = glob_viewLoc;
@@ -1393,6 +1405,46 @@ int isOnLine ( struct jVert *v0, struct jVert *v1, int *XY ) {
 	return 0;
 }
 
+extern int jText_box_width;
+
+int isOnText ( struct jText *text, int *XY ) {
+
+	float viewScale = glob_viewScale;
+	float *viewLoc = glob_viewLoc;
+
+	// canvasXY, translated from the screenXY to realXY.
+	float cXY[2] = { XY[0], XY[1] };
+	loc_to_point ( cXY, cXY, viewLoc,  viewScale );
+
+	// check the main box;
+	float boxXYWH[4] = { text->XYWH[0], text->XYWH[1], text->XYWH[2], text->XYWH[3] };
+	if ( pointInside ( cXY, boxXYWH ) ) {
+		// its inside the main box.
+		return 0;
+	}
+
+	// check the top box.
+	boxXYWH[1] -= jText_box_width;
+	boxXYWH[3] = jText_box_width;
+	if ( pointInside ( cXY, boxXYWH ) ) {
+		return 1;
+	}
+
+	// check the bottom right.
+//	boxXYWH[0] += boxXYWH[2];
+//	boxXYWH[1] += boxXYWH[3];
+
+	boxXYWH[0] = text->XYWH[0] + text->XYWH[2];
+	boxXYWH[1] = text->XYWH[1] + text->XYWH[3];
+	boxXYWH[2] = jText_box_width;
+	boxXYWH[3] = jText_box_width;
+	if ( pointInside ( cXY, boxXYWH ) ) {
+		// its inside the main box.
+		return 1;
+	}
+
+	return 0;
+}
 
 /** Dragging */
 

@@ -90,4 +90,14 @@
 	}
 
 
+// make, isNextSel ( int index )
+// which gets the next sees if it equals index, and then if cursor_depth == cursorLen - 2, maybe.
+// instead do
+// i = index
+// cursorDown
+// isThisSel
+// i think.
+
+
+
 

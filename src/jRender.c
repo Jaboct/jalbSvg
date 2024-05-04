@@ -9,6 +9,7 @@ extern char altKeys[];
 
 extern float colorWhite[];
 extern float colorOrange[];
+extern float colorBlue[];
 float colorGrayOpaque[4] = { 0.24, 0.24, 0.24, 0.6 };
 
 extern struct draw2dStruct *draw2dApi;
@@ -26,6 +27,9 @@ extern int vert_subMode;
 
 int vertWidth = 10;
 extern int controlPointR;
+
+
+extern int jText_box_width;
 
 
 extern ArrayList *cursorList;
@@ -180,7 +184,6 @@ void jPath_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jP
 
 		i += 1;
 	}
-
 
 	if ( thisObjEdit ) {
 		// render a bounding box.
@@ -397,8 +400,45 @@ void jText_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jT
 
 //	if ( renderMode == renderM_editAll ) {
 	if ( thisObjEdit ) {
+		// draw the white edit box around the text.
 		int iXYWH[4] = { XYWH[0], XYWH[1], XYWH[2], XYWH[3] };
 		draw2dApi->drawRect ( iXYWH, colorWhite, screenDims, glBuffers );
+
+		if ( thisSel ) {
+			// draw the bar at the top
+			iXYWH[1] -= (jText_box_width / viewScale);
+			iXYWH[3] = (jText_box_width / viewScale);
+			draw2dApi->drawRect ( iXYWH, colorBlue, screenDims, glBuffers );
+		}
+
+		// how do i determine if i am currently dragging this ele.
+		int expanding = 0;
+		// ok, so i also need to see if the enxt cursor is of type5.
+		if ( thisSel ) {
+//			printf ( "Cursor_depth: %d\n", cursor_depth );
+//			sayCursor;
+
+			int i = 5;
+			int parentSel = thisSel;
+			thisSel = 0;
+			isThisSel;
+			if ( thisSel ) {
+				expanding = 1;
+			}
+		}
+
+		// draw a little expand point in the bottom right.
+		iXYWH[0] += iXYWH[2];
+//		iXYWH[1] += iXYWH[3];
+		iXYWH[1] = XYWH[1] + XYWH[3];
+
+		iXYWH[2] = 10 / viewScale;
+		iXYWH[3] = 10 / viewScale;
+		if ( expanding ) {
+			draw2dApi->fillRect ( iXYWH, colorOrange, screenDims, glBuffers );
+		} else {
+			draw2dApi->drawRect ( iXYWH, colorOrange, screenDims, glBuffers );
+		}
 	}
 
 	if ( debugPrint_jvg_render ) {

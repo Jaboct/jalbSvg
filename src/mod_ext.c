@@ -203,8 +203,10 @@ void loc_to_point_glob ( float *p0, float *pSet ) {
 /** event util */
 
 int thisEdit ( int thisSel ) {
+
 	if ( renderMode == renderM_editAll ) {
 		return 1;
+
 	} else if ( renderMode == renderM_edit ) {
 		if ( thisSel ) {
 			return 1;
