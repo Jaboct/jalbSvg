@@ -51,11 +51,21 @@ int ctrlMemLast = -1;
 // more cursor
 extern int selected;
 extern int mouseHeld;
-extern int thisSel; // used during rendering to figure if the ele being rendered is currently selected.
+int heldType = 0;
+float heldStart[2];
+float cursorWorldLoc[2] = { 0, 0 };
+extern int thisSel; // used during rendering to figure if the ele, or a subEle, being rendered is currently selected.
 
 extern int renderMode;
 
 int vert_subMode = 0;
+
+enum heldTypes {	// u can have highlight and camera move at the same time.
+	ht_none = 0,
+	ht_cameraMove,
+	ht_eleMove,
+	ht_highlight,
+};
 
 
 // for text box ctrl jumping.
@@ -123,6 +133,24 @@ void jalbJvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void
 			viewLoc, viewScale );
 	}
 
+	if ( mouseHeld &&
+	     heldType == ht_highlight ) {
+		// get the cursor loc.
+		int XYWH[4];
+
+		float screenXY[2];
+		point_to_loc ( heldStart, screenXY, viewLoc, viewScale );
+		XYWH[0] = screenXY[0];
+		XYWH[1] = screenXY[1];
+
+		point_to_loc ( cursorWorldLoc, screenXY, viewLoc, viewScale );
+
+		XYWH[2] = screenXY[0] - XYWH[0];
+		XYWH[3] = screenXY[1] - XYWH[1];
+
+		draw2dApi->drawRect ( XYWH, colorWhite, screenDims, glBuffers );
+	}
+
 	/// at the top render the save dir
 	int XYWH[4] = {
 		XYWHpass[0],
@@ -154,8 +182,6 @@ void jalbJvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void
 	XYWH[1] += XYWH[3] - 1;
 	XYWH[3] = 1;
 	draw2dApi->fillRect ( XYWH, colorWhite, screenDims, glBuffers );
-
-
 
 
 	if ( debugPrint_jvg_render ) {
@@ -399,8 +425,39 @@ printf ( "load path uiGen\n" );
 			return 1;
 		}
 
+		// its not clicking on an ele, and its not trying to add a type.
+		if ( e->button.button == SDL_BUTTON_LEFT ) {
+			heldType = ht_highlight;
+
+			float fClickXY[2] = { clickXYpass[0], clickXYpass[1] };
+			float worldXY[2];
+			loc_to_point ( fClickXY, worldXY, viewLoc, viewScale );
+
+			heldStart[0] = worldXY[0];
+			heldStart[1] = worldXY[1];
+
+			return 1;
+
+		} else if ( e->button.button == SDL_BUTTON_MIDDLE ) {
+//			heldType = ht_cameraMove;
+
+			// return 0 because i want jlui to hanlde it.
+			return 0;
+		} else {
+			heldType = ht_none;
+		}
+
 	} else if ( e->type == SDL_MOUSEBUTTONUP ) {
 		mouseHeld = 0;
+
+		// if left mouse button is down, then held is still true.
+		int XY[2];
+		Uint32 state = SDL_GetMouseState ( &XY[0], &XY[1] );
+		if ( ( state & SDL_BUTTON_LMASK ) != 0 ) {
+			mouseHeld = 1;
+		} else {
+			heldType = ht_none;
+		}
 
 		if ( tempEle ) {
 			printf ( "BUTTON UP ADD TEMP ELE\n" );
@@ -425,6 +482,8 @@ printf ( "load path uiGen\n" );
 			return 1;
 		}
 
+		float fXY[2] = { clickXYpass[0], clickXYpass[1] };
+		loc_to_point ( fXY, cursorWorldLoc, viewLoc, viewScale );
 
 		if ( renderMode == renderM_editAll ||
 		     renderMode == renderM_edit ) {
@@ -444,6 +503,7 @@ printf ( "load path uiGen\n" );
 		struct cursorMem *lastCursor = NULL;
 
 		int selType = jIterateToSelected ( global_jEles, &parent, &ele, &vertI, &controlI, &lastCursor );
+
 /*
 		printf ( "selType: %d\n", selType );
 		printf ( "parent: %p\n", parent );
@@ -461,6 +521,7 @@ printf ( "load path uiGen\n" );
 				// drag the entire path around.
 				dragJPath ( ele->path, dXY );
 			}
+
 		} else if ( selType == cs_vert ) {
 //			struct jVert *vert = arrayListGetPointer ( ele->path->verts, vertI );
 //			vert->XY[0] += dx;

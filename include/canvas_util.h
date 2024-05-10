@@ -8,9 +8,11 @@
 /** Functions */
 
 // convert a world loc to a screen loc.
+// world_to_screen
 void point_to_loc ( float *p0, float *pSet, float *viewLoc, float viewScale );
 
 // convert a screen loc to a world loc.
+// screen_to_world
 void loc_to_point ( float *p0, float *pSet, float *viewLoc, float viewScale );
 void loc_to_pointI ( int *p0, float *pSet, float *viewLoc, float viewScale );
 
