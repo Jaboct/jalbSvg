@@ -154,6 +154,13 @@ uiGen	u	set_uiGen_debug_event	1
 uiGen	r	set_uiGen_debug_render	1
 
 
+LayLib:
+uiGen	deepList	deepList_init	deepList_render	deepList_event	deepList_close	deepList_number
+
+Hotkey:
+#uiGen	p	hand_load_deepList	"/home/jadoo/workspace/jHigh/uiGen/res/hand_uiGen/uiGen_maker.xml"
+uiGen	p	hand_load_uiGen	"/home/jadoo/workspace/jHigh/uiGen/res/hand_uiGen/uiGen_maker.xml"
+
 
 Append:
 lay/ui/uiGen_hotkey
@@ -240,6 +247,9 @@ uiGen	assemble_appendMod_full_list
 
 
 
+uiGen_globList_load:
+#/home/jadoo/workspace/jHigh/uiGen/res/hand_uiGen/uiGen_maker.xml
+/home/jadoo/workspace/jHigh/jalbSvg/res/uiGen_hand/eleList.xml
 
 
 
