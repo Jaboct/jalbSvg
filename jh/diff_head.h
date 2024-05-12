@@ -16,67 +16,22 @@
 
 
 
-void shapes_preInit ( );
+void jMod_preInit ( );
+
+
 
 
 /** Structs */
 
-struct rect {
-	char style[256];
-	char id[256];
-	float x;
-	float y;
-	float width;
-	float height;
-	char fill[256];
-	char stroke[256];
-	char stroke_width[256];
-	char stroke_opacity[256];
-};
-struct circle {
-	char style[256];
-	char id[256];
-	float cx;
-	float cy;
-	float r;
-};
-struct ellipse {
-	char style[256];
-	char id[256];
-	float cx;
-	float cy;
-	float rx;
-	float ry;
-};
 
 
 /** Post Includes */
 
 
+void *preInit ( ArrayList *keyList, ArrayList *modList );
+void postInit ( ArrayList *modList, int thisMod );
+void closing ( void *data );
+
 /** Functions */
-
-/** rect */
-struct rect *rectInit ( );
-void rectFill ( struct rect *var );
-void *rectInitMask ( );
-void rectClose ( struct rect *var );
-void rectBodyToVal ( void *varPass, int nameI, char *body );
-int rectNameToIndex ( char *body, void *data, void *ret, char **strPtr );
-
-/** circle */
-struct circle *circleInit ( );
-void circleFill ( struct circle *var );
-void *circleInitMask ( );
-void circleClose ( struct circle *var );
-void circleBodyToVal ( void *varPass, int nameI, char *body );
-int circleNameToIndex ( char *body, void *data, void *ret, char **strPtr );
-
-/** ellipse */
-struct ellipse *ellipseInit ( );
-void ellipseFill ( struct ellipse *var );
-void *ellipseInitMask ( );
-void ellipseClose ( struct ellipse *var );
-void ellipseBodyToVal ( void *varPass, int nameI, char *body );
-int ellipseNameToIndex ( char *body, void *data, void *ret, char **strPtr );
 
 /** Other Functs */

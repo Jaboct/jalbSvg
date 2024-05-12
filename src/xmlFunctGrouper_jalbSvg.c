@@ -51,8 +51,38 @@ extern struct backbone_structStruct *backbone_arr_jalbSvg[];
 void *get_backbone_arr ( ) {
 	return backbone_arr_jalbSvg;
 }
-int num_projectVars_jalbSvg = 0;
+int num_projectVars_jalbSvg = 1;
+
+extern ArrayList global_jEles;// (jMod.c)
+struct backbone_subAl global_jEles_global_jEles_subAl = {
+	.overflow = 10,
+	.literal = 0,
+	.type = 1,
+	.typeIndex = 15,
+	.length = -1,
+	.naked = 0,
+};
+
+struct backbone_projectVar proj_global_jEles = {
+	{
+		.name = "global_jEles",
+		.type = 0,
+		.typeIndex = 3,
+		.initType = 0,
+		.length = 0,
+		.literal = 1,
+		.data = {
+			0,
+			&global_jEles_global_jEles_subAl,
+		},
+		.saveFlag = 1,
+		.naked = 0,
+	},
+	.data = &global_jEles,
+};
+
 struct backbone_projectVar *projectVar_arr_jalbSvg[] = {
+	&proj_global_jEles,
 };
 
 void *get_num_projectVars ( ) {

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectVar>
+  <var>
+    <name>global_jEles</name>
+    <type>0</type>
+    <typeIndex>3</typeIndex>
+    <initType>0</initType>
+    <initTypeData>
+      <>-1</>
+    </initTypeData>
+    <closeType>0</closeType>
+    <length>0</length>
+    <literal>1</literal>
+    <subAl>
+      <curEles>10</curEles>
+      <eleSize>1</eleSize>
+      <overflow>10</overflow>
+      <literal>0</literal>
+      <type>1</type>
+      <typeIndex>20</typeIndex>
+      <length>-1</length>
+      <naked>0</naked>
+    </subAl>
+    <external>0</external>
+    <attribute>0</attribute>
+    <saveFlag>1</saveFlag>
+    <naked>0</naked>
+    <comment></comment>
+  </var>
+</projectVar>

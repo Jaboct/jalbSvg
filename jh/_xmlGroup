@@ -48,7 +48,7 @@ jh/function/funct.xml
 jh/scriptEle/script.xml
 
 # projectVar
-jh/projectVar/projectVar.xml
+jh/projectVar/global_jEles.xml
 
 # modStructs
 jh/modStruct/jalbSvg.xml

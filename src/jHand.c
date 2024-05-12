@@ -29,7 +29,8 @@ int cEnd[3];
 
 
 struct jvg *glob_jvg = NULL;
-ArrayList *global_jEles = NULL; // (struct jNakedUnion*)
+//ArrayList *global_jEles = NULL; // (struct jNakedUnion*)
+extern ArrayList *global_jEles; // (struct jNakedUnion*)
 struct jNakedUnion *tempEle = NULL;
 
 char saveDir[256] = "";

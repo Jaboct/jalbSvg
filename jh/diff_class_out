@@ -1,45 +1,4 @@
-57a58,61
-> 	strcpy ( var->fill, "none" );
-> 	strcpy ( var->stroke, "#000000" );
-> 	strcpy ( var->stroke_width, "1.0px" );
-> 	strcpy ( var->stroke_opacity, "1" );
-70,71c74,79
-< 	0,
-< 	0,
----
-> 	1,
-> 	1,
-> 	1,
-> 	1,
-> 	1,
-> 	1,
-92a101,108
-> 	} else if ( nameI == 6 ) {
-> 		strcpy ( var->fill, body );
-> 	} else if ( nameI == 7 ) {
-> 		strcpy ( var->stroke, body );
-> 	} else if ( nameI == 8 ) {
-> 		strcpy ( var->stroke_width, body );
-> 	} else if ( nameI == 9 ) {
-> 		strcpy ( var->stroke_opacity, body );
-109a126,133
-> 	} else if ( strcmp ( body, "fill" ) == 0 ) {
-> 		return 6;
-> 	} else if ( strcmp ( body, "stroke" ) == 0 ) {
-> 		return 7;
-> 	} else if ( strcmp ( body, "stroke_width" ) == 0 ) {
-> 		return 8;
-> 	} else if ( strcmp ( body, "stroke_opacity" ) == 0 ) {
-> 		return 9;
-152,156c176,180
-< 	0,
-< 	0,
-< 	0,
-< 	0,
-< 	0,
----
-> 	1,
-> 	1,
-> 	1,
-> 	1,
-> 	1,
+15a16
+> ArrayList *global_jEles = NULL;	// (struct jNakedUnion*)
+19a21
+> 	global_jEles = initArrayList ( 10, sizeof ( struct nakedUnion* ), 10 );

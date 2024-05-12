@@ -1,308 +1,91 @@
-#include "shapes.h"
+#include "jMod.h"
 
 /** AUTO GENERATED CODE */
 
-extern char altKeys[];
+char altKeys[akNum] = {0};
 
-extern float colorWhite[];
-extern float colorGray[];
-extern float colorDGray[];
-extern float colorDGray1[];
-extern float colorDGray2[];
-extern float colorBlack[];
-extern float colorGold[];
+float colorWhite[4] = { 1.00, 1.00, 1.00, 1.0 };
+float colorGray[4] = { 0.5, 0.5, 0.5, 1.0 };
+float colorDGray[4] = { 0.08, 0.08, 0.08, 1.0 };
+float colorDGray1[4] = { 0.16, 0.16, 0.16, 1.0 };
+float colorDGray2[4] = { 0.24, 0.24, 0.24, 1.0 };
+float colorBlack[4] = { 0.00, 0.00, 0.00, 1.0 };
+float colorGold[4] =  { 1.00, 0.80, 0.00, 1.0 };
+float colorOrange[4] = { .9, 0.5, 0.0, 1.0 };
+
+ArrayList *global_jEles = NULL;	// (struct jNakedUnion*)
 
 
 
-
-void shapes_preInit ( ) {
+void jMod_preInit ( ) {
+	global_jEles = initArrayList ( 10, sizeof ( struct nakedUnion* ), 10 );
 }
 
 
-extern int rectEditId;
-extern int circleEditId;
-extern int ellipseEditId;
-extern int debugPrint_projectName_init;
+void *preInit ( ArrayList *keyList, ArrayList *modList ) {
+	return NULL;
+}
+
+void postInit ( ArrayList *modList, int thisMod ) {
+}
+
+void closing ( void *data ) {
+	if ( data ) {
+		free ( data );
+	}
+}
+
+int debugPrint_projectName_init = 0;
 
 
-extern struct draw2dStruct *draw2dApi;
-extern struct draw3dStruct *draw3dApi;
-extern struct jalbFont *fonts[];
 
-//extern void (*addCanvas)(int id, void *data, int *xywh);
-extern addCanvasF *addCanvas;
+struct draw2dStruct *draw2dApi = NULL;
+struct draw2dStruct *draw3dApi = NULL;
+//struct jalbFont *font16 = NULL;
+struct jalbFont *fonts[2] = { NULL, NULL };
 
-extern struct backbone_structStruct rect;
-extern struct backbone_structStruct circle;
-extern struct backbone_structStruct ellipse;
+//void (*addCanvas)(int id, void *data, int *xywh) = NULL;
+addCanvasF *addCanvas = NULL;
+
+struct uiGen_api *uiGenApi = NULL;
+
+/** Key */
+
+//void keyWord ( char *line, void *data ) {
+//}
+
+/** Getter + Setter */
+
+void setDraw2dApi ( void *api ) {
+	printf ( "setDraw2dApi ( %p )\n", api );
+	draw2dApi = api;
+}
+
+void setDraw3dApi ( void *api ) {
+	printf ( "setDraw3dApi ( %p )\n", api );
+	draw3dApi = api;
+}
+
+void setFont16 ( void *data ) {
+	printf ( "setFont16 ( ): %p\n", data );
+	fonts[0] = data;
+}
+
+void setFont32 ( void *data ) {
+	printf ( "setFont32 ( ): %p\n", data );
+	fonts[1] = data;
+}
+
+void setAddCanvas ( void *f ) {
+	printf ( "setAddCanvas ( ): %p\n", f );
+	addCanvas = f;
+}
+
+void setUiGenApi ( void *f ) {
+	printf ( "setUiGenApi ( ): %p\n", f );
+	uiGenApi = f;
+}
 
 /** Functions */
 
-/** rect */
-
-struct rect *rectInit ( ) {
-	if ( debugPrint_projectName_init ) {
-		printf ( "rectInit ( )\n" );
-	}
-	struct rect *var = malloc ( sizeof ( struct rect ) );
-	rectFill ( var );
-	return var;
-}
-void rectFill ( struct rect *var ) {
-	var->style[0] = '\0';
-	var->id[0] = '\0';
-	var->x = 0.0;
-	var->y = 0.0;
-	var->width = 0.0;
-	var->height = 0.0;
-	strcpy ( var->fill, "none" );
-	strcpy ( var->stroke, "#000000" );
-	strcpy ( var->stroke_width, "1.0px" );
-	strcpy ( var->stroke_opacity, "1" );
-}
-
-void *rectInitMask ( ) {
-	void *ret = rectInit ( );
-	return ret;
-
-}
-void rectClose ( struct rect *var ) {
-	free ( var );
-
-}
-int rect_attrib_arr[] = {
-	1,
-	1,
-	1,
-	1,
-	1,
-	1,
-	0,
-	0,
-	0,
-	0,
-};
-void rectBodyToVal ( void *varPass, int nameI, char *body ) {
-
-	struct rect *var = varPass;
-
-	if ( nameI == 0 ) {
-		strcpy ( var->style, body );
-	} else if ( nameI == 1 ) {
-		strcpy ( var->id, body );
-	} else if ( nameI == 2 ) {
-		var->x = atof ( body );
-	} else if ( nameI == 3 ) {
-		var->y = atof ( body );
-	} else if ( nameI == 4 ) {
-		var->width = atof ( body );
-	} else if ( nameI == 5 ) {
-		var->height = atof ( body );
-	} else if ( nameI == 6 ) {
-		strcpy ( var->fill, body );
-	} else if ( nameI == 7 ) {
-		strcpy ( var->stroke, body );
-	} else if ( nameI == 8 ) {
-		strcpy ( var->stroke_width, body );
-	} else if ( nameI == 9 ) {
-		strcpy ( var->stroke_opacity, body );
-	}
-}
-
-int rectNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
-
-	if ( strcmp ( body, "style" ) == 0 ) {
-		return 0;
-	} else if ( strcmp ( body, "id" ) == 0 ) {
-		return 1;
-	} else if ( strcmp ( body, "x" ) == 0 ) {
-		return 2;
-	} else if ( strcmp ( body, "y" ) == 0 ) {
-		return 3;
-	} else if ( strcmp ( body, "width" ) == 0 ) {
-		return 4;
-	} else if ( strcmp ( body, "height" ) == 0 ) {
-		return 5;
-	} else if ( strcmp ( body, "fill" ) == 0 ) {
-		return 6;
-	} else if ( strcmp ( body, "stroke" ) == 0 ) {
-		return 7;
-	} else if ( strcmp ( body, "stroke_width" ) == 0 ) {
-		return 8;
-	} else if ( strcmp ( body, "stroke_opacity" ) == 0 ) {
-		return 9;
-	}
-	return -1;
-}
-
-struct xmlFuncts rectXml = {
-	"rect",
-	rectInitMask,
-	rectNameToIndex,
-	rectBodyToVal,
-};
-
-void rect_print ( struct rect *stru ) {
-	printf ( "rect_print ( )\n" );
-}
-/** circle */
-
-struct circle *circleInit ( ) {
-	if ( debugPrint_projectName_init ) {
-		printf ( "circleInit ( )\n" );
-	}
-	struct circle *var = malloc ( sizeof ( struct circle ) );
-	circleFill ( var );
-	return var;
-}
-void circleFill ( struct circle *var ) {
-	var->style[0] = '\0';
-	var->id[0] = '\0';
-	var->cx = 0.0;
-	var->cy = 0.0;
-	var->r = 0.0;
-}
-
-void *circleInitMask ( ) {
-	void *ret = circleInit ( );
-	return ret;
-
-}
-void circleClose ( struct circle *var ) {
-	free ( var );
-
-}
-int circle_attrib_arr[] = {
-	1,
-	1,
-	1,
-	1,
-	1,
-};
-void circleBodyToVal ( void *varPass, int nameI, char *body ) {
-
-	struct circle *var = varPass;
-
-	if ( nameI == 0 ) {
-		strcpy ( var->style, body );
-	} else if ( nameI == 1 ) {
-		strcpy ( var->id, body );
-	} else if ( nameI == 2 ) {
-		var->cx = atof ( body );
-	} else if ( nameI == 3 ) {
-		var->cy = atof ( body );
-	} else if ( nameI == 4 ) {
-		var->r = atof ( body );
-	}
-}
-
-int circleNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
-
-	if ( strcmp ( body, "style" ) == 0 ) {
-		return 0;
-	} else if ( strcmp ( body, "id" ) == 0 ) {
-		return 1;
-	} else if ( strcmp ( body, "cx" ) == 0 ) {
-		return 2;
-	} else if ( strcmp ( body, "cy" ) == 0 ) {
-		return 3;
-	} else if ( strcmp ( body, "r" ) == 0 ) {
-		return 4;
-	}
-	return -1;
-}
-
-struct xmlFuncts circleXml = {
-	"circle",
-	circleInitMask,
-	circleNameToIndex,
-	circleBodyToVal,
-};
-
-void circle_print ( struct circle *stru ) {
-	printf ( "circle_print ( )\n" );
-}
-/** ellipse */
-
-struct ellipse *ellipseInit ( ) {
-	if ( debugPrint_projectName_init ) {
-		printf ( "ellipseInit ( )\n" );
-	}
-	struct ellipse *var = malloc ( sizeof ( struct ellipse ) );
-	ellipseFill ( var );
-	return var;
-}
-void ellipseFill ( struct ellipse *var ) {
-	var->style[0] = '\0';
-	var->id[0] = '\0';
-	var->cx = 0.0;
-	var->cy = 0.0;
-	var->rx = 0.0;
-	var->ry = 0.0;
-}
-
-void *ellipseInitMask ( ) {
-	void *ret = ellipseInit ( );
-	return ret;
-
-}
-void ellipseClose ( struct ellipse *var ) {
-	free ( var );
-
-}
-int ellipse_attrib_arr[] = {
-	0,
-	0,
-	0,
-	0,
-	0,
-	0,
-};
-void ellipseBodyToVal ( void *varPass, int nameI, char *body ) {
-
-	struct ellipse *var = varPass;
-
-	if ( nameI == 0 ) {
-		strcpy ( var->style, body );
-	} else if ( nameI == 1 ) {
-		strcpy ( var->id, body );
-	} else if ( nameI == 2 ) {
-		var->cx = atof ( body );
-	} else if ( nameI == 3 ) {
-		var->cy = atof ( body );
-	} else if ( nameI == 4 ) {
-		var->rx = atof ( body );
-	} else if ( nameI == 5 ) {
-		var->ry = atof ( body );
-	}
-}
-
-int ellipseNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
-
-	if ( strcmp ( body, "style" ) == 0 ) {
-		return 0;
-	} else if ( strcmp ( body, "id" ) == 0 ) {
-		return 1;
-	} else if ( strcmp ( body, "cx" ) == 0 ) {
-		return 2;
-	} else if ( strcmp ( body, "cy" ) == 0 ) {
-		return 3;
-	} else if ( strcmp ( body, "rx" ) == 0 ) {
-		return 4;
-	} else if ( strcmp ( body, "ry" ) == 0 ) {
-		return 5;
-	}
-	return -1;
-}
-
-struct xmlFuncts ellipseXml = {
-	"ellipse",
-	ellipseInitMask,
-	ellipseNameToIndex,
-	ellipseBodyToVal,
-};
-
-void ellipse_print ( struct ellipse *stru ) {
-	printf ( "ellipse_print ( )\n" );
-}
 /** Other Functs */

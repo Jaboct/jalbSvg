@@ -1,5 +1,0 @@
-30a31,34
-> 	char fill[256];
-> 	char stroke[256];
-> 	char stroke_width[256];
-> 	char stroke_opacity[256];

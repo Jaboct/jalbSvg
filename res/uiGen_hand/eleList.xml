@@ -1,6 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uiGen>
   <vertList>
+    <uiUnion>
+      <literalVar>
+        <data>
+          <str>jalbJvg Ele List</str>
+          <useData>0</useData>
+        </data>
+        <pxMove>
+          <XYWH>
+            0,
+            0,
+            0,
+            0,
+          </XYWH>
+        </pxMove>
+      </literalVar>
+    </uiUnion>
+    <uiUnion>
+      <projectVar>
+        <modI>0</modI>
+        <modName>jalbJvg</modName>
+        <varI>0</varI>
+        <uniList>
+          <list>
+            <uiUnion>
+              <alIterate>
+                <uniList>
+                  <list>
+                    <uiUnion>
+                      <renderObj>
+                        <locType>1</locType>
+                        <absLoc>
+                          0.000000,
+                          0.000000,
+                        </absLoc>
+                        <relLoc>
+                          0.000000,
+                          0.000000,
+                        </relLoc>
+                        <WH>
+                          0.000000,
+                          20.000000,
+                        </WH>
+                        <>-1</>
+                        <xyOffsetScales>
+                          0.000000,
+                          1.000000,
+                        </xyOffsetScales>
+                        <scrollable>0</scrollable>
+                        <scroll>0</scroll>
+                      </renderObj>
+                    </uiUnion>
+                  </list>
+                  <cursor>
+                    0,
+                    0,
+                    0,
+                    0,
+                  </cursor>
+                </uniList>
+                <type>0</type>
+                <xyOffsetScale>
+                  0.000000,
+                  0.000000,
+                </xyOffsetScale>
+              </alIterate>
+            </uiUnion>
+          </list>
+          <cursor>
+            0,
+            0,
+            0,
+            0,
+          </cursor>
+        </uniList>
+      </projectVar>
+    </uiUnion>
   </vertList>
   <eventList>
   </eventList>
