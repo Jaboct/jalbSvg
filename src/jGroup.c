@@ -120,6 +120,7 @@ void jNakedUnionTypeChange0 ( struct jNakedUnion *var, int type ) {
 	} else if ( var->type == 3 ) {
 	} else if ( var->type == 4 ) {
 	} else if ( var->type == 5 ) {
+	} else if ( var->type == 6 ) {
 	}
 	if ( type == 0 ) {
 		var->g = jGroupInit ( );
@@ -133,6 +134,8 @@ void jNakedUnionTypeChange0 ( struct jNakedUnion *var, int type ) {
 		var->circ = jCircInit ( );
 	} else if ( type == 5 ) {
 		var->ellipse = jEllipseInit ( );
+	} else if ( type == 6 ) {
+		var->complex = complexEleInit ( );
 	}
 	var->type = type;
 }
@@ -168,6 +171,10 @@ void jNakedUnionClose ( struct jNakedUnion *var ) {
 		if ( var->ellipse ) {
 			jEllipseClose ( var->ellipse );
 		}
+	} else if ( var->type == 6 ) {
+		if ( var->complex ) {
+			complexEleClose ( var->complex );
+		}
 	}
 	free ( var );
 
@@ -191,6 +198,8 @@ void jNakedUnionBodyToVal ( void *varPass, int nameI, char *body ) {
 		} else if ( var->type == 4 ) {
 			// wont get called?
 		} else if ( var->type == 5 ) {
+			// wont get called?
+		} else if ( var->type == 6 ) {
 			// wont get called?
 		}
 	}
@@ -234,6 +243,12 @@ int jNakedUnionNameToIndex ( char *body, void *data, void *ret, char **strPtr ) 
 		*strPtr = "jEllipse";
 		void **retPtr = ret;
 		*retPtr = &var->ellipse;
+		return jxnPtr;
+	} else if ( strcmp ( body, "complex" ) == 0 ) {
+		jNakedUnionTypeChange0 ( var, 6 );
+		*strPtr = "complexEle";
+		void **retPtr = ret;
+		*retPtr = &var->complex;
 		return jxnPtr;
 	}
 	return -1;

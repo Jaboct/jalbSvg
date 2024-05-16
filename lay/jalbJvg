@@ -139,6 +139,7 @@ Hotkey:
 jalbJvg	t	set_cursorInputMode	1
 jalbJvg	6	set_cursorInputMode	2
 jalbJvg	5	set_cursorInputMode	3
+jalbJvg	g	set_cursorInputMode	4
 jalbJvg	r	toggle_debugPrint_jvg_render
 
 Hotkey:

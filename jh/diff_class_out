@@ -1,4 +1,0 @@
-15a16
-> ArrayList *global_jEles = NULL;	// (struct jNakedUnion*)
-19a21
-> 	global_jEles = initArrayList ( 10, sizeof ( struct nakedUnion* ), 10 );

@@ -19,6 +19,7 @@
 #include "jPath.h"
 #include "jText.h"
 #include "jShapes.h"
+#include "complexEle.h"
 
 void jGroup_preInit ( );
 
@@ -39,6 +40,7 @@ struct jNakedUnion {
 		struct jRect *rect;
 		struct jCirc *circ;
 		struct jEllipse *ellipse;
+		struct complexEle *complex;
 	};
 };
 enum jNakedUnionEnum {
@@ -48,6 +50,7 @@ enum jNakedUnionEnum {
 	jNaked_Rect,
 	jNaked_Circ,
 	jNaked_Ellipse,	// 5
+	jNaked_Complex,
 };
 struct jvg {
 	ArrayList *eles;	// (struct jNakedUnion*)

@@ -28,6 +28,7 @@ jh/structStruct/jvg.xml
 jh/structStruct/jRect.xml
 jh/structStruct/jCirc.xml
 jh/structStruct/jEllipse.xml
+jh/structStruct/complexEle.xml
 
 # fileStructs
 jh/fileStruct/mod.xml
@@ -40,6 +41,7 @@ jh/fileStruct/jPath.xml
 jh/fileStruct/jText.xml
 jh/fileStruct/jGroup.xml
 jh/fileStruct/jShapes.xml
+jh/fileStruct/complexEle.xml
 
 # functions
 jh/function/funct.xml
