@@ -123,6 +123,14 @@ float pointLineDist ( float *p, float *v0, float *v1 );
 void dragJPath ( struct jPath *path, float *dXY );
 
 
+
+
+/// util stuff
+
+char *jType_to_str ( struct jNakedUnion *uni );
+void jType_spawnEditUi ( struct jNakedUnion *uni );
+
+
 /// uiGen
 
 void set_uiGen_api ( void *data );

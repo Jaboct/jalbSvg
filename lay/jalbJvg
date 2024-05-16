@@ -245,13 +245,15 @@ Run:
 uiGen	assemble_appendMod_full_list
 
 
+Run:
+#uiGen	set_uiGen_debug_event	1
 
 
 uiGen_globList_load:
 #/home/jadoo/workspace/jHigh/uiGen/res/hand_uiGen/uiGen_maker.xml
 /home/jadoo/workspace/jHigh/jalbSvg/res/uiGen_hand/eleList.xml
-
-
+/home/jadoo/workspace/jHigh/jalbSvg/res/uiGen_hand/jPath.xml
+/home/jadoo/workspace/jHigh/jalbSvg/res/uiGen_hand/jText.xml
 
 
 

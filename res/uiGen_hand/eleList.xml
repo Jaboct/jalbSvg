@@ -10,7 +10,7 @@
         <pxMove>
           <XYWH>
             0,
-            0,
+            1,
             0,
             0,
           </XYWH>
@@ -19,7 +19,7 @@
     </uiUnion>
     <uiUnion>
       <projectVar>
-        <modI>0</modI>
+        <modI>9</modI>
         <modName>jalbJvg</modName>
         <varI>0</varI>
         <uniList>
@@ -40,10 +40,35 @@
                           0.000000,
                         </relLoc>
                         <WH>
-                          0.000000,
+                          1000.000000,
                           20.000000,
                         </WH>
-                        <>-1</>
+                        <uniList>
+                          <list>
+                            <uiUnion>
+                              <funct>
+                                <retType>4</retType>
+                                <functRef>
+                                  <modI>9</modI>
+                                  <modName>jalbJvg</modName>
+                                  <functI>-1</functI>
+                                </functRef>
+                                <params>
+                                  <uiUnion>
+                                    <>-101</>
+                                  </uiUnion>
+                                </params>
+                                <name>jType_to_str</name>
+                              </funct>
+                            </uiUnion>
+                          </list>
+                          <cursor>
+                            0,
+                            0,
+                            0,
+                            0,
+                          </cursor>
+                        </uniList>
                         <xyOffsetScales>
                           0.000000,
                           1.000000,
@@ -51,6 +76,35 @@
                         <scrollable>0</scrollable>
                         <scroll>0</scroll>
                       </renderObj>
+                      <event>
+                        <key>
+                          <trigger>
+                            <click>
+                              <altKeys>
+                                0,
+                                1,
+                                0,
+                              </altKeys>
+                            </click>
+                          </trigger>
+                          <action>
+                            <funct>
+                              <retType>5</retType>
+                              <functRef>
+                                <modI>9</modI>
+                                <modName>jalbJvg</modName>
+                                <functI>-1</functI>
+                              </functRef>
+                              <params>
+                                <uiUnion>
+                                  <>-101</>
+                                </uiUnion>
+                              </params>
+                              <name>jType_spawnEditUi</name>
+                            </funct>
+                          </action>
+                        </key>
+                      </event>
                     </uiUnion>
                   </list>
                   <cursor>
@@ -60,7 +114,7 @@
                     0,
                   </cursor>
                 </uniList>
-                <type>0</type>
+                <type>2</type>
                 <xyOffsetScale>
                   0.000000,
                   0.000000,

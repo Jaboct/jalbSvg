@@ -1553,6 +1553,67 @@ void dragJPath ( struct jPath *path, float *dXY ) {
 }
 
 
+/// util stuff
+
+char *jType_to_str ( struct jNakedUnion *uni ) {
+//	printf ( "jType_to_str ( )\n" );
+//	printf ( "uni: %p\n", uni );
+
+	switch ( uni->type ) {
+		case jNaked_G:
+			return "Group";
+		case jNaked_Path:
+			return "Path";
+		case jNaked_Text:
+			return "Text";
+		case jNaked_Rect:
+			return "Rect";
+		case jNaked_Circ:
+			return "Circ";
+		case jNaked_Ellipse:
+			return "Ellipse";
+		default:
+			return "Type out of Range";
+	}
+
+
+	return "Type out of Range";
+}
+
+void jType_spawnEditUi ( struct jNakedUnion *uni ) {
+	printf ( "jType_spawnEditUi ( )\n" );
+
+	char *dir = NULL;
+	void *data = NULL;
+
+	switch ( uni->type ) {
+		case jNaked_G:
+			break;
+		case jNaked_Path:
+			dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/uiGen_hand/jPath.xml";
+			data = uni->path;
+
+			break;
+		case jNaked_Text:
+			dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/uiGen_hand/jText.xml";
+			data = uni->text;
+
+			break;
+		case jNaked_Rect:
+			break;
+		case jNaked_Circ:
+			break;
+		case jNaked_Ellipse:
+			break;
+		default:
+			break;
+	}
+
+	if ( dir ) {
+		uiGen_api->load_and_set_norm ( dir, data );
+	}
+}
+
 /// uiGen
 
 void set_uiGen_api ( void *data ) {
