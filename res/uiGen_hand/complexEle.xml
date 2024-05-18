@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uiGen>
+  <vertList>
+    <uiUnion>
+      <literalVar>
+        <data>
+          <str>complexEle</str>
+          <useData>0</useData>
+        </data>
+        <pxMove>
+          <XYWH>
+            0,
+            1,
+            0,
+            0,
+          </XYWH>
+        </pxMove>
+      </literalVar>
+    </uiUnion>
+  </vertList>
+  <eventList>
+  </eventList>
+  <scroll>0</scroll>
+  <name>complexEle.xml</name>
+  <data></data>
+  <strBuffer></strBuffer>
+  <cursor>
+    0,
+    0,
+    0,
+    0,
+  </cursor>
+  <saveDir>/home/jadoo/workspace/jHigh/jalbSvg/res/uiGen_hand/</saveDir>
+  <dataList>
+  </dataList>
+  <macroList>
+  </macroList>
+  <scrollable>0</scrollable>
+</uiGen>

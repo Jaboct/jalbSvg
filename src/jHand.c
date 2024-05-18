@@ -365,6 +365,27 @@ printf ( "load path uiGen\n" );
 			set_cursorInputMode ( ci_reg );
 
 			return 1;
+
+		} else if ( cursorInputMode == ci_complex ) {
+			if ( tempEle ) {
+				printf ( "TEMP ELE ERROR\n" );
+			}
+			tempEle = jNakedUnionInit ( );
+			jNakedUnionTypeChange0 ( tempEle, jNaked_Complex );
+			struct complexEle *complex = tempEle->complex;
+
+			float worldXY[2];
+			loc_to_pointI ( clickXYpass, worldXY, viewLoc, viewScale );
+
+/*
+			circ->XY[0] = worldXY[0];
+			circ->XY[1] = worldXY[1];
+			circ->radius = 10;
+*/
+
+			set_cursorInputMode ( ci_reg );
+
+			return 1;
 		}
 
 		selected = 0;
@@ -1572,6 +1593,8 @@ char *jType_to_str ( struct jNakedUnion *uni ) {
 			return "Circ";
 		case jNaked_Ellipse:
 			return "Ellipse";
+		case jNaked_Complex:
+			return "Complex Ele";
 		default:
 			return "Type out of Range";
 	}
@@ -1604,6 +1627,11 @@ void jType_spawnEditUi ( struct jNakedUnion *uni ) {
 		case jNaked_Circ:
 			break;
 		case jNaked_Ellipse:
+			break;
+		case jNaked_Complex:
+			dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/uiGen_hand/complexEle.xml";
+			data = uni->text;
+
 			break;
 		default:
 			break;

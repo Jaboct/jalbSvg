@@ -53,6 +53,7 @@ enum cursorInputTypes {
 	ci_text,
 	ci_pen,
 	ci_circ,
+	ci_complex,
 	ci_num,
 };
 

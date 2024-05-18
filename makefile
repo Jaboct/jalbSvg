@@ -83,6 +83,7 @@ $(LDIR)jalbSvg.so: $(jalbSvgOs)
 jalbJvgFiles = jMod \
  jPath jText jShapes jGroup \
  jHand jEvent jRender complexEle \
+ api \
  event_sb \
  backbone_jalbJvg xmlFunctGrouper_jalbJvg
 

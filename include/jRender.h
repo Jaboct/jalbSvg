@@ -44,6 +44,9 @@ void jText_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jT
 void jCircRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jCirc *circ,
 		float *viewLoc, float viewScale );
 
+void complexEleRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct complexEle *complex,
+		float *viewLoc, float viewScale );
+
 /** Util */
 
 void path_lrtb ( struct jPath *path, float *lrtb );

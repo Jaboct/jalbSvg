@@ -103,6 +103,11 @@ void jNaked_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct j
 		struct jCirc *circ = uni->circ;
 		jCircRender ( screenDims, glBuffers, XYWHpass, circ,
 			viewLoc, viewScale );
+
+	} else if ( uni->type == jNaked_Complex ) {
+		struct complexEle *complex = uni->complex;
+		complexEleRender ( screenDims, glBuffers, XYWHpass, complex,
+			viewLoc, viewScale );
 	}
 }
 
@@ -457,6 +462,21 @@ void jCircRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jCi
 
 	int iXY[2] = { screenXY[0], screenXY[1] };
 	draw2dApi->drawCircle ( iXY, diameter, colorWhite, screenDims, glBuffers );
+}
+
+void complexEleRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct complexEle *complex,
+		float *viewLoc, float viewScale ) {
+//	printf ( "complexEleRender ( )\n" );
+
+/*
+	float screenXY[2];
+	point_to_loc ( circ->XY, screenXY, viewLoc, viewScale );
+
+	float diameter = circ->radius / viewScale * 2;
+
+	int iXY[2] = { screenXY[0], screenXY[1] };
+	draw2dApi->drawCircle ( iXY, diameter, colorWhite, screenDims, glBuffers );
+*/
 }
 
 

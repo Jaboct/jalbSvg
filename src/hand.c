@@ -1144,6 +1144,8 @@ void set_cursorInputMode ( int i ) {
 		newIcon = cr_pen;
 	} else if ( cursorInputMode == ci_circ ) {
 		newIcon = cr_circ;
+	} else if ( cursorInputMode == ci_complex ) {
+		newIcon = cr_circ;
 	}
 
 	set_cursor_iconI ( newIcon );
