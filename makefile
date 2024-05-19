@@ -92,7 +92,7 @@ jalbJvgOs = $(patsubst %,$(ODIR)%.o,$(jalbJvgFiles))
 jalbJvgDeps = $(patsubst %,$(Dep)%.d,$(jalbJvgFiles))
 
 # can i make this generic, so i dont need to copy paste it for each mod?
-$(LDIR)jalbJvg.so: $(jalbJvgOs) $(LDIR)jalbSvg.so
+$(LDIR)jalbJvg.so: $(jalbJvgOs) $(LDIR)jalbSvg.so $(LDIR)consumeMod.so
 	$(CC) $(CFLAGS) $(CFLAGS2) -o $@ $^ $(LIBS)
 
 # -l$(LDIR)jalbSvg.so

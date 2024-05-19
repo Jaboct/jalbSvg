@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <structStruct>
-  <name>complexEle</name>
+  <name>complexDec</name>
   <vars>
     <subVar>
       <name>name</name>
