@@ -6,9 +6,10 @@
 struct jvg_api jvg_api_void = {
 	.initJvgEle = &initJvgEle,
 	.addJvgEle = addJvgEle,
-	.initPath = (void *(*) ( ))&jPathInit,
+	.initPath = (void *(*) ( ))&initPathEle,
 	.initPathVert = initPathVert,
 	.initPathLine = initPathLine,
+
 //	.initPathLine = (void *(*) ( ))&jLineInit,
 //	.getPathVert = 
 /*	void *(*initPathVert) ( );
@@ -17,34 +18,58 @@ struct jvg_api jvg_api_void = {
 	void *(*setPathLineVert) ( void *line, int vertIndex, void *vert );
 	void *(*initTextBox) ( );
 */
-	.initTextBox = 	(void *(*) ( ))jTextInit,
+	.textBox_set_text = textBox_set_text,
+	.textBox_set_XYWH = textBox_set_XYWH,
+
+	.initTextBox = 	(void *(*) ( ))initTextEle,
+
+	.saveToDir = saveToDir,
 };
 
 /** Functions */
 
 void *get_jvg_api ( ) {
+	printf ( "get_jvg_api ( )\n" );
+	printf ( "&jvg_api_void: %p\n", &jvg_api_void );
+
 	return &jvg_api_void;
 }
 
 void *initJvgEle ( ) {
-	// rn this is just an arraylist, should i stick it in its own struct eventually?
+	printf ( "initJvgEle ( )\n" );
 
-	ArrayList *jEles = initArrayList ( 10, sizeof ( struct jNakedUnion* ), 10 );
-	return jEles;
+	struct jvg *jvg = jvgInit ( );
+
+	printf ( "jvg: %p\n", jvg );
+
+	return jvg;
 }
 
 void addJvgEle ( void *jvg, void *ele ) {
-	arrayListAddEndPointer ( jvg, ele );
+	printf ( "addJvgEle ( )\n" );
+	printf ( "jvg: %p\n", jvg );
+
+	struct jvg *j = jvg;
+	arrayListAddEndPointer ( j->eles, ele );
+
+	printf ( "addJvgEle ( ) OVER\n" );
 }
 
 /// Path
+
+void *initPathEle ( ) {
+	struct jNakedUnion *uni = jNakedUnionInit ( );
+	jNakedUnionTypeChange0 ( uni, jNaked_Path );
+	return uni;
+}
 
 void *initPathVert ( void *path, float *loc ) {
 	struct jVert *vert = jVertInit ( );
 	vert->XY[0] = loc[0];
 	vert->XY[1] = loc[1];
 
-	struct jPath *p = path;
+	struct jNakedUnion *uni = path;
+	struct jPath *p = uni->path;
 	arrayListAddEndPointer ( p->verts, vert );
 
 	return vert;
@@ -57,7 +82,8 @@ void *initPathLine ( void *path, int v0, int v1 ) {
 
 	line->type = path_LineTo;
 
-	struct jPath *p = path;
+	struct jNakedUnion *uni = path;
+	struct jPath *p = uni->path;
 	arrayListAddEndPointer ( p->lines, line );
 
 	return line;
@@ -65,8 +91,19 @@ void *initPathLine ( void *path, int v0, int v1 ) {
 
 /// Text Box
 
+void *initTextEle ( ) {
+	printf ( "initTextEle ( )\n" );
+
+	struct jNakedUnion *uni = jNakedUnionInit ( );
+	jNakedUnionTypeChange0 ( uni, jNaked_Text );
+	return uni;
+}
+
 void textBox_set_XYWH ( void *textBox, float *XYWH ) {
-	struct jText *text = textBox;
+	printf ( "textBox_set_XYWH ( )\n" );
+
+	struct jNakedUnion *uni = textBox;
+	struct jText *text = uni->text;
 	text->XYWH[0] = XYWH[0];
 	text->XYWH[1] = XYWH[1];
 	text->XYWH[2] = XYWH[2];
@@ -75,11 +112,25 @@ void textBox_set_XYWH ( void *textBox, float *XYWH ) {
 }
 
 void textBox_set_text ( void *textBox, char *str ) {
-	struct jText *text = textBox;
+	printf ( "textBox_set_text ( )\n" );
+	printf ( "str: %s\n", str );
+
+	struct jNakedUnion *uni = textBox;
+	struct jText *text = uni->text;
 	fillStringBuilder ( str, text->sb );
+
+	printf ( "textBox_set_text ( ) OVER\n" );
 }
 
+/// Other
 
+void saveToDir ( void *jvg, char *dir ) {
+	printf ( "saveToDir ( )\n" );
+
+	struct jvg *j = jvg;
+
+	jalbJvg_save ( j, dir );
+}
 
 
 

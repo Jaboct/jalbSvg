@@ -820,23 +820,30 @@ void jHand_save ( ) {
 	printf ( "jHand_save ( )\n" );
 
 	if ( saveDir[0] != '\0' ) {
-		jalbJvg_save ( saveDir );
+		jalbJvg_glob_save ( saveDir );
 	} else {
 		char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/test_00.xml";
-		jalbJvg_save ( dir );
+		jalbJvg_glob_save ( dir );
 	}
 
 	printf ( "jHand_save ( ) OVER\n" );
 }
 
-void jalbJvg_save ( char *dir ) {
+void jalbJvg_glob_save ( char *dir ) {
 	printf ( "jalbJvg_save ( )\n" );
 	printf ( "dir: %s\n", dir );
 
-	fwriteXml_backbone ( dir, &jvg, glob_jvg,
-		jvg_attributes, backbone_arr_jalbJvg, len_backbone_arr_jalbJvg );
+	jalbJvg_save ( glob_jvg, dir );
 
 	printf ( "jalbJvg_save ( ) OVER\n" );
+}
+
+void jalbJvg_save ( struct jvg *jvgEle, char *dir ) {
+	printf ( "jalbJvg_save ( )\n" );
+	printf ( "jvgEle: %p\n", jvgEle );
+
+	fwriteXml_backbone ( dir, &jvg, jvgEle,
+		jvg_attributes, backbone_arr_jalbJvg, len_backbone_arr_jalbJvg );
 }
 
 void jHand_load ( ) {

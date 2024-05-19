@@ -104,7 +104,8 @@ jalbJvg	l	jHand_load
 
 
 Hotkey:
-jalbJvg	1	jalbJvg_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/test_01.xml"
+#jalbJvg	1	jalbJvg_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/test_01.xml"
+jalbJvg	1	jalbJvg_load	"/home/jadoo/workspace/jHigh/jHighMapper/res/output.xml"
 
 
 

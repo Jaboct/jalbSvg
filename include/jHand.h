@@ -77,7 +77,8 @@ void say_jPath ( struct jPath *path );
 /** Save and Load */
 
 void jHand_save ( );
-void jalbJvg_save ( char *dir );
+void jalbJvg_glob_save ( char *dir );
+void jalbJvg_save ( struct jvg *jvgEle, char *dir );
 
 void jHand_load ( );
 void jalbJvg_load ( char *dir );
