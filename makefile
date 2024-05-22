@@ -83,6 +83,7 @@ $(LDIR)jalbSvg.so: $(jalbSvgOs)
 jalbJvgFiles = jMod \
  jPath jText jShapes jGroup \
  jHand jEvent jRender complexEle complexEle_ext \
+ jProof \
  api \
  event_sb \
  backbone_jalbJvg xmlFunctGrouper_jalbJvg
@@ -132,6 +133,8 @@ ifeq ($(CompType), win)
 	del obj\*.o *~ modCore.exe dep\*.d lib\*.so
 else
 	rm -f $(ODIR)*.o $(Dep)*.d $(libGenericData) $(SPECIFICSO) *~ $(LDIR)*.so
+
+	cp ../consume/lib/consumeMod.so lib/
 endif
 
 
