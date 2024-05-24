@@ -115,6 +115,7 @@ int onHoverType ( int *XY );
 int isOnVert ( struct jPath *path, int *XY );
 int isOnLine ( struct jVert *v0, struct jVert *v1, int *XY );
 int isOnText ( struct jText *text, int *XY );
+int isOnCirc ( struct jCirc *circ, int *XY );
 
 float pointLineDist ( float *p, float *v0, float *v1 );
 

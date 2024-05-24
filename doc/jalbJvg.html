@@ -49,6 +49,8 @@ body{
 <nav id="links">
   <ul>
     <li><a href="#render">rendering</a></li>
+    <li><a href="#event">Event</a></li>
+    <li><a href="#selected">Selected</a></li>
     <li><a href="#complexEle">Complex Ele</a></li>
   </ul>
 </nav>
@@ -72,7 +74,89 @@ With a few global varaibles:<br>
 int selected; says if this or an element beneith it is selected.<br>
 int thisSel; says if this specifically, and not something beneith it is selected.<br>
 <br>
+<br>
 
+<b>View Scale</b><br>
+does a high number mean zoomed in or zoomed out?<br>
+zoome in means you can see less, but what you can see is more detailed.<br>
+zoomed out means you can see more.<br>
+
+<br>
+</div>
+
+<br>
+<br>
+
+<div class="myParagraph" id="event">
+<b>Jvg Event</b><br>
+
+jText_mEvent uses:<br>
+pointInsideI ( )<br>
+<br>
+<br>
+<b>Control Points</b><br>
+I feel like i wnat the option, to have control point size scale with zoon, vs remain constant.<br>
+int jText_box_width<br>
+int controlPointWidth<br>
+
+<br>
+<br>
+
+<br>
+</div>
+
+<br>
+<br>
+
+
+<div class="myParagraph" id="selected">
+<b>Selected + Cursor</b><br>
+When rendering i have the global:<br>
+int thisSel;<br>
+<br>
+I have the function:<br>
+thisSel ( int );<br>
+<br>
+<br>
+How do i handle dragging?<br>
+selected needs to be true.<br>
+can be set deep in the event, or at the top level.<br>
+<br>
+Upon click at the ele that was clicked on you need to run:<br>
+handleCursor_start, macro which depends on a few things TODO.<br>
+<br>
+Then return 1, and every recur'd function will run handleCursor macro<br>
+<br>
+<br>
+When handling drag, i jIterateToSelected ( )<br>
+<br>
+<b>Cursor Values</b><br>
+<br>
+<u>Text:</u><br>
+0: editing text<br>
+1: dragging?<br>
+5: resizing from bottom right?<br>
+<br>
+<u>Circle</u><br>
+0: moving center.<br>
+1: resizing from right.<br>
+<br>
+<br>
+
+<br>
+<br>
+
+<b>jIterateToSelected</b><br>
+Iterates through my cursor list to find the ele which is actually selected.<br>
+Because eles have a varying ammount of information, this can be complicated.<br>
+For example, a textBox needs 1 extra int, to signify if i am moving it, editing the text, resizing it.<br>
+
+<br>
+<br>
+
+<b>Cursor Change</b><br>
+set_cursor_iconI<br>
+onHoverCheck<br>
 <br>
 </div>
 

@@ -192,11 +192,12 @@ void jalbJvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void
 
 int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 		float *viewLoc, float viewScale ) {
-/*
+
 	if ( debugPrint_jvg_event ) {
 		printf ( "jalbJvg_mEvent ( )\n" );
 	}
-*/
+
+	int ret = 0;
 
 	if ( !glob_jvg ) {
 		glob_jvg = jvgInit ( );
@@ -217,7 +218,10 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 			}
 
 			set_cursorInputMode ( ci_reg );
-			return 1;
+
+//			return 1;
+			ret = 1;
+			goto functEnd;
 		}
 
 		struct jNakedUnion *parent;
@@ -234,13 +238,15 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 				if ( selType == cs_text ) {
 				} else if ( selType == cs_object ) {
 					if ( ele->type == jNaked_Path ) {
-printf ( "load path uiGen\n" );
+						printf ( "load path uiGen\n" );
 
 						char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/uiGen_hand/jPath.xml";
 
 						uiGen_api->load_and_set_norm ( dir, ele->path );
 
-						return 0;
+//						return 0;
+						ret = 0;
+						goto functEnd;
 					}
 				}
 			}
@@ -264,60 +270,90 @@ printf ( "load path uiGen\n" );
 			if ( altKeys[akCtrl] ) {
 				if ( e->key.keysym.sym == SDLK_h ) {		// Math characters
 					add_special ( sb, spec_therefore );
-					return 1;
+//					return 1;
+					ret = 1;
+					goto functEnd;
 				} else if ( e->key.keysym.sym == SDLK_7 ) {
 					add_special ( sb, spec_and );
-					return 1;
+//					return 1;
+					ret = 1;
+					goto functEnd;
 				} else if ( e->key.keysym.sym == SDLK_BACKSLASH ) {
 					add_special ( sb, spec_or );
-					return 1;
+//					return 1;
+					ret = 1;
+					goto functEnd;
 				} else if ( e->key.keysym.sym == SDLK_m ) {
 					add_special ( sb, spec_micro );
-					return 1;
+//					return 1;
+					ret = 1;
+					goto functEnd;
 				} else if ( e->key.keysym.sym == SDLK_j ) {
 					add_special ( sb, spec_emptySet );
-					return 1;
+//					return 1;
+					ret = 1;
+					goto functEnd;
 
 				} else if ( e->key.keysym.sym == SDLK_k ) {	// Greek Letters
 					add_special ( sb, spec_alphaL );
-					return 1;
+//					return 1;
+					ret = 1;
+					goto functEnd;
 				} else if ( e->key.keysym.sym == SDLK_b ) {
 					add_special ( sb, spec_betaL );
-					return 1;
+//					return 1;
+					ret = 1;
+					goto functEnd;
 				} else if ( e->key.keysym.sym == SDLK_d ) {
 					if ( altKeys[akShift] ) {
 						add_special ( sb, spec_deltaU );
 					} else {
 						add_special ( sb, spec_deltaL );
 					}
-					return 1;
+//					return 1;
+					ret = 1;
+					goto functEnd;
 				} else if ( e->key.keysym.sym == SDLK_y ) {
 					add_special ( sb, spec_thetaL );
-					return 1;
+//					return 1;
+					ret = 1;
+					goto functEnd;
 				} else if ( e->key.keysym.sym == SDLK_u ) {
 					add_special ( sb, spec_lambdaL );
-					return 1;
+//					return 1;
+					ret = 1;
+					goto functEnd;
 				} else if ( e->key.keysym.sym == SDLK_p ) {
 					add_special ( sb, spec_pi );
-					return 1;
+//					return 1;
+					ret = 1;
+					goto functEnd;
 				} else if ( e->key.keysym.sym == SDLK_i ) {
 //					add_special ( sb, spec_rhoL );
 					add_special ( sb, spec_integral );
-					return 1;
+//					return 1;
+					ret = 1;
+					goto functEnd;
 				} else if ( e->key.keysym.sym == SDLK_o ) {
 					add_special ( sb, spec_omegaL );
-					return 1;
+//					return 1;
+					ret = 1;
+					goto functEnd;
 				}
+			}
+			if ( ret ) {
+				goto functEnd;
 			}
 
 
-			int ret = sbKey ( e->key.keysym.sym, sb, undoMem, cStart, cEnd,
+			ret = sbKey ( e->key.keysym.sym, sb, undoMem, cStart, cEnd,
 				&searching, search, altKeys,
 				glob_ctrlKeys, NULL, textWrap, maxCols );
 //			printf ( "SB KEY RET: %d\n", ret );
 
 			if ( ret ) {
-				return 1;
+//				return 1;
+				goto functEnd;
 			}
 //			printSb ( sb );
 		}
@@ -345,7 +381,9 @@ printf ( "load path uiGen\n" );
 
 			set_cursorInputMode ( ci_reg );
 
-			return 1;
+//			return 1;
+			ret = 1;
+			goto functEnd;
 
 		} else if ( cursorInputMode == ci_circ ) {
 			if ( tempEle ) {
@@ -364,7 +402,9 @@ printf ( "load path uiGen\n" );
 
 			set_cursorInputMode ( ci_reg );
 
-			return 1;
+//			return 1;
+			ret = 1;
+			goto functEnd;
 
 		} else if ( cursorInputMode == ci_complex ) {
 			if ( tempEle ) {
@@ -385,18 +425,24 @@ printf ( "load path uiGen\n" );
 
 			set_cursorInputMode ( ci_reg );
 
-			return 1;
+//			return 1;
+			ret = 1;
+			goto functEnd;
 		}
 
 		selected = 0;
 
-		int ret = jNakedList_mEvent_start ( e, clickXYpass, eleWH, eles,
+		ret = jNakedList_mEvent_start ( e, clickXYpass, eleWH, eles,
 			viewLoc, viewScale );
 
-//		printf ( "naked list return: %d\n", ret );
+		if ( debugPrint_jvg_event ) {
+			printf ( "naked list return: %d\n", ret );
+		}
+
 		if ( ret ) {
 			sayCursor;
-			return 1;
+//			return 1;
+			goto functEnd;
 		}
 
 
@@ -444,7 +490,9 @@ printf ( "load path uiGen\n" );
 
 			set_cursorInputMode ( ci_reg );
 
-			return 1;
+//			return 1;
+			ret = 1;
+			goto functEnd;
 		}
 
 		// its not clicking on an ele, and its not trying to add a type.
@@ -458,13 +506,18 @@ printf ( "load path uiGen\n" );
 			heldStart[0] = worldXY[0];
 			heldStart[1] = worldXY[1];
 
-			return 1;
+//			return 1;
+			ret = 1;
+			goto functEnd;
 
 		} else if ( e->button.button == SDL_BUTTON_MIDDLE ) {
 //			heldType = ht_cameraMove;
 
 			// return 0 because i want jlui to hanlde it.
-			return 0;
+//			return 0;
+			ret = 0;
+			goto functEnd;
+
 		} else {
 			heldType = ht_none;
 		}
@@ -501,7 +554,9 @@ printf ( "load path uiGen\n" );
 				struct jCirc *circ = tempEle->circ;
 				circ->radius += dx;
 			}
-			return 1;
+//			return 1;
+			ret = 1;
+			goto functEnd;
 		}
 
 		float fXY[2] = { clickXYpass[0], clickXYpass[1] };
@@ -515,7 +570,9 @@ printf ( "load path uiGen\n" );
 
 		if ( !selected ||
 		     !mouseHeld ) {
-			return 0;
+//			return 0;
+			ret = 0;
+			goto functEnd;
 		}
 
 		struct jNakedUnion *parent;
@@ -579,18 +636,38 @@ printf ( "load path uiGen\n" );
 				text->XYWH[2] += dx;
 				text->XYWH[3] += dy;
 			}
+		} else if ( selType == cs_circ ) {
+			struct jCirc *circ = ele->circ;
+
+			printf ( "CS_CIRC selected\n" );
+
+			if ( vertI == 0 ) {
+				// dragging
+
+				circ->XY[0] += dx;
+				circ->XY[1] += dy;
+
+			} else if ( vertI == 1 ) {
+				// reshaping
+
+				// i can improve this at some point.
+				circ->radius += dx;
+
+			}
+
 		} else {
 			printf ( "unhandled selType: %d\n", selType );
 		}
 	}
 
-/*
+	functEnd:;
+
 	if ( debugPrint_jvg_event ) {
 		printf ( "jalbJvg_mEvent ( ) OVER\n" );
 	}
-*/
 
-	return 0;
+
+	return ret;
 }
 
 void jalbJvg_close ( void *data ) {
@@ -1414,6 +1491,12 @@ int onHoverType ( int *XY ) {
 			if ( isOnText ( text, XY ) ) {
 				return 1;
 			}
+		} else if ( uni->type == jNaked_Circ ) {
+			struct jCirc *circ = uni->circ;
+
+			if ( isOnCirc ( circ, XY ) ) {
+				return 1;
+			}
 		}
 
 		i += 1;
@@ -1496,6 +1579,7 @@ int isOnLine ( struct jVert *v0, struct jVert *v1, int *XY ) {
 }
 
 extern int jText_box_width;
+extern int controlPointWidth;
 
 int isOnText ( struct jText *text, int *XY ) {
 
@@ -1530,6 +1614,29 @@ int isOnText ( struct jText *text, int *XY ) {
 	boxXYWH[3] = jText_box_width;
 	if ( pointInside ( cXY, boxXYWH ) ) {
 		// its inside the main box.
+		return 1;
+	}
+
+	return 0;
+}
+
+int isOnCirc ( struct jCirc *circ, int *XY ) {
+	float viewScale = glob_viewScale;
+	float *viewLoc = glob_viewLoc;
+
+	// canvasXY, translated from the screenXY to realXY.
+	float cXY[2] = { XY[0], XY[1] };
+	loc_to_point ( cXY, cXY, viewLoc,  viewScale );
+
+	// check the center box;
+	float boxXYWH[4] = { circ->XY[0] - controlPointWidth / 2, circ->XY[1] - controlPointWidth / 2, controlPointWidth, controlPointWidth };
+	if ( pointInside ( cXY, boxXYWH ) ) {
+		return 1;
+	}
+
+	// check the outer box;
+	boxXYWH[0] = circ->XY[0] + circ->radius - controlPointWidth / 2;
+	if ( pointInside ( cXY, boxXYWH ) ) {
 		return 1;
 	}
 

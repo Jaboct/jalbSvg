@@ -124,6 +124,16 @@ int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct
 //			printf ( "SELECTED TEXT\n" );
 
 			return cs_text;
+
+		} else if ( uni->type == jNaked_Circ ) {
+			i += 1;
+			mem = arrayListGetPointer ( cursorList, i );
+
+			*vertI = mem->selI;
+
+			*lastCursor = mem;
+
+			return cs_circ;
 		}
 
 	} else if ( i == len - 3 ) {
@@ -203,7 +213,9 @@ int jNakedList_mEvent_start ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayL
 
 int jNakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *eles,
 		float *viewLoc, float viewScale ) {
-	printf ( "jNakedList_mEvent ( )\n" );
+	if ( debugPrint_jvg_event ) {
+		printf ( "jNakedList_mEvent ( )\n" );
+	}
 
 	int i;
 	int len;
@@ -242,6 +254,18 @@ int jNakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *e
 			cursorDown;
 			int ret = jText_mEvent ( e, clickXYpass, eleWH, text,
 				viewLoc, viewScale );
+
+			cursorUp;
+			if ( ret == 1 ) {
+//				selI = i;
+				handleCursor;
+				return ret;
+			}
+		} else if ( uni->type == jNaked_Circ ) {
+			struct jCirc *circ = uni->circ;
+			cursorDown;
+			int ret = jCirc_mEvent ( e, clickXYpass, eleWH, circ,
+				viewLoc, viewScale );
 			cursorUp;
 			if ( ret == 1 ) {
 //				selI = i;
@@ -252,6 +276,11 @@ int jNakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *e
 
 		i += 1;
 	}
+
+	if ( debugPrint_jvg_event ) {
+		printf ( "jNakedList_mEvent ( ) OVER\n" );
+	}
+
 	return 0;
 }
 
@@ -636,12 +665,9 @@ int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *tex
 
 //			printf ( "maxCols: %d\n", maxCols );
 
-// set_debugPrint_jalbSb ( 1 );
 			int overClickLines = -1;
 			// determines the index of the click (this should also handle return the cursorXY...)
 			int ret = newSbClickToIndex_wrap ( charXY, text->sb, maxCols, tabW, &overClickLines );
-
-// set_debugPrint_jalbSb ( 0 );
 
 //			printf ( "ret: %d\n", ret );
 
@@ -684,6 +710,7 @@ int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *tex
 
 	// check top bar for moving it around.
 
+	// the box in "screen space"
 	boxXYWH[0] = screenXYWH[0] + screenXYWH[2];
 	boxXYWH[1] = screenXYWH[1] + screenXYWH[3];
 	boxXYWH[2] = boxWidth;
@@ -708,6 +735,58 @@ int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *tex
 	return 0;
 }
 
+extern int controlPointWidth;
+
+int jCirc_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jCirc *circ,
+		float *viewLoc, float viewScale ) {
+
+	printf ( "jCirc_mEvent ( )\n" );
+
+	float screenXY[4];
+	point_to_loc ( circ->XY, screenXY, viewLoc, viewScale );
+
+	int cWidth = controlPointWidth / viewScale;
+
+	// first check the center and drag location
+	float iXYWH[4];
+	iXYWH[0] = screenXY[0] - (cWidth / 2);
+	iXYWH[1] = screenXY[1] - (cWidth / 2);
+	iXYWH[2] = cWidth;
+	iXYWH[3] = cWidth;
+	if ( pointInsideI ( clickXYpass, iXYWH ) ) {
+		printf ( "click inside center\n" );
+
+		selected = 1;
+
+		int i = 0;
+		handleCursor_start;
+
+		return 1;
+	}
+
+
+	iXYWH[0] = circ->XY[0] + circ->radius;;
+	iXYWH[1] = circ->XY[1];
+	// now check the right side.
+	point_to_loc ( iXYWH, screenXY, viewLoc, viewScale );
+
+	// now check the right side and change radius.
+	iXYWH[0] = screenXY[0] - (cWidth / 2);
+	iXYWH[1] = screenXY[1] - (cWidth / 2);
+
+	if ( pointInsideI ( clickXYpass, iXYWH ) ) {
+		printf ( "click inside right\n" );
+
+		selected = 1;
+
+		int i = 1;
+		handleCursor_start;
+
+		return 1;
+	}
+
+	return 0;
+}
 
 
 

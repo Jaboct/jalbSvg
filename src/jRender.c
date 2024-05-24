@@ -38,6 +38,9 @@ extern int cursor_depth;
 extern int selected;
 extern int thisSel;
 
+// i generally use squares for control point.
+int controlPointWidth = 10;
+
 
 /// debug
 
@@ -403,7 +406,6 @@ void jText_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jT
 
 	int thisObjEdit = thisEdit ( thisSel );
 
-//	if ( renderMode == renderM_editAll ) {
 	if ( thisObjEdit ) {
 		// draw the white edit box around the text.
 		int iXYWH[4] = { XYWH[0], XYWH[1], XYWH[2], XYWH[3] };
@@ -454,14 +456,56 @@ void jText_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jT
 void jCircRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jCirc *circ,
 		float *viewLoc, float viewScale ) {
 //	printf ( "jCircRender ( )\n" );
+//	printf ( "thisSel: %d\n", thisSel );
 
 	float screenXY[2];
 	point_to_loc ( circ->XY, screenXY, viewLoc, viewScale );
 
-	float diameter = circ->radius / viewScale * 2;
+	float radius = circ->radius / viewScale;
 
 	int iXY[2] = { screenXY[0], screenXY[1] };
-	draw2dApi->drawCircle ( iXY, diameter, colorWhite, screenDims, glBuffers );
+//	draw2dApi->drawCircle ( iXY, diameter, colorWhite, screenDims, glBuffers );
+
+	int minSides = 20;
+
+	int sides = 20;
+	// TODO this should be relative to viewScale aswell.
+	// he more zoomed in i am, the more sides there are, but at the same time, i shouldnt be rendering a full circle.
+
+	sides = circ->radius / 20;
+	if ( sides < minSides ) {
+		sides = minSides;
+	}
+
+	draw2dApi->drawCircle_sides ( screenDims, glBuffers,
+		iXY, radius, sides, colorWhite );
+
+	int thisObjEdit = thisEdit ( thisSel );
+//	printf ( "thisObjEdit: %d\n", thisObjEdit );
+
+	if ( thisObjEdit ) {
+		// draw the control points, a square at the center, and right side.
+
+		int cWidth = controlPointWidth / viewScale;
+
+		// square at the center.
+		int iXYWH[4];
+//		iXYWH[0] = XYWHpass[0] + circ->XY[0] - (controlPointWidth / 2);
+//		iXYWH[1] = XYWHpass[1] + circ->XY[1] - (controlPointWidth / 2);
+
+		iXYWH[0] = XYWHpass[0] + screenXY[0] - (cWidth / 2);
+		iXYWH[1] = XYWHpass[1] + screenXY[1] - (cWidth / 2);
+		iXYWH[2] = cWidth;
+		iXYWH[3] = cWidth;
+		draw2dApi->drawRect ( iXYWH, colorOrange, screenDims, glBuffers );
+
+		// square at the right side.
+		iXYWH[0] = XYWHpass[0] + screenXY[0] + radius - (cWidth / 2);
+		iXYWH[1] = XYWHpass[1] + screenXY[1] - (cWidth / 2);
+		iXYWH[2] = cWidth;
+		iXYWH[3] = cWidth;
+		draw2dApi->drawRect ( iXYWH, colorOrange, screenDims, glBuffers );
+	}
 }
 
 void complexEleRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct complexEle *complex,

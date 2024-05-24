@@ -249,6 +249,7 @@ uiGen	assemble_appendMod_full_list
 
 Run:
 #uiGen	set_uiGen_debug_event	1
+#jalbJvg	set_debugPrint_jvg_event	1
 
 
 uiGen_globList_load:
