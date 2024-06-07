@@ -19,6 +19,7 @@
       <saveFlag>1</saveFlag>
       <naked>0</naked>
       <comment></comment>
+      <modNick></modNick>
     </subVar>
     <subVar>
       <name>id</name>
@@ -37,6 +38,7 @@
       <saveFlag>1</saveFlag>
       <naked>0</naked>
       <comment></comment>
+      <modNick></modNick>
     </subVar>
     <subVar>
       <name>x</name>
@@ -55,6 +57,7 @@
       <saveFlag>1</saveFlag>
       <naked>0</naked>
       <comment></comment>
+      <modNick></modNick>
     </subVar>
     <subVar>
       <name>y</name>
@@ -73,6 +76,7 @@
       <saveFlag>1</saveFlag>
       <naked>0</naked>
       <comment></comment>
+      <modNick></modNick>
     </subVar>
     <subVar>
       <name>width</name>
@@ -91,6 +95,7 @@
       <saveFlag>1</saveFlag>
       <naked>0</naked>
       <comment></comment>
+      <modNick></modNick>
     </subVar>
     <subVar>
       <name>height</name>
@@ -109,6 +114,7 @@
       <saveFlag>1</saveFlag>
       <naked>0</naked>
       <comment></comment>
+      <modNick></modNick>
     </subVar>
     <subVar>
       <name>fill</name>
@@ -130,6 +136,7 @@
       <saveFlag>99</saveFlag>
       <naked>0</naked>
       <comment></comment>
+      <modNick></modNick>
     </subVar>
     <subVar>
       <name>stroke</name>
@@ -151,6 +158,7 @@
       <saveFlag>99</saveFlag>
       <naked>0</naked>
       <comment></comment>
+      <modNick></modNick>
     </subVar>
     <subVar>
       <name>stroke_width</name>
@@ -172,6 +180,7 @@
       <saveFlag>99</saveFlag>
       <naked>0</naked>
       <comment></comment>
+      <modNick></modNick>
     </subVar>
     <subVar>
       <name>stroke_opacity</name>
@@ -193,6 +202,7 @@
       <saveFlag>99</saveFlag>
       <naked>0</naked>
       <comment></comment>
+      <modNick></modNick>
     </subVar>
   </vars>
   <overloadRenderEdit></overloadRenderEdit>

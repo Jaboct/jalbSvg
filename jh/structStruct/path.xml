@@ -19,6 +19,7 @@
       <saveFlag>1</saveFlag>
       <naked>0</naked>
       <comment></comment>
+      <modNick></modNick>
     </subVar>
     <subVar>
       <name>d</name>
@@ -37,6 +38,7 @@
       <saveFlag>1</saveFlag>
       <naked>0</naked>
       <comment></comment>
+      <modNick></modNick>
     </subVar>
     <subVar>
       <name>id</name>
@@ -55,6 +57,7 @@
       <saveFlag>1</saveFlag>
       <naked>0</naked>
       <comment></comment>
+      <modNick></modNick>
     </subVar>
     <subVar>
       <name>eles</name>
@@ -82,6 +85,7 @@
       <saveFlag>99</saveFlag>
       <naked>0</naked>
       <comment></comment>
+      <modNick></modNick>
     </subVar>
     <subVar>
       <name>fill</name>
@@ -103,6 +107,7 @@
       <saveFlag>99</saveFlag>
       <naked>0</naked>
       <comment></comment>
+      <modNick></modNick>
     </subVar>
     <subVar>
       <name>stroke</name>
@@ -124,6 +129,7 @@
       <saveFlag>99</saveFlag>
       <naked>0</naked>
       <comment></comment>
+      <modNick></modNick>
     </subVar>
     <subVar>
       <name>stroke_width</name>
@@ -145,6 +151,7 @@
       <saveFlag>99</saveFlag>
       <naked>0</naked>
       <comment></comment>
+      <modNick></modNick>
     </subVar>
     <subVar>
       <name>stroke_linecap</name>
@@ -166,6 +173,7 @@
       <saveFlag>99</saveFlag>
       <naked>0</naked>
       <comment></comment>
+      <modNick></modNick>
     </subVar>
     <subVar>
       <name>stroke_linejoin</name>
@@ -187,6 +195,7 @@
       <saveFlag>99</saveFlag>
       <naked>0</naked>
       <comment></comment>
+      <modNick></modNick>
     </subVar>
     <subVar>
       <name>stroke_opacity</name>
@@ -208,6 +217,7 @@
       <saveFlag>99</saveFlag>
       <naked>0</naked>
       <comment></comment>
+      <modNick></modNick>
     </subVar>
   </vars>
   <overloadRenderEdit></overloadRenderEdit>

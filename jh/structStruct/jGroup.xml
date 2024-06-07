@@ -28,6 +28,7 @@
       <saveFlag>1</saveFlag>
       <naked>0</naked>
       <comment></comment>
+      <modNick></modNick>
     </subVar>
   </vars>
   <overloadRenderEdit></overloadRenderEdit>

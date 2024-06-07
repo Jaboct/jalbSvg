@@ -19,6 +19,7 @@
       <saveFlag>1</saveFlag>
       <naked>0</naked>
       <comment></comment>
+      <modNick></modNick>
     </subVar>
     <subVar>
       <name>v0</name>
@@ -37,6 +38,7 @@
       <saveFlag>1</saveFlag>
       <naked>0</naked>
       <comment></comment>
+      <modNick></modNick>
     </subVar>
     <subVar>
       <name>v1</name>
@@ -55,6 +57,7 @@
       <saveFlag>1</saveFlag>
       <naked>0</naked>
       <comment></comment>
+      <modNick></modNick>
     </subVar>
     <subVar>
       <name>c0</name>
@@ -73,6 +76,7 @@
       <saveFlag>1</saveFlag>
       <naked>0</naked>
       <comment></comment>
+      <modNick></modNick>
     </subVar>
     <subVar>
       <name>c1</name>
@@ -91,6 +95,7 @@
       <saveFlag>1</saveFlag>
       <naked>0</naked>
       <comment></comment>
+      <modNick></modNick>
     </subVar>
   </vars>
   <overloadRenderEdit></overloadRenderEdit>

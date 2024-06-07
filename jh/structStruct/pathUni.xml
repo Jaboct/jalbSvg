@@ -31,6 +31,7 @@
           <saveFlag>1</saveFlag>
           <naked>0</naked>
           <comment></comment>
+          <modNick></modNick>
         </type>
         <typeDec>-1</typeDec>
         <list>
@@ -51,6 +52,7 @@
             <saveFlag>1</saveFlag>
             <naked>0</naked>
             <comment></comment>
+            <modNick></modNick>
           </subVar>
           <subVar>
             <name>lineTo</name>
@@ -69,6 +71,7 @@
             <saveFlag>1</saveFlag>
             <naked>0</naked>
             <comment></comment>
+            <modNick></modNick>
           </subVar>
           <subVar>
             <name>cubicBez</name>
@@ -87,6 +90,7 @@
             <saveFlag>1</saveFlag>
             <naked>0</naked>
             <comment></comment>
+            <modNick></modNick>
           </subVar>
           <subVar>
             <name>quadBez</name>
@@ -105,6 +109,7 @@
             <saveFlag>1</saveFlag>
             <naked>0</naked>
             <comment></comment>
+            <modNick></modNick>
           </subVar>
           <subVar>
             <name>ellipArc</name>
@@ -123,6 +128,7 @@
             <saveFlag>1</saveFlag>
             <naked>0</naked>
             <comment></comment>
+            <modNick></modNick>
           </subVar>
           <subVar>
             <name>PathEnd</name>
@@ -141,6 +147,7 @@
             <saveFlag>1</saveFlag>
             <naked>0</naked>
             <comment></comment>
+            <modNick></modNick>
           </subVar>
         </list>
         <prefix>path_</prefix>
@@ -150,6 +157,7 @@
       <saveFlag>1</saveFlag>
       <naked>0</naked>
       <comment></comment>
+      <modNick></modNick>
     </subVar>
   </vars>
   <overloadRenderEdit></overloadRenderEdit>

@@ -465,12 +465,15 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 			text->XYWH[2] = defaultWH[0];
 			text->XYWH[3] = defaultWH[1];
 
+
 			{
 				cursor_depth = 1;
 				int i = 0;	// irrelevent, just needs to be 1 deeper than the text box.
 				handleCursor_start;
 			}
+
 			printf ( "set second part\n" );
+
 			{
 				cursor_depth = 0;
 				int i = arrayListGetLength ( global_jEles ) - 1;
