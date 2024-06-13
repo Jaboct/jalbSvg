@@ -37,7 +37,7 @@
         <eleSize>0</eleSize>
         <overflow>10</overflow>
         <literal>0</literal>
-        <type>0</type>
+        <type>1</type>
         <typeIndex>5</typeIndex>
         <length>0</length>
         <naked>0</naked>
@@ -47,7 +47,7 @@
       <saveFlag>1</saveFlag>
       <naked>0</naked>
       <comment></comment>
-      <modNick></modNick>
+      <modNick>jHigh</modNick>
     </subVar>
   </vars>
   <overloadRenderEdit></overloadRenderEdit>

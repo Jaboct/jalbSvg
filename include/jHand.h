@@ -138,5 +138,10 @@ void jType_spawnEditUi ( struct jNakedUnion *uni );
 void set_uiGen_api ( void *data );
 
 
+/// Xml
+
+void prepairComplex_xml ( );
+
+
 
 

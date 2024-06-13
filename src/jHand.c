@@ -1772,7 +1772,22 @@ void set_uiGen_api ( void *data ) {
 
 
 
+/// Xml
 
+extern int num_structStruct_consumeMod;
+extern struct xmlFuncts *xmlFuncts_arr_consumeMod[];
+
+int xmlPrepaired = 0;
+
+void prepairComplex_xml ( ) {
+	if ( xmlPrepaired ) {
+		return;
+	}
+	xmlPrepaired = 1;
+
+	wrangleXmlFuncts ( "jalbJvg", num_structStruct_jalbJvg, xmlFuncts_arr_jalbJvg );
+	wrangleXmlFuncts ( "jHigh", num_structStruct_consumeMod, xmlFuncts_arr_consumeMod );
+}
 
 
 
