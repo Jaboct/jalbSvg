@@ -23,6 +23,7 @@
       <naked>0</naked>
       <comment></comment>
       <modNick></modNick>
+      <typeName></typeName>
     </subVar>
     <subVar>
       <name>height</name>
@@ -45,6 +46,7 @@
       <naked>0</naked>
       <comment></comment>
       <modNick></modNick>
+      <typeName></typeName>
     </subVar>
     <subVar>
       <name>viewBox</name>
@@ -67,6 +69,7 @@
       <naked>0</naked>
       <comment></comment>
       <modNick></modNick>
+      <typeName></typeName>
     </subVar>
     <subVar>
       <name>version</name>
@@ -89,6 +92,7 @@
       <naked>0</naked>
       <comment></comment>
       <modNick></modNick>
+      <typeName></typeName>
     </subVar>
     <subVar>
       <name>id</name>
@@ -108,6 +112,7 @@
       <naked>0</naked>
       <comment></comment>
       <modNick></modNick>
+      <typeName></typeName>
     </subVar>
     <subVar>
       <name>eles</name>
@@ -136,6 +141,7 @@
       <naked>1</naked>
       <comment></comment>
       <modNick></modNick>
+      <typeName></typeName>
     </subVar>
   </vars>
   <overloadRenderEdit></overloadRenderEdit>

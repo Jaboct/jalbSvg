@@ -32,6 +32,7 @@
           <naked>0</naked>
           <comment></comment>
           <modNick></modNick>
+          <typeName></typeName>
         </type>
         <typeDec>-1</typeDec>
         <list>
@@ -53,6 +54,7 @@
             <naked>0</naked>
             <comment></comment>
             <modNick></modNick>
+            <typeName></typeName>
           </subVar>
           <subVar>
             <name>lineTo</name>
@@ -72,6 +74,7 @@
             <naked>0</naked>
             <comment></comment>
             <modNick></modNick>
+            <typeName></typeName>
           </subVar>
           <subVar>
             <name>cubicBez</name>
@@ -91,6 +94,7 @@
             <naked>0</naked>
             <comment></comment>
             <modNick></modNick>
+            <typeName></typeName>
           </subVar>
           <subVar>
             <name>quadBez</name>
@@ -110,6 +114,7 @@
             <naked>0</naked>
             <comment></comment>
             <modNick></modNick>
+            <typeName></typeName>
           </subVar>
           <subVar>
             <name>ellipArc</name>
@@ -129,6 +134,7 @@
             <naked>0</naked>
             <comment></comment>
             <modNick></modNick>
+            <typeName></typeName>
           </subVar>
           <subVar>
             <name>PathEnd</name>
@@ -148,6 +154,7 @@
             <naked>0</naked>
             <comment></comment>
             <modNick></modNick>
+            <typeName></typeName>
           </subVar>
         </list>
         <prefix>path_</prefix>
@@ -158,6 +165,7 @@
       <naked>0</naked>
       <comment></comment>
       <modNick></modNick>
+      <typeName></typeName>
     </subVar>
   </vars>
   <overloadRenderEdit></overloadRenderEdit>

@@ -20,6 +20,7 @@
       <naked>0</naked>
       <comment></comment>
       <modNick></modNick>
+      <typeName></typeName>
     </subVar>
     <subVar>
       <name>subVars</name>
@@ -48,6 +49,7 @@
       <naked>0</naked>
       <comment></comment>
       <modNick></modNick>
+      <typeName></typeName>
     </subVar>
   </vars>
   <overloadRenderEdit></overloadRenderEdit>

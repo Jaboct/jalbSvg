@@ -32,6 +32,7 @@
           <naked>0</naked>
           <comment></comment>
           <modNick></modNick>
+          <typeName></typeName>
         </type>
         <typeDec>-1</typeDec>
         <list>
@@ -53,6 +54,7 @@
             <naked>0</naked>
             <comment></comment>
             <modNick></modNick>
+            <typeName></typeName>
           </subVar>
           <subVar>
             <name>path</name>
@@ -72,6 +74,7 @@
             <naked>0</naked>
             <comment></comment>
             <modNick></modNick>
+            <typeName></typeName>
           </subVar>
           <subVar>
             <name>text</name>
@@ -91,6 +94,7 @@
             <naked>0</naked>
             <comment></comment>
             <modNick></modNick>
+            <typeName></typeName>
           </subVar>
           <subVar>
             <name>rect</name>
@@ -110,6 +114,7 @@
             <naked>0</naked>
             <comment></comment>
             <modNick></modNick>
+            <typeName></typeName>
           </subVar>
           <subVar>
             <name>circle</name>
@@ -129,6 +134,7 @@
             <naked>0</naked>
             <comment></comment>
             <modNick></modNick>
+            <typeName></typeName>
           </subVar>
           <subVar>
             <name>ellipse</name>
@@ -148,6 +154,7 @@
             <naked>0</naked>
             <comment></comment>
             <modNick></modNick>
+            <typeName></typeName>
           </subVar>
         </list>
         <prefix></prefix>
@@ -158,6 +165,7 @@
       <naked>1</naked>
       <comment></comment>
       <modNick></modNick>
+      <typeName></typeName>
     </subVar>
   </vars>
   <overloadRenderEdit></overloadRenderEdit>
