@@ -20,8 +20,8 @@ Dims:
 //2048, 2048
 //2400, 1600
 #100,300
-1600, 1200
-
+#1600, 1200
+800, 600
 
 
 LayLib:
@@ -161,7 +161,7 @@ uiGen	deepList	deepList_init	deepList_render	deepList_event	deepList_close	deepL
 
 Hotkey:
 #uiGen	p	hand_load_deepList	"/home/jadoo/workspace/jHigh/uiGen/res/hand_uiGen/uiGen_maker.xml"
-uiGen	p	hand_load_uiGen	"/home/jadoo/workspace/jHigh/uiGen/res/hand_uiGen/uiGen_maker.xml"
+#uiGen	p	hand_load_uiGen	"/home/jadoo/workspace/jHigh/uiGen/res/hand_uiGen/uiGen_maker.xml"
 
 
 Append:
