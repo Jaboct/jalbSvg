@@ -22,6 +22,8 @@
         <typeIndex>16</typeIndex>
         <length>-1</length>
         <naked>0</naked>
+        <modNick></modNick>
+        <typeName></typeName>
       </subAl>
       <external>0</external>
       <attribute>0</attribute>
@@ -51,6 +53,8 @@
         <typeIndex>17</typeIndex>
         <length>-1</length>
         <naked>0</naked>
+        <modNick></modNick>
+        <typeName></typeName>
       </subAl>
       <external>0</external>
       <attribute>0</attribute>

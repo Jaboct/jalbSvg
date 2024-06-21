@@ -42,6 +42,8 @@
         <typeIndex>5</typeIndex>
         <length>0</length>
         <naked>0</naked>
+        <modNick></modNick>
+        <typeName></typeName>
       </subAl>
       <external>0</external>
       <attribute>0</attribute>
@@ -49,7 +51,7 @@
       <naked>0</naked>
       <comment></comment>
       <modNick>jHigh</modNick>
-      <typeName></typeName>
+      <typeName>subVar</typeName>
     </subVar>
   </vars>
   <overloadRenderEdit></overloadRenderEdit>
