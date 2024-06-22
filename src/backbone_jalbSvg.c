@@ -117,15 +117,14 @@ struct backbone_subVar *svg_varArr[] = {
 	&svg_eles,
 };
 struct backbone_structStruct svg = {
-	"svg",
-	6,
-	svg_varArr,
-	"",
-	"",
-	0,
-	0, // len?
+	.name = "svg",
+	.varsLen = 6,
+	.vars = svg_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
 	.structSize = sizeof ( struct svg ),
-	svg_attributes,
+	.attributes = svg_attributes,
 };
 
 
@@ -253,7 +252,7 @@ struct backbone_subVar nakedUnion_ = {
 		0,
 		&nakedUnion__complex,
 	},
-	offsetof ( struct nakedUnion, type ),
+	.external = offsetof ( struct nakedUnion, type ),
 	.saveFlag = 1,
 	.naked = 1,
 };
@@ -261,15 +260,14 @@ struct backbone_subVar *nakedUnion_varArr[] = {
 	&nakedUnion_,
 };
 struct backbone_structStruct nakedUnion = {
-	"nakedUnion",
-	1,
-	nakedUnion_varArr,
-	"",
-	"",
-	0,
-	0, // len?
+	.name = "nakedUnion",
+	.varsLen = 1,
+	.vars = nakedUnion_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
 	.structSize = sizeof ( struct nakedUnion ),
-	nakedUnion_attributes,
+	.attributes = nakedUnion_attributes,
 };
 
 
@@ -321,15 +319,14 @@ struct backbone_subVar *g_varArr[] = {
 	&g_eles,
 };
 struct backbone_structStruct g = {
-	"g",
-	2,
-	g_varArr,
-	"",
-	"",
-	0,
-	0, // len?
+	.name = "g",
+	.varsLen = 2,
+	.vars = g_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
 	.structSize = sizeof ( struct g ),
-	g_attributes,
+	.attributes = g_attributes,
 };
 
 
@@ -509,15 +506,14 @@ struct backbone_subVar *path_varArr[] = {
 	&path_stroke_opacity,
 };
 struct backbone_structStruct path = {
-	"path",
-	10,
-	path_varArr,
-	"",
-	"",
-	0,
-	0, // len?
+	.name = "path",
+	.varsLen = 10,
+	.vars = path_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
 	.structSize = sizeof ( struct path ),
-	path_attributes,
+	.attributes = path_attributes,
 };
 
 
@@ -649,7 +645,7 @@ struct backbone_subVar pathUni_ = {
 		0,
 		&pathUni__complex,
 	},
-	offsetof ( struct pathUni, type ),
+	.external = offsetof ( struct pathUni, type ),
 	.saveFlag = 1,
 	.naked = 0,
 };
@@ -657,15 +653,14 @@ struct backbone_subVar *pathUni_varArr[] = {
 	&pathUni_,
 };
 struct backbone_structStruct pathUni = {
-	"pathUni",
-	1,
-	pathUni_varArr,
-	"",
-	"",
-	0,
-	0, // len?
+	.name = "pathUni",
+	.varsLen = 1,
+	.vars = pathUni_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
 	.structSize = sizeof ( struct pathUni ),
-	pathUni_attributes,
+	.attributes = pathUni_attributes,
 };
 
 
@@ -708,15 +703,14 @@ struct backbone_subVar *moveTo_varArr[] = {
 	&moveTo_XY,
 };
 struct backbone_structStruct moveTo = {
-	"moveTo",
-	2,
-	moveTo_varArr,
-	"",
-	"",
-	0,
-	0, // len?
+	.name = "moveTo",
+	.varsLen = 2,
+	.vars = moveTo_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
 	.structSize = sizeof ( struct moveTo ),
-	moveTo_attributes,
+	.attributes = moveTo_attributes,
 };
 
 
@@ -775,15 +769,14 @@ struct backbone_subVar *lineTo_varArr[] = {
 	&lineTo_type,
 };
 struct backbone_structStruct lineTo = {
-	"lineTo",
-	3,
-	lineTo_varArr,
-	"",
-	"",
-	0,
-	0, // len?
+	.name = "lineTo",
+	.varsLen = 3,
+	.vars = lineTo_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
 	.structSize = sizeof ( struct lineTo ),
-	lineTo_attributes,
+	.attributes = lineTo_attributes,
 };
 
 
@@ -874,15 +867,14 @@ struct backbone_subVar *cubicBez_varArr[] = {
 	&cubicBez_type,
 };
 struct backbone_structStruct cubicBez = {
-	"cubicBez",
-	5,
-	cubicBez_varArr,
-	"",
-	"",
-	0,
-	0, // len?
+	.name = "cubicBez",
+	.varsLen = 5,
+	.vars = cubicBez_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
 	.structSize = sizeof ( struct cubicBez ),
-	cubicBez_attributes,
+	.attributes = cubicBez_attributes,
 };
 
 
@@ -957,15 +949,14 @@ struct backbone_subVar *quadBez_varArr[] = {
 	&quadBez_type,
 };
 struct backbone_structStruct quadBez = {
-	"quadBez",
-	4,
-	quadBez_varArr,
-	"",
-	"",
-	0,
-	0, // len?
+	.name = "quadBez",
+	.varsLen = 4,
+	.vars = quadBez_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
 	.structSize = sizeof ( struct quadBez ),
-	quadBez_attributes,
+	.attributes = quadBez_attributes,
 };
 
 
@@ -1072,15 +1063,14 @@ struct backbone_subVar *ellipArc_varArr[] = {
 	&ellipArc_sweepFlag,
 };
 struct backbone_structStruct ellipArc = {
-	"ellipArc",
-	6,
-	ellipArc_varArr,
-	"",
-	"",
-	0,
-	0, // len?
+	.name = "ellipArc",
+	.varsLen = 6,
+	.vars = ellipArc_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
 	.structSize = sizeof ( struct ellipArc ),
-	ellipArc_attributes,
+	.attributes = ellipArc_attributes,
 };
 
 
@@ -1184,15 +1174,14 @@ struct backbone_subVar *text_varArr[] = {
 	&text_spanList,
 };
 struct backbone_structStruct text = {
-	"text",
-	5,
-	text_varArr,
-	"",
-	"",
-	0,
-	0, // len?
+	.name = "text",
+	.varsLen = 5,
+	.vars = text_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
 	.structSize = sizeof ( struct text ),
-	text_attributes,
+	.attributes = text_attributes,
 };
 
 
@@ -1340,15 +1329,14 @@ struct backbone_subVar *tspan_varArr[] = {
 	&tspan_stringBuilder,
 };
 struct backbone_structStruct tspan = {
-	"tspan",
-	8,
-	tspan_varArr,
-	"",
-	"",
-	0,
-	0, // len?
+	.name = "tspan",
+	.varsLen = 8,
+	.vars = tspan_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
 	.structSize = sizeof ( struct tspan ),
-	tspan_attributes,
+	.attributes = tspan_attributes,
 };
 
 
@@ -1523,15 +1511,14 @@ struct backbone_subVar *rect_varArr[] = {
 	&rect_stroke_opacity,
 };
 struct backbone_structStruct rect = {
-	"rect",
-	10,
-	rect_varArr,
-	"",
-	"",
-	0,
-	0, // len?
+	.name = "rect",
+	.varsLen = 10,
+	.vars = rect_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
 	.structSize = sizeof ( struct rect ),
-	rect_attributes,
+	.attributes = rect_attributes,
 };
 
 
@@ -1622,15 +1609,14 @@ struct backbone_subVar *circle_varArr[] = {
 	&circle_r,
 };
 struct backbone_structStruct circle = {
-	"circle",
-	5,
-	circle_varArr,
-	"",
-	"",
-	0,
-	0, // len?
+	.name = "circle",
+	.varsLen = 5,
+	.vars = circle_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
 	.structSize = sizeof ( struct circle ),
-	circle_attributes,
+	.attributes = circle_attributes,
 };
 
 
@@ -1737,15 +1723,14 @@ struct backbone_subVar *ellipse_varArr[] = {
 	&ellipse_ry,
 };
 struct backbone_structStruct ellipse = {
-	"ellipse",
-	6,
-	ellipse_varArr,
-	"",
-	"",
-	0,
-	0, // len?
+	.name = "ellipse",
+	.varsLen = 6,
+	.vars = ellipse_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
 	.structSize = sizeof ( struct ellipse ),
-	ellipse_attributes,
+	.attributes = ellipse_attributes,
 };
 
 

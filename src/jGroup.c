@@ -69,13 +69,13 @@ int jGroup_attrib_arr[] = {
 };
 void jGroupBodyToVal ( void *varPass, int nameI, char *body ) {
 
-//	struct jGroup *var = varPass;
+	struct jGroup *var = varPass;
 
 	if ( nameI == 0 ) {
 	}
 }
 
-int jGroupNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+int jGroupNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	struct jGroup *var = data;
 	if ( strcmp ( body, "eles" ) == 0 ) {
@@ -205,7 +205,7 @@ void jNakedUnionBodyToVal ( void *varPass, int nameI, char *body ) {
 	}
 }
 
-int jNakedUnionNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+int jNakedUnionNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	struct jNakedUnion *var = data;
 	if ( strcmp ( body, "g" ) == 0 ) {
@@ -277,6 +277,7 @@ struct jvg *jvgInit ( ) {
 }
 void jvgFill ( struct jvg *var ) {
 	var->eles = initArrayList ( 10, sizeof ( struct jNakedUnion* ), 10 );
+	var->complexDecList = initArrayList ( 10, sizeof ( struct complexDec* ), 10 );
 }
 
 void *jvgInitMask ( ) {
@@ -288,26 +289,35 @@ void jvgClose ( struct jvg *var ) {
 	if ( var->eles ) {
 		freeArrayListPointerFunction ( var->eles, (void (*)(void*))jNakedUnionClose );
 	}
+	if ( var->complexDecList ) {
+		freeArrayListPointerFunction ( var->complexDecList, (void (*)(void*))complexDecClose );
+	}
 	free ( var );
 
 }
 int jvg_attrib_arr[] = {
 	0,
+	0,
 };
 void jvgBodyToVal ( void *varPass, int nameI, char *body ) {
 
-//	struct jvg *var = varPass;
+	struct jvg *var = varPass;
 
 	if ( nameI == 0 ) {
+	} else if ( nameI == 1 ) {
 	}
 }
 
-int jvgNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+int jvgNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	struct jvg *var = data;
 	if ( strcmp ( body, "eles" ) == 0 ) {
 		void **ptrPtr = (void**)ret;
 		*ptrPtr = var->eles;
+		return jxnAlPtr;
+	} else if ( strcmp ( body, "complexDecList" ) == 0 ) {
+		void **ptrPtr = (void**)ret;
+		*ptrPtr = var->complexDecList;
 		return jxnAlPtr;
 	}
 	return -1;

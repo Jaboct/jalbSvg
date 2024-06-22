@@ -62,15 +62,14 @@ struct backbone_subVar *jPath_varArr[] = {
 	&jPath_lines,
 };
 struct backbone_structStruct jPath = {
-	"jPath",
-	2,
-	jPath_varArr,
-	"",
-	"",
-	0,
-	0, // len?
+	.name = "jPath",
+	.varsLen = 2,
+	.vars = jPath_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
 	.structSize = sizeof ( struct jPath ),
-	jPath_attributes,
+	.attributes = jPath_attributes,
 };
 
 
@@ -97,15 +96,14 @@ struct backbone_subVar *jVert_varArr[] = {
 	&jVert_XY,
 };
 struct backbone_structStruct jVert = {
-	"jVert",
-	1,
-	jVert_varArr,
-	"",
-	"",
-	0,
-	0, // len?
+	.name = "jVert",
+	.varsLen = 1,
+	.vars = jVert_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
 	.structSize = sizeof ( struct jVert ),
-	jVert_attributes,
+	.attributes = jVert_attributes,
 };
 
 
@@ -196,15 +194,14 @@ struct backbone_subVar *jLine_varArr[] = {
 	&jLine_c1,
 };
 struct backbone_structStruct jLine = {
-	"jLine",
-	5,
-	jLine_varArr,
-	"",
-	"",
-	0,
-	0, // len?
+	.name = "jLine",
+	.varsLen = 5,
+	.vars = jLine_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
 	.structSize = sizeof ( struct jLine ),
-	jLine_attributes,
+	.attributes = jLine_attributes,
 };
 
 
@@ -276,15 +273,14 @@ struct backbone_subVar *jText_varArr[] = {
 	&jText_fontSize,
 };
 struct backbone_structStruct jText = {
-	"jText",
-	3,
-	jText_varArr,
-	"",
-	"",
-	0,
-	0, // len?
+	.name = "jText",
+	.varsLen = 3,
+	.vars = jText_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
 	.structSize = sizeof ( struct jText ),
-	jText_attributes,
+	.attributes = jText_attributes,
 };
 
 
@@ -324,15 +320,14 @@ struct backbone_subVar *jGroup_varArr[] = {
 	&jGroup_eles,
 };
 struct backbone_structStruct jGroup = {
-	"jGroup",
-	1,
-	jGroup_varArr,
-	"",
-	"",
-	0,
-	0, // len?
+	.name = "jGroup",
+	.varsLen = 1,
+	.vars = jGroup_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
 	.structSize = sizeof ( struct jGroup ),
-	jGroup_attributes,
+	.attributes = jGroup_attributes,
 };
 
 
@@ -437,7 +432,7 @@ struct backbone_subVar jNakedUnion__ellipse = {
 struct backbone_subVar jNakedUnion__complex = {
 	.name = "complex",
 	.type = 1,
-	.typeIndex = 10,
+	.typeIndex = 11,
 	.initType = 0,
 	.length = 0,
 	.literal = 0,
@@ -457,7 +452,7 @@ struct backbone_subVar *jNakedUnion__varArr[] = {
 	&jNakedUnion__ellipse,
 	&jNakedUnion__complex,
 };
-struct backbone_subComplex jNakedUnion__complex = {
+struct backbone_subComplex jNakedUnion_complex = {
 	{
 	},
 	0,
@@ -474,9 +469,9 @@ struct backbone_subVar jNakedUnion_ = {
 	.literal = 1,
 	.data = {
 		0,
-		&jNakedUnion__complex,
+		&jNakedUnion_complex,
 	},
-	offsetof ( struct jNakedUnion, type ),
+	.external = offsetof ( struct jNakedUnion, type ),
 	.saveFlag = 1,
 	.naked = 1,
 };
@@ -484,15 +479,14 @@ struct backbone_subVar *jNakedUnion_varArr[] = {
 	&jNakedUnion_,
 };
 struct backbone_structStruct jNakedUnion = {
-	"jNakedUnion",
-	1,
-	jNakedUnion_varArr,
-	"",
-	"",
-	0,
-	0, // len?
+	.name = "jNakedUnion",
+	.varsLen = 1,
+	.vars = jNakedUnion_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
 	.structSize = sizeof ( struct jNakedUnion ),
-	jNakedUnion_attributes,
+	.attributes = jNakedUnion_attributes,
 };
 
 
@@ -525,15 +519,24 @@ struct backbone_subVar jvg_eles = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar jvg_complexDecList = {
-	.name = "complexDecList",
+struct backbone_subAl jvg_complexDecList_subAl = {
+	.overflow = 10,
+	.literal = 0,
 	.type = 1,
 	.typeIndex = 10,
+	.length = -1,
+	.naked = 0,
+};
+struct backbone_subVar jvg_complexDecList = {
+	.name = "complexDecList",
+	.type = 0,
+	.typeIndex = 3,
 	.initType = 0,
 	.length = 0,
 	.literal = 1,
 	.data = {
 		0,
+		&jvg_complexDecList_subAl,
 	},
 	.external = offsetof ( struct jvg, complexDecList ),
 	.saveFlag = 1,
@@ -544,15 +547,14 @@ struct backbone_subVar *jvg_varArr[] = {
 	&jvg_complexDecList,
 };
 struct backbone_structStruct jvg = {
-	"jvg",
-	2,
-	jvg_varArr,
-	"",
-	"",
-	0,
-	0, // len?
+	.name = "jvg",
+	.varsLen = 2,
+	.vars = jvg_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
 	.structSize = sizeof ( struct jvg ),
-	jvg_attributes,
+	.attributes = jvg_attributes,
 };
 
 
@@ -583,15 +585,14 @@ struct backbone_subVar *jRect_varArr[] = {
 	&jRect_XYWH,
 };
 struct backbone_structStruct jRect = {
-	"jRect",
-	1,
-	jRect_varArr,
-	"",
-	"",
-	0,
-	0, // len?
+	.name = "jRect",
+	.varsLen = 1,
+	.vars = jRect_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
 	.structSize = sizeof ( struct jRect ),
-	jRect_attributes,
+	.attributes = jRect_attributes,
 };
 
 
@@ -634,15 +635,14 @@ struct backbone_subVar *jCirc_varArr[] = {
 	&jCirc_radius,
 };
 struct backbone_structStruct jCirc = {
-	"jCirc",
-	2,
-	jCirc_varArr,
-	"",
-	"",
-	0,
-	0, // len?
+	.name = "jCirc",
+	.varsLen = 2,
+	.vars = jCirc_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
 	.structSize = sizeof ( struct jCirc ),
-	jCirc_attributes,
+	.attributes = jCirc_attributes,
 };
 
 
@@ -733,15 +733,14 @@ struct backbone_subVar *jEllipse_varArr[] = {
 	&jEllipse_ry,
 };
 struct backbone_structStruct jEllipse = {
-	"jEllipse",
-	5,
-	jEllipse_varArr,
-	"",
-	"",
-	0,
-	0, // len?
+	.name = "jEllipse",
+	.varsLen = 5,
+	.vars = jEllipse_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
 	.structSize = sizeof ( struct jEllipse ),
-	jEllipse_attributes,
+	.attributes = jEllipse_attributes,
 };
 
 
@@ -799,15 +798,14 @@ struct backbone_subVar *complexDec_varArr[] = {
 	&complexDec_subVars,
 };
 struct backbone_structStruct complexDec = {
-	"complexDec",
-	2,
-	complexDec_varArr,
-	"",
-	"",
-	0,
-	0, // len?
+	.name = "complexDec",
+	.varsLen = 2,
+	.vars = complexDec_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
 	.structSize = sizeof ( struct complexDec ),
-	complexDec_attributes,
+	.attributes = complexDec_attributes,
 };
 
 
@@ -859,15 +857,14 @@ struct backbone_subVar *complexEle_varArr[] = {
 	&complexEle_subVars,
 };
 struct backbone_structStruct complexEle = {
-	"complexEle",
-	2,
-	complexEle_varArr,
-	"",
-	"",
-	0,
-	0, // len?
+	.name = "complexEle",
+	.varsLen = 2,
+	.vars = complexEle_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
 	.structSize = sizeof ( struct complexEle ),
-	complexEle_attributes,
+	.attributes = complexEle_attributes,
 };
 
 

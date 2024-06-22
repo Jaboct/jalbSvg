@@ -54,6 +54,7 @@ enum jNakedUnionEnum {
 };
 struct jvg {
 	ArrayList *eles;	// (struct jNakedUnion*)
+	ArrayList *complexDecList;	// (struct complexDec*)
 };
 
 
@@ -68,7 +69,7 @@ void jGroupFill ( struct jGroup *var );
 void *jGroupInitMask ( );
 void jGroupClose ( struct jGroup *var );
 void jGroupBodyToVal ( void *varPass, int nameI, char *body );
-int jGroupNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+int jGroupNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** jNakedUnion */
 struct jNakedUnion *jNakedUnionInit ( );
@@ -77,7 +78,7 @@ void jNakedUnionTypeChange0 ( struct jNakedUnion *var, int type );
 void *jNakedUnionInitMask ( );
 void jNakedUnionClose ( struct jNakedUnion *var );
 void jNakedUnionBodyToVal ( void *varPass, int nameI, char *body );
-int jNakedUnionNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+int jNakedUnionNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** jvg */
 struct jvg *jvgInit ( );
@@ -85,6 +86,6 @@ void jvgFill ( struct jvg *var );
 void *jvgInitMask ( );
 void jvgClose ( struct jvg *var );
 void jvgBodyToVal ( void *varPass, int nameI, char *body );
-int jvgNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+int jvgNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** Other Functs */
