@@ -348,6 +348,7 @@ int jNakedUnion__attributes[] = {
 	0,
 	0,
 	0,
+	0,
 };
 struct backbone_subVar jNakedUnion__g = {
 	.name = "g",
@@ -433,6 +434,20 @@ struct backbone_subVar jNakedUnion__ellipse = {
 	.saveFlag = 1,
 	.naked = 0,
 };
+struct backbone_subVar jNakedUnion__complex = {
+	.name = "complex",
+	.type = 1,
+	.typeIndex = 10,
+	.initType = 0,
+	.length = 0,
+	.literal = 0,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct jNakedUnion, complex ),
+	.saveFlag = 1,
+	.naked = 0,
+};
 struct backbone_subVar *jNakedUnion__varArr[] = {
 	&jNakedUnion__g,
 	&jNakedUnion__path,
@@ -440,12 +455,13 @@ struct backbone_subVar *jNakedUnion__varArr[] = {
 	&jNakedUnion__rect,
 	&jNakedUnion__circ,
 	&jNakedUnion__ellipse,
+	&jNakedUnion__complex,
 };
 struct backbone_subComplex jNakedUnion__complex = {
 	{
 	},
 	0,
-	6,
+	7,
 	jNakedUnion__varArr,
 	"jNaked_"
 };
@@ -484,6 +500,7 @@ struct backbone_structStruct jNakedUnion = {
 
 int jvg_attributes[] = {
 	0,
+	0,
 };
 struct backbone_subAl jvg_eles_subAl = {
 	.overflow = 10,
@@ -508,12 +525,27 @@ struct backbone_subVar jvg_eles = {
 	.saveFlag = 1,
 	.naked = 0,
 };
+struct backbone_subVar jvg_complexDecList = {
+	.name = "complexDecList",
+	.type = 1,
+	.typeIndex = 10,
+	.initType = 0,
+	.length = 0,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct jvg, complexDecList ),
+	.saveFlag = 1,
+	.naked = 0,
+};
 struct backbone_subVar *jvg_varArr[] = {
 	&jvg_eles,
+	&jvg_complexDecList,
 };
 struct backbone_structStruct jvg = {
 	"jvg",
-	1,
+	2,
 	jvg_varArr,
 	"",
 	"",
@@ -715,7 +747,133 @@ struct backbone_structStruct jEllipse = {
 
 
 
-int len_backbone_arr_jalbJvg = 10;
+
+
+/** complexEle */
+
+int complexDec_attributes[] = {
+	0,
+	0,
+};
+struct backbone_subVar complexDec_name = {
+	.name = "name",
+	.type = 0,
+	.typeIndex = 4,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct complexDec, name ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subAl complexDec_subVars_subAl = {
+	.overflow = 10,
+	.literal = 0,
+	.type = 1,
+	.typeIndex = 0,
+	.length = 0,
+	.naked = 0,
+	.modNick = "jHigh",
+	.typeName = "subVar",
+};
+struct backbone_subVar complexDec_subVars = {
+	.name = "subVars",
+	.type = 0,
+	.typeIndex = 3,
+	.initType = 0,
+	.length = 0,
+	.literal = 1,
+	.data = {
+		0,
+		&complexDec_subVars_subAl,
+	},
+	.external = offsetof ( struct complexDec, subVars ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar *complexDec_varArr[] = {
+	&complexDec_name,
+	&complexDec_subVars,
+};
+struct backbone_structStruct complexDec = {
+	"complexDec",
+	2,
+	complexDec_varArr,
+	"",
+	"",
+	0,
+	0, // len?
+	.structSize = sizeof ( struct complexDec ),
+	complexDec_attributes,
+};
+
+
+
+
+int complexEle_attributes[] = {
+	0,
+	0,
+};
+struct backbone_subVar complexEle_name = {
+	.name = "name",
+	.type = 0,
+	.typeIndex = 4,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		0,
+	},
+	.external = offsetof ( struct complexEle, name ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subAl complexEle_subVars_subAl = {
+	.overflow = 10,
+	.literal = 0,
+	.type = 0,
+	.typeIndex = 5,
+	.length = 0,
+	.naked = 0,
+};
+struct backbone_subVar complexEle_subVars = {
+	.name = "subVars",
+	.type = 0,
+	.typeIndex = 3,
+	.initType = 0,
+	.length = 0,
+	.literal = 1,
+	.data = {
+		0,
+		&complexEle_subVars_subAl,
+	},
+	.external = offsetof ( struct complexEle, subVars ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar *complexEle_varArr[] = {
+	&complexEle_name,
+	&complexEle_subVars,
+};
+struct backbone_structStruct complexEle = {
+	"complexEle",
+	2,
+	complexEle_varArr,
+	"",
+	"",
+	0,
+	0, // len?
+	.structSize = sizeof ( struct complexEle ),
+	complexEle_attributes,
+};
+
+
+
+
+int len_backbone_arr_jalbJvg = 11;
 struct backbone_structStruct *backbone_arr_jalbJvg[] = {
 	&jPath,
 	&jVert,
@@ -727,4 +885,5 @@ struct backbone_structStruct *backbone_arr_jalbJvg[] = {
 	&jRect,
 	&jCirc,
 	&jEllipse,
+	&complexDec,
 };

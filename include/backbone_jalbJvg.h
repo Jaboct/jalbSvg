@@ -8,3 +8,4 @@
 #include "jText.h"
 #include "jGroup.h"
 #include "jShapes.h"
+#include "complexEle.h"
