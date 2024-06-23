@@ -25,7 +25,7 @@ void complexEle_preInit ( );
 
 struct complexDec {
 	char name[256];
-	ArrayList *subVars;	// (void*)
+	ArrayList *subVars;	// (struct subVar*)
 };
 struct complexEle {
 	char name[256];
@@ -44,7 +44,7 @@ void complexDecFill ( struct complexDec *var );
 void *complexDecInitMask ( );
 void complexDecClose ( struct complexDec *var );
 void complexDecBodyToVal ( void *varPass, int nameI, char *body );
-int complexDecNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+int complexDecNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** complexEle */
 struct complexEle *complexEleInit ( );
@@ -52,6 +52,6 @@ void complexEleFill ( struct complexEle *var );
 void *complexEleInitMask ( );
 void complexEleClose ( struct complexEle *var );
 void complexEleBodyToVal ( void *varPass, int nameI, char *body );
-int complexEleNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+int complexEleNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** Other Functs */

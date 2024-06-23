@@ -103,7 +103,13 @@ jalbJvg	s	jHand_save
 jalbJvg	l	jHand_load
 
 
+// complexEle development
+
 Hotkey:
+jalbJvg	1	hand_complex_save
+
+
+#Hotkey:
 #jalbJvg	1	jalbJvg_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/test_01.xml"
 jalbJvg	1	jalbJvg_load	"/home/jadoo/workspace/jHigh/jHighMapper/res/output.xml"
 jalbJvg	0	jProof_test_all
@@ -233,7 +239,7 @@ uiGen	uiGenEdit	uiGenInitEdit	uiGenRenderEdit	uiGenEventEdit	uiGenCloseEdit	uiGe
 Getter:
 layoutUi	addCanvasEle	uiGen	setAddCanvas
 layoutUi	addCanvasEle	jalbDir	setAddCanvas
-jalbJvg	jalbJvg_load	jalbDir	set_openFile_f
+jalbJvg	jalbJvg_load_global	jalbDir	set_openFile_f
 
 Setter:
 draw2d	getFunctWrap	uiGen	setDraw2dApi
@@ -250,6 +256,12 @@ uiGen	assemble_appendMod_full_list
 Run:
 #uiGen	set_uiGen_debug_event	1
 #jalbJvg	set_debugPrint_jvg_event	1
+
+
+Getter:
+jalbJvg	subVarInit	jalbJvg	set_subVar_init
+jalbJvg	subVar_setName	jalbJvg	set_subVar_setName
+
 
 
 uiGen_globList_load:

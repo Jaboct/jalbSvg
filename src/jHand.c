@@ -934,8 +934,8 @@ void jHand_load ( ) {
 	jalbJvg_load ( dir );
 }
 
-void jalbJvg_load ( char *dir ) {
-	struct jvg *jvgEle = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbJvg, num_structStruct_jalbJvg );
+void jalbJvg_load_global ( char *dir ) {
+	struct jvg *jvgEle = jalbJvg_load ( dir );
 	printf ( "jvgEle: %p\n", jvgEle );
 //	printf ( "jvgEle->eles.len: %d\n", arrayListGetLength ( jvgEle->eles ) );
 
@@ -946,10 +946,17 @@ void jalbJvg_load ( char *dir ) {
 	}
 
 	strcpy ( saveDir, dir );
-
-	printf ( "jHand_load ( ) OVER\n" );
 }
 
+void *jalbJvg_load ( char *dir ) {
+	printf ( "jalbJvg_load ( )\n" );
+
+	struct jvg *jvgEle = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbJvg, num_structStruct_jalbJvg );
+
+	printf ( "jalbJvg_load ( ) OVER\n" );
+
+	return jvgEle;
+}
 
 void *get_jalbJvg_load ( ) {
 	printf ( "get_jalbJvg_load ( )\n" );

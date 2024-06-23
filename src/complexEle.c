@@ -48,7 +48,7 @@ struct complexDec *complexDecInit ( ) {
 }
 void complexDecFill ( struct complexDec *var ) {
 	var->name[0] = '\0';
-	var->subVars = initArrayList ( 10, sizeof ( void* ), 10 );
+	var->subVars = initArrayList ( 10, sizeof ( struct subVar* ), 10 );
 }
 
 void *complexDecInitMask ( ) {
@@ -58,7 +58,7 @@ void *complexDecInitMask ( ) {
 }
 void complexDecClose ( struct complexDec *var ) {
 	if ( var->subVars ) {
-		freeArrayListPointer ( var->subVars );
+		// TODO subVar from out of mod, import close (modNick: jHigh, subVarName: subVar).
 	}
 	free ( var );
 
@@ -77,13 +77,16 @@ void complexDecBodyToVal ( void *varPass, int nameI, char *body ) {
 	}
 }
 
-int complexDecNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+int complexDecNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	struct complexDec *var = data;
 	if ( strcmp ( body, "name" ) == 0 ) {
 		return 0;
 	} else if ( strcmp ( body, "subVars" ) == 0 ) {
-		return 1;
+		*modName = "jHigh";
+		void **ptrPtr = (void**)ret;
+		*ptrPtr = var->subVars;
+		return jxnAlPtr;
 	}
 	return -1;
 }
@@ -139,7 +142,7 @@ void complexEleBodyToVal ( void *varPass, int nameI, char *body ) {
 	}
 }
 
-int complexEleNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+int complexEleNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	struct complexEle *var = data;
 	if ( strcmp ( body, "name" ) == 0 ) {

@@ -69,7 +69,7 @@ int jGroup_attrib_arr[] = {
 };
 void jGroupBodyToVal ( void *varPass, int nameI, char *body ) {
 
-	struct jGroup *var = varPass;
+//	struct jGroup *var = varPass;
 
 	if ( nameI == 0 ) {
 	}
@@ -301,7 +301,7 @@ int jvg_attrib_arr[] = {
 };
 void jvgBodyToVal ( void *varPass, int nameI, char *body ) {
 
-	struct jvg *var = varPass;
+//	struct jvg *var = varPass;
 
 	if ( nameI == 0 ) {
 	} else if ( nameI == 1 ) {

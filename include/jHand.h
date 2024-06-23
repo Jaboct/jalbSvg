@@ -81,7 +81,8 @@ void jalbJvg_glob_save ( char *dir );
 void jalbJvg_save ( struct jvg *jvgEle, char *dir );
 
 void jHand_load ( );
-void jalbJvg_load ( char *dir );
+void jalbJvg_load_global ( char *dir );
+void *jalbJvg_load ( char *dir );
 
 
 /** Debug */
