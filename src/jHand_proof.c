@@ -73,6 +73,19 @@ printf ( "d\n" );
 void hand_complex_load ( ) {
 	printf ( "hand_complex_load ( )\n" );
 
+	jvg_backbone_wrangle ( );
+
+	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/jvgTest/test_00.xml";
+	struct jvg *jvg = jalbJvg_load ( dir );
+
+
+	printf ( "jvg->complexDecList.len: %d\n", arrayListGetLength ( jvg->complexDecList ) );
+
+	char *dir1 = "/home/jadoo/workspace/jHigh/jalbSvg/res/jvgTest/test_01.xml";
+	jalbJvg_save ( jvg, dir1 );
+
+//	exit ( 12 );
+
 	printf ( "hand_complex_load ( ) OVER\n" );
 }
 

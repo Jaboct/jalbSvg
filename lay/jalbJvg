@@ -107,7 +107,7 @@ jalbJvg	l	jHand_load
 
 Hotkey:
 jalbJvg	1	hand_complex_save
-
+jalbJvg	2	hand_complex_load
 
 #Hotkey:
 #jalbJvg	1	jalbJvg_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/test_01.xml"

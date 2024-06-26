@@ -2,7 +2,7 @@
 
 
 
-int num_structStruct_jalbJvg = 10;
+int num_structStruct_jalbJvg = 11;
 
 
 extern struct xmlFuncts jPathXml;
@@ -15,6 +15,7 @@ extern struct xmlFuncts jvgXml;
 extern struct xmlFuncts jRectXml;
 extern struct xmlFuncts jCircXml;
 extern struct xmlFuncts jEllipseXml;
+extern struct xmlFuncts complexDecXml;
 
 
 struct xmlFuncts *xmlFuncts_arr_jalbJvg[] = {
@@ -28,6 +29,7 @@ struct xmlFuncts *xmlFuncts_arr_jalbJvg[] = {
 	&jRectXml,
 	&jCircXml,
 	&jEllipseXml,
+	&complexDecXml,
 };
 
 
@@ -62,8 +64,8 @@ struct backbone_projectVar proj_global_jEles = {
 		.length = 0,
 		.literal = 1,
 		.data = {
-			0,
-			&global_jEles_global_jEles_subAl,
+			.id = 0,
+			.ptr = &global_jEles_global_jEles_subAl,
 		},
 		.saveFlag = 1,
 		.naked = 0,

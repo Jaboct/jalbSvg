@@ -23,7 +23,7 @@ struct backbone_subVar svg_width = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct svg, width ),
 	.saveFlag = 1,
@@ -37,7 +37,7 @@ struct backbone_subVar svg_height = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct svg, height ),
 	.saveFlag = 1,
@@ -51,7 +51,7 @@ struct backbone_subVar svg_viewBox = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct svg, viewBox ),
 	.saveFlag = 1,
@@ -65,7 +65,7 @@ struct backbone_subVar svg_version = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct svg, version ),
 	.saveFlag = 1,
@@ -79,7 +79,7 @@ struct backbone_subVar svg_id = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct svg, id ),
 	.saveFlag = 1,
@@ -101,8 +101,8 @@ struct backbone_subVar svg_eles = {
 	.length = 0,
 	.literal = 1,
 	.data = {
-		0,
-		&svg_eles_subAl,
+		.id = 0,
+		.ptr = &svg_eles_subAl,
 	},
 	.external = offsetof ( struct svg, eles ),
 	.saveFlag = 1,
@@ -149,7 +149,7 @@ struct backbone_subVar nakedUnion__g = {
 	.length = 0,
 	.literal = 0,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct nakedUnion, g ),
 	.saveFlag = 1,
@@ -163,7 +163,7 @@ struct backbone_subVar nakedUnion__path = {
 	.length = 0,
 	.literal = 0,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct nakedUnion, path ),
 	.saveFlag = 1,
@@ -177,7 +177,7 @@ struct backbone_subVar nakedUnion__text = {
 	.length = 0,
 	.literal = 0,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct nakedUnion, text ),
 	.saveFlag = 1,
@@ -191,7 +191,7 @@ struct backbone_subVar nakedUnion__rect = {
 	.length = 0,
 	.literal = 0,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct nakedUnion, rect ),
 	.saveFlag = 1,
@@ -205,7 +205,7 @@ struct backbone_subVar nakedUnion__circle = {
 	.length = 0,
 	.literal = 0,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct nakedUnion, circle ),
 	.saveFlag = 1,
@@ -219,7 +219,7 @@ struct backbone_subVar nakedUnion__ellipse = {
 	.length = 0,
 	.literal = 0,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct nakedUnion, ellipse ),
 	.saveFlag = 1,
@@ -234,12 +234,12 @@ struct backbone_subVar *nakedUnion__varArr[] = {
 	&nakedUnion__ellipse,
 };
 struct backbone_subComplex nakedUnion__complex = {
-	{
+	.type = {
 	},
-	0,
-	6,
-	nakedUnion__varArr,
-	""
+	.typeDec = 0,
+	.listLen = 6,
+	.arr = nakedUnion__varArr,
+	.prefix = ""
 };
 struct backbone_subVar nakedUnion_ = {
 	.name = "",
@@ -249,8 +249,8 @@ struct backbone_subVar nakedUnion_ = {
 	.length = 0,
 	.literal = 1,
 	.data = {
-		0,
-		&nakedUnion__complex,
+		.id = 0,
+		.ptr = &nakedUnion__complex,
 	},
 	.external = offsetof ( struct nakedUnion, type ),
 	.saveFlag = 1,
@@ -285,7 +285,7 @@ struct backbone_subVar g_id = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct g, id ),
 	.saveFlag = 1,
@@ -307,8 +307,8 @@ struct backbone_subVar g_eles = {
 	.length = 0,
 	.literal = 1,
 	.data = {
-		0,
-		&g_eles_subAl,
+		.id = 0,
+		.ptr = &g_eles_subAl,
 	},
 	.external = offsetof ( struct g, eles ),
 	.saveFlag = 1,
@@ -352,7 +352,7 @@ struct backbone_subVar path_style = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct path, style ),
 	.saveFlag = 1,
@@ -366,7 +366,7 @@ struct backbone_subVar path_d = {
 	.length = 1024,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct path, d ),
 	.saveFlag = 1,
@@ -380,7 +380,7 @@ struct backbone_subVar path_id = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct path, id ),
 	.saveFlag = 1,
@@ -402,8 +402,8 @@ struct backbone_subVar path_eles = {
 	.length = 0,
 	.literal = 1,
 	.data = {
-		0,
-		&path_eles_subAl,
+		.id = 0,
+		.ptr = &path_eles_subAl,
 	},
 	.external = offsetof ( struct path, eles ),
 	.saveFlag = 99,
@@ -417,7 +417,7 @@ struct backbone_subVar path_fill = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct path, fill ),
 	.saveFlag = 99,
@@ -431,7 +431,7 @@ struct backbone_subVar path_stroke = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct path, stroke ),
 	.saveFlag = 99,
@@ -445,7 +445,7 @@ struct backbone_subVar path_stroke_width = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct path, stroke_width ),
 	.saveFlag = 99,
@@ -459,7 +459,7 @@ struct backbone_subVar path_stroke_linecap = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct path, stroke_linecap ),
 	.saveFlag = 99,
@@ -473,7 +473,7 @@ struct backbone_subVar path_stroke_linejoin = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct path, stroke_linejoin ),
 	.saveFlag = 99,
@@ -487,7 +487,7 @@ struct backbone_subVar path_stroke_opacity = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct path, stroke_opacity ),
 	.saveFlag = 99,
@@ -542,7 +542,7 @@ struct backbone_subVar pathUni__moveTo = {
 	.length = 0,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct pathUni, moveTo ),
 	.saveFlag = 1,
@@ -556,7 +556,7 @@ struct backbone_subVar pathUni__lineTo = {
 	.length = 0,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct pathUni, lineTo ),
 	.saveFlag = 1,
@@ -570,7 +570,7 @@ struct backbone_subVar pathUni__cubicBez = {
 	.length = 0,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct pathUni, cubicBez ),
 	.saveFlag = 1,
@@ -584,7 +584,7 @@ struct backbone_subVar pathUni__quadBez = {
 	.length = 0,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct pathUni, quadBez ),
 	.saveFlag = 1,
@@ -598,7 +598,7 @@ struct backbone_subVar pathUni__ellipArc = {
 	.length = 0,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct pathUni, ellipArc ),
 	.saveFlag = 1,
@@ -612,7 +612,7 @@ struct backbone_subVar pathUni__PathEnd = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct pathUni, PathEnd ),
 	.saveFlag = 1,
@@ -627,12 +627,12 @@ struct backbone_subVar *pathUni__varArr[] = {
 	&pathUni__PathEnd,
 };
 struct backbone_subComplex pathUni__complex = {
-	{
+	.type = {
 	},
-	0,
-	6,
-	pathUni__varArr,
-	"path_"
+	.typeDec = 0,
+	.listLen = 6,
+	.arr = pathUni__varArr,
+	.prefix = "path_"
 };
 struct backbone_subVar pathUni_ = {
 	.name = "",
@@ -642,8 +642,8 @@ struct backbone_subVar pathUni_ = {
 	.length = 0,
 	.literal = 1,
 	.data = {
-		0,
-		&pathUni__complex,
+		.id = 0,
+		.ptr = &pathUni__complex,
 	},
 	.external = offsetof ( struct pathUni, type ),
 	.saveFlag = 1,
@@ -678,7 +678,7 @@ struct backbone_subVar moveTo_rel = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct moveTo, rel ),
 	.saveFlag = 1,
@@ -692,7 +692,7 @@ struct backbone_subVar moveTo_XY = {
 	.length = 2,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct moveTo, XY ),
 	.saveFlag = 1,
@@ -729,7 +729,7 @@ struct backbone_subVar lineTo_rel = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct lineTo, rel ),
 	.saveFlag = 1,
@@ -743,7 +743,7 @@ struct backbone_subVar lineTo_XY = {
 	.length = 2,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct lineTo, XY ),
 	.saveFlag = 1,
@@ -757,7 +757,7 @@ struct backbone_subVar lineTo_type = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct lineTo, type ),
 	.saveFlag = 1,
@@ -797,7 +797,7 @@ struct backbone_subVar cubicBez_rel = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct cubicBez, rel ),
 	.saveFlag = 1,
@@ -811,7 +811,7 @@ struct backbone_subVar cubicBez_XY = {
 	.length = 2,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct cubicBez, XY ),
 	.saveFlag = 1,
@@ -825,7 +825,7 @@ struct backbone_subVar cubicBez_c0 = {
 	.length = 2,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct cubicBez, c0 ),
 	.saveFlag = 1,
@@ -839,7 +839,7 @@ struct backbone_subVar cubicBez_c1 = {
 	.length = 2,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct cubicBez, c1 ),
 	.saveFlag = 1,
@@ -853,7 +853,7 @@ struct backbone_subVar cubicBez_type = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct cubicBez, type ),
 	.saveFlag = 1,
@@ -894,7 +894,7 @@ struct backbone_subVar quadBez_rel = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct quadBez, rel ),
 	.saveFlag = 1,
@@ -908,7 +908,7 @@ struct backbone_subVar quadBez_XY = {
 	.length = 2,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct quadBez, XY ),
 	.saveFlag = 1,
@@ -922,7 +922,7 @@ struct backbone_subVar quadBez_control = {
 	.length = 2,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct quadBez, control ),
 	.saveFlag = 1,
@@ -936,7 +936,7 @@ struct backbone_subVar quadBez_type = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct quadBez, type ),
 	.saveFlag = 1,
@@ -978,7 +978,7 @@ struct backbone_subVar ellipArc_rel = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct ellipArc, rel ),
 	.saveFlag = 1,
@@ -992,7 +992,7 @@ struct backbone_subVar ellipArc_XY = {
 	.length = 2,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct ellipArc, XY ),
 	.saveFlag = 1,
@@ -1006,7 +1006,7 @@ struct backbone_subVar ellipArc_rXY = {
 	.length = 2,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct ellipArc, rXY ),
 	.saveFlag = 1,
@@ -1020,7 +1020,7 @@ struct backbone_subVar ellipArc_angle = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct ellipArc, angle ),
 	.saveFlag = 1,
@@ -1034,7 +1034,7 @@ struct backbone_subVar ellipArc_largeArcFlag = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct ellipArc, largeArcFlag ),
 	.saveFlag = 1,
@@ -1048,7 +1048,7 @@ struct backbone_subVar ellipArc_sweepFlag = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct ellipArc, sweepFlag ),
 	.saveFlag = 1,
@@ -1095,7 +1095,7 @@ struct backbone_subVar text_space = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct text, space ),
 	.saveFlag = 99,
@@ -1109,7 +1109,7 @@ struct backbone_subVar text_style = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct text, style ),
 	.saveFlag = 1,
@@ -1123,7 +1123,7 @@ struct backbone_subVar text_x = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct text, x ),
 	.saveFlag = 1,
@@ -1137,7 +1137,7 @@ struct backbone_subVar text_y = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct text, y ),
 	.saveFlag = 1,
@@ -1159,8 +1159,8 @@ struct backbone_subVar text_spanList = {
 	.length = 0,
 	.literal = 1,
 	.data = {
-		0,
-		&text_spanList_subAl,
+		.id = 0,
+		.ptr = &text_spanList_subAl,
 	},
 	.external = offsetof ( struct text, spanList ),
 	.saveFlag = 1,
@@ -1205,7 +1205,7 @@ struct backbone_subVar tspan_role = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct tspan, role ),
 	.saveFlag = 1,
@@ -1219,7 +1219,7 @@ struct backbone_subVar tspan_id = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct tspan, id ),
 	.saveFlag = 1,
@@ -1233,7 +1233,7 @@ struct backbone_subVar tspan_style = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct tspan, style ),
 	.saveFlag = 1,
@@ -1247,7 +1247,7 @@ struct backbone_subVar tspan_x = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct tspan, x ),
 	.saveFlag = 1,
@@ -1261,7 +1261,7 @@ struct backbone_subVar tspan_y = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct tspan, y ),
 	.saveFlag = 1,
@@ -1275,7 +1275,7 @@ struct backbone_subVar tspan_body = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct tspan, body ),
 	.saveFlag = 1,
@@ -1289,7 +1289,7 @@ struct backbone_subVar tspan_fontSize = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct tspan, fontSize ),
 	.saveFlag = 99,
@@ -1311,8 +1311,8 @@ struct backbone_subVar tspan_stringBuilder = {
 	.length = 0,
 	.literal = 1,
 	.data = {
-		0,
-		&tspan_stringBuilder_subAl,
+		.id = 0,
+		.ptr = &tspan_stringBuilder_subAl,
 	},
 	.external = offsetof ( struct tspan, stringBuilder ),
 	.saveFlag = 99,
@@ -1366,7 +1366,7 @@ struct backbone_subVar rect_style = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct rect, style ),
 	.saveFlag = 1,
@@ -1380,7 +1380,7 @@ struct backbone_subVar rect_id = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct rect, id ),
 	.saveFlag = 1,
@@ -1394,7 +1394,7 @@ struct backbone_subVar rect_x = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct rect, x ),
 	.saveFlag = 1,
@@ -1408,7 +1408,7 @@ struct backbone_subVar rect_y = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct rect, y ),
 	.saveFlag = 1,
@@ -1422,7 +1422,7 @@ struct backbone_subVar rect_width = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct rect, width ),
 	.saveFlag = 1,
@@ -1436,7 +1436,7 @@ struct backbone_subVar rect_height = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct rect, height ),
 	.saveFlag = 1,
@@ -1450,7 +1450,7 @@ struct backbone_subVar rect_fill = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct rect, fill ),
 	.saveFlag = 99,
@@ -1464,7 +1464,7 @@ struct backbone_subVar rect_stroke = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct rect, stroke ),
 	.saveFlag = 99,
@@ -1478,7 +1478,7 @@ struct backbone_subVar rect_stroke_width = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct rect, stroke_width ),
 	.saveFlag = 99,
@@ -1492,7 +1492,7 @@ struct backbone_subVar rect_stroke_opacity = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct rect, stroke_opacity ),
 	.saveFlag = 99,
@@ -1539,7 +1539,7 @@ struct backbone_subVar circle_style = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct circle, style ),
 	.saveFlag = 1,
@@ -1553,7 +1553,7 @@ struct backbone_subVar circle_id = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct circle, id ),
 	.saveFlag = 1,
@@ -1567,7 +1567,7 @@ struct backbone_subVar circle_cx = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct circle, cx ),
 	.saveFlag = 1,
@@ -1581,7 +1581,7 @@ struct backbone_subVar circle_cy = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct circle, cy ),
 	.saveFlag = 1,
@@ -1595,7 +1595,7 @@ struct backbone_subVar circle_r = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct circle, r ),
 	.saveFlag = 1,
@@ -1638,7 +1638,7 @@ struct backbone_subVar ellipse_style = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct ellipse, style ),
 	.saveFlag = 1,
@@ -1652,7 +1652,7 @@ struct backbone_subVar ellipse_id = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct ellipse, id ),
 	.saveFlag = 1,
@@ -1666,7 +1666,7 @@ struct backbone_subVar ellipse_cx = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct ellipse, cx ),
 	.saveFlag = 1,
@@ -1680,7 +1680,7 @@ struct backbone_subVar ellipse_cy = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct ellipse, cy ),
 	.saveFlag = 1,
@@ -1694,7 +1694,7 @@ struct backbone_subVar ellipse_rx = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct ellipse, rx ),
 	.saveFlag = 1,
@@ -1708,7 +1708,7 @@ struct backbone_subVar ellipse_ry = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct ellipse, ry ),
 	.saveFlag = 1,

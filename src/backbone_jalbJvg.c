@@ -27,8 +27,8 @@ struct backbone_subVar jPath_verts = {
 	.length = 0,
 	.literal = 1,
 	.data = {
-		0,
-		&jPath_verts_subAl,
+		.id = 0,
+		.ptr = &jPath_verts_subAl,
 	},
 	.external = offsetof ( struct jPath, verts ),
 	.saveFlag = 1,
@@ -50,8 +50,8 @@ struct backbone_subVar jPath_lines = {
 	.length = 0,
 	.literal = 1,
 	.data = {
-		0,
-		&jPath_lines_subAl,
+		.id = 0,
+		.ptr = &jPath_lines_subAl,
 	},
 	.external = offsetof ( struct jPath, lines ),
 	.saveFlag = 1,
@@ -86,7 +86,7 @@ struct backbone_subVar jVert_XY = {
 	.length = 2,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct jVert, XY ),
 	.saveFlag = 1,
@@ -124,7 +124,7 @@ struct backbone_subVar jLine_type = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct jLine, type ),
 	.saveFlag = 1,
@@ -138,7 +138,7 @@ struct backbone_subVar jLine_v0 = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct jLine, v0 ),
 	.saveFlag = 1,
@@ -152,7 +152,7 @@ struct backbone_subVar jLine_v1 = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct jLine, v1 ),
 	.saveFlag = 1,
@@ -166,7 +166,7 @@ struct backbone_subVar jLine_c0 = {
 	.length = 2,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct jLine, c0 ),
 	.saveFlag = 1,
@@ -180,7 +180,7 @@ struct backbone_subVar jLine_c1 = {
 	.length = 2,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct jLine, c1 ),
 	.saveFlag = 1,
@@ -224,7 +224,7 @@ struct backbone_subVar jText_XYWH = {
 	.length = 4,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct jText, XYWH ),
 	.saveFlag = 1,
@@ -246,8 +246,8 @@ struct backbone_subVar jText_sb = {
 	.length = 0,
 	.literal = 1,
 	.data = {
-		0,
-		&jText_sb_subAl,
+		.id = 0,
+		.ptr = &jText_sb_subAl,
 	},
 	.external = offsetof ( struct jText, sb ),
 	.saveFlag = 1,
@@ -261,7 +261,7 @@ struct backbone_subVar jText_fontSize = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct jText, fontSize ),
 	.saveFlag = 1,
@@ -309,8 +309,8 @@ struct backbone_subVar jGroup_eles = {
 	.length = 0,
 	.literal = 1,
 	.data = {
-		0,
-		&jGroup_eles_subAl,
+		.id = 0,
+		.ptr = &jGroup_eles_subAl,
 	},
 	.external = offsetof ( struct jGroup, eles ),
 	.saveFlag = 1,
@@ -353,7 +353,7 @@ struct backbone_subVar jNakedUnion__g = {
 	.length = 0,
 	.literal = 0,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct jNakedUnion, g ),
 	.saveFlag = 1,
@@ -367,7 +367,7 @@ struct backbone_subVar jNakedUnion__path = {
 	.length = 0,
 	.literal = 0,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct jNakedUnion, path ),
 	.saveFlag = 1,
@@ -381,7 +381,7 @@ struct backbone_subVar jNakedUnion__text = {
 	.length = 0,
 	.literal = 0,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct jNakedUnion, text ),
 	.saveFlag = 1,
@@ -395,7 +395,7 @@ struct backbone_subVar jNakedUnion__rect = {
 	.length = 0,
 	.literal = 0,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct jNakedUnion, rect ),
 	.saveFlag = 1,
@@ -409,7 +409,7 @@ struct backbone_subVar jNakedUnion__circ = {
 	.length = 0,
 	.literal = 0,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct jNakedUnion, circ ),
 	.saveFlag = 1,
@@ -423,7 +423,7 @@ struct backbone_subVar jNakedUnion__ellipse = {
 	.length = 0,
 	.literal = 0,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct jNakedUnion, ellipse ),
 	.saveFlag = 1,
@@ -437,7 +437,7 @@ struct backbone_subVar jNakedUnion__complex = {
 	.length = 0,
 	.literal = 0,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct jNakedUnion, complex ),
 	.saveFlag = 1,
@@ -453,12 +453,12 @@ struct backbone_subVar *jNakedUnion__varArr[] = {
 	&jNakedUnion__complex,
 };
 struct backbone_subComplex jNakedUnion_complex = {
-	{
+	.type = {
 	},
-	0,
-	7,
-	jNakedUnion__varArr,
-	"jNaked_"
+	.typeDec = 0,
+	.listLen = 7,
+	.arr = jNakedUnion__varArr,
+	.prefix = "jNaked_"
 };
 struct backbone_subVar jNakedUnion_ = {
 	.name = "",
@@ -468,8 +468,8 @@ struct backbone_subVar jNakedUnion_ = {
 	.length = 0,
 	.literal = 1,
 	.data = {
-		0,
-		&jNakedUnion_complex,
+		.id = 0,
+		.ptr = &jNakedUnion_complex,
 	},
 	.external = offsetof ( struct jNakedUnion, type ),
 	.saveFlag = 1,
@@ -512,8 +512,8 @@ struct backbone_subVar jvg_eles = {
 	.length = 0,
 	.literal = 1,
 	.data = {
-		0,
-		&jvg_eles_subAl,
+		.id = 0,
+		.ptr = &jvg_eles_subAl,
 	},
 	.external = offsetof ( struct jvg, eles ),
 	.saveFlag = 1,
@@ -535,8 +535,8 @@ struct backbone_subVar jvg_complexDecList = {
 	.length = 0,
 	.literal = 1,
 	.data = {
-		0,
-		&jvg_complexDecList_subAl,
+		.id = 0,
+		.ptr = &jvg_complexDecList_subAl,
 	},
 	.external = offsetof ( struct jvg, complexDecList ),
 	.saveFlag = 1,
@@ -575,7 +575,7 @@ struct backbone_subVar jRect_XYWH = {
 	.length = 4,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct jRect, XYWH ),
 	.saveFlag = 1,
@@ -610,7 +610,7 @@ struct backbone_subVar jCirc_XY = {
 	.length = 2,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct jCirc, XY ),
 	.saveFlag = 1,
@@ -624,7 +624,7 @@ struct backbone_subVar jCirc_radius = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct jCirc, radius ),
 	.saveFlag = 1,
@@ -663,7 +663,7 @@ struct backbone_subVar jEllipse_XY = {
 	.length = 2,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct jEllipse, XY ),
 	.saveFlag = 1,
@@ -677,7 +677,7 @@ struct backbone_subVar jEllipse_cx = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct jEllipse, cx ),
 	.saveFlag = 1,
@@ -691,7 +691,7 @@ struct backbone_subVar jEllipse_cy = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct jEllipse, cy ),
 	.saveFlag = 1,
@@ -705,7 +705,7 @@ struct backbone_subVar jEllipse_rx = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct jEllipse, rx ),
 	.saveFlag = 1,
@@ -719,7 +719,7 @@ struct backbone_subVar jEllipse_ry = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct jEllipse, ry ),
 	.saveFlag = 1,
@@ -762,7 +762,7 @@ struct backbone_subVar complexDec_name = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct complexDec, name ),
 	.saveFlag = 1,
@@ -786,8 +786,8 @@ struct backbone_subVar complexDec_subVars = {
 	.length = 0,
 	.literal = 1,
 	.data = {
-		0,
-		&complexDec_subVars_subAl,
+		.id = 0,
+		.ptr = &complexDec_subVars_subAl,
 	},
 	.external = offsetof ( struct complexDec, subVars ),
 	.saveFlag = 1,
@@ -823,7 +823,7 @@ struct backbone_subVar complexEle_name = {
 	.length = -1,
 	.literal = 1,
 	.data = {
-		0,
+		.id = 0,
 	},
 	.external = offsetof ( struct complexEle, name ),
 	.saveFlag = 1,
@@ -845,8 +845,8 @@ struct backbone_subVar complexEle_subVars = {
 	.length = 0,
 	.literal = 1,
 	.data = {
-		0,
-		&complexEle_subVars_subAl,
+		.id = 0,
+		.ptr = &complexEle_subVars_subAl,
 	},
 	.external = offsetof ( struct complexEle, subVars ),
 	.saveFlag = 1,
