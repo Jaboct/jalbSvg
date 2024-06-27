@@ -20,8 +20,8 @@ Dims:
 //2048, 2048
 //2400, 1600
 #100,300
-#1600, 1200
-800, 600
+1600, 1200
+#800, 600
 
 
 LayLib:
@@ -215,7 +215,7 @@ jalbJvg	empty_global_svg
 
 Run:
 #jalbJvg	set_debugPrint_jalbXml_macro	1
-jalbJvg	jalbXml_02_set_debug	1
+#jalbJvg	jalbXml_02_set_debug	1
 #jalbJvg	set_jalbXml_debugPrint_top	1
 #jalbJvg	make_spread_sheet
 #jalbJvg	set_debugPrint_jvg_render	1
