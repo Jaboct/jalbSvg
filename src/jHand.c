@@ -335,7 +335,11 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 					ret = 1;
 					goto functEnd;
 				} else if ( e->key.keysym.sym == SDLK_o ) {
-					add_special ( sb, spec_omegaL );
+					if ( altKeys[akShift] ) {
+						add_special ( sb, spec_omegaU );
+					} else {
+						add_special ( sb, spec_omegaL );
+					}
 //					return 1;
 					ret = 1;
 					goto functEnd;
@@ -1096,6 +1100,10 @@ void add_special ( ArrayList *sb, int index ) {
 		str = str1;
 	} else if ( index == spec_rhoL ) {
 		char str1[] = { 0xCF, 0x81, 00 };
+		str = str1;
+	} else if ( index == spec_omegaU ) {
+		// omega (lower)
+		char str1[] = { 0xCE, 0xA9, 0x00 };
 		str = str1;
 	} else if ( index == spec_omegaL ) {
 		// omega (lower)

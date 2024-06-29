@@ -36,6 +36,7 @@ enum spec_keys {
 	spec_lambdaL,
 	spec_pi,
 	spec_rhoL,
+	spec_omegaU,
 	spec_omegaL,
 
 	spec_integral,
