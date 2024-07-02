@@ -3,9 +3,29 @@
   <name>complexEle</name>
   <vars>
     <subVar>
-      <name>name</name>
+      <name>XYWH</name>
       <type>0</type>
-      <typeIndex>4</typeIndex>
+      <typeIndex>1</typeIndex>
+      <initType>0</initType>
+      <initTypeData>
+        <>-1</>
+      </initTypeData>
+      <closeType>0</closeType>
+      <length>4</length>
+      <literal>1</literal>
+      <>-1</>
+      <external>0</external>
+      <attribute>0</attribute>
+      <saveFlag>1</saveFlag>
+      <naked>0</naked>
+      <comment></comment>
+      <modNick></modNick>
+      <typeName></typeName>
+    </subVar>
+    <subVar>
+      <name>decType</name>
+      <type>0</type>
+      <typeIndex>0</typeIndex>
       <initType>0</initType>
       <initTypeData>
         <>-1</>
@@ -23,7 +43,7 @@
       <typeName></typeName>
     </subVar>
     <subVar>
-      <name>subVars</name>
+      <name>liveSubVars</name>
       <type>0</type>
       <typeIndex>3</typeIndex>
       <initType>0</initType>

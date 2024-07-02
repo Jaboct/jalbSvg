@@ -219,7 +219,6 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 
 			set_cursorInputMode ( ci_reg );
 
-//			return 1;
 			ret = 1;
 			goto functEnd;
 		}
@@ -244,7 +243,6 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 
 						uiGen_api->load_and_set_norm ( dir, ele->path );
 
-//						return 0;
 						ret = 0;
 						goto functEnd;
 					}
@@ -270,38 +268,31 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 			if ( altKeys[akCtrl] ) {
 				if ( e->key.keysym.sym == SDLK_h ) {		// Math characters
 					add_special ( sb, spec_therefore );
-//					return 1;
 					ret = 1;
 					goto functEnd;
 				} else if ( e->key.keysym.sym == SDLK_7 ) {
 					add_special ( sb, spec_and );
-//					return 1;
 					ret = 1;
 					goto functEnd;
 				} else if ( e->key.keysym.sym == SDLK_BACKSLASH ) {
 					add_special ( sb, spec_or );
-//					return 1;
 					ret = 1;
 					goto functEnd;
 				} else if ( e->key.keysym.sym == SDLK_m ) {
 					add_special ( sb, spec_micro );
-//					return 1;
 					ret = 1;
 					goto functEnd;
 				} else if ( e->key.keysym.sym == SDLK_j ) {
 					add_special ( sb, spec_emptySet );
-//					return 1;
 					ret = 1;
 					goto functEnd;
 
 				} else if ( e->key.keysym.sym == SDLK_k ) {	// Greek Letters
 					add_special ( sb, spec_alphaL );
-//					return 1;
 					ret = 1;
 					goto functEnd;
 				} else if ( e->key.keysym.sym == SDLK_b ) {
 					add_special ( sb, spec_betaL );
-//					return 1;
 					ret = 1;
 					goto functEnd;
 				} else if ( e->key.keysym.sym == SDLK_d ) {
@@ -310,28 +301,23 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 					} else {
 						add_special ( sb, spec_deltaL );
 					}
-//					return 1;
 					ret = 1;
 					goto functEnd;
 				} else if ( e->key.keysym.sym == SDLK_y ) {
 					add_special ( sb, spec_thetaL );
-//					return 1;
 					ret = 1;
 					goto functEnd;
 				} else if ( e->key.keysym.sym == SDLK_u ) {
 					add_special ( sb, spec_lambdaL );
-//					return 1;
 					ret = 1;
 					goto functEnd;
 				} else if ( e->key.keysym.sym == SDLK_p ) {
 					add_special ( sb, spec_pi );
-//					return 1;
 					ret = 1;
 					goto functEnd;
 				} else if ( e->key.keysym.sym == SDLK_i ) {
 //					add_special ( sb, spec_rhoL );
 					add_special ( sb, spec_integral );
-//					return 1;
 					ret = 1;
 					goto functEnd;
 				} else if ( e->key.keysym.sym == SDLK_o ) {
@@ -340,7 +326,6 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 					} else {
 						add_special ( sb, spec_omegaL );
 					}
-//					return 1;
 					ret = 1;
 					goto functEnd;
 				}
@@ -356,7 +341,6 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 //			printf ( "SB KEY RET: %d\n", ret );
 
 			if ( ret ) {
-//				return 1;
 				goto functEnd;
 			}
 //			printSb ( sb );
@@ -385,7 +369,6 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 
 			set_cursorInputMode ( ci_reg );
 
-//			return 1;
 			ret = 1;
 			goto functEnd;
 
@@ -406,7 +389,6 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 
 			set_cursorInputMode ( ci_reg );
 
-//			return 1;
 			ret = 1;
 			goto functEnd;
 
@@ -429,7 +411,6 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 
 			set_cursorInputMode ( ci_reg );
 
-//			return 1;
 			ret = 1;
 			goto functEnd;
 		}
@@ -445,7 +426,6 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 
 		if ( ret ) {
 			sayCursor;
-//			return 1;
 			goto functEnd;
 		}
 
@@ -497,7 +477,6 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 
 			set_cursorInputMode ( ci_reg );
 
-//			return 1;
 			ret = 1;
 			goto functEnd;
 		}
@@ -513,7 +492,6 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 			heldStart[0] = worldXY[0];
 			heldStart[1] = worldXY[1];
 
-//			return 1;
 			ret = 1;
 			goto functEnd;
 
@@ -521,7 +499,6 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 //			heldType = ht_cameraMove;
 
 			// return 0 because i want jlui to hanlde it.
-//			return 0;
 			ret = 0;
 			goto functEnd;
 
@@ -561,7 +538,6 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 				struct jCirc *circ = tempEle->circ;
 				circ->radius += dx;
 			}
-//			return 1;
 			ret = 1;
 			goto functEnd;
 		}
@@ -577,7 +553,6 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 
 		if ( !selected ||
 		     !mouseHeld ) {
-//			return 0;
 			ret = 0;
 			goto functEnd;
 		}

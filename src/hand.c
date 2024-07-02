@@ -1124,6 +1124,8 @@ void changeCursor ( ) {
 }
 */
 
+
+// pass an index from (enum cursorInputTypes (mod_ext.h)).
 void set_cursorInputMode ( int i ) {
 /*
 	printf ( "set_cursorInputMode ( )\n" );
@@ -1145,6 +1147,7 @@ void set_cursorInputMode ( int i ) {
 	} else if ( cursorInputMode == ci_circ ) {
 		newIcon = cr_circ;
 	} else if ( cursorInputMode == ci_complex ) {
+		// TODO
 		newIcon = cr_circ;
 	}
 

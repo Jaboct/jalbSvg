@@ -112,8 +112,13 @@ struct complexEle *complexEleInit ( ) {
 	return var;
 }
 void complexEleFill ( struct complexEle *var ) {
-	var->name[0] = '\0';
-	var->subVars = initArrayList ( 10, sizeof ( void* ), 10 );
+	var->XYWH[0] = 0.0;
+	var->XYWH[1] = 0.0;
+	var->XYWH[2] = 0.0;
+	var->XYWH[3] = 0.0;
+
+	var->decType = 0;
+	var->liveSubVars = initArrayList ( 10, sizeof ( void* ), 10 );
 }
 
 void *complexEleInitMask ( ) {
@@ -122,13 +127,14 @@ void *complexEleInitMask ( ) {
 
 }
 void complexEleClose ( struct complexEle *var ) {
-	if ( var->subVars ) {
-		freeArrayListPointer ( var->subVars );
+	if ( var->liveSubVars ) {
+		freeArrayListPointer ( var->liveSubVars );
 	}
 	free ( var );
 
 }
 int complexEle_attrib_arr[] = {
+	0,
 	0,
 	0,
 };
@@ -137,18 +143,22 @@ void complexEleBodyToVal ( void *varPass, int nameI, char *body ) {
 	struct complexEle *var = varPass;
 
 	if ( nameI == 0 ) {
-		strcpy ( var->name, body );
+		consumeStdArr ( body, 1, 1, var->XYWH, 4 );
 	} else if ( nameI == 1 ) {
+		var->decType = atoi ( body );
+	} else if ( nameI == 2 ) {
 	}
 }
 
 int complexEleNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	struct complexEle *var = data;
-	if ( strcmp ( body, "name" ) == 0 ) {
+	if ( strcmp ( body, "XYWH" ) == 0 ) {
 		return 0;
-	} else if ( strcmp ( body, "subVars" ) == 0 ) {
+	} else if ( strcmp ( body, "decType" ) == 0 ) {
 		return 1;
+	} else if ( strcmp ( body, "liveSubVars" ) == 0 ) {
+		return 2;
 	}
 	return -1;
 }

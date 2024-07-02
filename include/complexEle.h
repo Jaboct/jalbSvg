@@ -28,8 +28,9 @@ struct complexDec {
 	ArrayList *subVars;	// (struct subVar*)
 };
 struct complexEle {
-	char name[256];
-	ArrayList *subVars;	// (void*)
+	float XYWH[4];
+	int decType;
+	ArrayList *liveSubVars;	// (void*)
 };
 
 

@@ -91,6 +91,10 @@ void jNakedList_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, Arra
 
 void jNaked_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jNakedUnion *uni,
 		float *viewLoc, float viewScale ) {
+	if ( debugPrint_jvg_render ) {
+		printf ( "jNaked_render ( )\n" );
+	}
+
 	if ( uni->type == jNaked_G ) {
 	} else if ( uni->type == jNaked_Path ) {
 		struct jPath *path = uni->path;
@@ -510,7 +514,7 @@ void jCircRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jCi
 
 void complexEleRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct complexEle *complex,
 		float *viewLoc, float viewScale ) {
-//	printf ( "complexEleRender ( )\n" );
+	printf ( "complexEleRender ( )\n" );
 
 /*
 	float screenXY[2];
