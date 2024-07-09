@@ -17,6 +17,13 @@ extern struct draw2dStruct *draw2dApi;
 extern struct jalbFont *fonts[];
 extern int numFonts;
 
+
+/// Global vars
+
+extern struct jvg *glob_jvg;
+
+
+
 /// normal vars
 
 extern int cStart[];
@@ -514,7 +521,70 @@ void jCircRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jCi
 
 void complexEleRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct complexEle *complex,
 		float *viewLoc, float viewScale ) {
+
 	printf ( "complexEleRender ( )\n" );
+	printf ( "complex->decType: %d\n", complex->decType );
+
+	printf ( "viewScale: %f\n", viewScale );
+
+	struct jalbFont *font = fonts[0];
+
+
+	float fXYWH[4];
+	point_to_loc ( complex->XYWH, fXYWH, viewLoc, viewScale );
+	fXYWH[2] = complex->XYWH[2] / viewScale;
+	fXYWH[3] = complex->XYWH[3] / viewScale;
+
+	int drawOutline = 1;
+	if ( complex->decType < 0 ) {
+		drawOutline = 1;
+	}
+	if ( drawOutline ) {
+		draw2dApi->drawRectF ( fXYWH, colorWhite, screenDims, glBuffers );
+	}
+
+	if ( complex->decType < 0 ) {
+		float charXY[2] = { fXYWH[0] + 2, fXYWH[1] + 2 };
+
+		char str[256];
+		sprintf ( str, "complex->decType < 0. (%d)", complex->decType );
+
+		draw2dApi->drawCharPre ( font, colorWhite );
+		draw2dApi->drawStringBounded ( screenDims, glBuffers, charXY,
+			fXYWH, font, str );
+	} else {
+//		printf ( "complex->decType: %d\n", complex->decType );
+
+		struct complexDec *dec = arrayListGetPointer ( glob_jvg->complexDecList, complex->decType );
+
+		float screenXY[2] = {
+			fXYWH[0],
+			fXYWH[1],
+		};
+//		point_to_loc ( complex->XYWH, screenXY, viewLoc, viewScale );
+
+		int XYWH[4] = {
+			screenXY[0],
+			screenXY[1],
+			XYWHpass[2],
+			XYWHpass[3],
+		};
+
+		if ( dec->renderFunct ) {
+			// For normal non dynamic rendering.
+//			void (*funct)(int *screenDims, GLuint *glBuffers, int *XYWHpass, void *data) = dec->renderFunct;
+//			funct ( screenDims, glBuffers, XYWH, NULL );
+
+			// For dynamic rendering
+			void (*funct)(int *screenDims, GLuint *glBuffers, int *XYWHpass, void *data,
+				float *viewLoc, float viewScale) = dec->renderFunct;
+			funct ( screenDims, glBuffers, XYWH, NULL,
+				viewLoc, viewScale );
+		} else {
+			printf ( "ERROR, !dec->renderFunct\n" );
+		}
+	}
+
 
 /*
 	float screenXY[2];

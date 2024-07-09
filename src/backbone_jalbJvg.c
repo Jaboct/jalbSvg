@@ -753,6 +753,11 @@ struct backbone_structStruct jEllipse = {
 int complexDec_attributes[] = {
 	0,
 	0,
+	0,
+	0,
+	0,
+	0,
+	0,
 };
 struct backbone_subVar complexDec_name = {
 	.name = "name",
@@ -793,13 +798,89 @@ struct backbone_subVar complexDec_subVars = {
 	.saveFlag = 1,
 	.naked = 0,
 };
+struct backbone_subVar complexDec_modName = {
+	.name = "modName",
+	.type = 0,
+	.typeIndex = 4,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct complexDec, modName ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar complexDec_renderFunct_name = {
+	.name = "renderFunct_name",
+	.type = 0,
+	.typeIndex = 4,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct complexDec, renderFunct_name ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar complexDec_renderFunct = {
+	.name = "renderFunct",
+	.type = 0,
+	.typeIndex = 8,
+	.initType = 0,
+	.length = 0,
+	.literal = 1,
+	.data = {
+		.id = 0,
+//		.ptr = offsetof ( struct complexDec, renderFunct_typeName ) - offsetof ( struct complexDec, renderFunct ),
+	},
+	.external = offsetof ( struct complexDec, renderFunct ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar complexDec_eventFunct_name = {
+	.name = "eventFunct_name",
+	.type = 0,
+	.typeIndex = 4,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct complexDec, eventFunct_name ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar complexDec_eventFunct = {
+	.name = "eventFunct",
+	.type = 0,
+	.typeIndex = 5,
+	.initType = 0,
+	.length = 0,
+	.literal = 1,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct complexDec, eventFunct ),
+	.saveFlag = 1,
+	.naked = 0,
+};
 struct backbone_subVar *complexDec_varArr[] = {
 	&complexDec_name,
 	&complexDec_subVars,
+	&complexDec_modName,
+	&complexDec_renderFunct_name,
+	&complexDec_renderFunct,
+	&complexDec_eventFunct_name,
+	&complexDec_eventFunct,
 };
 struct backbone_structStruct complexDec = {
 	.name = "complexDec",
-	.varsLen = 2,
+	.varsLen = 7,
 	.vars = complexDec_varArr,
 	.overloadRenderEdit = "",
 	.overloadEventEdit = "",
@@ -814,22 +895,37 @@ struct backbone_structStruct complexDec = {
 int complexEle_attributes[] = {
 	0,
 	0,
+	0,
 };
-struct backbone_subVar complexEle_name = {
-	.name = "name",
+struct backbone_subVar complexEle_XYWH = {
+	.name = "XYWH",
 	.type = 0,
-	.typeIndex = 4,
+	.typeIndex = 1,
+	.initType = 0,
+	.length = 4,
+	.literal = 1,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct complexEle, XYWH ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar complexEle_decType = {
+	.name = "decType",
+	.type = 0,
+	.typeIndex = 0,
 	.initType = 0,
 	.length = -1,
 	.literal = 1,
 	.data = {
 		.id = 0,
 	},
-	.external = offsetof ( struct complexEle, name ),
+	.external = offsetof ( struct complexEle, decType ),
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subAl complexEle_subVars_subAl = {
+struct backbone_subAl complexEle_liveSubVars_subAl = {
 	.overflow = 10,
 	.literal = 0,
 	.type = 0,
@@ -837,8 +933,8 @@ struct backbone_subAl complexEle_subVars_subAl = {
 	.length = 0,
 	.naked = 0,
 };
-struct backbone_subVar complexEle_subVars = {
-	.name = "subVars",
+struct backbone_subVar complexEle_liveSubVars = {
+	.name = "liveSubVars",
 	.type = 0,
 	.typeIndex = 3,
 	.initType = 0,
@@ -846,19 +942,20 @@ struct backbone_subVar complexEle_subVars = {
 	.literal = 1,
 	.data = {
 		.id = 0,
-		.ptr = &complexEle_subVars_subAl,
+		.ptr = &complexEle_liveSubVars_subAl,
 	},
-	.external = offsetof ( struct complexEle, subVars ),
+	.external = offsetof ( struct complexEle, liveSubVars ),
 	.saveFlag = 1,
 	.naked = 0,
 };
 struct backbone_subVar *complexEle_varArr[] = {
-	&complexEle_name,
-	&complexEle_subVars,
+	&complexEle_XYWH,
+	&complexEle_decType,
+	&complexEle_liveSubVars,
 };
 struct backbone_structStruct complexEle = {
 	.name = "complexEle",
-	.varsLen = 2,
+	.varsLen = 3,
 	.vars = complexEle_varArr,
 	.overloadRenderEdit = "",
 	.overloadEventEdit = "",
@@ -870,7 +967,7 @@ struct backbone_structStruct complexEle = {
 
 
 
-int len_backbone_arr_jalbJvg = 11;
+int len_backbone_arr_jalbJvg = 12;
 struct backbone_structStruct *backbone_arr_jalbJvg[] = {
 	&jPath,
 	&jVert,
@@ -883,4 +980,17 @@ struct backbone_structStruct *backbone_arr_jalbJvg[] = {
 	&jCirc,
 	&jEllipse,
 	&complexDec,
+	&complexEle,
 };
+
+struct backbone_structStruct **get_backbone_arr_jalbJvg ( ) {
+	return backbone_arr_jalbJvg;
+}
+int get_backbone_arr_len_jalbJvg ( ) {
+	return len_backbone_arr_jalbJvg;
+}
+int get_backbone_arr_total_jalbJvg ( struct backbone_structStruct ***arrPtr ) {
+	*arrPtr = backbone_arr_jalbJvg;
+	return len_backbone_arr_jalbJvg;
+}
+

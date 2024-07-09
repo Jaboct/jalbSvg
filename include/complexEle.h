@@ -26,6 +26,12 @@ void complexEle_preInit ( );
 struct complexDec {
 	char name[256];
 	ArrayList *subVars;	// (struct subVar*)
+	char modName[256];
+	char renderFunct_name[256];
+	void *renderFunct;
+	char renderFunct_typeName[64];	// wtf is this?
+	char eventFunct_name[256];
+	void *eventFunct;
 };
 struct complexEle {
 	float XYWH[4];

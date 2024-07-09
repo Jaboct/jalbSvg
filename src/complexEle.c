@@ -49,6 +49,11 @@ struct complexDec *complexDecInit ( ) {
 void complexDecFill ( struct complexDec *var ) {
 	var->name[0] = '\0';
 	var->subVars = initArrayList ( 10, sizeof ( struct subVar* ), 10 );
+	var->modName[0] = '\0';
+	var->renderFunct_name[0] = '\0';
+	var->renderFunct = NULL;
+	var->eventFunct_name[0] = '\0';
+	var->eventFunct = NULL;
 }
 
 void *complexDecInitMask ( ) {
@@ -66,6 +71,11 @@ void complexDecClose ( struct complexDec *var ) {
 int complexDec_attrib_arr[] = {
 	0,
 	0,
+	0,
+	0,
+	0,
+	0,
+	0,
 };
 void complexDecBodyToVal ( void *varPass, int nameI, char *body ) {
 
@@ -74,6 +84,16 @@ void complexDecBodyToVal ( void *varPass, int nameI, char *body ) {
 	if ( nameI == 0 ) {
 		strcpy ( var->name, body );
 	} else if ( nameI == 1 ) {
+	} else if ( nameI == 2 ) {
+		strcpy ( var->modName, body );
+	} else if ( nameI == 3 ) {
+		strcpy ( var->renderFunct_name, body );
+	} else if ( nameI == 4 ) {
+		// wont get called?
+	} else if ( nameI == 5 ) {
+		strcpy ( var->eventFunct_name, body );
+	} else if ( nameI == 6 ) {
+		// wont get called?
 	}
 }
 
@@ -87,6 +107,19 @@ int complexDecNameToIndex ( char *body, void *data, void *ret, char **strPtr, ch
 		void **ptrPtr = (void**)ret;
 		*ptrPtr = var->subVars;
 		return jxnAlPtr;
+	} else if ( strcmp ( body, "modName" ) == 0 ) {
+		return 2;
+	} else if ( strcmp ( body, "renderFunct_name" ) == 0 ) {
+		return 3;
+	} else if ( strcmp ( body, "renderFunct" ) == 0 ) {
+		void **retPtr = ret;
+		*retPtr = &var->renderFunct;
+		*strPtr = (char*)(offsetof ( struct complexDec, renderFunct_typeName ) - offsetof ( struct complexDec, renderFunct ));
+		return jxnPtrAmbig;
+	} else if ( strcmp ( body, "eventFunct_name" ) == 0 ) {
+		return 5;
+	} else if ( strcmp ( body, "eventFunct" ) == 0 ) {
+		return 6;
 	}
 	return -1;
 }
@@ -152,7 +185,7 @@ void complexEleBodyToVal ( void *varPass, int nameI, char *body ) {
 
 int complexEleNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
-	struct complexEle *var = data;
+//	struct complexEle *var = data;
 	if ( strcmp ( body, "XYWH" ) == 0 ) {
 		return 0;
 	} else if ( strcmp ( body, "decType" ) == 0 ) {

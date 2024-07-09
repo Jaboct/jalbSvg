@@ -1754,3 +1754,15 @@ struct backbone_structStruct *backbone_arr_jalbSvg[] = {
 	&circle,
 	&ellipse,
 };
+
+struct backbone_structStruct **get_backbone_arr_jalbSvg ( ) {
+	return backbone_arr_jalbSvg;
+}
+int get_backbone_arr_len_jalbSvg ( ) {
+	return len_backbone_arr_jalbSvg;
+}
+int get_backbone_arr_total_jalbSvg ( struct backbone_structStruct ***arrPtr ) {
+	*arrPtr = backbone_arr_jalbSvg;
+	return len_backbone_arr_jalbSvg;
+}
+

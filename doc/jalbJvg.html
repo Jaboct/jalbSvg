@@ -61,11 +61,27 @@ body{
 <br>
 <br>
 
+<div class="myParagraph" id="globalVars">
+<b>globalVars</b><br>
+<div class="codeBlock">struct jvg *glob_jvg = NULL;
+extern ArrayList *global_jEles; // (struct jNakedUnion*)	(global_jvg->eles)
+</div>
+
+<br>
+</div>
+
+<br>
+<br>
+
 <div class="myParagraph" id="baseFunctions">
 <b>Base Functions:</b><br>
 <u>Render:</u><br>
 <div class="codeBlock">void jNaked_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jNakedUnion *uni,
 		float *viewLoc, float viewScale ); (jRender.c)
+void jPath_render ( );
+void jText_render ( );
+void jCircRender ( );
+void jComplexRender ( );
 </div>
 <u>Event:</u><br>
 <br>

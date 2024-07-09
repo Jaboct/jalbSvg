@@ -396,18 +396,21 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 			if ( tempEle ) {
 				printf ( "TEMP ELE ERROR\n" );
 			}
+
 			tempEle = jNakedUnionInit ( );
 			jNakedUnionTypeChange0 ( tempEle, jNaked_Complex );
 			struct complexEle *complex = tempEle->complex;
 
+//			complex->decType = -1;
+			complex->decType = 0;
+
 			float worldXY[2];
 			loc_to_pointI ( clickXYpass, worldXY, viewLoc, viewScale );
 
-/*
-			circ->XY[0] = worldXY[0];
-			circ->XY[1] = worldXY[1];
-			circ->radius = 10;
-*/
+			complex->XYWH[0] = worldXY[0];
+			complex->XYWH[1] = worldXY[1];
+			complex->XYWH[2] = 100;
+			complex->XYWH[3] = 100;
 
 			set_cursorInputMode ( ci_reg );
 

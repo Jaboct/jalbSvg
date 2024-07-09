@@ -2,7 +2,7 @@
 
 
 
-int num_structStruct_jalbJvg = 11;
+int num_structStruct_jalbJvg = 12;
 
 
 extern struct xmlFuncts jPathXml;
@@ -16,6 +16,7 @@ extern struct xmlFuncts jRectXml;
 extern struct xmlFuncts jCircXml;
 extern struct xmlFuncts jEllipseXml;
 extern struct xmlFuncts complexDecXml;
+extern struct xmlFuncts complexEleXml;
 
 
 struct xmlFuncts *xmlFuncts_arr_jalbJvg[] = {
@@ -30,6 +31,7 @@ struct xmlFuncts *xmlFuncts_arr_jalbJvg[] = {
 	&jCircXml,
 	&jEllipseXml,
 	&complexDecXml,
+	&complexEleXml,
 };
 
 
