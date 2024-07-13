@@ -1764,6 +1764,16 @@ void set_uiGen_api ( void *data ) {
 }
 
 
+extern void (*setViewScale) (float s);
+
+void set_jvg_viewScale ( float f ) {
+	if ( !setViewScale ) {
+		printf ( "ERROR !setViewScale\n" );
+		return;
+	}
+	setViewScale ( f );
+}
+
 
 /// Xml
 

@@ -41,6 +41,6 @@ void set_modCore_modGetter ( void *mod );
 
 /// Other
 
-void complexDec_postInit ( struct complexDec *dec );
+void complexDecPostInit ( struct complexDec *dec );
 
 

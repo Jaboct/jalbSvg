@@ -8,7 +8,9 @@
   <drawCutString>0</drawCutString>
   <scrollHandle>0</scrollHandle>
   <preInc></preInc>
-  <postInc></postInc>
+  <postInc>
+#include &quot;complexEle_ext.h&quot;
+</postInc>
   <structIds>
     25,
     26,

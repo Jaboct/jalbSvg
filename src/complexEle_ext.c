@@ -39,7 +39,7 @@ void hand_complex_01 ( ) {
 
 	// reach into another mod, and grab the functs.
 
-	complexDec_postInit ( dec );
+	complexDecPostInit ( dec );
 
 	printf ( "hand_complex_01 ( ) OVER\n" );
 }
@@ -155,12 +155,14 @@ void set_modCore_modGetter ( void *mod ) {
 
 /// Other
 
-void complexDec_postInit ( struct complexDec *dec ) {
-	printf ( "complexDec_postInit ( )\n" );
+void complexDecPostInit ( struct complexDec *dec ) {
+	printf ( "complexDecPostInit ( )\n" );
 
 	struct modWrap *wrap = modWrap_fromNick ( dec->modName );
 	if ( !wrap ) {
 		printf ( "ERROR, !wrap\n" );
+		printf ( "cant find mod: %s\n", dec->modName );
+		return;
 	}
 
 //	int (*funct)( struct backbone_structStruct*** ) = NULL;
@@ -174,7 +176,7 @@ void complexDec_postInit ( struct complexDec *dec ) {
 	GET_FUNCT ( dec->eventFunct, wrap->handle, dec->eventFunct_name );
 	printf ( "dec->eventFunct: %p\n", dec->eventFunct );
 
-	printf ( "complexDec_postInit ( ) OVER\n" );
+	printf ( "complexDecPostInit ( ) OVER\n" );
 }
 
 

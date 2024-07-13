@@ -38,6 +38,7 @@ Text:
 /home/jadoo/workspace/jHigh/jalbSvg/makefile
 /home/jadoo/workspace/jHigh/jalbSvg/lay/jalbJvg
 /home/jadoo/workspace/jHigh/jalbSvg/src/jHand.c
+/home/jadoo/workspace/jHigh/jalbSvg/src/complexEle_ext.c
 
 
 jHighLoad:

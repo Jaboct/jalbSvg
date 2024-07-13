@@ -78,6 +78,9 @@ int complexDec_attrib_arr[] = {
 	0,
 };
 void complexDecBodyToVal ( void *varPass, int nameI, char *body ) {
+	printf ( "complexDecBodyToVal ( )\n" );
+	printf ( "nameI: %d\n", nameI );
+	printf ( "body: %s\n", body );
 
 	struct complexDec *var = varPass;
 
@@ -98,6 +101,8 @@ void complexDecBodyToVal ( void *varPass, int nameI, char *body ) {
 }
 
 int complexDecNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
+	printf ( "complexDecNameToIndex ( )\n" );
+	printf ( "body: %s\n", body );
 
 	struct complexDec *var = data;
 	if ( strcmp ( body, "name" ) == 0 ) {
@@ -129,6 +134,7 @@ struct xmlFuncts complexDecXml = {
 	complexDecInitMask,
 	complexDecNameToIndex,
 	complexDecBodyToVal,
+	.postInit = (void(*)(void*))complexDecPostInit,
 };
 
 void complexDec_print ( struct complexDec *stru ) {

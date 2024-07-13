@@ -29,7 +29,7 @@ struct complexDec {
 	char modName[256];
 	char renderFunct_name[256];
 	void *renderFunct;
-	char renderFunct_typeName[64];	// wtf is this?
+	char renderFunct_typeName[64];
 	char eventFunct_name[256];
 	void *eventFunct;
 };
@@ -41,6 +41,8 @@ struct complexEle {
 
 
 /** Post Includes */
+
+#include "complexEle_ext.h"
 
 
 /** Functions */
