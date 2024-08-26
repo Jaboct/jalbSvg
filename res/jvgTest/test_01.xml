@@ -27,6 +27,11 @@
           <typeName></typeName>
         </subVar>
       </subVars>
+      <modName></modName>
+      <renderFunct_name></renderFunct_name>
+      <renderFunct>      
+      <eventFunct_name></eventFunct_name>
+      <eventFunct></eventFunct>
     </complexDec>
   </complexDecList>
 </jvg>

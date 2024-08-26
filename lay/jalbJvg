@@ -171,6 +171,11 @@ Hotkey:
 #uiGen	p	hand_load_uiGen	"/home/jadoo/workspace/jHigh/uiGen/res/hand_uiGen/uiGen_maker.xml"
 
 
+# complex script stuff
+
+Hotkey:
+jalbJvg	m	hand_script
+
 
 LayLib:
 uiGen	deepList	deepList_init	deepList_render	deepList_event	deepList_close	deepList_number
@@ -204,9 +209,6 @@ layoutUi	JLUI_setViewScale	jalbJvg	set_set_viewScale
 
 #Debug:
 all
-
-Run:
-#jalbJvg	set_debugPrint_jalbXml_macro	1
 
 
 #Run:
@@ -265,7 +267,7 @@ uiGen	assemble_appendMod_full_list
 Run:
 #uiGen	set_uiGen_debug_event	1
 #jalbJvg	set_debugPrint_jvg_event	1
-
+#jalbJvg	set_debugPrint_jalbXml_macro	1
 
 Getter:
 jalbJvg	subVarInit	jalbJvg	set_subVar_init

@@ -157,11 +157,13 @@ void set_modCore_modGetter ( void *mod ) {
 
 void complexDecPostInit ( struct complexDec *dec ) {
 	printf ( "complexDecPostInit ( )\n" );
+	printf ( "dec: %p\n", dec );
+	printf ( "dec->modName: %s\n", dec->modName );
 
 	struct modWrap *wrap = modWrap_fromNick ( dec->modName );
 	if ( !wrap ) {
 		printf ( "ERROR, !wrap\n" );
-		printf ( "cant find mod: %s\n", dec->modName );
+		printf ( "cant find modName: %s\n", dec->modName );
 		return;
 	}
 
@@ -178,6 +180,32 @@ void complexDecPostInit ( struct complexDec *dec ) {
 
 	printf ( "complexDecPostInit ( ) OVER\n" );
 }
+
+
+
+
+int complexEle_initType ( struct complexEle *ele, int type ) {
+	int numDecs = arrayListGetPointer ( glob_jvg->complexDecList );
+	if ( type < 0 ||
+	     type >= numDecs ) {
+		printf ( "ERROR, type out of range\n" );
+		return;
+	}
+
+	struct coplexDec *dec = arrayListGetPointer ( glob_jvg->complexDecList, type );
+	
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

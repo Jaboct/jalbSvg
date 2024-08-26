@@ -17,6 +17,14 @@ struct modWrap {
 	void *handle;
 };
 
+struct jvg_liveData {
+	int type;
+	union {
+		int i;
+		int f;
+	}
+};
+
 
 /** Functions */
 

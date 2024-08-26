@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <title>complexEle (jalbJvg / jalbSvg project)</title>
+
+<link rel="stylesheet" href="../../../../archive/notes/programs/html/codeSheet.css">
+
+<style type="text/css">
+#colorstrip{
+    position: fixed;
+    top: 0;
+    width: 100%; height: 38px;
+    z-index: 100;
+    border-style: solid;
+    border-color: white;
+    background-color: white;
+}
+
+body{
+	margin-top: 52px; /* Same as the height of the topbar */
+}
+
+</style>
+
+</head>
+
+<header>
+<body id="top">
+  <p>
+    <b>jalbSvg documentation</b><br>
+  </p>
+<!-- i should use a self made html ele, like head 2 or some shit. instead of pasting in 2 spaces and making it bold.-->
+<div id="colorstrip">
+
+<p class="alignleft">
+<a class="heads" href="#top">top</a>
+</p>
+
+<div style="clear: both;"></div>
+</div>
+</header>
+
+<body>
+
+<div class="myParagraph">
+&nbsp;&nbsp;<b>Links</b><br>
+<nav id="links">
+  <ul>
+    <li><a href="#complexEle">Complex Ele</a></li>
+  </ul>
+</nav>
+</div>
+
+<br>
+<br>
+
+<div class="myParagraph" id="complexEle">
+<b>Complex Ele</b><br>
+2 structs, <u>complexDec</u> and <u>complexEle</u><br>
+complexDec is the declaration of a complex struct, where i choose what the subVars are and it gets saved into the list TODO.<br>
+complexEle is an instantiation of complexDec, it contains all (or some?) the subVars that were declared in complexDec, but this contains live variables.<br>
+<br>
+<br>
+
+Why does complexDec have -&gt;modName?<br>
+
+<br>
+<br>
+
+I believe this uses multi mod?<br>
+<br>
+
+consumeMod.so is built into jalbJvg.<br>
+wrangleBackbone<br>
+wrangleXmlFuncts<br>
+<br>
+I have a seperate backbone function i made recently, erm its a Layout hotkey called:<br>
+"jHighXmlGroup_mod:"<br>
+<br>
+<br>
+with the wrangled backbone, I can load the struct from xml.<br>
+If i build in the header I can access it directly.<br>
+If not i can access the data via getters that i pass via apis or direct .so function retrieval.<br>
+<br>
+How do i plan to access them?<br>
+i think just use headers directly?<br>
+Im building the mod in, so i might aswell access its structs and functs directly.<br>
+
+<br>
+</div>
+
+<br>
+<br>
+
+<div class="myParagraph" id="spawning">
+<b>Spawning</b><br>
+So first you need to generate a complexDec ele.<br>
+I am going to make a uiGen for this.<br>
+<br>
+Then you need to spawn an instace of it, in form of a complexEle.<br>
+How to do this?<br>
+<br>
+<br>
+
+Right now <u>ctrl-g</u> spawn a complexEle.<br>
+set_cursorInputMode ( 4 ); (hand.h)<br>
+<br>
+
+Then upon click:<br>
+jalbJvg_mEvent ( ) (jHand.h)<br>
+
+<br>
+</div>
+
+<br>
+<br>
+
+<div class="myParagraph" id="render">
+<b>Render</b><br>
+i got jalbCalc ele to render.<br>
+<br>
+I want some default render options.<br>
+such as render something like:<br>
+varName: varValue<br>
+<br>
+maybe implement a box color and stuff like that? idk.<br>
+<br>
+</div>
+
+<br>
+<br>
+
+<div class="myParagraph" id="event">
+<b>Event</b><br>
+
+<br>
+</div>
+
+<br>
+<br>
+
+<div class="myParagraph" id="scripting">
+<b>Scripting</b><br>
+
+<u>Live Data</u><br>
+i want the std type.
+
+<br>
+</div>
+
+<br>
+<br>
+
+<br>
+<br>
+
+<br>
+<br>
+
+<br>
+<br>
+
+<br>
+<br>
+
+<br>
+<br>
+
+<br>
+<br>
+
+<br>
+<br>
+
+<br>
+<br>
+
+<br>
+<br>
+
+<br>
+<br>
+
+<br>
+<br>
+
+<br>
+<br>
+
+<br>
+<br>
+</body>
+
+
+</html>
+

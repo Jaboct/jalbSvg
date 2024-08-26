@@ -400,6 +400,7 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 			tempEle = jNakedUnionInit ( );
 			jNakedUnionTypeChange0 ( tempEle, jNaked_Complex );
 			struct complexEle *complex = tempEle->complex;
+			complexEle_initType ( 0 );
 
 //			complex->decType = -1;
 			complex->decType = 0;
