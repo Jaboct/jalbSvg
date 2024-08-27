@@ -52,6 +52,7 @@ int controlPointWidth = 10;
 /// debug
 
 extern int debugPrint_jvg_render;
+int debugPrint_jvg_complex_render = 0;
 
 
 /** Functions */
@@ -522,10 +523,12 @@ void jCircRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jCi
 void complexEleRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct complexEle *complex,
 		float *viewLoc, float viewScale ) {
 
-	printf ( "complexEleRender ( )\n" );
-	printf ( "complex->decType: %d\n", complex->decType );
+	if ( debugPrint_jvg_complex_render ) {
+		printf ( "complexEleRender ( )\n" );
+		printf ( "complex->decType: %d\n", complex->decType );
 
-	printf ( "viewScale: %f\n", viewScale );
+		printf ( "viewScale: %f\n", viewScale );
+	}
 
 	struct jalbFont *font = fonts[0];
 
@@ -581,20 +584,9 @@ void complexEleRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struc
 			funct ( screenDims, glBuffers, XYWH, NULL,
 				viewLoc, viewScale );
 		} else {
-			printf ( "ERROR, !dec->renderFunct\n" );
+//			printf ( "ERROR, !dec->renderFunct\n" );
 		}
 	}
-
-
-/*
-	float screenXY[2];
-	point_to_loc ( circ->XY, screenXY, viewLoc, viewScale );
-
-	float diameter = circ->radius / viewScale * 2;
-
-	int iXY[2] = { screenXY[0], screenXY[1] };
-	draw2dApi->drawCircle ( iXY, diameter, colorWhite, screenDims, glBuffers );
-*/
 }
 
 

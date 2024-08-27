@@ -127,6 +127,9 @@ void grabBackbone ( char *jvgNick, char *modName, void *handle ) {
 }
 
 struct modWrap *modWrap_fromNick ( char *nick ) {
+	printf ( "modWrap_fromNick ( )\n" );
+	printf ( "nick: %s\n", nick );
+
 	int i;
 	int len;
 	i = 0;
@@ -177,31 +180,98 @@ void complexDecPostInit ( struct complexDec *dec ) {
 
 	GET_FUNCT ( dec->eventFunct, wrap->handle, dec->eventFunct_name );
 	printf ( "dec->eventFunct: %p\n", dec->eventFunct );
+	if ( !dec->eventFunct ) {
+		printf ( "cant find event function: %s\n", dec->eventFunct_name );
+	}
 
 	printf ( "complexDecPostInit ( ) OVER\n" );
 }
 
 
 
-
-int complexEle_initType ( struct complexEle *ele, int type ) {
-	int numDecs = arrayListGetPointer ( glob_jvg->complexDecList );
+// type is the index of the complexDecList
+void complexEle_initType ( struct complexEle *ele, int type ) {
+	int numDecs = arrayListGetLength ( glob_jvg->complexDecList );
 	if ( type < 0 ||
 	     type >= numDecs ) {
 		printf ( "ERROR, type out of range\n" );
 		return;
 	}
 
-	struct coplexDec *dec = arrayListGetPointer ( glob_jvg->complexDecList, type );
-	
+	ele->decType = type;
+
+	struct complexDec *dec = arrayListGetPointer ( glob_jvg->complexDecList, type );
+	int i = 0;
+	int len = arrayListGetLength ( dec->subVars );
+	while ( i < len ) {
+		struct subVar *var = arrayListGetPointer ( dec->subVars, i );
+
+		if ( var->type == jalbType_std ) {
+			struct jLiveData *jLive = jLiveDataInit ( );
+			arrayListAddEndPointer ( ele->liveSubVars, jLive );
+
+			jLiveDataTypeChange0 ( jLive, var->typeIndex );
+		} else {
+			arrayListAddEndPointer ( ele->liveSubVars, NULL );
+		}
+
+		i += 1;
+	}
+}
+
+
+/** Event */
+
+int complexEle_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct complexEle *ele,
+		float *viewLoc, float viewScale ) {
+	printf ( "complexEle_mEvent ( )\n" );
+
+	int numDec = arrayListGetLength ( glob_jvg->complexDecList );
+
+	if ( ele->decType < 0 ||
+	     ele->decType >= numDec ) {
+		printf ( "ERROR, ele->decType out of range\n" );
+
+		return 0;
+	}
+
+	// TODO make sure i click inside the box.
+
+	struct complexDec *dec = arrayListGetPointer ( glob_jvg->complexDecList, ele->decType );
+
+	printf ( "dec->eventFunct: %p\n", dec->eventFunct );
+
+	if ( dec->eventFunct ) {
+		// do i want to send viewLoc and viewScale?
+		// or just convert clickXY to a float and send it?
+//		dec->eventFunct ( SDL_Event *e, int *clickXYpass, int *eleWH, struct complexEle *ele,
+//			float *viewLoc, float viewScale );
+
+		float worldXY[2];
+		loc_to_pointI ( clickXYpass, worldXY, viewLoc, viewScale );
+		int clickXY[2] = {
+			worldXY[0],
+			worldXY[1],
+		};
+
+		int (*funct)(SDL_Event *e, int *clickXYpass, int *eleWH, void *data) = dec->eventFunct;
+		funct ( e, clickXY, eleWH, ele );
+	}
+
+	printf ( "complexEle_mEvent ( ) OVER\n" );
+
+	return 0;
 }
 
 
 
+void hand_ee_event ( SDL_Event *e, int *clickXYpass, int *eleWH, struct complexEle *ele ) {
+	printf ( "hand_ee_event ( )\n" );
+	printf ( "ele->decType: %d\n", ele->decType );
 
+	// run the script on this event.
 
-
-
+}
 
 
 

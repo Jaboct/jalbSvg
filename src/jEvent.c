@@ -272,6 +272,18 @@ int jNakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *e
 				handleCursor;
 				return ret;
 			}
+		} else if ( uni->type == jNaked_Complex ) {
+			struct complexEle *complex = uni->complex;
+
+			cursorDown;
+			int ret = complexEle_mEvent ( e, clickXYpass, eleWH, complex,
+				viewLoc, viewScale );
+			cursorUp;
+
+			if ( ret == 1 ) {
+				handleCursor;
+				return ret;
+			}
 		}
 
 		i += 1;

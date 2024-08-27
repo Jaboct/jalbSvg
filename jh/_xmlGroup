@@ -30,6 +30,7 @@ jh/structStruct/jCirc.xml
 jh/structStruct/jEllipse.xml
 jh/structStruct/complexDec.xml
 jh/structStruct/complexEle.xml
+jh/structStruct/jLiveData.xml
 
 # fileStructs
 jh/fileStruct/mod.xml

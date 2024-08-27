@@ -44,7 +44,6 @@ void hand_script ( ) {
 	ele->op->lit = jLitRefInit ( );
 	ele->op->lit->val = 12;
 
-
 	run_script ( thisFunctScript );
 }
 

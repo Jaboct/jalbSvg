@@ -29,14 +29,24 @@ struct complexDec {
 	char modName[256];
 	char renderFunct_name[256];
 	void *renderFunct;
-	char renderFunct_typeName[64];
 	char eventFunct_name[256];
 	void *eventFunct;
 };
 struct complexEle {
 	float XYWH[4];
 	int decType;
-	ArrayList *liveSubVars;	// (void*)
+	ArrayList *liveSubVars;	// (struct jLiveData*)
+};
+struct jLiveData {
+	int type;
+	union  {
+		int i;
+		float f;
+	};
+};
+enum jLiveDataEnum {
+	jld_I = 0,
+	jld_F,
 };
 
 
@@ -62,5 +72,14 @@ void *complexEleInitMask ( );
 void complexEleClose ( struct complexEle *var );
 void complexEleBodyToVal ( void *varPass, int nameI, char *body );
 int complexEleNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
+
+/** jLiveData */
+struct jLiveData *jLiveDataInit ( );
+void jLiveDataFill ( struct jLiveData *var );
+void jLiveDataTypeChange0 ( struct jLiveData *var, int type );
+void *jLiveDataInitMask ( );
+void jLiveDataClose ( struct jLiveData *var );
+void jLiveDataBodyToVal ( void *varPass, int nameI, char *body );
+int jLiveDataNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** Other Functs */

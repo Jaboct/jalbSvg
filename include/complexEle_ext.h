@@ -6,6 +6,8 @@
 
 #include "api/structStruct.h"
 
+#include "canvas_util.h"
+
 #include "jGroup.h"
 #include "complexEle.h"
 
@@ -15,14 +17,6 @@ struct modWrap {
 	char nick[256];
 	char realName[256];	// for grabbing auto generated functions.
 	void *handle;
-};
-
-struct jvg_liveData {
-	int type;
-	union {
-		int i;
-		int f;
-	}
 };
 
 
@@ -50,5 +44,19 @@ void set_modCore_modGetter ( void *mod );
 /// Other
 
 void complexDecPostInit ( struct complexDec *dec );
+
+
+
+void complexEle_initType ( struct complexEle *ele, int type );
+
+
+
+/** Event */
+
+int complexEle_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct complexEle *complex,
+		float *viewLoc, float viewScale );
+
+
+
 
 

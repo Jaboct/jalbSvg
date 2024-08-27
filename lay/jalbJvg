@@ -293,6 +293,7 @@ jalbModCore	glob_modFromNick	jalbJvg	set_modCore_modGetter
 
 Run:
 jalbJvg	hand_grab_mod	"jalbCalc"	"jalbCalc"	"jalbCalc"
+jalbJvg	hand_grab_mod	"jalbJvg"	"jalbJvg"	"jalbJvg"
 
 Run:
 jalbJvg	jvg_backbone_wrangle

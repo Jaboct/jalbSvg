@@ -829,13 +829,12 @@ struct backbone_subVar complexDec_renderFunct_name = {
 struct backbone_subVar complexDec_renderFunct = {
 	.name = "renderFunct",
 	.type = 0,
-	.typeIndex = 8,
+	.typeIndex = 5,
 	.initType = 0,
 	.length = 0,
 	.literal = 1,
 	.data = {
 		.id = 0,
-//		.ptr = offsetof ( struct complexDec, renderFunct_typeName ) - offsetof ( struct complexDec, renderFunct ),
 	},
 	.external = offsetof ( struct complexDec, renderFunct ),
 	.saveFlag = 1,
@@ -928,8 +927,8 @@ struct backbone_subVar complexEle_decType = {
 struct backbone_subAl complexEle_liveSubVars_subAl = {
 	.overflow = 10,
 	.literal = 0,
-	.type = 0,
-	.typeIndex = 5,
+	.type = 1,
+	.typeIndex = 12,
 	.length = 0,
 	.naked = 0,
 };
@@ -967,7 +966,88 @@ struct backbone_structStruct complexEle = {
 
 
 
-int len_backbone_arr_jalbJvg = 12;
+int jLiveData_attributes[] = {
+	0,
+};
+int jLiveData__attributes[] = {
+	0,
+	0,
+};
+struct backbone_subVar jLiveData__i = {
+	.name = "i",
+	.type = 0,
+	.typeIndex = 0,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct jLiveData, i ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar jLiveData__f = {
+	.name = "f",
+	.type = 0,
+	.typeIndex = 1,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct jLiveData, f ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar *jLiveData__varArr[] = {
+	&jLiveData__i,
+	&jLiveData__f,
+};
+struct backbone_subComplex jLiveData__complex = {
+	.type = {
+	},
+	.typeDec = 0,
+	.listLen = 2,
+	.arr = jLiveData__varArr,
+	.prefix = "jld_"
+};
+struct backbone_subVar jLiveData_ = {
+	.name = "",
+	.type = 0,
+	.typeIndex = 6,
+	.initType = 0,
+	.length = 0,
+	.literal = 1,
+	.data = {
+		.id = 0,
+		.ptr = &jLiveData__complex,
+	},
+	.external = offsetof ( struct jLiveData, type ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar *jLiveData_varArr[] = {
+	&jLiveData_,
+};
+struct backbone_structStruct jLiveData = {
+	.name = "jLiveData",
+	.varsLen = 1,
+	.vars = jLiveData_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
+	.structSize = sizeof ( struct jLiveData ),
+	.attributes = jLiveData_attributes,
+};
+
+
+
+
+/// Data Array
+
+int len_backbone_arr_jalbJvg = 13;
 struct backbone_structStruct *backbone_arr_jalbJvg[] = {
 	&jPath,
 	&jVert,
@@ -981,16 +1061,23 @@ struct backbone_structStruct *backbone_arr_jalbJvg[] = {
 	&jEllipse,
 	&complexDec,
 	&complexEle,
+	&jLiveData,
 };
+
+
+/// Getters
 
 struct backbone_structStruct **get_backbone_arr_jalbJvg ( ) {
 	return backbone_arr_jalbJvg;
 }
+
 int get_backbone_arr_len_jalbJvg ( ) {
 	return len_backbone_arr_jalbJvg;
 }
+
 int get_backbone_arr_total_jalbJvg ( struct backbone_structStruct ***arrPtr ) {
 	*arrPtr = backbone_arr_jalbJvg;
 	return len_backbone_arr_jalbJvg;
 }
+
 

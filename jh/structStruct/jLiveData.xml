@@ -1,29 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <structStruct>
-  <name>complexEle</name>
+  <name>jLiveData</name>
   <vars>
     <subVar>
-      <name>XYWH</name>
+      <name></name>
       <type>0</type>
-      <typeIndex>1</typeIndex>
+      <typeIndex>6</typeIndex>
       <initType>0</initType>
       <initTypeData>
         <>-1</>
       </initTypeData>
       <closeType>0</closeType>
-      <length>4</length>
+      <length>0</length>
       <literal>1</literal>
-      <>-1</>
-      <external>0</external>
-      <attribute>0</attribute>
-      <saveFlag>1</saveFlag>
-      <naked>0</naked>
-      <comment></comment>
-      <modNick></modNick>
-      <typeName></typeName>
-    </subVar>
+      <subComplex>
+        <type>
+          <name></name>
+          <type>0</type>
+          <typeIndex>-1</typeIndex>
+          <initType>0</initType>
+          <initTypeData>
+            <>-1</>
+          </initTypeData>
+          <closeType>0</closeType>
+          <length>0</length>
+          <literal>1</literal>
+          <>-1</>
+          <external>0</external>
+          <attribute>0</attribute>
+          <saveFlag>1</saveFlag>
+          <naked>0</naked>
+          <comment></comment>
+          <modNick></modNick>
+          <typeName></typeName>
+        </type>
+        <typeDec>-1</typeDec>
+        <list>
     <subVar>
-      <name>decType</name>
+      <name>i</name>
       <type>0</type>
       <typeIndex>0</typeIndex>
       <initType>0</initType>
@@ -43,28 +57,28 @@
       <typeName></typeName>
     </subVar>
     <subVar>
-      <name>liveSubVars</name>
+      <name>f</name>
       <type>0</type>
-      <typeIndex>3</typeIndex>
+      <typeIndex>1</typeIndex>
       <initType>0</initType>
       <initTypeData>
         <>-1</>
       </initTypeData>
       <closeType>0</closeType>
-      <length>0</length>
+      <length>-1</length>
       <literal>1</literal>
-      <subAl>
-        <curEles>10</curEles>
-        <eleSize>0</eleSize>
-        <overflow>10</overflow>
-        <literal>0</literal>
-        <type>1</type>
-        <typeIndex>27</typeIndex>
-        <length>0</length>
-        <naked>0</naked>
-        <modNick></modNick>
-        <typeName></typeName>
-      </subAl>
+      <>-1</>
+      <external>0</external>
+      <attribute>0</attribute>
+      <saveFlag>1</saveFlag>
+      <naked>0</naked>
+      <comment></comment>
+      <modNick></modNick>
+      <typeName></typeName>
+    </subVar>
+        </list>
+        <prefix>jld_</prefix>
+      </subComplex>
       <external>0</external>
       <attribute>0</attribute>
       <saveFlag>1</saveFlag>

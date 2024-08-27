@@ -49,6 +49,10 @@ body{
 <nav id="links">
   <ul>
     <li><a href="#complexEle">Complex Ele</a></li>
+    <li><a href="#spawning">Spawning</a></li>
+    <li><a href="#render">Render</a></li>
+    <li><a href="#event">Event</a></li>
+    <li><a href="#scripting">Scripting</a></li>
   </ul>
 </nav>
 </div>
@@ -121,6 +125,18 @@ jalbJvg_mEvent ( ) (jHand.h)<br>
 <b>Render</b><br>
 i got jalbCalc ele to render.<br>
 <br>
+
+I set renderFunct_name, and then<br>
+complexDecPostInit();<br>
+retrieves the function from the mod using dlsym.<br>
+<br>
+complexEleRender() (jRender.h)<br>
+then calls the retrieved function, with the params:<br>
+void (*funct)(int *screenDims, GLuint *glBuffers, int *XYWHpass, void *data)<br>
+
+<br>
+<br>
+<u>Default</u><br>
 I want some default render options.<br>
 such as render something like:<br>
 varName: varValue<br>
