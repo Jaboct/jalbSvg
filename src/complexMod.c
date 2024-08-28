@@ -45,10 +45,10 @@ struct complexMod *complexModInit ( ) {
 	return var;
 }
 void complexModFill ( struct complexMod *var ) {
-	var->complexDecList = initArrayList ( 0, sizeof ( out of range (type: -1) (typeIndex: -1)* ), 0 );
-	var->globalVars = initArrayList ( 0, sizeof ( out of range (type: -1) (typeIndex: -1)* ), 0 );
-	var->globalScripts = initArrayList ( 0, sizeof ( out of range (type: -1) (typeIndex: -1)* ), 0 );
-	var->globalScripts = initArrayList ( 0, sizeof ( out of range (type: -1) (typeIndex: -1)* ), 0 );
+	var->name = NULL;
+	var->complexDecList = initArrayList ( 10, sizeof ( struct complexDec* ), 10 );
+	var->globalVars = initArrayList ( 10, sizeof ( struct subVar* ), 10 );
+	var->globalScripts = initArrayList ( 10, sizeof ( struct complexScript* ), 10 );
 }
 
 void *complexModInitMask ( ) {
@@ -57,6 +57,15 @@ void *complexModInitMask ( ) {
 
 }
 void complexModClose ( struct complexMod *var ) {
+	if ( var->complexDecList ) {
+		freeArrayListPointerFunction ( var->complexDecList, (void (*)(void*))complexDecClose );
+	}
+	if ( var->globalVars ) {
+		// TODO subVar from out of mod, import close (modNick: jHigh, subVarName: subVar).
+	}
+	if ( var->globalScripts ) {
+		freeArrayListPointerFunction ( var->globalScripts, (void (*)(void*))complexScriptClose );
+	}
 	free ( var );
 
 }
@@ -71,21 +80,24 @@ void complexModBodyToVal ( void *varPass, int nameI, char *body ) {
 	struct complexMod *var = varPass;
 
 	if ( nameI == 0 ) {
+		strcpy ( var->name, body );
 	} else if ( nameI == 1 ) {
 	} else if ( nameI == 2 ) {
 	} else if ( nameI == 3 ) {
-		// wont get called?
 	}
 }
 
 int complexModNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	struct complexMod *var = data;
-	if ( strcmp ( body, "complexDecList" ) == 0 ) {
+	if ( strcmp ( body, "name" ) == 0 ) {
+		return 0;
+	} else if ( strcmp ( body, "complexDecList" ) == 0 ) {
 		void **ptrPtr = (void**)ret;
 		*ptrPtr = var->complexDecList;
 		return jxnAlPtr;
 	} else if ( strcmp ( body, "globalVars" ) == 0 ) {
+		*modName = "jHigh";
 		void **ptrPtr = (void**)ret;
 		*ptrPtr = var->globalVars;
 		return jxnAlPtr;
@@ -93,8 +105,6 @@ int complexModNameToIndex ( char *body, void *data, void *ret, char **strPtr, ch
 		void **ptrPtr = (void**)ret;
 		*ptrPtr = var->globalScripts;
 		return jxnAlPtr;
-	} else if ( strcmp ( body, "" ) == 0 ) {
-		return 3;
 	}
 	return -1;
 }

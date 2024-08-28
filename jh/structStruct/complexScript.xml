@@ -1,30 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <structStruct>
-  <name>jvg</name>
+  <name>complexScript</name>
   <vars>
     <subVar>
-      <name>eles</name>
+      <name>name</name>
       <type>0</type>
-      <typeIndex>3</typeIndex>
+      <typeIndex>4</typeIndex>
       <initType>0</initType>
       <initTypeData>
         <>-1</>
       </initTypeData>
       <closeType>0</closeType>
-      <length>0</length>
+      <length>-1</length>
       <literal>1</literal>
-      <subAl>
-        <curEles>10</curEles>
-        <eleSize>0</eleSize>
-        <overflow>10</overflow>
-        <literal>0</literal>
-        <type>1</type>
-        <typeIndex>20</typeIndex>
-        <length>-1</length>
-        <naked>0</naked>
-        <modNick></modNick>
-        <typeName></typeName>
-      </subAl>
+      <>-1</>
       <external>0</external>
       <attribute>0</attribute>
       <saveFlag>1</saveFlag>
@@ -34,7 +23,7 @@
       <typeName></typeName>
     </subVar>
     <subVar>
-      <name>moduleList</name>
+      <name>eleList</name>
       <type>0</type>
       <typeIndex>3</typeIndex>
       <initType>0</initType>
@@ -50,7 +39,7 @@
         <overflow>10</overflow>
         <literal>0</literal>
         <type>1</type>
-        <typeIndex>28</typeIndex>
+        <typeIndex>30</typeIndex>
         <length>-1</length>
         <naked>0</naked>
         <modNick></modNick>

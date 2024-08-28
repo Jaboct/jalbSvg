@@ -15,6 +15,8 @@
 #include <jalbXml/jalbXml_02.h>
 
 
+#include "complexEle.h"
+#include "complexScript.h"
 
 void complexMod_preInit ( );
 
@@ -24,10 +26,10 @@ void complexMod_preInit ( );
 /** Structs */
 
 struct complexMod {
-	ArrayList *complexDecList;	// (out of range (type: -1) (typeIndex: -1)*)
-	ArrayList *globalVars;	// (out of range (type: -1) (typeIndex: -1)*)
-	ArrayList *globalScripts;	// (out of range (type: -1) (typeIndex: -1)*)
-	[type (0) typeIndex (-1)] *;
+	char *name;
+	ArrayList *complexDecList;	// (struct complexDec*)
+	ArrayList *globalVars;	// (struct subVar*)
+	ArrayList *globalScripts;	// (struct complexScript*)
 };
 
 

@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fileStruct>
-  <name>complexMod</name>
+  <name>complexScript</name>
   <colors>0</colors>
   <getters>0</getters>
   <modFuncts>0</modFuncts>
   <typeValFuncts>0</typeValFuncts>
   <drawCutString>0</drawCutString>
   <scrollHandle>0</scrollHandle>
-  <preInc>
-#include &quot;complexEle.h&quot;
-#include &quot;complexScript.h&quot;
-</preInc>
+  <preInc></preInc>
   <postInc></postInc>
   <structIds>
-    28,
+    29,
+    30,
   </structIds>
   <functIds>
   </functIds>

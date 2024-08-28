@@ -1,56 +1,55 @@
 #pragma once
 
-#include <jalb/jalb_idPtr.h>
+/** AUTO GENERATED CODE */
 
-#include "api/structStruct.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-#include "complexEle.h"
+#include <jalb/jalbArrayList.h>
+#include <jalb/jalbSay.h>
+
+#include <jalb/jfile.h>
+#include <jalb/jalb_addCanvas.h>
+#include <jalbDraw/drawCutString.h>
+
+#include <jalbXml/jalbXml_02.h>
+
+
+
+void complexScript_preInit ( );
+
+
 
 
 /** Structs */
 
-struct jScriptEle {
-	int type;
-	union {
-		struct subVar *varDec;
-		struct jScriptOperator *op;
-	};
+struct complexScript {
+	char name[256];
+	ArrayList *eleList;	// (struct cScriptEle*)
+};
+struct cScriptEle {
 };
 
-enum jsOperator {
-	jsOp_add = 0,
-};
 
-struct jScriptOperator {
-	int type;
-	struct jVarRef *object;
-	struct jVarRef *actor;
-	struct jLitRef *lit;
-};
-
-struct jVarRef {
-	int index;
-	struct jVarRef *subData;
-};
-
-struct jLitRef {
-	int val;
-};
+/** Post Includes */
 
 
 /** Functions */
 
-void hand_script ( );
-void hand_script_2 ( );
+/** complexScript */
+struct complexScript *complexScriptInit ( );
+void complexScriptFill ( struct complexScript *var );
+void *complexScriptInitMask ( );
+void complexScriptClose ( struct complexScript *var );
+void complexScriptBodyToVal ( void *varPass, int nameI, char *body );
+int complexScriptNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
-struct jScriptEle *jScriptEleInit ( );
-struct jScriptOperator *jScriptOperatorInit ( );
-struct jVarRef *jVarRefInit ( );
-struct jLitRef *jLitRefInit ( );
+/** cScriptEle */
+struct cScriptEle *cScriptEleInit ( );
+void cScriptEleFill ( struct cScriptEle *var );
+void *cScriptEleInitMask ( );
+void cScriptEleClose ( struct cScriptEle *var );
+void cScriptEleBodyToVal ( void *varPass, int nameI, char *body );
+int cScriptEleNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
-void run_script ( ArrayList *script );
-
-
-
-
-
+/** Other Functs */
