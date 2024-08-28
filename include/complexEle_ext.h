@@ -4,14 +4,15 @@
 #include <jalb/soMacros>
 #include <jalb/jalbUtilities.h>
 
-#include "api/structStruct.h"
 
+#include "api/structStruct.h"
 #include "canvas_util.h"
 
-#include "jGroup.h"
+
 #include "complexEle.h"
 
 #include "complexScript_ext.h"
+
 
 /** Struct */
 
@@ -21,6 +22,11 @@ struct modWrap {
 	void *handle;
 };
 
+
+/** Post Includes */
+
+#include "jEvent.h"
+#include "jGroup.h"
 
 /** Functions */
 
@@ -58,6 +64,7 @@ void complexEle_initType ( struct complexEle *ele, int type );
 int complexEle_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct complexEle *complex,
 		float *viewLoc, float viewScale );
 
+int hand_ee_event ( SDL_Event *e, int *clickXYpass, int *eleWH, struct complexEle *ele );
 
 
 

@@ -290,7 +290,9 @@ extern char altKeys[];
 
 extern ArrayList *scopeData;	// (struct idPtr*)
 
-void hand_ee_event ( SDL_Event *e, int *clickXYpass, int *eleWH, struct complexEle *ele ) {
+extern int selected;
+
+int hand_ee_event ( SDL_Event *e, int *clickXYpass, int *eleWH, struct complexEle *ele ) {
 	printf ( "hand_ee_event ( )\n" );
 	printf ( "ele->decType: %d\n", ele->decType );
 
@@ -305,6 +307,36 @@ void hand_ee_event ( SDL_Event *e, int *clickXYpass, int *eleWH, struct complexE
 	if ( altKeys[akShift] ) {
 		// set cursor.
 		// ok, so i need to get data.
+
+		// or i want to run a cursor script...
+
+		if ( selected ) {
+			struct jNakedUnion *parent;
+			struct jNakedUnion *nakedEle;
+			int vertI = -1;
+			int controlI = -1;
+			struct cursorMem *lastCursor;
+
+			int selType = jIterateToSelected ( glob_jvg->eles, &parent, &nakedEle, &vertI, &controlI, &lastCursor );
+			if ( selType == jNaked_Complex ) {
+				struct complexEle *selEle = nakedEle->complex;
+				if ( selEle == ele ) {
+					printf ( "CLICKING ON ITSELf\n" );
+				}
+
+//				if ( selEle->decModI == modI ) {
+					// it is from this mod, so continue.
+
+					printf ( "the mods linked\n" );
+//				}
+			}
+		} else {
+			printf ( "NO ELE SELECTED\n" );
+		}
+
+		// this ele is now selected
+		selected = 1;
+		return 1;
 	}
 
 	if ( !scopeData ) {
@@ -321,6 +353,8 @@ void hand_ee_event ( SDL_Event *e, int *clickXYpass, int *eleWH, struct complexE
 	// run the script on this event.
 
 	hand_script_2 ( );
+
+	return 2;
 }
 
 

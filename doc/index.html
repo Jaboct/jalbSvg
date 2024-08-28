@@ -292,19 +292,54 @@ onHoverCheck ( ) (jHand.h)<br>
 
 <u>Select Multiple</u>
 Alright, so the way i currently tell if a ele is selected is simply through the globals.<br>
-<div class="codeBlock">ArrayList *cursorList
-int cursorDepth
-int selected
-int thisSel
+<div class="codeBlock">(mod_ext.c)
+ArrayList *cursorList;
+int cursor_depth;
+int selected;
+int thisSel;
 </div>
 
+<br>
+<br>
+
+<div class="codeBlock">int cursorInputMode = 0;	// enum cursorInputTypes;
+int cursorRenderMode = 0;	// enum cursorRenderTypes;
+</div>
 
 <br>
 <br>
 
-<u>Functions</u><br>
-<b>jIterateToSelected ( )</b><br>
-Returns the selType according to.<br>
+<u>Functions:</u><br>
+(event.c)<br>
+<div class="codeBlock">int iterateToSelected ( struct svg *svg, struct nakedUnion **parent, struct nakedUnion **ele,
+		int *vertI, int *controlI, struct cursorMem **lastCursor );</div>
+<br>
+(jEvent.c)<br>
+<div class="codeBlock">struct jNakedUnion *parent;
+struct jNakedUnion *ele;
+int vertI = -1;
+int controlI = -1;
+struct cursorMem *lastCursor;
+
+int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct jNakedUnion **ele,
+		int *vertI, int *controlI, struct cursorMem **lastCursor );</div>
+<br>
+Returns the int type of the element that is selected.<br>
+either of:<br>
+enum nakedUnionEnum;<br>
+or<br>
+enum jNakedUnionEnum;<br>
+
+<br>
+<br>
+
+<u>return value</u><br>
+return 1 when i want to set cursor.<br>
+I need an option to consume, but not set cursor.<br>
+<br>
+
+TODO<br>
+selected should probably not be set deep in each ele types event?<br>
 
 <br>
 </div>

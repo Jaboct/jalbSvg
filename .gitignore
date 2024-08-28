@@ -10,6 +10,7 @@ res/worlds/new/*
 
 # jHigh stuff
 /jh/diff_backbone.c
+/jh/diff_backbone.h
 /jh/diff_backbone_out
 /jh/diff_class.c
 /jh/diff_class_out

@@ -363,7 +363,8 @@ int path_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct path *path,
  * control:
  *  the object, vert index, and control index.
  */
-int iterateToSelected ( struct svg *svg, struct nakedUnion **parent, struct nakedUnion **ele, int *vertI, int *controlI, struct cursorMem **lastCursor ) {
+int iterateToSelected ( struct svg *svg, struct nakedUnion **parent, struct nakedUnion **ele,
+		int *vertI, int *controlI, struct cursorMem **lastCursor ) {
 	printf ( "iterateToSelected ( )\n" );
 
 	int i = 0;

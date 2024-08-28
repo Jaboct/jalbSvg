@@ -30,6 +30,9 @@ struct complexMod {
 	ArrayList *globalVars;	// (struct subVar*)
 	ArrayList *globalScripts;	// (struct complexScript*)
 };
+struct complexModData {
+	ArrayList *globalData;	// (struct jLiveData*)
+};
 
 
 /** Post Includes */
@@ -47,5 +50,13 @@ void *complexModInitMask ( );
 void complexModClose ( struct complexMod *var );
 void complexModBodyToVal ( void *varPass, int nameI, char *body );
 int complexModNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
+
+/** complexModData */
+struct complexModData *complexModDataInit ( );
+void complexModDataFill ( struct complexModData *var );
+void *complexModDataInitMask ( );
+void complexModDataClose ( struct complexModData *var );
+void complexModDataBodyToVal ( void *varPass, int nameI, char *body );
+int complexModDataNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** Other Functs */

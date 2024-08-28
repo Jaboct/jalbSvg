@@ -150,6 +150,7 @@ void complexEleFill ( struct complexEle *var ) {
 	var->XYWH[2] = 0.0;
 	var->XYWH[3] = 0.0;
 
+	var->decModI = 0;
 	var->decType = 0;
 	var->liveSubVars = initArrayList ( 10, sizeof ( struct jLiveData* ), 10 );
 }
@@ -170,6 +171,7 @@ int complexEle_attrib_arr[] = {
 	0,
 	0,
 	0,
+	0,
 };
 void complexEleBodyToVal ( void *varPass, int nameI, char *body ) {
 
@@ -178,8 +180,10 @@ void complexEleBodyToVal ( void *varPass, int nameI, char *body ) {
 	if ( nameI == 0 ) {
 		consumeStdArr ( body, 1, 1, var->XYWH, 4 );
 	} else if ( nameI == 1 ) {
-		var->decType = atoi ( body );
+		var->decModI = atoi ( body );
 	} else if ( nameI == 2 ) {
+		var->decType = atoi ( body );
+	} else if ( nameI == 3 ) {
 	}
 }
 
@@ -188,8 +192,10 @@ int complexEleNameToIndex ( char *body, void *data, void *ret, char **strPtr, ch
 	struct complexEle *var = data;
 	if ( strcmp ( body, "XYWH" ) == 0 ) {
 		return 0;
-	} else if ( strcmp ( body, "decType" ) == 0 ) {
+	} else if ( strcmp ( body, "decModI" ) == 0 ) {
 		return 1;
+	} else if ( strcmp ( body, "decType" ) == 0 ) {
+		return 2;
 	} else if ( strcmp ( body, "liveSubVars" ) == 0 ) {
 		void **ptrPtr = (void**)ret;
 		*ptrPtr = var->liveSubVars;

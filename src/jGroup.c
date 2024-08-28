@@ -278,6 +278,7 @@ struct jvg *jvgInit ( ) {
 void jvgFill ( struct jvg *var ) {
 	var->eles = initArrayList ( 10, sizeof ( struct jNakedUnion* ), 10 );
 	var->moduleList = initArrayList ( 10, sizeof ( struct complexMod* ), 10 );
+	var->moduleDataList = initArrayList ( 10, sizeof ( struct complexModData* ), 10 );
 }
 
 void *jvgInitMask ( ) {
@@ -292,10 +293,14 @@ void jvgClose ( struct jvg *var ) {
 	if ( var->moduleList ) {
 		freeArrayListPointerFunction ( var->moduleList, (void (*)(void*))complexModClose );
 	}
+	if ( var->moduleDataList ) {
+		freeArrayListPointerFunction ( var->moduleDataList, (void (*)(void*))complexModDataClose );
+	}
 	free ( var );
 
 }
 int jvg_attrib_arr[] = {
+	0,
 	0,
 	0,
 };
@@ -305,6 +310,7 @@ void jvgBodyToVal ( void *varPass, int nameI, char *body ) {
 
 	if ( nameI == 0 ) {
 	} else if ( nameI == 1 ) {
+	} else if ( nameI == 2 ) {
 	}
 }
 
@@ -318,6 +324,10 @@ int jvgNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **mo
 	} else if ( strcmp ( body, "moduleList" ) == 0 ) {
 		void **ptrPtr = (void**)ret;
 		*ptrPtr = var->moduleList;
+		return jxnAlPtr;
+	} else if ( strcmp ( body, "moduleDataList" ) == 0 ) {
+		void **ptrPtr = (void**)ret;
+		*ptrPtr = var->moduleDataList;
 		return jxnAlPtr;
 	}
 	return -1;

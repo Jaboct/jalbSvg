@@ -34,6 +34,7 @@ struct complexDec {
 };
 struct complexEle {
 	float XYWH[4];
+	int decModI;
 	int decType;
 	ArrayList *liveSubVars;	// (struct jLiveData*)
 };

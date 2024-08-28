@@ -318,5 +318,18 @@ void hand_load_complexMod ( ) {
 }
 
 
+// make sure the moduleDataList matches the moduleList?
+// ill finish this later
+void init_jvg_globalVars ( struct jvg *jvg ) {
+	printf ( "init_jvg_globalVars ( )\n" );
+
+	int i = 0;
+	int numMods = arrayListGetLength ( jvg->moduleList );
+	while ( i < numMods ) {
+//		int numMods = arrayListGetLength ( jvg->moduleList );
+	}
+
+	printf ( "init_jvg_globalVars ( ) OVER\n" );
+}
 
 

@@ -20,6 +20,7 @@ void complexMod_preInit ( ) {
 
 
 extern int complexModEditId;
+extern int complexModDataEditId;
 extern int debugPrint_projectName_init;
 
 
@@ -31,6 +32,7 @@ extern struct jalbFont *fonts[];
 extern addCanvasF *addCanvas;
 
 extern struct backbone_structStruct complexMod;
+extern struct backbone_structStruct complexModData;
 
 /** Functions */
 
@@ -118,5 +120,63 @@ struct xmlFuncts complexModXml = {
 
 void complexMod_print ( struct complexMod *stru ) {
 	printf ( "complexMod_print ( )\n" );
+}
+/** complexModData */
+
+struct complexModData *complexModDataInit ( ) {
+	if ( debugPrint_projectName_init ) {
+		printf ( "complexModDataInit ( )\n" );
+	}
+	struct complexModData *var = malloc ( sizeof ( struct complexModData ) );
+	complexModDataFill ( var );
+	return var;
+}
+void complexModDataFill ( struct complexModData *var ) {
+	var->globalData = initArrayList ( 10, sizeof ( struct jLiveData* ), 10 );
+}
+
+void *complexModDataInitMask ( ) {
+	void *ret = complexModDataInit ( );
+	return ret;
+
+}
+void complexModDataClose ( struct complexModData *var ) {
+	if ( var->globalData ) {
+		freeArrayListPointerFunction ( var->globalData, (void (*)(void*))jLiveDataClose );
+	}
+	free ( var );
+
+}
+int complexModData_attrib_arr[] = {
+	0,
+};
+void complexModDataBodyToVal ( void *varPass, int nameI, char *body ) {
+
+//	struct complexModData *var = varPass;
+
+	if ( nameI == 0 ) {
+	}
+}
+
+int complexModDataNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
+
+	struct complexModData *var = data;
+	if ( strcmp ( body, "globalData" ) == 0 ) {
+		void **ptrPtr = (void**)ret;
+		*ptrPtr = var->globalData;
+		return jxnAlPtr;
+	}
+	return -1;
+}
+
+struct xmlFuncts complexModDataXml = {
+	"complexModData",
+	complexModDataInitMask,
+	complexModDataNameToIndex,
+	complexModDataBodyToVal,
+};
+
+void complexModData_print ( struct complexModData *stru ) {
+	printf ( "complexModData_print ( )\n" );
 }
 /** Other Functs */

@@ -14,12 +14,12 @@
       <length>0</length>
       <literal>1</literal>
       <subAl>
-        <curEles>0</curEles>
+        <curEles>10</curEles>
         <eleSize>0</eleSize>
-        <overflow>0</overflow>
+        <overflow>10</overflow>
         <literal>0</literal>
-        <type>-1</type>
-        <typeIndex>-1</typeIndex>
+        <type>1</type>
+        <typeIndex>27</typeIndex>
         <length>-1</length>
         <naked>0</naked>
         <modNick></modNick>

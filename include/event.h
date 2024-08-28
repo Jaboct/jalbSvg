@@ -39,7 +39,8 @@ int path_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct path *path,
  * control:
  *  the object, vert index, and control index.
  */
-int iterateToSelected ( struct svg *svg, struct nakedUnion **parent, struct nakedUnion **ele, int *vertI, int *controlI, struct cursorMem **lastCursor );
+int iterateToSelected ( struct svg *svg, struct nakedUnion **parent, struct nakedUnion **ele,
+		int *vertI, int *controlI, struct cursorMem **lastCursor );
 int shiftClick ( struct svg *svg, float *worldXY );
 
 void move_pUni ( struct pathUni *pUni,  struct pathUni *pUniNext, float dx, float dy );

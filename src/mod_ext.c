@@ -42,6 +42,16 @@ int pointW = 10;
 GLuint *glob_glBuffers = NULL;
 
 
+/// Cursor Vars
+
+// this has recursion so needs an arraylist.
+int selected = 0;
+int mouseHeld = 0;
+
+ArrayList *cursorList = NULL;
+int cursor_depth = 0;
+
+
 /// proofs
 
 extern int doingTests;
@@ -116,12 +126,6 @@ int jalbSvg_event ( SDL_Event *e, int *clickXY, int *eleWH, void *data ) {
 	return 1;
 }
 
-// this has recursion so needs an arraylist.
-int selected = 0;
-int mouseHeld = 0;
-
-ArrayList *cursorList = NULL;
-int cursor_depth = 0;
 
 int jalbSvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 		float *viewLoc, float viewScale ) {
