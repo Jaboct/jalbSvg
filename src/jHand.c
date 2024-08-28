@@ -42,7 +42,11 @@ extern float glob_viewLoc[];
 // debug
 int debugPrint_jvg_render = 0;
 extern int debugPrint_jvg_event;
+
+extern int debugPrint_jvg_complex_render;
+
 extern int svg_debugPrint_render_text;
+
 
 
 int tabW = 8;
@@ -965,6 +969,7 @@ void set_debugPrint_jvg_render ( int i ) {
 	printf ( "i: %d\n", i );
 
 	debugPrint_jvg_render = i;
+	debugPrint_jvg_complex_render = i;
 
 	printf ( "set_debugPrint_jvg_render ( ) OVER\n" );
 }

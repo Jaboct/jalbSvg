@@ -34,6 +34,7 @@ jh/structStruct/jLiveData.xml
 jh/structStruct/complexMod.xml
 jh/structStruct/complexScript.xml
 jh/structStruct/cScriptEle.xml
+jh/structStruct/complexModData.xml
 
 # fileStructs
 jh/fileStruct/mod.xml

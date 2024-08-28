@@ -259,7 +259,7 @@ struct xmlFuncts jNakedUnionXml = {
 	jNakedUnionInitMask,
 	jNakedUnionNameToIndex,
 	jNakedUnionBodyToVal,
-	(void (*) (void*, int))jNakedUnionTypeChange0,
+	.typeChange = (void (*) (void*, int))jNakedUnionTypeChange0,
 };
 
 void jNakedUnion_print ( struct jNakedUnion *stru ) {
@@ -277,7 +277,7 @@ struct jvg *jvgInit ( ) {
 }
 void jvgFill ( struct jvg *var ) {
 	var->eles = initArrayList ( 10, sizeof ( struct jNakedUnion* ), 10 );
-	var->complexDecList = initArrayList ( 10, sizeof ( struct complexDec* ), 10 );
+	var->moduleList = initArrayList ( 10, sizeof ( struct complexMod* ), 10 );
 }
 
 void *jvgInitMask ( ) {
@@ -289,8 +289,8 @@ void jvgClose ( struct jvg *var ) {
 	if ( var->eles ) {
 		freeArrayListPointerFunction ( var->eles, (void (*)(void*))jNakedUnionClose );
 	}
-	if ( var->complexDecList ) {
-		freeArrayListPointerFunction ( var->complexDecList, (void (*)(void*))complexDecClose );
+	if ( var->moduleList ) {
+		freeArrayListPointerFunction ( var->moduleList, (void (*)(void*))complexModClose );
 	}
 	free ( var );
 
@@ -315,9 +315,9 @@ int jvgNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **mo
 		void **ptrPtr = (void**)ret;
 		*ptrPtr = var->eles;
 		return jxnAlPtr;
-	} else if ( strcmp ( body, "complexDecList" ) == 0 ) {
+	} else if ( strcmp ( body, "moduleList" ) == 0 ) {
 		void **ptrPtr = (void**)ret;
-		*ptrPtr = var->complexDecList;
+		*ptrPtr = var->moduleList;
 		return jxnAlPtr;
 	}
 	return -1;

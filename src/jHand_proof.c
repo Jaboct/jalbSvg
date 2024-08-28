@@ -52,10 +52,13 @@ void hand_complex_save ( ) {
 	}
 
 
+	struct complexMod *mod = complexModInit ( );
+
+
 printf ( "a\n" );
 	struct jvg *jvg = jvgInit ( );
 	struct complexDec *dec = complexDecInit ( );
-	arrayListAddEndPointer ( jvg->complexDecList, dec );
+	arrayListAddEndPointer ( mod->complexDecList, dec );
 
 printf ( "b\n" );
 	void *subVar = f_subVar_init ( );
@@ -79,7 +82,7 @@ void hand_complex_load ( ) {
 	struct jvg *jvg = jalbJvg_load ( dir );
 
 
-	printf ( "jvg->complexDecList.len: %d\n", arrayListGetLength ( jvg->complexDecList ) );
+//	printf ( "jvg->complexDecList.len: %d\n", arrayListGetLength ( mod->complexDecList ) );
 
 	char *dir1 = "/home/jadoo/workspace/jHigh/jalbSvg/res/jvgTest/test_01.xml";
 	jalbJvg_save ( jvg, dir1 );

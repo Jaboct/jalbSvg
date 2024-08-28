@@ -19,7 +19,7 @@
 #include "jPath.h"
 #include "jText.h"
 #include "jShapes.h"
-#include "complexEle.h"
+#include "complexMod.h"
 
 void jGroup_preInit ( );
 
@@ -54,7 +54,7 @@ enum jNakedUnionEnum {
 };
 struct jvg {
 	ArrayList *eles;	// (struct jNakedUnion*)
-	ArrayList *complexDecList;	// (struct complexDec*)
+	ArrayList *moduleList;	// (struct complexMod*)
 };
 
 

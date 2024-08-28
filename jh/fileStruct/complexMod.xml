@@ -8,12 +8,14 @@
   <drawCutString>0</drawCutString>
   <scrollHandle>0</scrollHandle>
   <preInc>
+</preInc>
+  <postInc>
 #include &quot;complexEle.h&quot;
 #include &quot;complexScript.h&quot;
-</preInc>
-  <postInc></postInc>
+</postInc>
   <structIds>
     28,
+    31,
   </structIds>
   <functIds>
   </functIds>

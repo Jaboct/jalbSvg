@@ -13,6 +13,8 @@
 #include "jGroup.h"
 #include "jShapes.h"
 #include "complexEle.h"
+#include "complexMod.h"
+#include "complexScript.h"
 
 /** Functions */
 

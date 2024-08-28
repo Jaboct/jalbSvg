@@ -23,8 +23,12 @@ void hand_complex_00 ( ) {
 void hand_complex_01 ( ) {
 	printf ( "hand_complex_01 ( )\n" );
 
+	/// TODO, this should be retrieved.
+	int modI = 0;
+	struct complexMod *mod = arrayListGetPointer ( glob_jvg->moduleList, modI );
+
 	struct complexDec *dec = complexDecInit ( );
-	arrayListAddEndPointer ( glob_jvg->complexDecList, dec );
+	arrayListAddEndPointer ( mod->complexDecList, dec );
 
 	struct subVar *var = subVarInit ( );
 	arrayListAddEndPointer ( dec->subVars, var );
@@ -191,7 +195,12 @@ void complexDecPostInit ( struct complexDec *dec ) {
 
 // type is the index of the complexDecList
 void complexEle_initType ( struct complexEle *ele, int type ) {
-	int numDecs = arrayListGetLength ( glob_jvg->complexDecList );
+
+	/// TODO, this should be retrieved.
+	int modI = 0;
+	struct complexMod *mod = arrayListGetPointer ( glob_jvg->moduleList, modI );
+
+	int numDecs = arrayListGetLength ( mod->complexDecList );
 	if ( type < 0 ||
 	     type >= numDecs ) {
 		printf ( "ERROR, type out of range\n" );
@@ -200,7 +209,7 @@ void complexEle_initType ( struct complexEle *ele, int type ) {
 
 	ele->decType = type;
 
-	struct complexDec *dec = arrayListGetPointer ( glob_jvg->complexDecList, type );
+	struct complexDec *dec = arrayListGetPointer ( mod->complexDecList, type );
 	int i = 0;
 	int len = arrayListGetLength ( dec->subVars );
 	while ( i < len ) {
@@ -226,7 +235,11 @@ int complexEle_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct compl
 		float *viewLoc, float viewScale ) {
 	printf ( "complexEle_mEvent ( )\n" );
 
-	int numDec = arrayListGetLength ( glob_jvg->complexDecList );
+	/// TODO, this should be retrieved.
+	int modI = 0;
+	struct complexMod *mod = arrayListGetPointer ( glob_jvg->moduleList, modI );
+
+	int numDec = arrayListGetLength ( mod->complexDecList );
 
 	if ( ele->decType < 0 ||
 	     ele->decType >= numDec ) {
@@ -246,7 +259,7 @@ int complexEle_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct compl
 		return 0;
 	}
 
-	struct complexDec *dec = arrayListGetPointer ( glob_jvg->complexDecList, ele->decType );
+	struct complexDec *dec = arrayListGetPointer ( mod->complexDecList, ele->decType );
 
 	printf ( "dec->eventFunct: %p\n", dec->eventFunct );
 
@@ -273,11 +286,26 @@ int complexEle_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct compl
 }
 
 
+extern char altKeys[];
+
 extern ArrayList *scopeData;	// (struct idPtr*)
 
 void hand_ee_event ( SDL_Event *e, int *clickXYpass, int *eleWH, struct complexEle *ele ) {
 	printf ( "hand_ee_event ( )\n" );
 	printf ( "ele->decType: %d\n", ele->decType );
+
+	sayCharArray_hex ( "altKeys", altKeys, akNum );
+
+	int modI = 0;
+	struct complexMod *mod = arrayListGetPointer ( glob_jvg->moduleList, modI );
+	if ( !mod ) {
+		printf ( "ERROR, !mod\n" );
+	}
+
+	if ( altKeys[akShift] ) {
+		// set cursor.
+		// ok, so i need to get data.
+	}
 
 	if ( !scopeData ) {
 		scopeData = initArrayList ( 10, sizeof ( void* ), 10 );	

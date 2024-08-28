@@ -4,6 +4,7 @@
 
 #include "api/structStruct.h"
 
+#include "complexMod.h"
 #include "complexEle.h"
 
 
@@ -49,6 +50,16 @@ struct jVarRef *jVarRefInit ( );
 struct jLitRef *jLitRefInit ( );
 
 void run_script ( ArrayList *script );
+
+
+/// Complex Mod
+
+void hand_save_complexMod ( );
+void save_complexMod ( char *dir, struct complexMod *mod );
+void hand_load_complexMod ( );
+
+
+
 
 
 

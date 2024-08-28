@@ -519,16 +519,16 @@ struct backbone_subVar jvg_eles = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subAl jvg_complexDecList_subAl = {
+struct backbone_subAl jvg_moduleList_subAl = {
 	.overflow = 10,
 	.literal = 0,
 	.type = 1,
-	.typeIndex = 10,
+	.typeIndex = 13,
 	.length = -1,
 	.naked = 0,
 };
-struct backbone_subVar jvg_complexDecList = {
-	.name = "complexDecList",
+struct backbone_subVar jvg_moduleList = {
+	.name = "moduleList",
 	.type = 0,
 	.typeIndex = 3,
 	.initType = 0,
@@ -536,15 +536,15 @@ struct backbone_subVar jvg_complexDecList = {
 	.literal = 1,
 	.data = {
 		.id = 0,
-		.ptr = &jvg_complexDecList_subAl,
+		.ptr = &jvg_moduleList_subAl,
 	},
-	.external = offsetof ( struct jvg, complexDecList ),
+	.external = offsetof ( struct jvg, moduleList ),
 	.saveFlag = 1,
 	.naked = 0,
 };
 struct backbone_subVar *jvg_varArr[] = {
 	&jvg_eles,
-	&jvg_complexDecList,
+	&jvg_moduleList,
 };
 struct backbone_structStruct jvg = {
 	.name = "jvg",
@@ -1045,9 +1045,268 @@ struct backbone_structStruct jLiveData = {
 
 
 
+
+
+/** complexMod */
+
+int complexMod_attributes[] = {
+	0,
+	0,
+	0,
+	0,
+};
+struct backbone_subVar complexMod_name = {
+	.name = "name",
+	.type = 0,
+	.typeIndex = 4,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct complexMod, name ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subAl complexMod_complexDecList_subAl = {
+	.overflow = 10,
+	.literal = 0,
+	.type = 1,
+	.typeIndex = 10,
+	.length = -1,
+	.naked = 0,
+};
+struct backbone_subVar complexMod_complexDecList = {
+	.name = "complexDecList",
+	.type = 0,
+	.typeIndex = 3,
+	.initType = 0,
+	.length = 0,
+	.literal = 1,
+	.data = {
+		.id = 0,
+		.ptr = &complexMod_complexDecList_subAl,
+	},
+	.external = offsetof ( struct complexMod, complexDecList ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subAl complexMod_globalVars_subAl = {
+	.overflow = 10,
+	.literal = 0,
+	.type = 1,
+	.typeIndex = 0,
+	.length = -1,
+	.naked = 0,
+	.modNick = "jHigh",
+	.typeName = "subVar",
+};
+struct backbone_subVar complexMod_globalVars = {
+	.name = "globalVars",
+	.type = 0,
+	.typeIndex = 3,
+	.initType = 0,
+	.length = 0,
+	.literal = 1,
+	.data = {
+		.id = 0,
+		.ptr = &complexMod_globalVars_subAl,
+	},
+	.external = offsetof ( struct complexMod, globalVars ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subAl complexMod_globalScripts_subAl = {
+	.overflow = 10,
+	.literal = 0,
+	.type = 1,
+	.typeIndex = 14,
+	.length = -1,
+	.naked = 0,
+};
+struct backbone_subVar complexMod_globalScripts = {
+	.name = "globalScripts",
+	.type = 0,
+	.typeIndex = 3,
+	.initType = 0,
+	.length = 0,
+	.literal = 1,
+	.data = {
+		.id = 0,
+		.ptr = &complexMod_globalScripts_subAl,
+	},
+	.external = offsetof ( struct complexMod, globalScripts ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar *complexMod_varArr[] = {
+	&complexMod_name,
+	&complexMod_complexDecList,
+	&complexMod_globalVars,
+	&complexMod_globalScripts,
+};
+struct backbone_structStruct complexMod = {
+	.name = "complexMod",
+	.varsLen = 4,
+	.vars = complexMod_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
+	.structSize = sizeof ( struct complexMod ),
+	.attributes = complexMod_attributes,
+};
+
+
+
+
+
+
+/** complexScript */
+
+int complexScript_attributes[] = {
+	0,
+	0,
+};
+struct backbone_subVar complexScript_name = {
+	.name = "name",
+	.type = 0,
+	.typeIndex = 4,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct complexScript, name ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subAl complexScript_eleList_subAl = {
+	.overflow = 10,
+	.literal = 0,
+	.type = 1,
+	.typeIndex = 15,
+	.length = -1,
+	.naked = 0,
+};
+struct backbone_subVar complexScript_eleList = {
+	.name = "eleList",
+	.type = 0,
+	.typeIndex = 3,
+	.initType = 0,
+	.length = 0,
+	.literal = 1,
+	.data = {
+		.id = 0,
+		.ptr = &complexScript_eleList_subAl,
+	},
+	.external = offsetof ( struct complexScript, eleList ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar *complexScript_varArr[] = {
+	&complexScript_name,
+	&complexScript_eleList,
+};
+struct backbone_structStruct complexScript = {
+	.name = "complexScript",
+	.varsLen = 2,
+	.vars = complexScript_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
+	.structSize = sizeof ( struct complexScript ),
+	.attributes = complexScript_attributes,
+};
+
+
+
+
+int cScriptEle_attributes[] = {
+	0,
+};
+int cScriptEle__attributes[] = {
+	0,
+	0,
+};
+struct backbone_subVar cScriptEle__varDec = {
+	.name = "varDec",
+	.type = 0,
+	.typeIndex = -1,
+	.initType = 0,
+	.length = 0,
+	.literal = 1,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct cScriptEle, varDec ),
+	.saveFlag = 1,
+	.naked = 0,
+	.modNick = "jHigh",
+	.typeName = "subVar",
+};
+struct backbone_subVar cScriptEle__operator = {
+	.name = "operator",
+	.type = 0,
+	.typeIndex = -1,
+	.initType = 0,
+	.length = 0,
+	.literal = 1,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct cScriptEle, operator ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar *cScriptEle__varArr[] = {
+	&cScriptEle__varDec,
+	&cScriptEle__operator,
+};
+struct backbone_subComplex cScriptEle__complex = {
+	.type = {
+	},
+	.typeDec = 0,
+	.listLen = 2,
+	.arr = cScriptEle__varArr,
+	.prefix = ""
+};
+struct backbone_subVar cScriptEle_ = {
+	.name = "",
+	.type = 0,
+	.typeIndex = 6,
+	.initType = 0,
+	.length = 0,
+	.literal = 1,
+	.data = {
+		.id = 0,
+		.ptr = &cScriptEle__complex,
+	},
+	.external = offsetof ( struct cScriptEle, type ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar *cScriptEle_varArr[] = {
+	&cScriptEle_,
+};
+struct backbone_structStruct cScriptEle = {
+	.name = "cScriptEle",
+	.varsLen = 1,
+	.vars = cScriptEle_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
+	.structSize = sizeof ( struct cScriptEle ),
+	.attributes = cScriptEle_attributes,
+};
+
+
+
+
 /// Data Array
 
-int len_backbone_arr_jalbJvg = 13;
+int len_backbone_arr_jalbJvg = 16;
 struct backbone_structStruct *backbone_arr_jalbJvg[] = {
 	&jPath,
 	&jVert,
@@ -1062,6 +1321,9 @@ struct backbone_structStruct *backbone_arr_jalbJvg[] = {
 	&complexDec,
 	&complexEle,
 	&jLiveData,
+	&complexMod,
+	&complexScript,
+	&cScriptEle,
 };
 
 

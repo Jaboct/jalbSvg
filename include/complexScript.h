@@ -28,6 +28,16 @@ struct complexScript {
 	ArrayList *eleList;	// (struct cScriptEle*)
 };
 struct cScriptEle {
+	int type;
+	union  {
+		struct subVar *varDec;
+//		out of range (type: 0) (typeIndex: -1) *operator;
+		void *operator;
+	};
+};
+enum cScriptEleEnum {
+	VarDec = 0,
+	Operator,
 };
 
 
@@ -47,6 +57,7 @@ int complexScriptNameToIndex ( char *body, void *data, void *ret, char **strPtr,
 /** cScriptEle */
 struct cScriptEle *cScriptEleInit ( );
 void cScriptEleFill ( struct cScriptEle *var );
+void cScriptEleTypeChange0 ( struct cScriptEle *var, int type );
 void *cScriptEleInitMask ( );
 void cScriptEleClose ( struct cScriptEle *var );
 void cScriptEleBodyToVal ( void *varPass, int nameI, char *body );

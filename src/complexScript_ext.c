@@ -256,3 +256,67 @@ printf ( "}\n" );
 	printf ( "run_script ( ) OVER\n" );
 }
 
+
+/// Complex Mod
+
+extern int len_backbone_arr_jalbJvg;
+extern struct backbone_structStruct *backbone_arr_jalbJvg[];
+
+extern int complexMod_attributes[];
+extern struct backbone_structStruct complexMod;
+
+
+extern int num_structStruct_jalbJvg;
+extern struct xmlFuncts *xmlFuncts_arr_jalbJvg[];
+
+
+void hand_save_complexMod ( ) {
+	printf ( "hand_save_complexMod ( )\n" );
+
+
+	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/EE/test_00_script.xml";
+
+	struct complexMod *mod = complexModInit ( );
+	strcpy ( mod->name, "mod name" );
+
+	struct complexDec *dec = complexDecInit ( );
+	arrayListAddEndPointer ( mod->complexDecList, dec );
+
+
+	save_complexMod ( dir, mod );
+
+
+	printf ( "hand_save_complexMod ( ) OVER\n" );
+}
+
+void save_complexMod ( char *dir, struct complexMod *mod ) {
+	printf ( "save_complexMod ( )\n" );
+
+
+	fwriteXml_backbone ( dir, &complexMod, mod,
+		complexMod_attributes, backbone_arr_jalbJvg, len_backbone_arr_jalbJvg );
+
+
+	printf ( "save_complexMod ( ) OVER\n" );
+}
+
+void hand_load_complexMod ( ) {
+	printf ( "hand_load_complexMod ( )\n" );
+
+
+	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/EE/test_00_script.xml";
+	char *dir2 = "/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/EE/test_00_script_2.xml";
+
+	struct complexMod *mod = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbJvg, num_structStruct_jalbJvg );
+
+	printf ( "loaded: %p\n", mod );
+
+	save_complexMod ( dir2, mod );
+
+
+	printf ( "hand_load_complexMod ( ) OVER\n" );
+}
+
+
+
+

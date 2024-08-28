@@ -101,6 +101,7 @@ void jNaked_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct j
 		float *viewLoc, float viewScale ) {
 	if ( debugPrint_jvg_render ) {
 		printf ( "jNaked_render ( )\n" );
+		printf ( "uni->type: %d\n", uni->type );
 	}
 
 	if ( uni->type == jNaked_G ) {
@@ -538,6 +539,14 @@ void complexEleRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struc
 	fXYWH[2] = complex->XYWH[2] / viewScale;
 	fXYWH[3] = complex->XYWH[3] / viewScale;
 
+	/// TODO, this should be retrieved.
+	int modI = 0;
+	struct complexMod *mod = arrayListGetPointer ( glob_jvg->moduleList, modI );
+	if ( !mod ) {
+		printf ( "ERROR, !mod\n" );
+		return;
+	}
+
 	int drawOutline = 1;
 	if ( complex->decType < 0 ) {
 		drawOutline = 1;
@@ -558,7 +567,7 @@ void complexEleRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struc
 	} else {
 //		printf ( "complex->decType: %d\n", complex->decType );
 
-		struct complexDec *dec = arrayListGetPointer ( glob_jvg->complexDecList, complex->decType );
+		struct complexDec *dec = arrayListGetPointer ( mod->complexDecList, complex->decType );
 
 		float screenXY[2] = {
 			fXYWH[0],

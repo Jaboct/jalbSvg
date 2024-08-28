@@ -45,7 +45,7 @@ struct complexMod *complexModInit ( ) {
 	return var;
 }
 void complexModFill ( struct complexMod *var ) {
-	var->name = NULL;
+	var->name[0] = '\0';
 	var->complexDecList = initArrayList ( 10, sizeof ( struct complexDec* ), 10 );
 	var->globalVars = initArrayList ( 10, sizeof ( struct subVar* ), 10 );
 	var->globalScripts = initArrayList ( 10, sizeof ( struct complexScript* ), 10 );

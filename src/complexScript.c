@@ -111,7 +111,24 @@ struct cScriptEle *cScriptEleInit ( ) {
 	return var;
 }
 void cScriptEleFill ( struct cScriptEle *var ) {
+	var->type = -1;
+//	cScriptEleTypeChange0 ( var, 0 );
 }
+void cScriptEleTypeChange0 ( struct cScriptEle *var, int type ) {
+	if ( var->type == type ) {
+		return;
+	}
+	if ( var->type == 0 ) {
+	} else if ( var->type == 1 ) {
+	}
+	if ( type == 0 ) {
+				
+	} else if ( type == 1 ) {
+				
+	}
+	var->type = type;
+}
+
 
 void *cScriptEleInitMask ( ) {
 	void *ret = cScriptEleInit ( );
@@ -119,18 +136,38 @@ void *cScriptEleInitMask ( ) {
 
 }
 void cScriptEleClose ( struct cScriptEle *var ) {
+	if ( var->type == 0 ) {
+	} else if ( var->type == 1 ) {
+	}
 	free ( var );
 
 }
 int cScriptEle_attrib_arr[] = {
+	0,
 };
 void cScriptEleBodyToVal ( void *varPass, int nameI, char *body ) {
 
+	struct cScriptEle *var = varPass;
 
+	if ( nameI == 0 ) {
+		if ( var->type == 0 ) {
+			// wont get called?
+		} else if ( var->type == 1 ) {
+			// wont get called?
+		}
+	}
 }
 
 int cScriptEleNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
+	struct cScriptEle *var = data;
+	if ( strcmp ( body, "varDec" ) == 0 ) {
+		cScriptEleTypeChange0 ( var, 0 );
+		return 0;
+	} else if ( strcmp ( body, "operator" ) == 0 ) {
+		cScriptEleTypeChange0 ( var, 1 );
+		return 0;
+	}
 	return -1;
 }
 
@@ -139,6 +176,7 @@ struct xmlFuncts cScriptEleXml = {
 	cScriptEleInitMask,
 	cScriptEleNameToIndex,
 	cScriptEleBodyToVal,
+	.typeChange = (void (*) (void*, int))cScriptEleTypeChange0,
 };
 
 void cScriptEle_print ( struct cScriptEle *stru ) {

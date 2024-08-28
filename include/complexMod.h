@@ -15,8 +15,7 @@
 #include <jalbXml/jalbXml_02.h>
 
 
-#include "complexEle.h"
-#include "complexScript.h"
+
 
 void complexMod_preInit ( );
 
@@ -26,7 +25,7 @@ void complexMod_preInit ( );
 /** Structs */
 
 struct complexMod {
-	char *name;
+	char name[256];
 	ArrayList *complexDecList;	// (struct complexDec*)
 	ArrayList *globalVars;	// (struct subVar*)
 	ArrayList *globalScripts;	// (struct complexScript*)
@@ -34,6 +33,9 @@ struct complexMod {
 
 
 /** Post Includes */
+
+#include "complexEle.h"
+#include "complexScript.h"
 
 
 /** Functions */
