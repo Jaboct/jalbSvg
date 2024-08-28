@@ -31,6 +31,7 @@ jh/structStruct/jEllipse.xml
 jh/structStruct/complexDec.xml
 jh/structStruct/complexEle.xml
 jh/structStruct/jLiveData.xml
+jh/structStruct/complexMod.xml
 
 # fileStructs
 jh/fileStruct/mod.xml
@@ -44,6 +45,7 @@ jh/fileStruct/jText.xml
 jh/fileStruct/jGroup.xml
 jh/fileStruct/jShapes.xml
 jh/fileStruct/complexEle.xml
+jh/fileStruct/complexMod.xml
 
 # functions
 jh/function/funct.xml

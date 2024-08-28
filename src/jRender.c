@@ -585,6 +585,36 @@ void complexEleRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struc
 				viewLoc, viewScale );
 		} else {
 //			printf ( "ERROR, !dec->renderFunct\n" );
+
+			float charXY[2] = { fXYWH[0] + 2, fXYWH[1] + 2 };
+
+			char buffer[1024];
+
+			draw2dApi->drawCharPre ( font, colorWhite );
+
+			sprintf ( buffer, "%s", dec->name );
+			draw2dApi->drawStringBounded ( screenDims, glBuffers, charXY,
+				fXYWH, font, buffer );
+			charXY[1] += font->atlasInfo.glyphH;
+
+
+			int i = 0;
+			int len = arrayListGetLength ( complex->liveSubVars );
+			while ( i < len ) {
+				struct jLiveData *data = arrayListGetPointer ( complex->liveSubVars, i );
+				struct subVar *subVar = arrayListGetPointer ( dec->subVars, i );
+				if ( data->type == 0 ) {
+					sprintf ( buffer, "%s: %d", subVar->name, data->i );
+				} else {
+					sprintf ( buffer, "data type not handled" );
+				}
+
+				draw2dApi->drawStringBounded ( screenDims, glBuffers, charXY,
+					fXYWH, font, buffer );
+				charXY[1] += font->atlasInfo.glyphH;
+
+				i += 1;
+			}
 		}
 	}
 }

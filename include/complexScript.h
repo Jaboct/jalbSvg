@@ -1,6 +1,10 @@
 #pragma once
 
+#include <jalb/jalb_idPtr.h>
+
 #include "api/structStruct.h"
+
+#include "complexEle.h"
 
 
 /** Structs */
@@ -37,6 +41,7 @@ struct jLitRef {
 /** Functions */
 
 void hand_script ( );
+void hand_script_2 ( );
 
 struct jScriptEle *jScriptEleInit ( );
 struct jScriptOperator *jScriptOperatorInit ( );

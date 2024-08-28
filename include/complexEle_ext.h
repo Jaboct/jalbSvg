@@ -11,6 +11,8 @@
 #include "jGroup.h"
 #include "complexEle.h"
 
+#include "complexScript.h"
+
 /** Struct */
 
 struct modWrap {

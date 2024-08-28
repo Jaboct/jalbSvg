@@ -235,7 +235,16 @@ int complexEle_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct compl
 		return 0;
 	}
 
-	// TODO make sure i click inside the box.
+	float screenXYWH[4];
+	point_to_loc ( ele->XYWH, screenXYWH, viewLoc, viewScale );
+
+	screenXYWH[2] = ele->XYWH[2] / viewScale;
+	screenXYWH[3] = ele->XYWH[3] / viewScale;
+
+	if ( !pointInsideI ( clickXYpass, screenXYWH ) ) {
+		// clicked outside the box.
+		return 0;
+	}
 
 	struct complexDec *dec = arrayListGetPointer ( glob_jvg->complexDecList, ele->decType );
 
@@ -264,13 +273,26 @@ int complexEle_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct compl
 }
 
 
+extern ArrayList *scopeData;	// (struct idPtr*)
 
 void hand_ee_event ( SDL_Event *e, int *clickXYpass, int *eleWH, struct complexEle *ele ) {
 	printf ( "hand_ee_event ( )\n" );
 	printf ( "ele->decType: %d\n", ele->decType );
 
+	if ( !scopeData ) {
+		scopeData = initArrayList ( 10, sizeof ( void* ), 10 );	
+	}
+
+	// TEMP
+	// this particular event adds the complexEle.
+	struct idPtr *id = malloc ( sizeof ( *id ) );
+	id->id = 0;
+	id->ptr = ele;
+	arrayListAddEndPointer ( scopeData, id );
+
 	// run the script on this event.
 
+	hand_script_2 ( );
 }
 
 
