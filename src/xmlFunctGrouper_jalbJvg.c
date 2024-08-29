@@ -2,7 +2,7 @@
 
 
 
-int num_structStruct_jalbJvg = 17;
+int num_structStruct_jalbJvg = 18;
 
 
 extern struct xmlFuncts jPathXml;
@@ -22,6 +22,7 @@ extern struct xmlFuncts complexModXml;
 extern struct xmlFuncts complexScriptXml;
 extern struct xmlFuncts cScriptEleXml;
 extern struct xmlFuncts complexModDataXml;
+extern struct xmlFuncts complexRefXml;
 
 
 struct xmlFuncts *xmlFuncts_arr_jalbJvg[] = {
@@ -42,6 +43,7 @@ struct xmlFuncts *xmlFuncts_arr_jalbJvg[] = {
 	&complexScriptXml,
 	&cScriptEleXml,
 	&complexModDataXml,
+	&complexRefXml,
 };
 
 

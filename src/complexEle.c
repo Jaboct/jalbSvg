@@ -22,6 +22,7 @@ void complexEle_preInit ( ) {
 extern int complexDecEditId;
 extern int complexEleEditId;
 extern int jLiveDataEditId;
+extern int complexRefEditId;
 extern int debugPrint_projectName_init;
 
 
@@ -35,6 +36,7 @@ extern addCanvasF *addCanvas;
 extern struct backbone_structStruct complexDec;
 extern struct backbone_structStruct complexEle;
 extern struct backbone_structStruct jLiveData;
+extern struct backbone_structStruct complexRef;
 
 /** Functions */
 
@@ -234,11 +236,14 @@ void jLiveDataTypeChange0 ( struct jLiveData *var, int type ) {
 	}
 	if ( var->type == 0 ) {
 	} else if ( var->type == 1 ) {
+	} else if ( var->type == 2 ) {
 	}
 	if ( type == 0 ) {
 		var->i = 0;
 	} else if ( type == 1 ) {
 		var->f = 0.0;
+	} else if ( type == 2 ) {
+		var->complexRef = complexRefInit ( );
 	}
 	var->type = type;
 }
@@ -252,6 +257,10 @@ void *jLiveDataInitMask ( ) {
 void jLiveDataClose ( struct jLiveData *var ) {
 	if ( var->type == 0 ) {
 	} else if ( var->type == 1 ) {
+	} else if ( var->type == 2 ) {
+		if ( var->complexRef ) {
+			complexRefClose ( var->complexRef );
+		}
 	}
 	free ( var );
 
@@ -268,6 +277,8 @@ void jLiveDataBodyToVal ( void *varPass, int nameI, char *body ) {
 			var->i = atoi ( body );
 		} else if ( var->type == 1 ) {
 			var->f = atof ( body );
+		} else if ( var->type == 2 ) {
+			// wont get called?
 		}
 	}
 }
@@ -281,6 +292,12 @@ int jLiveDataNameToIndex ( char *body, void *data, void *ret, char **strPtr, cha
 	} else if ( strcmp ( body, "f" ) == 0 ) {
 		jLiveDataTypeChange0 ( var, 1 );
 		return 0;
+	} else if ( strcmp ( body, "complexRef" ) == 0 ) {
+		jLiveDataTypeChange0 ( var, 2 );
+		*strPtr = "complexRef";
+		void **retPtr = ret;
+		*retPtr = &var->complexRef;
+		return jxnPtr;
 	}
 	return -1;
 }
@@ -295,5 +312,68 @@ struct xmlFuncts jLiveDataXml = {
 
 void jLiveData_print ( struct jLiveData *stru ) {
 	printf ( "jLiveData_print ( )\n" );
+}
+/** complexRef */
+
+struct complexRef *complexRefInit ( ) {
+	if ( debugPrint_projectName_init ) {
+		printf ( "complexRefInit ( )\n" );
+	}
+	struct complexRef *var = malloc ( sizeof ( struct complexRef ) );
+	complexRefFill ( var );
+	return var;
+}
+void complexRefFill ( struct complexRef *var ) {
+	var->eleI = 0;
+	var->complexPtr = complexEleInit ( );
+}
+
+void *complexRefInitMask ( ) {
+	void *ret = complexRefInit ( );
+	return ret;
+
+}
+void complexRefClose ( struct complexRef *var ) {
+	free ( var );
+
+}
+int complexRef_attrib_arr[] = {
+	0,
+	0,
+};
+void complexRefBodyToVal ( void *varPass, int nameI, char *body ) {
+
+	struct complexRef *var = varPass;
+
+	if ( nameI == 0 ) {
+		var->eleI = atoi ( body );
+	} else if ( nameI == 1 ) {
+		// wont get called?
+	}
+}
+
+int complexRefNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
+
+	struct complexRef *var = data;
+	if ( strcmp ( body, "eleI" ) == 0 ) {
+		return 0;
+	} else if ( strcmp ( body, "complexPtr" ) == 0 ) {
+		*strPtr = "complexEle";
+		void **retPtr = ret;
+		*retPtr = &var->complexPtr;
+		return jxnPtr;
+	}
+	return -1;
+}
+
+struct xmlFuncts complexRefXml = {
+	"complexRef",
+	complexRefInitMask,
+	complexRefNameToIndex,
+	complexRefBodyToVal,
+};
+
+void complexRef_print ( struct complexRef *stru ) {
+	printf ( "complexRef_print ( )\n" );
 }
 /** Other Functs */

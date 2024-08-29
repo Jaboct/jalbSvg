@@ -219,7 +219,13 @@ void complexEle_initType ( struct complexEle *ele, int type ) {
 			struct jLiveData *jLive = jLiveDataInit ( );
 			arrayListAddEndPointer ( ele->liveSubVars, jLive );
 
-			jLiveDataTypeChange0 ( jLive, var->typeIndex );
+			// TODO better type changing between subVar and jLiveData.
+			int type = var->typeIndex;
+			if ( type == 8 ) {
+				type = jld_ComplexRef;
+			}
+
+			jLiveDataTypeChange0 ( jLive, type );
 		} else {
 			arrayListAddEndPointer ( ele->liveSubVars, NULL );
 		}
@@ -300,6 +306,110 @@ extern int cursor_depth;
 extern int selected;
 
 
+// for complexRef linking
+void jvgPostInit ( struct jvg *jvg ) {
+	printf ( "jvgPostInit ( )\n" );
+
+	// multiply ways to do this, iterate through the complexDecs to determine which have complexRefs, then only update those eles.
+	// iterate through naked unions, if it is a complex of uknown type, iterate throught its vars, if it finds a complexRef, then mark that type as good,
+	//  if not, then mark it is bad. what if i make unions?
+	// im going to simply iterate every naked union, and then search every complex
+
+
+	int i = 0;
+	int len = arrayListGetLength ( jvg->eles );
+	while ( i < len ) {
+		struct jNakedUnion *uni = arrayListGetPointer ( jvg->eles, i );
+
+		if ( uni->type == jNaked_Complex ) {
+			struct complexEle *ele = uni->complex;
+
+			complexEle_ref_link ( jvg, ele );
+		}
+
+		i += 1;
+	}
+
+	printf ( "jvgPostInit ( ) OVER\n" );
+}
+
+// converts complexRef ptr to eleI
+void jvgPreSave ( struct jvg *jvg ) {
+	printf ( "jvgPreSave ( )\n" );
+
+	int i = 0;
+	int len = arrayListGetLength ( jvg->eles );
+	while ( i < len ) {
+		struct jNakedUnion *uni = arrayListGetPointer ( jvg->eles, i );
+
+		if ( uni->type == jNaked_Complex ) {
+			struct complexEle *ele = uni->complex;
+
+			complexEle_index_link ( jvg, ele );
+		}
+
+		i += 1;
+	}
+
+	printf ( "jvgPreSave ( ) OVER\n" );
+}
+
+void complexEle_ref_link ( struct jvg *jvg, struct complexEle *ele ) {
+	printf ( "complexEle_ref_link ( )\n" );
+
+	int i = 0;
+	int len = arrayListGetLength ( ele->liveSubVars );
+	while ( i < len ) {
+		struct jLiveData *data = arrayListGetPointer ( ele->liveSubVars, i );
+		if ( data->type == jld_ComplexRef ) {
+			struct complexRef *ref = data->complexRef;
+
+			printf ( "get ptr for ref->eleI: %d\n", ref->eleI );
+
+			struct jNakedUnion *uni = arrayListGetPointer ( jvg->eles, ref->eleI );
+			if ( uni->type == jNaked_Complex ) {
+				data->complexRef->complexPtr = uni->complex;
+			} else {
+				printf ( "ERROR, ele [%d] is not a complexEle\n", ref->eleI );
+			}
+		}
+
+		i += 1;
+	}
+}
+
+void complexEle_index_link ( struct jvg *jvg, struct complexEle *ele ) {
+	int i = 0;
+	int len = arrayListGetLength ( ele->liveSubVars );
+	while ( i < len ) {
+		struct jLiveData *data = arrayListGetPointer ( ele->liveSubVars, i );
+		if ( data->type == jld_ComplexRef ) {
+			data->complexRef->eleI = complexEle_toIndex ( jvg, data->complexRef->complexPtr );
+		}
+		i += 1;
+	}
+}
+
+int complexEle_toIndex ( struct jvg *jvg, struct complexEle *ele ) {
+	int i = 0;
+	int len = arrayListGetLength ( jvg->eles );
+	while ( i < len ) {
+		struct jNakedUnion *uni = arrayListGetPointer ( jvg->eles, i );
+
+		if ( uni->type == jNaked_Complex ) {
+			if ( uni->complex == ele ) {
+				return i;
+			}
+		}
+
+		i += 1;
+	}
+	return -1;
+}
+
+/** Temp Hand Electrical Engineering Functions */
+
+void hand_voltageSource_render ( 
 
 
 int hand_ee_event ( SDL_Event *e, int *clickXYpass, int *eleWH, struct complexEle *ele ) {
@@ -342,7 +452,14 @@ int hand_ee_event ( SDL_Event *e, int *clickXYpass, int *eleWH, struct complexEl
 						// TODO, is the old eles node selected?
 						// now lets link them.
 
-						printf ( "the mods linked\n" );
+						printf ( "the mods are the same\n" );
+
+						// this is specific stuff
+						if ( selEle->decType == 0 ) {
+							// the complexRef is ele[1]
+							struct jLiveData *data = arrayListGetPointer ( ele->liveSubVars, 1 );
+							data->complexRef->complexPtr = selEle;
+						}
 //					}
 				}
 			}
@@ -375,14 +492,14 @@ int hand_ee_event ( SDL_Event *e, int *clickXYpass, int *eleWH, struct complexEl
 
 	hand_script_2 ( );
 
+	// subtraction propogation script.
+	struct jLiveData *data = arrayListGetPointer ( ele->liveSubVars, 1 );
+	struct complexEle *other = data->complexRef->complexPtr;
+	if ( other ) {
+		struct jLiveData *subData = arrayListGetPointer ( other->liveSubVars, 0 );
+		subData->i -= 1;
+	}
+
 	return 2;
 }
-
-
-
-
-
-
-
-
 

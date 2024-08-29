@@ -612,8 +612,10 @@ void complexEleRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struc
 			while ( i < len ) {
 				struct jLiveData *data = arrayListGetPointer ( complex->liveSubVars, i );
 				struct subVar *subVar = arrayListGetPointer ( dec->subVars, i );
-				if ( data->type == 0 ) {
+				if ( data->type == jld_I ) {
 					sprintf ( buffer, "%s: %d", subVar->name, data->i );
+				} else if ( data->type == jld_ComplexRef ) {
+					sprintf ( buffer, "Complex Ref, draw line" );
 				} else {
 					sprintf ( buffer, "data type not handled" );
 				}
@@ -621,6 +623,25 @@ void complexEleRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struc
 				draw2dApi->drawStringBounded ( screenDims, glBuffers, charXY,
 					fXYWH, font, buffer );
 				charXY[1] += font->atlasInfo.glyphH;
+
+				if ( data->type == jld_ComplexRef ) {
+					struct complexEle *otherEle = data->complexRef->complexPtr;
+					if ( otherEle ) {
+//						printf ( "DRAWING CONNECTING LINE\n" );
+
+						float p0[2] = { fXYWH[0], fXYWH[1] };
+						float p1[2];
+						point_to_loc ( otherEle->XYWH, p1, viewLoc, viewScale );
+
+//						sayFloatArray ( "p0", p0, 2 );
+//						sayFloatArray ( "p1", p1, 2 );
+
+						// this should use svg logic to thicken it?
+						draw2dApi->drawSeg ( screenDims, glBuffers, p0, p1, colorWhite );
+
+						draw2dApi->drawCharPre ( font, colorWhite );
+					}
+				}
 
 				i += 1;
 			}

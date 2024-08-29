@@ -61,6 +61,7 @@ struct jvg {
 /** Post Includes */
 
 #include "complexMod.h"
+#include "complexEle_ext.h"
 
 
 /** Functions */

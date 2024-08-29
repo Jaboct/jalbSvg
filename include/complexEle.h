@@ -43,11 +43,17 @@ struct jLiveData {
 	union  {
 		int i;
 		float f;
+		struct complexRef *complexRef;
 	};
 };
 enum jLiveDataEnum {
 	jld_I = 0,
 	jld_F,
+	jld_ComplexRef,
+};
+struct complexRef {
+	int eleI;
+	struct complexEle *complexPtr;
 };
 
 
@@ -82,5 +88,13 @@ void *jLiveDataInitMask ( );
 void jLiveDataClose ( struct jLiveData *var );
 void jLiveDataBodyToVal ( void *varPass, int nameI, char *body );
 int jLiveDataNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
+
+/** complexRef */
+struct complexRef *complexRefInit ( );
+void complexRefFill ( struct complexRef *var );
+void *complexRefInitMask ( );
+void complexRefClose ( struct complexRef *var );
+void complexRefBodyToVal ( void *varPass, int nameI, char *body );
+int complexRefNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** Other Functs */

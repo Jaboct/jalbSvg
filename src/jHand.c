@@ -197,10 +197,10 @@ void jalbJvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void
 int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 		float *viewLoc, float viewScale ) {
 
-//	if ( debugPrint_jvg_event ) {
+	if ( debugPrint_jvg_event ) {
 		printf ( "jalbJvg_mEvent ( )\n" );
 		printf ( "selected: %d\n", selected );
-//	}
+	}
 
 	int ret = 0;
 
@@ -915,6 +915,7 @@ void jalbJvg_save ( struct jvg *jvgEle, char *dir ) {
 	printf ( "jalbJvg_save ( )\n" );
 	printf ( "jvgEle: %p\n", jvgEle );
 
+	jvgPreSave ( jvgEle );
 	fwriteXml_backbone ( dir, &jvg, jvgEle,
 		jvg_attributes, backbone_arr_jalbJvg, len_backbone_arr_jalbJvg );
 }

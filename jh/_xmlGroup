@@ -35,6 +35,7 @@ jh/structStruct/complexMod.xml
 jh/structStruct/complexScript.xml
 jh/structStruct/cScriptEle.xml
 jh/structStruct/complexModData.xml
+jh/structStruct/complexRef.xml
 
 # fileStructs
 jh/fileStruct/mod.xml

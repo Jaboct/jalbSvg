@@ -1013,6 +1013,7 @@ int jLiveData_attributes[] = {
 int jLiveData__attributes[] = {
 	0,
 	0,
+	0,
 };
 struct backbone_subVar jLiveData__i = {
 	.name = "i",
@@ -1042,15 +1043,30 @@ struct backbone_subVar jLiveData__f = {
 	.saveFlag = 1,
 	.naked = 0,
 };
+struct backbone_subVar jLiveData__complexRef = {
+	.name = "complexRef",
+	.type = 1,
+	.typeIndex = 17,
+	.initType = 0,
+	.length = 0,
+	.literal = 0,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct jLiveData, complexRef ),
+	.saveFlag = 0,
+	.naked = 0,
+};
 struct backbone_subVar *jLiveData__varArr[] = {
 	&jLiveData__i,
 	&jLiveData__f,
+	&jLiveData__complexRef,
 };
 struct backbone_subComplex jLiveData__complex = {
 	.type = {
 	},
 	.typeDec = 0,
-	.listLen = 2,
+	.listLen = 3,
 	.arr = jLiveData__varArr,
 	.prefix = "jld_"
 };
@@ -1081,6 +1097,56 @@ struct backbone_structStruct jLiveData = {
 	.structDeclaration = 0,
 	.structSize = sizeof ( struct jLiveData ),
 	.attributes = jLiveData_attributes,
+};
+
+
+
+
+int complexRef_attributes[] = {
+	0,
+	0,
+};
+struct backbone_subVar complexRef_eleI = {
+	.name = "eleI",
+	.type = 0,
+	.typeIndex = 0,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct complexRef, eleI ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar complexRef_complexPtr = {
+	.name = "complexPtr",
+	.type = 1,
+	.typeIndex = 11,
+	.initType = 0,
+	.length = 0,
+	.literal = 1,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct complexRef, complexPtr ),
+	.saveFlag = 99,
+	.naked = 0,
+};
+struct backbone_subVar *complexRef_varArr[] = {
+	&complexRef_eleI,
+	&complexRef_complexPtr,
+};
+struct backbone_structStruct complexRef = {
+	.name = "complexRef",
+	.varsLen = 2,
+	.vars = complexRef_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
+	.structSize = sizeof ( struct complexRef ),
+	.attributes = complexRef_attributes,
 };
 
 
@@ -1390,7 +1456,7 @@ struct backbone_structStruct cScriptEle = {
 
 /// Data Array
 
-int len_backbone_arr_jalbJvg = 17;
+int len_backbone_arr_jalbJvg = 18;
 struct backbone_structStruct *backbone_arr_jalbJvg[] = {
 	&jPath,
 	&jVert,
@@ -1409,6 +1475,7 @@ struct backbone_structStruct *backbone_arr_jalbJvg[] = {
 	&complexScript,
 	&cScriptEle,
 	&complexModData,
+	&complexRef,
 };
 
 

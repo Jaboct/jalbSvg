@@ -68,4 +68,19 @@ int hand_ee_event ( SDL_Event *e, int *clickXYpass, int *eleWH, struct complexEl
 
 
 
+// for complexRef linking
+void jvgPostInit ( struct jvg *jvg );
+
+// converts complexRef ptr to eleI
+void jvgPreSave ( struct jvg *jvg );
+
+void complexEle_ref_link ( struct jvg *jvg, struct complexEle *ele );
+
+void complexEle_index_link ( struct jvg *jvg, struct complexEle *ele );
+int complexEle_toIndex ( struct jvg *jvg, struct complexEle *ele );
+
+
+
+
+
 
