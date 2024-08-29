@@ -22,7 +22,7 @@ extern int controlPointR;
 extern int selected;
 
 int debugPrint_jvg_event = 0;
-
+int debugPrint_jIterate = 1;
 
 extern int cStart[];
 extern int cEnd[];
@@ -46,11 +46,16 @@ char *uiGen_jTextEdit = "/home/jadoo/workspace/jHigh/jalbSvg/res/uiGen_hand/jTex
 
 int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct jNakedUnion **ele,
 		int *vertI, int *controlI, struct cursorMem **lastCursor ) {
-//	printf ( "iterateToSelected ( )\n" );
+	if ( debugPrint_jIterate ) {
+		printf ( "iterateToSelected ( )\n" );
+	}
 
 	int i = 0;
 	int len = arrayListGetLength ( cursorList );
-//	printf ( "cursorList.len: %d\n", len );
+
+	if ( debugPrint_jIterate ) {
+		printf ( "cursorList.len: %d\n", len );
+	}
 
 	struct jNakedUnion *uni = NULL;
 //	ArrayList *nextList = svg->eles;
@@ -84,7 +89,10 @@ int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct
 		}
 		i += 1;
 	}
-//	printf ( "exited while: %d\n", i );
+
+	if ( debugPrint_jIterate ) {
+		printf ( "exited while: %d\n", i );
+	}
 /*
 	*parent = uni;
 
@@ -134,6 +142,8 @@ int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct
 			*lastCursor = mem;
 
 			return cs_circ;
+		} else if ( uni->type == jNaked_Complex ) {
+			return cs_complex;
 		}
 
 	} else if ( i == len - 3 ) {

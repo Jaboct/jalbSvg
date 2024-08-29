@@ -273,6 +273,9 @@ contains the macros for cursor.<br>
 The cursor info isnt passed through the params, its instead global.<br>
 <br>
 
+<div class="codeBlock">handleCursor_start
+</div>
+
 ArrayList *cursorList;	// (struct cursorMem*)<br>
 int cursor_depth;<br>
 <br>
@@ -325,10 +328,9 @@ int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct
 		int *vertI, int *controlI, struct cursorMem **lastCursor );</div>
 <br>
 Returns the int type of the element that is selected.<br>
-either of:<br>
-enum nakedUnionEnum;<br>
-or<br>
-enum jNakedUnionEnum;<br>
+from the enum of:<br>
+enum cursorSelect;<br>
+
 
 <br>
 <br>

@@ -74,6 +74,7 @@ enum cursorSelect {
 	cs_control,
 	cs_text,
 	cs_circ,
+	cs_complex,
 };
 
 

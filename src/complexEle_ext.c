@@ -235,6 +235,8 @@ int complexEle_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct compl
 		float *viewLoc, float viewScale ) {
 	printf ( "complexEle_mEvent ( )\n" );
 
+	int ret = 0;
+
 	/// TODO, this should be retrieved.
 	int modI = 0;
 	struct complexMod *mod = arrayListGetPointer ( glob_jvg->moduleList, modI );
@@ -277,12 +279,12 @@ int complexEle_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct compl
 		};
 
 		int (*funct)(SDL_Event *e, int *clickXYpass, int *eleWH, void *data) = dec->eventFunct;
-		funct ( e, clickXY, eleWH, ele );
+		ret = funct ( e, clickXY, eleWH, ele );
 	}
 
 	printf ( "complexEle_mEvent ( ) OVER\n" );
 
-	return 0;
+	return ret;
 }
 
 
@@ -290,7 +292,15 @@ extern char altKeys[];
 
 extern ArrayList *scopeData;	// (struct idPtr*)
 
+
+// cursor
+extern ArrayList *cursorList;	// (struct cursorMem *mem)
+extern int cursor_depth;
+
 extern int selected;
+
+
+
 
 int hand_ee_event ( SDL_Event *e, int *clickXYpass, int *eleWH, struct complexEle *ele ) {
 	printf ( "hand_ee_event ( )\n" );
@@ -318,17 +328,23 @@ int hand_ee_event ( SDL_Event *e, int *clickXYpass, int *eleWH, struct complexEl
 			struct cursorMem *lastCursor;
 
 			int selType = jIterateToSelected ( glob_jvg->eles, &parent, &nakedEle, &vertI, &controlI, &lastCursor );
-			if ( selType == jNaked_Complex ) {
+			printf ( "selType: %d\n", selType );
+			if ( selType == cs_complex ) {
 				struct complexEle *selEle = nakedEle->complex;
 				if ( selEle == ele ) {
 					printf ( "CLICKING ON ITSELf\n" );
+				} else {
+//					if ( selEle->decModI == modI ) {
+						// it is from this mod, so continue.
+
+						// it is a seperate ele, from the same mod.
+						// i know i am clicking on this's "node" cuz of shift.
+						// TODO, is the old eles node selected?
+						// now lets link them.
+
+						printf ( "the mods linked\n" );
+//					}
 				}
-
-//				if ( selEle->decModI == modI ) {
-					// it is from this mod, so continue.
-
-					printf ( "the mods linked\n" );
-//				}
 			}
 		} else {
 			printf ( "NO ELE SELECTED\n" );
@@ -336,6 +352,11 @@ int hand_ee_event ( SDL_Event *e, int *clickXYpass, int *eleWH, struct complexEl
 
 		// this ele is now selected
 		selected = 1;
+
+		// idk if i need a specific i.
+		int i = 0;
+
+		handleCursor_start;
 		return 1;
 	}
 

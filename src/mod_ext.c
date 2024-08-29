@@ -48,7 +48,7 @@ GLuint *glob_glBuffers = NULL;
 int selected = 0;
 int mouseHeld = 0;
 
-ArrayList *cursorList = NULL;
+ArrayList *cursorList = NULL;	// (struct cursorMem *mem)
 int cursor_depth = 0;
 
 
@@ -134,7 +134,7 @@ int jalbSvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 	}
 
 	if ( !cursorList ) {
-		cursorList = initArrayList ( 10, sizeof ( void* ), 10 );
+		cursorList = initArrayList ( 10, sizeof ( struct cursorMem* ), 10 );
 	}
 
 	if ( !global_svg ) {

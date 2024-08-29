@@ -118,7 +118,7 @@ void jalbJvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void
 		global_jEles = initArrayList ( 10, sizeof ( struct jNakedUnion* ), 10 );
 	}
 	if ( !cursorList ) {
-		cursorList = initArrayList ( 10, sizeof ( struct cursorMem*), 10 );
+		cursorList = initArrayList ( 10, sizeof ( struct cursorMem* ), 10 );
 	}
 
 	viewScale = 1.0 / viewScale;
@@ -197,9 +197,10 @@ void jalbJvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void
 int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 		float *viewLoc, float viewScale ) {
 
-	if ( debugPrint_jvg_event ) {
+//	if ( debugPrint_jvg_event ) {
 		printf ( "jalbJvg_mEvent ( )\n" );
-	}
+		printf ( "selected: %d\n", selected );
+//	}
 
 	int ret = 0;
 
@@ -356,6 +357,7 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 		}
 		mouseHeld = 1;
 
+		// adding a new ele.
 		if ( cursorInputMode == ci_pen ) {
 			// create a new path.
 
@@ -423,21 +425,25 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 			goto functEnd;
 		}
 
-		selected = 0;
+//		selected = 0;
 
 		ret = jNakedList_mEvent_start ( e, clickXYpass, eleWH, eles,
 			viewLoc, viewScale );
 
-		if ( debugPrint_jvg_event ) {
+//		if ( debugPrint_jvg_event ) {
 			printf ( "naked list return: %d\n", ret );
-		}
+			printf ( "selected: %d\n", selected );
+//		}
 
 		if ( ret ) {
 			sayCursor;
 			goto functEnd;
 		}
 
+		// no ele was clicked on, so clear selected.
+		selected = 0;
 
+		// i did not clikc on an ele.
 		if ( cursorInputMode == ci_text ) {
 			// create a new jText
 
