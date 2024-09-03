@@ -29,8 +29,10 @@ struct complexDec {
 	char modName[256];
 	char renderFunct_name[256];
 	void *renderFunct;
+	ArrayList *renderParams;	// (int)
 	char eventFunct_name[256];
 	void *eventFunct;
+	ArrayList *eventParams;	// (int)
 };
 struct complexEle {
 	float XYWH[4];

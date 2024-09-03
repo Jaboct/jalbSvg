@@ -8,6 +8,10 @@ extern struct jvg *glob_jvg;
 struct jalbLayMod *(*modCore_modGetter) ( char *modNick ) = NULL;
 
 
+extern struct jalbFont *fonts[];
+extern int numFonts;
+
+
 /** Functions */
 
 void hand_complex_00 ( ) {
@@ -235,6 +239,69 @@ void complexEle_initType ( struct complexEle *ele, int type ) {
 }
 
 
+/** Render */
+
+void complexEleRender_sub ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct complexEle *complex, struct complexDec *dec,
+		float *viewLoc, float viewScale ) {
+
+	printf ( "complexEleRender_sub ( )\n" );
+	printf ( "complex: %p\n", complex );
+	printf ( "dec: %p\n", dec );
+
+	int numParams = arrayListGetLength ( dec->renderParams );
+
+	printf ( "numParams: %d\n", numParams );
+
+	if ( numParams <= 0 ) {
+		// For dynamic rendering
+		void (*funct)(int *screenDims, GLuint *glBuffers, int *XYWHpass, void *data,
+			float *viewLoc, float viewScale) = dec->renderFunct;
+		funct ( screenDims, glBuffers, XYWHpass, NULL,
+			viewLoc, viewScale );
+	} else {
+		void *params[numParams];
+		int i = 0;
+		while ( i < numParams ) {
+			int *pIndex = arrayListDataPointer ( dec->renderParams, i );
+
+			printf ( "*pIndex: %d\n", *pIndex );
+
+			struct jLiveData *data = arrayListGetPointer ( complex->liveSubVars, *pIndex );
+			if ( data->type == jld_I ) {
+				params[i] = &data->i;
+			} else if ( data->type == jld_F ) {
+				params[i] = &data->f;
+			} else if ( data->type == jld_ComplexRef ) {
+				params[i] = data->complexRef->complexPtr;
+			}
+
+			i += 1;
+		}
+		printf ( "params[0]: %p\n", params[0] );
+		printf ( "params[1]: %p\n", params[1] );
+
+		if ( numParams == 2 ) {
+			void (*funct)(int *screenDims, GLuint *glBuffers, int *XYWHpass,
+				float *viewLoc, float viewScale,
+				void *p0, void *p1);
+			funct = dec->renderFunct;
+
+			funct ( screenDims, glBuffers, XYWHpass,
+				viewLoc, viewScale,
+				params[0], params[1] );
+		} else if ( numParams == 3 ) {
+			void (*funct)(int *screenDims, GLuint *glBuffers, int *XYWHpass,
+				float *viewLoc, float viewScale,
+				void *p0, void *p1, void *p2);
+			funct = dec->renderFunct;
+
+			funct ( screenDims, glBuffers, XYWHpass,
+				viewLoc, viewScale,
+				params[0], params[1], params[2] );
+		}
+	}
+}
+
 /** Event */
 
 int complexEle_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct complexEle *ele,
@@ -409,8 +476,338 @@ int complexEle_toIndex ( struct jvg *jvg, struct complexEle *ele ) {
 
 /** Temp Hand Electrical Engineering Functions */
 
-void hand_voltageSource_render ( 
 
+extern float colorWhite[];
+
+extern struct draw2dStruct *draw2dApi;
+
+void hand_voltageSource_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass,
+		float *viewLoc, float viewScale,
+		int *voltage, struct complexEle *linkTo, struct complexEle *linkFrom ) {
+
+	printf ( "hand_voltageSource_render ( )\n" );
+	printf ( "*voltage: %d\n", *voltage );
+
+	sayIntArray ( "XYWHpass", XYWHpass, 4 );
+
+	struct jalbFont *font = fonts[0];
+
+	float XYWH[4] = { XYWHpass[0], XYWHpass[1], XYWHpass[2], XYWHpass[3] };
+
+	// i need to bound it better.
+	float centerXY[2] = {
+		XYWH[0] + XYWH[2] / 2,
+		XYWH[1] + XYWH[3] / 2,
+	};
+
+	float radius = 32.0 / viewScale;
+
+	printf ( "radius: %f\n", radius );
+
+//	float canvasXY[2];
+//	point_to_loc ( XYWH, canvasXY, viewLoc, viewScale );
+
+	int sides = 20;
+
+//	int XY[2] = { canvasXY[0], canvasXY[1] };
+//	int XY[2] = { XYWH[0], XYWH[1] };
+	int XY[2] = { centerXY[0], centerXY[1] };
+
+	// draw the circle.
+	draw2dApi->drawCircle_sides ( screenDims, glBuffers,
+		XY, radius, sides, colorWhite );
+
+	// this is total width, i shouldnt need to care about orient in this situation
+	float glyphW = (font->atlasInfo.glyphW - font->atlasInfo.orientX) / viewScale;
+	float glyphH = (font->atlasInfo.glyphH) / viewScale;
+
+	float fXY[2] = {
+		centerXY[0] - glyphW / 2,
+		centerXY[1] - radius,
+	};
+
+	sayFloatArray ( "centerXY", centerXY, 2 );
+	sayFloatArray ( "fXY", fXY, 2 );
+
+	// draw plus and minus
+/*
+	char buffer[32];
+	buffer[0] = '+';
+	buffer[1] = '\0';
+*/
+
+	draw2dApi->drawCharPre ( font, colorWhite );
+/*
+	draw2dApi->drawStringBounded ( screenDims, glBuffers, fXY,
+		XYWH, font, buffer );
+*/
+	int c = '+';
+	unsigned int relC = draw2dApi->charToIndex ( font, c );
+	draw2dApi->drawCharBounded_scale ( screenDims, glBuffers, fXY,
+		XYWH, font, relC, viewScale );
+
+	fXY[1] += radius * 1.4;
+	c = '-';
+	relC = draw2dApi->charToIndex ( font, c );
+	draw2dApi->drawCharBounded_scale ( screenDims, glBuffers, fXY,
+		XYWH, font, relC, viewScale );
+
+	// draw the voltage string
+	char buffer[256];
+	sprintf ( buffer, "%d [V]", *voltage );
+
+	int slen = strlen ( buffer );
+	fXY[0] = centerXY[0] - (slen * glyphW) / 2;
+	fXY[1] = centerXY[1] - glyphH / 2;
+	draw2dApi->drawStringBounded_scale ( screenDims, glBuffers, fXY,
+		XYWH, font, buffer, viewScale );
+
+	// node elements
+	float nodeRadius = 8.0 / viewScale;
+	float offset = 10.0 / viewScale;
+	float nodeLoc[2] = {
+		centerXY[0],
+		centerXY[1] - radius - offset,
+	};
+
+	float eleTop[2] = {
+		centerXY[0],
+		centerXY[1] - radius,
+	};
+
+	draw2dApi->drawSeg ( screenDims, glBuffers, eleTop, nodeLoc, colorWhite );
+
+	nodeLoc[1] = centerXY[1] - radius - offset - nodeRadius;
+	int iNode[2] = { nodeLoc[0], nodeLoc[1], };
+	draw2dApi->drawCircle_sides ( screenDims, glBuffers,
+		iNode, nodeRadius, sides, colorWhite );
+
+/*
+	// link to the next ele.
+	float linkFromXY[2] = {
+		centerXY[0],
+		centerXY[1] - radius,
+	};
+*/
+
+
+	int nodeType = 1;	// 1 for input
+	float linkToXY[2];
+	complexEleNodePosition ( viewLoc, viewScale,
+		linkTo, nodeType, linkToXY );
+
+	draw2dApi->drawSeg ( screenDims, glBuffers, nodeLoc, linkToXY, colorWhite );
+
+
+	// draw the bottom node
+	float eleBot[2] = {
+		centerXY[0],
+		centerXY[1] + radius,
+	};
+	nodeLoc[1] = eleBot[1] + offset;
+	draw2dApi->drawSeg ( screenDims, glBuffers, eleBot, nodeLoc, colorWhite );
+
+	iNode[0] = nodeLoc[0];
+	iNode[1] = nodeLoc[1] + nodeRadius;
+	draw2dApi->drawCircle_sides ( screenDims, glBuffers,
+		iNode, nodeRadius, sides, colorWhite );
+
+	printf ( "hand_voltageSource_render ( ) OVER\n" );
+}
+
+void hand_resistor_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass,
+		float *viewLoc, float viewScale,
+		int *resistance, struct complexEle *linkTo, struct complexEle *linkFrom ) {
+
+	printf ( "hand_resistor_render ( )\n" );
+	printf ( "*resistance: %d\n", *resistance );
+
+	sayIntArray ( "XYWHpass", XYWHpass, 4 );
+
+	struct jalbFont *font = fonts[0];
+
+	float XYWH[4] = { XYWHpass[0], XYWHpass[1], XYWHpass[2], XYWHpass[3] };
+
+	// i need to bound it better.
+	float centerXY[2] = {
+		XYWH[0] + XYWH[2] / 2,
+		XYWH[1] + XYWH[3] / 2,
+	};
+
+	float radius = 32.0 / viewScale;
+
+	printf ( "radius: %f\n", radius );
+
+//	float canvasXY[2];
+//	point_to_loc ( XYWH, canvasXY, viewLoc, viewScale );
+
+	int sides = 20;
+
+//	int XY[2] = { canvasXY[0], canvasXY[1] };
+//	int XY[2] = { XYWH[0], XYWH[1] };
+//	int XY[2] = { centerXY[0], centerXY[1] };
+
+/*
+	// draw the circle.
+	draw2dApi->drawCircle_sides ( screenDims, glBuffers,
+		XY, radius, sides, colorWhite );
+*/
+
+	float v0[2];
+	v0[0] = centerXY[0];
+	v0[1] = centerXY[1] - radius;
+
+	float v1[2];
+	v1[0] = centerXY[0];
+	v1[1] = centerXY[1] - radius * 0.4;
+	draw2dApi->drawSeg ( screenDims, glBuffers, v0, v1, colorWhite );
+
+	v0[0] = centerXY[0] + radius * 0.8;
+	v0[1] = centerXY[1] - radius * 0.2;
+	draw2dApi->drawSeg ( screenDims, glBuffers, v0, v1, colorWhite );
+
+	v1[0] = centerXY[0] - radius * 0.8;
+	v1[1] = centerXY[1] + radius * 0.2;
+	draw2dApi->drawSeg ( screenDims, glBuffers, v0, v1, colorWhite );
+
+	v0[0] = centerXY[0];
+	v0[1] = centerXY[1] + radius * 0.4;
+	draw2dApi->drawSeg ( screenDims, glBuffers, v0, v1, colorWhite );
+
+	v1[0] = centerXY[0];
+	v1[1] = centerXY[1] + radius;
+	draw2dApi->drawSeg ( screenDims, glBuffers, v0, v1, colorWhite );
+
+	// this is total width, i shouldnt need to care about orient in this situation
+	float glyphW = (font->atlasInfo.glyphW - font->atlasInfo.orientX) / viewScale;
+	float glyphH = (font->atlasInfo.glyphH) / viewScale;
+
+	float fXY[2] = {
+		centerXY[0] - glyphW / 2,
+		centerXY[1] - radius,
+	};
+
+	sayFloatArray ( "centerXY", centerXY, 2 );
+	sayFloatArray ( "fXY", fXY, 2 );
+
+	// draw plus and minus
+/*
+	char buffer[32];
+	buffer[0] = '+';
+	buffer[1] = '\0';
+*/
+
+	draw2dApi->drawCharPre ( font, colorWhite );
+/*
+	draw2dApi->drawStringBounded ( screenDims, glBuffers, fXY,
+		XYWH, font, buffer );
+*/
+	int c = '+';
+	unsigned int relC = draw2dApi->charToIndex ( font, c );
+	draw2dApi->drawCharBounded_scale ( screenDims, glBuffers, fXY,
+		XYWH, font, relC, viewScale );
+
+	fXY[1] += radius * 1.4;
+	c = '-';
+	relC = draw2dApi->charToIndex ( font, c );
+	draw2dApi->drawCharBounded_scale ( screenDims, glBuffers, fXY,
+		XYWH, font, relC, viewScale );
+
+
+
+	// draw the voltage string
+	char buffer[256];
+	sprintf ( buffer, "%d [omega]", *resistance );
+
+	int slen = strlen ( buffer );
+	fXY[0] = centerXY[0] - (slen * glyphW) / 2;
+	fXY[1] = centerXY[1] - glyphH / 2;
+	draw2dApi->drawStringBounded_scale ( screenDims, glBuffers, fXY,
+		XYWH, font, buffer, viewScale );
+
+
+
+
+	// node elements
+	float nodeRadius = 8.0 / viewScale;
+	float offset = 10.0 / viewScale;
+	float nodeLoc[2] = {
+		centerXY[0],
+		centerXY[1] - radius - offset,
+	};
+
+	float eleTop[2] = {
+		centerXY[0],
+		centerXY[1] - radius,
+	};
+
+	draw2dApi->drawSeg ( screenDims, glBuffers, eleTop, nodeLoc, colorWhite );
+
+	nodeLoc[1] = centerXY[1] - radius - offset - nodeRadius;
+	int iNode[2] = { nodeLoc[0], nodeLoc[1], };
+	draw2dApi->drawCircle_sides ( screenDims, glBuffers,
+		iNode, nodeRadius, sides, colorWhite );
+	
+/*
+	// link to the next ele.
+	float linkFromXY[2] = {
+		centerXY[0],
+		centerXY[1] - radius,
+	};
+*/
+
+
+	int nodeType = 1;	// 1 for input
+	float linkToXY[2];
+	complexEleNodePosition ( viewLoc, viewScale,
+		linkTo, nodeType, linkToXY );
+
+	draw2dApi->drawSeg ( screenDims, glBuffers, nodeLoc, linkToXY, colorWhite );
+
+
+	// draw the bottom node
+	float eleBot[2] = {
+		centerXY[0],
+		centerXY[1] + radius,
+	};
+	nodeLoc[1] = eleBot[1] + offset;
+	draw2dApi->drawSeg ( screenDims, glBuffers, eleBot, nodeLoc, colorWhite );
+
+	iNode[0] = nodeLoc[0];
+	iNode[1] = nodeLoc[1] + nodeRadius;
+	draw2dApi->drawCircle_sides ( screenDims, glBuffers,
+		iNode, nodeRadius, sides, colorWhite );
+
+	printf ( "hand_voltageSource_render ( ) OVER\n" );
+}
+
+
+// i need further node info.
+// type 0 is output, type 1 is input
+void complexEleNodePosition ( float *viewLoc, float viewScale,
+		struct complexEle *complexEle, int type, float *fillXY ) {
+
+	float canvasXYWH[4];
+	point_to_loc ( complexEle->XYWH, canvasXYWH, viewLoc, viewScale );
+	canvasXYWH[2] = complexEle->XYWH[2] / viewScale;
+	canvasXYWH[3] = complexEle->XYWH[3] / viewScale;
+
+	float center[2];
+	center[0] = canvasXYWH[0] + canvasXYWH[2] / 2;
+	center[1] = canvasXYWH[1] + canvasXYWH[3] / 2;
+
+	float radius = 32 / viewScale;
+	float nodeRadius = 8.0 / viewScale;
+	float offset = 10.0 / viewScale;
+
+	float totalOffset = -(radius + offset + nodeRadius);
+	if ( type == 1 ) {
+		totalOffset = -totalOffset;
+	}
+
+	fillXY[0] = center[0];
+	fillXY[1] = center[1] + totalOffset;
+}
 
 int hand_ee_event ( SDL_Event *e, int *clickXYpass, int *eleWH, struct complexEle *ele ) {
 	printf ( "hand_ee_event ( )\n" );

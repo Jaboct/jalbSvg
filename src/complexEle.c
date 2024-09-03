@@ -56,8 +56,10 @@ void complexDecFill ( struct complexDec *var ) {
 	var->modName[0] = '\0';
 	var->renderFunct_name[0] = '\0';
 	var->renderFunct = NULL;
+	var->renderParams = initArrayList ( 10, sizeof ( int ), 10 );
 	var->eventFunct_name[0] = '\0';
 	var->eventFunct = NULL;
+	var->eventParams = initArrayList ( 10, sizeof ( int ), 10 );
 }
 
 void *complexDecInitMask ( ) {
@@ -69,10 +71,18 @@ void complexDecClose ( struct complexDec *var ) {
 	if ( var->subVars ) {
 		// TODO subVar from out of mod, import close (modNick: jHigh, subVarName: subVar).
 	}
+	if ( var->renderParams ) {
+		freeArrayList ( var->renderParams );
+	}
+	if ( var->eventParams ) {
+		freeArrayList ( var->eventParams );
+	}
 	free ( var );
 
 }
 int complexDec_attrib_arr[] = {
+	0,
+	0,
 	0,
 	0,
 	0,
@@ -95,9 +105,13 @@ void complexDecBodyToVal ( void *varPass, int nameI, char *body ) {
 	} else if ( nameI == 4 ) {
 		// wont get called?
 	} else if ( nameI == 5 ) {
-		strcpy ( var->eventFunct_name, body );
+		consumeStdAl ( body, 0, 1, var->renderParams );
 	} else if ( nameI == 6 ) {
+		strcpy ( var->eventFunct_name, body );
+	} else if ( nameI == 7 ) {
 		// wont get called?
+	} else if ( nameI == 8 ) {
+		consumeStdAl ( body, 0, 1, var->eventParams );
 	}
 }
 
@@ -117,10 +131,14 @@ int complexDecNameToIndex ( char *body, void *data, void *ret, char **strPtr, ch
 		return 3;
 	} else if ( strcmp ( body, "renderFunct" ) == 0 ) {
 		return 4;
-	} else if ( strcmp ( body, "eventFunct_name" ) == 0 ) {
+	} else if ( strcmp ( body, "renderParams" ) == 0 ) {
 		return 5;
-	} else if ( strcmp ( body, "eventFunct" ) == 0 ) {
+	} else if ( strcmp ( body, "eventFunct_name" ) == 0 ) {
 		return 6;
+	} else if ( strcmp ( body, "eventFunct" ) == 0 ) {
+		return 7;
+	} else if ( strcmp ( body, "eventParams" ) == 0 ) {
+		return 8;
 	}
 	return -1;
 }

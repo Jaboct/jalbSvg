@@ -90,7 +90,7 @@
             <>-1</>
             <external>0</external>
             <attribute>0</attribute>
-            <saveFlag>00</saveFlag>
+            <saveFlag>1</saveFlag>
             <naked>0</naked>
             <comment></comment>
             <modNick></modNick>

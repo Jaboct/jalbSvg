@@ -783,6 +783,8 @@ int complexDec_attributes[] = {
 	0,
 	0,
 	0,
+	0,
+	0,
 };
 struct backbone_subVar complexDec_name = {
 	.name = "name",
@@ -865,6 +867,29 @@ struct backbone_subVar complexDec_renderFunct = {
 	.saveFlag = 1,
 	.naked = 0,
 };
+struct backbone_subAl complexDec_renderParams_subAl = {
+	.overflow = 10,
+	.literal = 1,
+	.type = 0,
+	.typeIndex = 0,
+	.length = -1,
+	.naked = 0,
+};
+struct backbone_subVar complexDec_renderParams = {
+	.name = "renderParams",
+	.type = 0,
+	.typeIndex = 3,
+	.initType = 0,
+	.length = 0,
+	.literal = 1,
+	.data = {
+		.id = 0,
+		.ptr = &complexDec_renderParams_subAl,
+	},
+	.external = offsetof ( struct complexDec, renderParams ),
+	.saveFlag = 1,
+	.naked = 0,
+};
 struct backbone_subVar complexDec_eventFunct_name = {
 	.name = "eventFunct_name",
 	.type = 0,
@@ -893,18 +918,43 @@ struct backbone_subVar complexDec_eventFunct = {
 	.saveFlag = 1,
 	.naked = 0,
 };
+struct backbone_subAl complexDec_eventParams_subAl = {
+	.overflow = 10,
+	.literal = 1,
+	.type = 0,
+	.typeIndex = 0,
+	.length = -1,
+	.naked = 0,
+};
+struct backbone_subVar complexDec_eventParams = {
+	.name = "eventParams",
+	.type = 0,
+	.typeIndex = 3,
+	.initType = 0,
+	.length = 0,
+	.literal = 1,
+	.data = {
+		.id = 0,
+		.ptr = &complexDec_eventParams_subAl,
+	},
+	.external = offsetof ( struct complexDec, eventParams ),
+	.saveFlag = 1,
+	.naked = 0,
+};
 struct backbone_subVar *complexDec_varArr[] = {
 	&complexDec_name,
 	&complexDec_subVars,
 	&complexDec_modName,
 	&complexDec_renderFunct_name,
 	&complexDec_renderFunct,
+	&complexDec_renderParams,
 	&complexDec_eventFunct_name,
 	&complexDec_eventFunct,
+	&complexDec_eventParams,
 };
 struct backbone_structStruct complexDec = {
 	.name = "complexDec",
-	.varsLen = 7,
+	.varsLen = 9,
 	.vars = complexDec_varArr,
 	.overloadRenderEdit = "",
 	.overloadEventEdit = "",
@@ -1054,7 +1104,7 @@ struct backbone_subVar jLiveData__complexRef = {
 		.id = 0,
 	},
 	.external = offsetof ( struct jLiveData, complexRef ),
-	.saveFlag = 0,
+	.saveFlag = 1,
 	.naked = 0,
 };
 struct backbone_subVar *jLiveData__varArr[] = {

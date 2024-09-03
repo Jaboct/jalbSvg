@@ -416,8 +416,8 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 
 			complex->XYWH[0] = worldXY[0];
 			complex->XYWH[1] = worldXY[1];
-			complex->XYWH[2] = 100;
-			complex->XYWH[3] = 100;
+			complex->XYWH[2] = 128;
+			complex->XYWH[3] = 128;
 
 			set_cursorInputMode ( ci_reg );
 
@@ -1807,7 +1807,57 @@ void prepairComplex_xml ( ) {
 
 
 
+/** Toolbar */
 
+#include <jalbApi/api_toolbar.h>
+
+struct api_toolbar *api_toolbar = NULL;
+
+void set_api_toolbar ( void *data ) {
+	printf ( "set_api_toolbar ( )\n" );
+	printf ( "data: %p\n", data );
+
+	api_toolbar = data;
+
+	printf ( "set_api_toolbar ( ) OVER\n" );
+}
+
+void jvg_pass_toolbar ( ) {
+	printf ( "jvg_pass_toolbar ( )\n" );
+
+	if ( !api_toolbar ) {
+		printf ( "ERROR, !api_toolbar, return\n" );
+		return;
+	}
+
+	// what dropdowns do i want?
+	void *toolEle = api_toolbar->spawn_toolbarEle ( "jvg complex", rt_drop, NULL, NULL );
+	api_toolbar->add_toolbarEle ( toolEle );
+
+	void *dropEle = api_toolbar->spawn_toolbarEle ( "new complexDec", rt_funct, NULL, NULL );
+
+	printf ( "jvg_pass_toolbar ( ) OVER\n" );
+}
+
+void spawn_new_complexDec ( ) {
+	printf ( "spawn_new_complexDec ( )\n" );
+	// add to the last mod.
+
+	int numMods = arrayListGetLength ( glob_jvg->moduleList );
+	struct complexMod *mod = NULL;
+	if ( numMods == 0 ) {
+		// spawn a new mod
+		mod = complexModInit ( );
+		arrayListAddEndPointer ( glob_jvg->moduleList, mod );
+	} else {
+		mod = arrayListGetPointer ( glob_jvg->moduleList, numMods-1 );
+	}
+
+	struct complexDec *dec = complexDecInit ( );
+	arrayListAddEndPointer ( mod->complexDecList, dec );
+
+	printf ( "spawn_new_complexDec ( ) OVER\n" );
+}
 
 
 

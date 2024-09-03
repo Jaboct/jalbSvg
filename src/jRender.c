@@ -569,6 +569,7 @@ void complexEleRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struc
 
 		struct complexDec *dec = arrayListGetPointer ( mod->complexDecList, complex->decType );
 
+/*
 		float screenXY[2] = {
 			fXYWH[0],
 			fXYWH[1],
@@ -581,17 +582,25 @@ void complexEleRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struc
 			XYWHpass[2],
 			XYWHpass[3],
 		};
+*/
 
 		if ( dec->renderFunct ) {
 			// For normal non dynamic rendering.
 //			void (*funct)(int *screenDims, GLuint *glBuffers, int *XYWHpass, void *data) = dec->renderFunct;
 //			funct ( screenDims, glBuffers, XYWH, NULL );
 
+/*
 			// For dynamic rendering
 			void (*funct)(int *screenDims, GLuint *glBuffers, int *XYWHpass, void *data,
 				float *viewLoc, float viewScale) = dec->renderFunct;
 			funct ( screenDims, glBuffers, XYWH, NULL,
 				viewLoc, viewScale );
+*/
+
+			int iXYWH[4] = { fXYWH[0], fXYWH[1], fXYWH[2], fXYWH[3] };
+			complexEleRender_sub ( screenDims, glBuffers, iXYWH, complex, dec,
+				viewLoc, viewScale );
+
 		} else {
 //			printf ( "ERROR, !dec->renderFunct\n" );
 

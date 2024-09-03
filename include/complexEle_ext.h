@@ -58,6 +58,10 @@ void complexDecPostInit ( struct complexDec *dec );
 void complexEle_initType ( struct complexEle *ele, int type );
 
 
+/** Render */
+
+void complexEleRender_sub ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct complexEle *complex, struct complexDec *dec,
+		float *viewLoc, float viewScale );
 
 /** Event */
 
@@ -79,6 +83,21 @@ void complexEle_ref_link ( struct jvg *jvg, struct complexEle *ele );
 void complexEle_index_link ( struct jvg *jvg, struct complexEle *ele );
 int complexEle_toIndex ( struct jvg *jvg, struct complexEle *ele );
 
+
+/** Temp Hand Electrical Engineering Functions */
+
+extern struct draw2dStruct *draw2dApi;
+
+void hand_voltageSource_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass,
+		float *viewLoc, float viewScale,
+		int *voltage, struct complexEle *linkTo, struct complexEle *linkFrom );
+void hand_resistor_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass,
+		float *viewLoc, float viewScale,
+		int *resistance, struct complexEle *linkTo, struct complexEle *linkFrom );
+
+// i need further node info.
+void complexEleNodePosition ( float *viewLoc, float viewScale,
+		struct complexEle *complexEle, int type, float *fillXY );
 
 
 
