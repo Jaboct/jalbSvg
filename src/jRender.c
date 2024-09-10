@@ -49,6 +49,9 @@ extern int thisSel;
 int controlPointWidth = 10;
 
 
+int renderCAD = 1;
+
+
 /// debug
 
 extern int debugPrint_jvg_render;
@@ -149,9 +152,11 @@ void jPath_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jP
 	int endArrow = 1;
 
 	// left, right, top, bottom
+	// to draw the bounding box.
 	float lrtb[4] = { 0, 0, 0, 0 };
 	path_lrtb ( path, lrtb );
 
+	// first draw the line segments.
 	while ( i < len ) {
 		struct jLine *line = arrayListGetPointer ( path->lines, i );
 
@@ -166,7 +171,7 @@ void jPath_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jP
 		float lineW = 1.0;
 		if ( line->type == path_LineTo ) {
 			seg_render ( screenDims, glBuffers, v0->XY, v1->XY, lineW,
-				viewLoc, viewScale );
+				viewLoc, viewScale, XYWHpass );
 
 			if ( endArrow ) {
 				float vect[2];
@@ -182,7 +187,7 @@ void jPath_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jP
 				vFinal[0] += v1->XY[0];
 				vFinal[1] += v1->XY[1];
 				seg_render ( screenDims, glBuffers, v1->XY, vFinal, lineW,
-					viewLoc, viewScale );
+					viewLoc, viewScale, XYWHpass );
 
 				vFinal[0] = vect[0];
 				vFinal[1] = vect[1];
@@ -192,15 +197,15 @@ void jPath_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jP
 				vFinal[0] += v1->XY[0];
 				vFinal[1] += v1->XY[1];
 				seg_render ( screenDims, glBuffers, v1->XY, vFinal, lineW,
-					viewLoc, viewScale );
+					viewLoc, viewScale, XYWHpass );
 			}
 
 		} else if ( line->type == path_CubicBez ) {
 			cubicBez_render ( screenDims, glBuffers, v0->XY, v1->XY, line->c0, line->c1,
-				viewLoc, viewScale );
+				viewLoc, viewScale, XYWHpass );
 		} else if ( line->type == path_QuadBez ) {
 			quadBez_render ( screenDims, glBuffers, v0->XY, v1->XY, line->c0,
-				viewLoc, viewScale );
+				viewLoc, viewScale, XYWHpass );
 		}
 
 		i += 1;
@@ -214,6 +219,9 @@ void jPath_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jP
 
 		float XYWH[4] = { lrtb[0], lrtb[2] };
 		point_to_loc ( XYWH, XYWH, viewLoc, viewScale );
+		XYWH[0] += XYWHpass[0];
+		XYWH[1] += XYWHpass[1];
+
 		XYWH[2] = (lrtb[1] - lrtb[0]) / viewScale;
 		XYWH[3] = (lrtb[3] - lrtb[2]) / viewScale;
 
@@ -245,6 +253,7 @@ void jPath_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jP
 		}
 	}
 
+	// render the verts and control points
 
 	if ( thisObjEdit ) {
 //		int cursorLen = arrayListGetLength ( cursorList );
@@ -254,6 +263,14 @@ void jPath_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jP
 		jVerts_render ( screenDims, glBuffers, XYWHpass, path->verts,
 			viewLoc, viewScale );
 		controlPoints_render ( screenDims, glBuffers, XYWHpass, path,
+			viewLoc, viewScale );
+	}
+
+	if ( renderCAD ) {
+		// render the vert info.
+		verts_CAD_render ( screenDims, glBuffers, XYWHpass, path->verts,
+			viewLoc, viewScale );
+		lines_CAD_render ( screenDims, glBuffers, XYWHpass, path,
 			viewLoc, viewScale );
 	}
 }
@@ -278,6 +295,8 @@ void jVerts_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, ArrayLis
 
 		float XYWH[4];
 		point_to_loc ( vert->XY, XYWH, viewLoc, viewScale );
+		XYWH[0] += XYWHpass[0];
+		XYWH[1] += XYWHpass[1];
 
 		XYWH[0] -= vertWidth / 2;
 		XYWH[1] -= vertWidth / 2;
@@ -331,10 +350,14 @@ void controlPoints_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, s
 
 			float cp0[2];
 			point_to_loc ( line->c0, cp0, viewLoc, viewScale );
+			cp0[0] += XYWHpass[0];
+			cp0[1] += XYWHpass[1];
 			int icp0[2] = { cp0[0], cp0[1] };
 
 			float cp1[2];
 			point_to_loc ( line->c1, cp1, viewLoc, viewScale );
+			cp1[0] += XYWHpass[0];
+			cp1[1] += XYWHpass[1];
 			int icp1[2] = { cp1[0], cp1[1] };
 
 
@@ -348,7 +371,7 @@ void controlPoints_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, s
 
 			// draw a line
 			seg_render ( screenDims, glBuffers, v0->XY, line->c0, viewScale,
-				viewLoc, viewScale );
+				viewLoc, viewScale, XYWHpass );
 
 			thisSel = 0;
 			{
@@ -364,7 +387,7 @@ void controlPoints_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, s
 
 			// draw a line
 			seg_render ( screenDims, glBuffers, v1->XY, line->c1, viewScale,
-				viewLoc, viewScale );
+				viewLoc, viewScale, XYWHpass );
 		} else if ( line->type == path_QuadBez ) {
 			// render 1 control point.
 		}
@@ -376,6 +399,96 @@ void controlPoints_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, s
 	}
 }
 
+void verts_CAD_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, ArrayList *verts,
+		float *viewLoc, float viewScale ) {
+
+	struct jalbFont *font = fonts[0];
+
+	int i = 0;
+	int len = arrayListGetLength ( verts );
+	while ( i < len ) {
+		struct jVert *vert = arrayListGetPointer ( verts, i );
+
+		float charXY[2] = {
+			0,
+			0,
+		};
+		point_to_loc ( vert->XY, charXY, viewLoc, viewScale );
+
+		char buffer[256];
+		sprintf ( buffer, "{ %f, %f }", vert->XY[0], vert->XY[1] );
+
+		int slen = strlen ( buffer );
+
+		float fXYWH[4] = {
+			charXY[0],
+			charXY[1],
+			font->atlasInfo.glyphW * slen,
+			font->atlasInfo.glyphH,
+		};
+
+		draw2dApi->drawCharPre ( font, colorWhite );
+		draw2dApi->drawStringBounded ( screenDims, glBuffers, charXY,
+			fXYWH, font, buffer );
+
+		i += 1;
+	}
+}
+
+void lines_CAD_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jPath *path,
+		float *viewLoc, float viewScale ) {
+
+	struct jalbFont *font = fonts[0];
+
+	int i = 0;
+	int len = arrayListGetLength ( path->lines );
+	while ( i < len ) {
+		struct jLine *line = arrayListGetPointer ( path->lines, i );
+		struct jVert *v0 = arrayListGetPointer ( path->verts, line->v0 );
+		struct jVert *v1 = arrayListGetPointer ( path->verts, line->v1 );
+
+		float centerPoint[2] = {
+			(v0->XY[0] + v1->XY[0]) / 2.0,
+			(v0->XY[1] + v1->XY[1]) / 2.0,
+		};
+
+		sayFloatArray ( "centerPoint", centerPoint, 2 );
+
+		float delta[2] = {
+			v0->XY[0] - v1->XY[0],
+			v0->XY[1] - v1->XY[1],
+		};
+		float l = vectNorm ( delta, 2 );
+
+		float charXY[2] = {
+			0,
+			0,
+		};
+		point_to_loc ( centerPoint, charXY, viewLoc, viewScale );
+
+		char buffer[256];
+		sprintf ( buffer, "%f", l );
+
+		printf ( "buffer: %s\n", buffer );
+
+		int slen = strlen ( buffer );
+
+		float fXYWH[4] = {
+			charXY[0],
+			charXY[1],
+			font->atlasInfo.glyphW * slen,
+			font->atlasInfo.glyphH,
+		};
+
+		draw2dApi->drawCharPre ( font, colorWhite );
+		draw2dApi->drawStringBounded ( screenDims, glBuffers, charXY,
+			fXYWH, font, buffer );
+
+		i += 1;
+	}
+}
+
+/// text
 
 void jText_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jText *text,
 		float *viewLoc, float viewScale ) {
@@ -473,6 +586,8 @@ void jCircRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jCi
 
 	float screenXY[2];
 	point_to_loc ( circ->XY, screenXY, viewLoc, viewScale );
+	screenXY[0] += XYWHpass[0];
+	screenXY[1] += XYWHpass[1];
 
 	float radius = circ->radius / viewScale;
 
@@ -506,15 +621,15 @@ void jCircRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jCi
 //		iXYWH[0] = XYWHpass[0] + circ->XY[0] - (controlPointWidth / 2);
 //		iXYWH[1] = XYWHpass[1] + circ->XY[1] - (controlPointWidth / 2);
 
-		iXYWH[0] = XYWHpass[0] + screenXY[0] - (cWidth / 2);
-		iXYWH[1] = XYWHpass[1] + screenXY[1] - (cWidth / 2);
+		iXYWH[0] = screenXY[0] - (cWidth / 2);
+		iXYWH[1] = screenXY[1] - (cWidth / 2);
 		iXYWH[2] = cWidth;
 		iXYWH[3] = cWidth;
 		draw2dApi->drawRect ( iXYWH, colorOrange, screenDims, glBuffers );
 
 		// square at the right side.
-		iXYWH[0] = XYWHpass[0] + screenXY[0] + radius - (cWidth / 2);
-		iXYWH[1] = XYWHpass[1] + screenXY[1] - (cWidth / 2);
+		iXYWH[0] = screenXY[0] + radius - (cWidth / 2);
+		iXYWH[1] = screenXY[1] - (cWidth / 2);
 		iXYWH[2] = cWidth;
 		iXYWH[3] = cWidth;
 		draw2dApi->drawRect ( iXYWH, colorOrange, screenDims, glBuffers );
@@ -536,6 +651,9 @@ void complexEleRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struc
 
 	float fXYWH[4];
 	point_to_loc ( complex->XYWH, fXYWH, viewLoc, viewScale );
+	fXYWH[0] += XYWHpass[0];
+	fXYWH[1] += XYWHpass[1];
+
 	fXYWH[2] = complex->XYWH[2] / viewScale;
 	fXYWH[3] = complex->XYWH[3] / viewScale;
 

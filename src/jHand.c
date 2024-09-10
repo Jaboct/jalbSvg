@@ -138,6 +138,7 @@ void jalbJvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void
 			viewLoc, viewScale );
 	}
 
+	// if the cursor is held, render the box represnting the selction area.
 	if ( mouseHeld &&
 	     heldType == ht_highlight ) {
 		// get the cursor loc.
@@ -145,10 +146,15 @@ void jalbJvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void
 
 		float screenXY[2];
 		point_to_loc ( heldStart, screenXY, viewLoc, viewScale );
+		screenXY[0] += XYWHpass[0];
+		screenXY[1] += XYWHpass[1];
+
 		XYWH[0] = screenXY[0];
 		XYWH[1] = screenXY[1];
 
 		point_to_loc ( cursorWorldLoc, screenXY, viewLoc, viewScale );
+		screenXY[0] += XYWHpass[0];
+		screenXY[1] += XYWHpass[1];
 
 		XYWH[2] = screenXY[0] - XYWH[0];
 		XYWH[3] = screenXY[1] - XYWH[1];
@@ -200,6 +206,7 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 	if ( debugPrint_jvg_event ) {
 		printf ( "jalbJvg_mEvent ( )\n" );
 		printf ( "selected: %d\n", selected );
+		sayIntArray ( "clickXYpass", clickXYpass, 2 );
 	}
 
 	int ret = 0;
@@ -1831,10 +1838,63 @@ void jvg_pass_toolbar ( ) {
 	}
 
 	// what dropdowns do i want?
-	void *toolEle = api_toolbar->spawn_toolbarEle ( "jvg complex", rt_drop, NULL, NULL );
-	api_toolbar->add_toolbarEle ( toolEle );
+	void *topEle = NULL;
+	void *dropEle = NULL;
+	void *f = NULL;
 
-	void *dropEle = api_toolbar->spawn_toolbarEle ( "new complexDec", rt_funct, NULL, NULL );
+	// jvg regular
+	topEle = api_toolbar->spawn_toolbarEle ( "jvg", rt_drop, NULL, NULL );
+	api_toolbar->add_toolbarEle ( topEle );
+
+	f = load_jvg_dirList;
+	dropEle = api_toolbar->spawn_toolbarEle ( "load", rt_funct, NULL, f );
+	api_toolbar->add_drop_toolbarEle ( topEle, dropEle );
+
+	f = jHand_save;
+	dropEle = api_toolbar->spawn_toolbarEle ( "save", rt_funct, NULL, f );
+	api_toolbar->add_drop_toolbarEle ( topEle, dropEle );
+
+	// open a uiGen showing glob_jvg project info.
+	f = spawn_projectInfo;
+	dropEle = api_toolbar->spawn_toolbarEle ( "projectInfo", rt_funct, NULL, f );
+	api_toolbar->add_drop_toolbarEle ( topEle, dropEle );
+
+	api_toolbar->crunch_drop ( topEle );
+
+
+	// jvg tools
+	topEle = api_toolbar->spawn_toolbarEle ( "jvg tools", rt_drop, NULL, NULL );
+	api_toolbar->add_toolbarEle ( topEle );
+
+	f = set_cursor_pen;
+	dropEle = api_toolbar->spawn_toolbarEle ( "pen", rt_funct, NULL, f );
+	api_toolbar->add_drop_toolbarEle ( topEle, dropEle );
+	f = set_cursor_text;
+	dropEle = api_toolbar->spawn_toolbarEle ( "text", rt_funct, NULL, f );
+	api_toolbar->add_drop_toolbarEle ( topEle, dropEle );
+	f = set_cursor_circ;
+	dropEle = api_toolbar->spawn_toolbarEle ( "circ", rt_funct, NULL, f );
+	api_toolbar->add_drop_toolbarEle ( topEle, dropEle );
+	f = set_cursor_complex;
+	dropEle = api_toolbar->spawn_toolbarEle ( "complex", rt_funct, NULL, f );
+	api_toolbar->add_drop_toolbarEle ( topEle, dropEle );
+
+	api_toolbar->crunch_drop ( topEle );
+
+
+	// jvg complex
+	topEle = api_toolbar->spawn_toolbarEle ( "jvg complex", rt_drop, NULL, NULL );
+	api_toolbar->add_toolbarEle ( topEle );
+
+	f = spawn_new_complexDec;
+	dropEle = api_toolbar->spawn_toolbarEle ( "new complexDec", rt_funct, NULL, f );
+	api_toolbar->add_drop_toolbarEle ( topEle, dropEle );
+
+	api_toolbar->crunch_drop ( topEle );
+
+	f = jvg_toggle_CAD;
+	topEle = api_toolbar->spawn_toolbarEle ( "CAD", rt_funct, NULL, f );
+	api_toolbar->add_toolbarEle ( topEle );
 
 	printf ( "jvg_pass_toolbar ( ) OVER\n" );
 }
@@ -1858,6 +1918,80 @@ void spawn_new_complexDec ( ) {
 
 	printf ( "spawn_new_complexDec ( ) OVER\n" );
 }
+
+void spawn_projectInfo ( ) {
+	printf ( "spawn_projectInfo ( )\n" );
+
+	printf ( "spawn_projectInfo ( ) OVER\n" );
+}
+
+
+void (*jalbDir_loadPane)(char *) = NULL;
+void set_jalbDir_loadPane ( void *data ) {
+	printf ( "set_jalbDir_loadPane ( )\n" );
+	printf ( "data: %p\n", data );
+
+	jalbDir_loadPane = data;
+
+	printf ( "set_jalbDir_loadPane ( ) OVER\n" );
+}
+
+void load_jvg_dirList ( ) {
+	printf ( "load_jvg_dirList ( )\n" );
+
+	if ( !jalbDir_loadPane ) {
+		printf ( "ERROR, !jalbDir_loadPane, return\n" );
+		return;
+	}
+
+	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/";
+	jalbDir_loadPane ( dir );
+
+	printf ( "load_jvg_dirList ( ) OVER\n" );
+}
+
+extern int renderCAD;
+
+void jvg_toggle_CAD ( ) {
+	printf ( "jvg_toggle_CAD ( )\n" );
+
+	if ( renderCAD ) {
+		renderCAD = 0;
+	} else {
+		renderCAD = 1;
+	}
+
+	printf ( "jvg_toggle_CAD ( ) OVER\n" );
+}
+
+
+/// tools
+
+void set_cursor_pen ( ) {
+	set_cursorInputMode ( ci_pen );
+}
+
+void set_cursor_text ( ) {
+	set_cursorInputMode ( ci_text );
+}
+
+void set_cursor_circ ( ) {
+	set_cursorInputMode ( ci_circ );
+}
+
+void set_cursor_complex ( ) {
+	set_cursorInputMode ( ci_complex );
+}
+
+
+
+
+
+
+
+
+
+
 
 
 

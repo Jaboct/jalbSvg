@@ -18,11 +18,12 @@
 /** Functions */
 
 void seg_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1, float lineW,
-		float *viewLoc, float viewScale );
+		float *viewLoc, float viewScale, int *XYWH );
 void cubicBez_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1, float *c0, float *c1,
-		float *viewLoc, float viewScale );
+		float *viewLoc, float viewScale, int *XYWHpass );
 void quadBez_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1, float *c0,
-		float *viewLoc, float viewScale );
+		float *viewLoc, float viewScale, int *XYWHpass );
+
 void ellipseArc_render ( int *screenDims, GLuint *glBuffers, float *p0, float *p1, float *c0, float *c1,
 		float *viewLoc, float viewScale );
 

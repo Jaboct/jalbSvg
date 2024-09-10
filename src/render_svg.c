@@ -187,7 +187,7 @@ void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *p
 			}
 //			draw2dApi->drawSeg ( screenDims, glBuffers, lastP, thisP, colorWhite );
 			seg_render ( screenDims, glBuffers, lastP, thisP, path->stroke_w,
-				glob_viewLoc, glob_viewScale );
+				glob_viewLoc, glob_viewScale, XYWH );
 		} else if ( uni->type == path_CubicBez ) {
 			struct cubicBez *cBez = uni->cubicBez;
 			thisP[0] = cBez->XY[0];
@@ -210,7 +210,7 @@ void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *p
 				lastC[1] += lastP[1];
 			}
 			cubicBez_render ( screenDims, glBuffers, lastP, thisP, lastC, thisC,
-				glob_viewLoc, glob_viewScale );
+				glob_viewLoc, glob_viewScale, XYWH );
 		} else if ( uni->type == path_QuadBez ) {
 			printf ( "TODO quadBez\n" );
 
@@ -233,7 +233,7 @@ void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *p
 //				lastC[1] += lastP[1];
 			}
 			quadBez_render ( screenDims, glBuffers, lastP, thisP, thisC,
-				glob_viewLoc, glob_viewScale );
+				glob_viewLoc, glob_viewScale, XYWH );
 
 		} else if ( uni->type == path_EllipArc ) {
 			printf ( "TODO ellipArc\n" );
@@ -257,7 +257,7 @@ void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *p
 
 //			draw2dApi->drawSeg ( screenDims, glBuffers, t0, t1, colorWhite );
 			seg_render ( screenDims, glBuffers, t0, t1, path->stroke_w,
-				glob_viewLoc, glob_viewScale );
+				glob_viewLoc, glob_viewScale, XYWH );
 		} else {
 			printf ( "TODO type unhandled (%d)\n", uni->type );
 		}
@@ -416,10 +416,10 @@ void path_render ( int *screenDims, GLuint *glBuffers, int *XYWH, struct path *p
 
 			// viewScale as the width so it remains at 1 regardless of scale.
 			seg_render ( screenDims, glBuffers, lastP, lastC, glob_viewScale,
-				glob_viewLoc, glob_viewScale );
+				glob_viewLoc, glob_viewScale, XYWH );
 
 			seg_render ( screenDims, glBuffers, thisP, thisC, glob_viewScale,
-				glob_viewLoc, glob_viewScale );
+				glob_viewLoc, glob_viewScale, XYWH );
 		} else if ( uni->type == path_QuadBez ) {
 			struct quadBez *quad = uni->quadBez;
 			printf ( "TODO quadBez editMode\n" );

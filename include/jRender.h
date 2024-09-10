@@ -38,6 +38,13 @@ void jVerts_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, ArrayLis
 void controlPoints_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jPath *path,
 		float *viewLoc, float viewScale );
 
+void verts_CAD_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, ArrayList *verts,
+		float *viewLoc, float viewScale );
+void lines_CAD_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jPath *path,
+		float *viewLoc, float viewScale );
+
+// text
+
 void jText_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jText *text,
 		float *viewLoc, float viewScale );
 

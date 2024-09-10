@@ -148,4 +148,29 @@ void prepairComplex_xml ( );
 
 
 
+// partiall toolbar stuff
+
+void set_api_toolbar ( void *data );
+void jvg_pass_toolbar ( );
+void spawn_new_complexDec ( );
+void spawn_projectInfo ( );
+
+void set_jalbDir_loadPane ( void *data );
+void load_jvg_dirList ( );
+
+void jvg_toggle_CAD ( );
+
+/// tools
+
+void set_cursor_pen ( );
+void set_cursor_text ( );
+void set_cursor_circ ( );
+void set_cursor_complex ( );
+
+
+
+
+
+
+
 

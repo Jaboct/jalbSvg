@@ -8,6 +8,7 @@ jalbDir	jalbDir2
 jalbJvg	jalbJvg
 jalbCalc	jalbCalc
 uiGen	uiGen
+toolbar	jalbToolbar
 
 
 Append:
@@ -29,6 +30,9 @@ LayLib:
 menu	menu	layEleInit	layEleRender	layEleEvent	layEleClose
 00	stru_00Edit	stru_00InitEdit	stru_00RenderEdit	stru_00EventEdit	stru_00CloseEdit	stru_00EditNumber
 #jalbJvg	jalbJvg	jalbJvg_init	jalbJvg_render	jalbJvg_event	jalbJvg_close
+toolbar	toolbar	toolbarInit	toolbarRender	toolbarEvent	toolbarClose
+toolbar	toolbarDrop	toolbarDropInit	toolbarDropRender	toolbarDropEvent	toolbarDropClose	toolbarDropId
+
 
 LayLibDynamic:
 jalbJvg	jalbJvg	jalbJvg_init	jalbJvg_renderDyn	tic	jalbJvg_mEvent	jalbJvg_mEvent	jalbJvg_close
@@ -39,10 +43,18 @@ layoutUi	canvasEleEdit	canvasEleInitEdit	canvasEleRenderEdit	canvasEleEventEdit	
 
 
 
-
 Lib:
 loop	jalbLoop
 // Loop _has_ to be last.
+
+
+
+// toolbar
+// needs to be before lay?
+
+Setter:
+font	getFontLast	toolbar	addFont
+
 
 
 Setter:
@@ -90,9 +102,12 @@ layoutUi	render	event
 
 
 Lay:
-#blank
-jalbJvg
+vert	33
+  toolbar
+  jalbJvg
 
+
+// used for screenshots?
 
 Setter:
 window	getLastWindow	jalbJvg	set_window
@@ -203,11 +218,27 @@ Setter:
 draw2d	getFunctWrap	jalbJvg	setDraw2dApi
 font	getFontFirst	jalbJvg	setFont16
 
+
 Getter:
 layoutUi	addCanvasEle	jalbJvg	setAddCanvas
 layoutUi	JLUI_setViewScale	jalbJvg	set_set_viewScale
 
 
+
+// Toolbar
+
+Setter:
+draw2d	getFunctWrap	toolbar	setDraw2dApi
+toolbar	get_api_toolbar	jalbJvg	set_api_toolbar
+
+Getter:
+jalbDir	hand_layDirTab_uiGen_dir	jalbJvg	set_jalbDir_loadPane
+
+Run:
+jalbJvg	jvg_pass_toolbar
+
+
+// Other
 
 #Debug:
 all
@@ -305,7 +336,8 @@ jalbJvg	jvg_backbone_wrangle
 
 
 
-
+Run:
+loop	setStage	1
 
 
 
