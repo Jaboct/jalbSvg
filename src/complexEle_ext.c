@@ -95,7 +95,6 @@ void recieveMod ( char *nick, void *handle, char *realName ) {
 // its modName not modNick, because it grabs the function.
 // just pass the modWrap.
 void grabBackbone ( char *jvgNick, char *modName, void *handle ) {
-
 	printf ( "grabBackbone ( )\n" );
 	printf ( "jvgNick: %s\n", jvgNick );
 	printf ( "modName: %s\n", modName );
