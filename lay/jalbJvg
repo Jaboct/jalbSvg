@@ -3,8 +3,10 @@ Append:
 lay/layoutFile_default
 
 
+#jalbDir	jalbDir2
+
 Lib:
-jalbDir	jalbDir2
+dir	jalbDir2
 jalbJvg	jalbJvg
 jalbCalc	jalbCalc
 uiGen	uiGen
@@ -24,6 +26,7 @@ Dims:
 #100,300
 1600, 1200
 #800, 600
+#1920, 1400
 
 
 LayLib:
@@ -116,8 +119,8 @@ window	getLastWindow	jalbJvg	set_window
 Hotkey:
 jalbJvg	e	toggle_renderMode
 jalbJvg	s	jHand_save
-jalbJvg	l	jHand_load
-
+#jalbJvg	l	jHand_load
+jalbJvg	l	jalbJvg_load_global	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/test/embedTest_00.xml"
 
 // complexEle development
 
@@ -165,7 +168,8 @@ Hotkey:
 
 
 Hotkey:
-jalbDir	d	hand_layDirTab_uiGen_dir	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/"
+#jalbDir	d	hand_layDirTab_uiGen_dir	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/"
+dir	d	hand_layDirTab_uiGen_dir	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/"
 
 
 Hotkey:
@@ -232,7 +236,8 @@ draw2d	getFunctWrap	toolbar	setDraw2dApi
 toolbar	get_api_toolbar	jalbJvg	set_api_toolbar
 
 Getter:
-jalbDir	hand_layDirTab_uiGen_dir	jalbJvg	set_jalbDir_loadPane
+#jalbDir	hand_layDirTab_uiGen_dir	jalbJvg	set_jalbDir_loadPane
+dir	hand_layDirTab_uiGen_dir	jalbJvg	set_jalbDir_loadPane
 
 Run:
 jalbJvg	jvg_pass_toolbar
@@ -282,15 +287,20 @@ uiGen	uiGenEdit	uiGenInitEdit	uiGenRenderEdit	uiGenEventEdit	uiGenCloseEdit	uiGe
 
 Getter:
 layoutUi	addCanvasEle	uiGen	setAddCanvas
-layoutUi	addCanvasEle	jalbDir	setAddCanvas
-jalbJvg	jalbJvg_load_global	jalbDir	set_openFile_f
+#layoutUi	addCanvasEle	jalbDir	setAddCanvas
+#jalbJvg	jalbJvg_load_global	jalbDir	set_openFile_f
+layoutUi	addCanvasEle	dir	setAddCanvas
+jalbJvg	jalbJvg_load_global	dir	set_openFile_f
 
 Setter:
 draw2d	getFunctWrap	uiGen	setDraw2dApi
 font	getFontFirst	uiGen	setFont16
-draw2d	getFunctWrap	jalbDir	setDraw2dApi
-font	getFontFirst	jalbDir	setFont16
-uiGen	get_uiGen_api_void	jalbDir	set_uiGen_api
+#draw2d	getFunctWrap	jalbDir	setDraw2dApi
+#font	getFontFirst	jalbDir	setFont16
+#uiGen	get_uiGen_api_void	jalbDir	set_uiGen_api
+draw2d	getFunctWrap	dir	setDraw2dApi
+font	getFontFirst	dir	setFont16
+uiGen	get_uiGen_api_void	dir	set_uiGen_api
 uiGen	get_uiGen_api_void	jalbJvg	setUiGenApi
 
 Run:

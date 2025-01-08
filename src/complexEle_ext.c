@@ -313,6 +313,10 @@ int complexEle_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct compl
 	int modI = 0;
 	struct complexMod *mod = arrayListGetPointer ( glob_jvg->moduleList, modI );
 
+	if ( !mod ) {
+		printf ( "ERROR, !mod, complexEle_mEvent ( )\n" );
+	}
+
 	int numDec = arrayListGetLength ( mod->complexDecList );
 
 	if ( ele->decType < 0 ||

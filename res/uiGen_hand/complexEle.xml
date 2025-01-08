@@ -16,6 +16,8 @@
           </XYWH>
         </pxMove>
       </literalVar>
+      <eventList>
+      </eventList>
     </uiUnion>
   </vertList>
   <eventList>
@@ -23,6 +25,9 @@
   <scroll>0</scroll>
   <name>complexEle.xml</name>
   <data></data>
+  <dataTypeDef>
+    <>-1</>
+  </dataTypeDef>
   <strBuffer></strBuffer>
   <cursor>
     0,
@@ -36,4 +41,6 @@
   <macroList>
   </macroList>
   <scrollable>0</scrollable>
+  <globData>
+  </globData>
 </uiGen>

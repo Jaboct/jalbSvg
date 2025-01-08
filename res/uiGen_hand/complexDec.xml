@@ -16,13 +16,110 @@
           </XYWH>
         </pxMove>
       </literalVar>
+      <eventList>
+      </eventList>
+    </uiUnion>
+    <uiUnion>
+      <subVar>
+        <struI>10</struI>
+        <subVarI>0</subVarI>
+        <>-1</>
+        <modI>14</modI>
+        <modName>jalbJvg</modName>
+        <editable>1</editable>
+        <preStr>name</preStr>
+      </subVar>
+      <eventList>
+      </eventList>
+    </uiUnion>
+    <uiUnion>
+      <subVar>
+        <struI>10</struI>
+        <subVarI>2</subVarI>
+        <>-1</>
+        <modI>14</modI>
+        <modName>jalbJvg</modName>
+        <editable>1</editable>
+        <preStr>modName</preStr>
+      </subVar>
+      <eventList>
+      </eventList>
+    </uiUnion>
+    <uiUnion>
+      <literalVar>
+        <data>
+          <>-1</>
+          <useData>0</useData>
+        </data>
+        <pxMove>
+          <XYWH>
+            0,
+            1,
+            0,
+            0,
+          </XYWH>
+        </pxMove>
+      </literalVar>
+      <eventList>
+      </eventList>
+    </uiUnion>
+    <uiUnion>
+      <subVar>
+        <struI>10</struI>
+        <subVarI>3</subVarI>
+        <>-1</>
+        <modI>14</modI>
+        <modName>jalbJvg</modName>
+        <editable>1</editable>
+        <preStr>renderF_name</preStr>
+      </subVar>
+      <eventList>
+      </eventList>
+    </uiUnion>
+    <uiUnion>
+      <literalVar>
+        <data>
+          <>-1</>
+          <useData>0</useData>
+        </data>
+        <pxMove>
+          <XYWH>
+            0,
+            1,
+            0,
+            0,
+          </XYWH>
+        </pxMove>
+      </literalVar>
+      <eventList>
+      </eventList>
+    </uiUnion>
+    <uiUnion>
+      <subVar>
+        <struI>10</struI>
+        <subVarI>6</subVarI>
+        <>-1</>
+        <modI>14</modI>
+        <modName>jalbJvg</modName>
+        <editable>1</editable>
+        <preStr>eventF_name</preStr>
+      </subVar>
+      <eventList>
+      </eventList>
     </uiUnion>
   </vertList>
   <eventList>
   </eventList>
   <scroll>0</scroll>
-  <name>complexEle.xml</name>
+  <name>complexDec.xml</name>
   <data></data>
+  <dataTypeDef>
+    <struType>
+      <modI>14</modI>
+      <modName>jalbJvg</modName>
+      <struI>10</struI>
+    </struType>
+  </dataTypeDef>
   <strBuffer></strBuffer>
   <cursor>
     0,
@@ -36,4 +133,6 @@
   <macroList>
   </macroList>
   <scrollable>0</scrollable>
+  <globData>
+  </globData>
 </uiGen>

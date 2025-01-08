@@ -1909,6 +1909,7 @@ void spawn_new_complexDec ( ) {
 		// spawn a new mod
 		mod = complexModInit ( );
 		arrayListAddEndPointer ( glob_jvg->moduleList, mod );
+
 	} else {
 		mod = arrayListGetPointer ( glob_jvg->moduleList, numMods-1 );
 	}
