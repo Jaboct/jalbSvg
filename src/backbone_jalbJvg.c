@@ -1513,17 +1513,17 @@ struct backbone_structStruct *backbone_arr_jalbJvg[] = {
 	&jLine,
 	&jText,
 	&jGroup,
-	&jNakedUnion,	// 5
+	&jNakedUnion,
 	&jvg,
 	&jRect,
 	&jCirc,
 	&jEllipse,
-	&complexDec,	// 10
+	&complexDec,
 	&complexEle,
 	&jLiveData,
 	&complexMod,
 	&complexScript,
-	&cScriptEle,	// 15
+	&cScriptEle,
 	&complexModData,
 	&complexRef,
 };

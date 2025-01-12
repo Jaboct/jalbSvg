@@ -6,7 +6,7 @@
         <XYWH>
           637.000000,
           418.000000,
-          100.000000,
+          400.000000,
           100.000000,
         </XYWH>
         <decType>0</decType>
@@ -15,36 +15,51 @@
       </complex>
     </jNakedUnion>
   </eles>
-  <complexDecList>
-    <complexDec>
-      <name></name>
-      <subVars>
-        <subVar>
+  <moduleList>
+    <complexMod>
+      <name>jalbCalc</name>
+      <complexDecList>
+        <complexDec>
           <name></name>
-          <type>0</type>
-          <typeIndex>-1</typeIndex>
-          <initType>0</initType>
-          <initTypeData>
-            <>-1</>
-          </initTypeData>
-          <closeType>0</closeType>
-          <length>0</length>
-          <literal>1</literal>
-          <>-1</>
-          <external>0</external>
-          <attribute>0</attribute>
-          <saveFlag>1</saveFlag>
-          <naked>0</naked>
-          <comment></comment>
-          <modNick></modNick>
-          <typeName></typeName>
-        </subVar>
-      </subVars>
-      <modName>jalbCalc</modName>
-      <renderFunct_name>rendEquation_render_dynamic</renderFunct_name>
-      <renderFunct>      
-      <eventFunct_name>jalbCalc_event</eventFunct_name>
-      <eventFunct></eventFunct>
-    </complexDec>
-  </complexDecList>
+          <subVars>
+            <subVar>
+              <name></name>
+              <type>0</type>
+              <typeIndex>-1</typeIndex>
+              <initType>0</initType>
+              <initTypeData>
+                <>-1</>
+              </initTypeData>
+              <closeType>0</closeType>
+              <length>0</length>
+              <literal>1</literal>
+              <>-1</>
+              <external>0</external>
+              <attribute>0</attribute>
+              <saveFlag>1</saveFlag>
+              <naked>0</naked>
+              <comment></comment>
+              <modNick></modNick>
+              <typeName></typeName>
+            </subVar>
+          </subVars>
+          <modName>jalbCalc</modName>
+          <renderFunct_name>rendEquation_render_dynamic</renderFunct_name>
+          <renderFunct></renderFunct>
+          <renderParams>
+          </renderParams>
+          <eventFunct_name>rendEquation_event_dynamic</eventFunct_name>
+          <eventFunct></eventFunct>
+          <eventParams>
+          </eventParams>
+        </complexDec>
+      </complexDecList>
+      <globalVars>
+      </globalVars>
+      <globalScripts>
+      </globalScripts>
+    </complexMod>
+  </moduleList>
+  <moduleDataList>
+  </moduleDataList>
 </jvg>

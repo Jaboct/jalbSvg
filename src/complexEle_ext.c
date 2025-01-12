@@ -242,14 +242,14 @@ void complexEle_initType ( struct complexEle *ele, int type ) {
 
 void complexEleRender_sub ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct complexEle *complex, struct complexDec *dec,
 		float *viewLoc, float viewScale ) {
-
+/*
 	printf ( "complexEleRender_sub ( )\n" );
 	printf ( "complex: %p\n", complex );
 	printf ( "dec: %p\n", dec );
-
+*/
 	int numParams = arrayListGetLength ( dec->renderParams );
 
-	printf ( "numParams: %d\n", numParams );
+//	printf ( "numParams: %d\n", numParams );
 
 	if ( numParams <= 0 ) {
 		// For dynamic rendering
@@ -315,6 +315,7 @@ int complexEle_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct compl
 
 	if ( !mod ) {
 		printf ( "ERROR, !mod, complexEle_mEvent ( )\n" );
+		return 0;
 	}
 
 	int numDec = arrayListGetLength ( mod->complexDecList );
@@ -354,8 +355,15 @@ int complexEle_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct compl
 			worldXY[1],
 		};
 
-		int (*funct)(SDL_Event *e, int *clickXYpass, int *eleWH, void *data) = dec->eventFunct;
-		ret = funct ( e, clickXY, eleWH, ele );
+//		int (*funct)(SDL_Event *e, int *clickXYpass, int *eleWH, void *data) = dec->eventFunct;
+//		ret = funct ( e, clickXY, eleWH, ele );
+
+		int relClick[2] = { clickXYpass[0] - ele->XYWH[0], clickXYpass[1] - ele->XYWH[1] };
+
+		int (*funct)(SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
+			float *viewLoc, float viewScale) = dec->eventFunct;
+		ret = funct ( e, relClick, eleWH, ele,
+			viewLoc, viewScale );
 	}
 
 	printf ( "complexEle_mEvent ( ) OVER\n" );
@@ -901,5 +909,24 @@ int hand_ee_event ( SDL_Event *e, int *clickXYpass, int *eleWH, struct complexEl
 	}
 
 	return 2;
+}
+
+
+
+void add_global_complexMod ( ) {
+	printf ( "add_global_complexMod ( )\n" );
+
+	if ( !glob_jvg ) {
+		goto functEnd;
+	}
+
+	struct jvg *jvg = glob_jvg;
+
+	struct complexMod *mod = complexModInit ( );
+	arrayListAddEndPointer ( jvg->moduleList, mod );
+
+	functEnd:;
+
+	printf ( "add_global_complexMod ( ) OVER\n" );
 }
 

@@ -28,7 +28,8 @@ int cStart[3];
 int cEnd[3];
 
 
-struct jvg *glob_jvg = NULL;
+//struct jvg *glob_jvg = NULL;
+extern struct jvg *glob_jvg;
 //ArrayList *global_jEles = NULL; // (struct jNakedUnion*)
 extern ArrayList *global_jEles; // (struct jNakedUnion*)
 struct jNakedUnion *tempEle = NULL;
@@ -1983,6 +1984,50 @@ void set_cursor_circ ( ) {
 void set_cursor_complex ( ) {
 	set_cursorInputMode ( ci_complex );
 }
+
+
+
+/** Loading examples for uiGen_liveDev */
+
+struct jvg *load_jvg_example_eleList ( ) {
+	printf ( "load_jvg_example_eleList ( )\n" );
+
+	struct jvg *jvg = jvgInit ( );
+	struct jNakedUnion *uni = jNakedUnionInit ( );
+	jNakedUnionTypeChange0 ( uni, jNaked_G );
+	arrayListAddEndPointer ( jvg->eles, uni );
+
+	uni = jNakedUnionInit ( );
+	jNakedUnionTypeChange0 ( uni, jNaked_Path );
+	arrayListAddEndPointer ( jvg->eles, uni );
+
+	uni = jNakedUnionInit ( );
+	jNakedUnionTypeChange0 ( uni, jNaked_Text );
+	arrayListAddEndPointer ( jvg->eles, uni );
+
+	uni = jNakedUnionInit ( );
+	jNakedUnionTypeChange0 ( uni, jNaked_Rect );
+	arrayListAddEndPointer ( jvg->eles, uni );
+
+	uni = jNakedUnionInit ( );
+	jNakedUnionTypeChange0 ( uni, jNaked_Circ );
+	arrayListAddEndPointer ( jvg->eles, uni );
+
+	uni = jNakedUnionInit ( );
+	jNakedUnionTypeChange0 ( uni, jNaked_Ellipse );
+	arrayListAddEndPointer ( jvg->eles, uni );
+
+	uni = jNakedUnionInit ( );
+	jNakedUnionTypeChange0 ( uni, jNaked_Complex );
+	arrayListAddEndPointer ( jvg->eles, uni );
+
+	glob_jvg = jvg;
+
+	printf ( "load_jvg_example_eleList ( ) OVER\n" );
+
+	return jvg;
+}
+
 
 
 

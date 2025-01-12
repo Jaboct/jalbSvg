@@ -7,7 +7,9 @@
   <typeValFuncts>0</typeValFuncts>
   <drawCutString>0</drawCutString>
   <scrollHandle>0</scrollHandle>
-  <preInc></preInc>
+  <preInc>
+#include "jGroup.h"
+</preInc>
   <postInc></postInc>
   <structIds>
   </structIds>
@@ -15,5 +17,6 @@
   </functIds>
   <varIds>
     0,
+    1,
   </varIds>
 </fileStruct>

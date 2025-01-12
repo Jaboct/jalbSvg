@@ -120,7 +120,9 @@ Hotkey:
 jalbJvg	e	toggle_renderMode
 jalbJvg	s	jHand_save
 #jalbJvg	l	jHand_load
-jalbJvg	l	jalbJvg_load_global	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/test/embedTest_00.xml"
+#jalbJvg	l	jalbJvg_load_global	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/test/embedTest_00.xml"
+jalbJvg	l	jalbJvg_load_global	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvgTest/test_02.xml"
+
 
 // complexEle development
 
@@ -193,8 +195,9 @@ Hotkey:
 
 Hotkey:
 #jalbJvg	m	hand_script
-jalbJvg	m	hand_save_complexMod
-jalbJvg	n	hand_load_complexMod
+#jalbJvg	m	hand_save_complexMod
+#jalbJvg	n	hand_load_complexMod
+jalbJvg	n	add_global_complexMod
 
 
 

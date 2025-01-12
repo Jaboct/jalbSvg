@@ -47,7 +47,7 @@ char *uiGen_jTextEdit = "/home/jadoo/workspace/jHigh/jalbSvg/res/uiGen_hand/jTex
 int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct jNakedUnion **ele,
 		int *vertI, int *controlI, struct cursorMem **lastCursor ) {
 	if ( debugPrint_jIterate ) {
-		printf ( "iterateToSelected ( )\n" );
+		printf ( "jIterateToSelected ( )\n" );
 	}
 
 	int i = 0;
@@ -121,6 +121,7 @@ int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct
 			*lastCursor = mem;
 
 			return cs_vert;
+
 		} else if ( uni->type == jNaked_Text ) {
 			i += 1;
 			mem = arrayListGetPointer ( cursorList, i );
@@ -142,6 +143,7 @@ int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct
 			*lastCursor = mem;
 
 			return cs_circ;
+
 		} else if ( uni->type == jNaked_Complex ) {
 			return cs_complex;
 		}
@@ -158,8 +160,13 @@ int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct
 		*controlI = mem->selI;
 
 		return cs_control;
+
 	} else {
 		return -1;
+	}
+
+	if ( debugPrint_jIterate ) {
+		printf ( "jIterateToSelected ( ) OVER\n" );
 	}
 
 	return -1;

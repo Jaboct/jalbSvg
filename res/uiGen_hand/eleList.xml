@@ -16,120 +16,113 @@
           </XYWH>
         </pxMove>
       </literalVar>
+      <eventList>
+      </eventList>
     </uiUnion>
     <uiUnion>
-      <projectVar>
-        <modI>9</modI>
+      <subVar>
+        <struI>6</struI>
+        <subVarI>0</subVarI>
+        <alRender>
+          <uniList>
+            <list>
+              <uiUnion>
+                <renderObj>
+                  <locType>1</locType>
+                  <absLoc>
+                    0.000000,
+                    0.000000,
+                  </absLoc>
+                  <relLoc>
+                    0.000000,
+                    0.000000,
+                  </relLoc>
+                  <WH>
+                    -1.000000,
+                    17.000000,
+                  </WH>
+                  <uniList>
+                    <list>
+                      <uiUnion>
+                        <subVar>
+                          <struI>5</struI>
+                          <subVarI>0</subVarI>
+                          <compRender>
+                            <comp_type>2</comp_type>
+                            <list>
+
+                              <uiUnion_list>
+                                <list>
+                                </list>
+                                <cursor>
+                                  0,
+                                  0,
+                                  0,
+                                  0,
+                                </cursor>
+                              </uiUnion_list>
+
+                              <uiUnion_list>
+                                <list>
+                                </list>
+                                <cursor>
+                                  0,
+                                  0,
+                                  0,
+                                  0,
+                                </cursor>
+                              </uiUnion_list>
+
+                            </list>
+                            <literalSubVar>0</literalSubVar>
+                          </compRender>
+                          <modI>14</modI>
+                          <modName>jalbJvg</modName>
+                          <editable>1</editable>
+                          <preStr></preStr>
+                        </subVar>
+                        <eventList>
+                        </eventList>
+                      </uiUnion>
+                    </list>
+                    <cursor>
+                      0,
+                      0,
+                      0,
+                      0,
+                    </cursor>
+                  </uniList>
+                  <xyOffsetScales>
+                    0.000000,
+                    1.000000,
+                  </xyOffsetScales>
+                  <scrollable>0</scrollable>
+                  <scroll>0</scroll>
+                </renderObj>
+                <eventList>
+                </eventList>
+              </uiUnion>
+            </list>
+            <cursor>
+              0,
+              0,
+              0,
+              0,
+            </cursor>
+          </uniList>
+          <type>2</type>
+          <xyOffsetScale>
+            0.000000,
+            0.000000,
+          </xyOffsetScale>
+        </alRender>
+        <modI>14</modI>
         <modName>jalbJvg</modName>
-        <varI>0</varI>
-        <uniList>
-          <list>
-            <uiUnion>
-              <alIterate>
-                <uniList>
-                  <list>
-                    <uiUnion>
-                      <renderObj>
-                        <locType>1</locType>
-                        <absLoc>
-                          0.000000,
-                          0.000000,
-                        </absLoc>
-                        <relLoc>
-                          0.000000,
-                          0.000000,
-                        </relLoc>
-                        <WH>
-                          1000.000000,
-                          20.000000,
-                        </WH>
-                        <uniList>
-                          <list>
-                            <uiUnion>
-                              <funct>
-                                <retType>4</retType>
-                                <functRef>
-                                  <modI>9</modI>
-                                  <modName>jalbJvg</modName>
-                                  <functI>-1</functI>
-                                </functRef>
-                                <params>
-                                  <uiUnion>
-                                    <>-101</>
-                                  </uiUnion>
-                                </params>
-                                <name>jType_to_str</name>
-                              </funct>
-                            </uiUnion>
-                          </list>
-                          <cursor>
-                            0,
-                            0,
-                            0,
-                            0,
-                          </cursor>
-                        </uniList>
-                        <xyOffsetScales>
-                          0.000000,
-                          1.000000,
-                        </xyOffsetScales>
-                        <scrollable>0</scrollable>
-                        <scroll>0</scroll>
-                      </renderObj>
-                      <event>
-                        <key>
-                          <trigger>
-                            <click>
-                              <altKeys>
-                                0,
-                                1,
-                                0,
-                              </altKeys>
-                            </click>
-                          </trigger>
-                          <action>
-                            <funct>
-                              <retType>5</retType>
-                              <functRef>
-                                <modI>9</modI>
-                                <modName>jalbJvg</modName>
-                                <functI>-1</functI>
-                              </functRef>
-                              <params>
-                                <uiUnion>
-                                  <>-101</>
-                                </uiUnion>
-                              </params>
-                              <name>jType_spawnEditUi</name>
-                            </funct>
-                          </action>
-                        </key>
-                      </event>
-                    </uiUnion>
-                  </list>
-                  <cursor>
-                    0,
-                    0,
-                    0,
-                    0,
-                  </cursor>
-                </uniList>
-                <type>2</type>
-                <xyOffsetScale>
-                  0.000000,
-                  0.000000,
-                </xyOffsetScale>
-              </alIterate>
-            </uiUnion>
-          </list>
-          <cursor>
-            0,
-            0,
-            0,
-            0,
-          </cursor>
-        </uniList>
-      </projectVar>
+        <editable>1</editable>
+        <preStr></preStr>
+      </subVar>
+      <eventList>
+      </eventList>
     </uiUnion>
   </vertList>
   <eventList>
@@ -137,6 +130,9 @@
   <scroll>0</scroll>
   <name>eleList.xml</name>
   <data></data>
+  <dataTypeDef>
+    <>-1</>
+  </dataTypeDef>
   <strBuffer></strBuffer>
   <cursor>
     0,
@@ -150,4 +146,6 @@
   <macroList>
   </macroList>
   <scrollable>0</scrollable>
+  <globData>
+  </globData>
 </uiGen>
