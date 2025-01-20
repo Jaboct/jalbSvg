@@ -2029,9 +2029,43 @@ struct jvg *load_jvg_example_eleList ( ) {
 }
 
 
+/** UiGen spawning */
+
+void open_left_toolbar ( ) {
+	printf ( "open_left_toolbar ( )\n" );
+
+	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/uiGen_hand/eleSpawner.xml";
+	void *data = NULL;
+	int type = 1; // no red bar.
+
+	int XYWH[4] = { 0, 54, 100, 400 };
+	uiGen_api->load_and_set_XYWH ( dir, data, XYWH, type );
+
+	printf ( "open_left_toolbar ( ) OVER\n" );
+}
 
 
+/// uiGen left toolbar stuff
 
+float retColor[4] = { 0.0 };
+float *toolBar_icon_color ( int i ) {
+	printf ( "toolBar_icon_color ( )\n" );
+	printf ( "i: %d\n", i );
+
+	if ( cursorInputMode == i ) {
+		retColor[0] = 0.8;
+		retColor[1] = 0.6;
+		retColor[2] = 0.0;
+		retColor[3] = 1.0;
+	} else {
+		retColor[0] = 0.4;
+		retColor[1] = 0.4;
+		retColor[2] = 0.4;
+		retColor[3] = 1.0;
+	}
+
+	return retColor;
+}
 
 
 

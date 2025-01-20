@@ -1127,11 +1127,9 @@ void changeCursor ( ) {
 
 // pass an index from (enum cursorInputTypes (mod_ext.h)).
 void set_cursorInputMode ( int i ) {
-/*
 	printf ( "set_cursorInputMode ( )\n" );
 	printf ( "i: %d\n", i );
 	printf ( "old mode: %d\n", cursorInputMode );
-*/
 
 	cursorInputMode = i;
 
