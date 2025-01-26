@@ -431,8 +431,8 @@ int spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyph
 
 	// is this on the screen at all?
 	// well i still want a decent return value...
-	if ( fXYWH[0] > XYWHpass[2] ||	// off to the right
-	     fXYWH[1] > XYWHpass[3] ||	// off below
+	if ( fXYWH[0] > (XYWHpass[0] + XYWHpass[2]) ||	// off to the right
+	     fXYWH[1] > (XYWHpass[1] + XYWHpass[3]) ||	// off below
 	     fXYWH[0] + fXYWH[2] < 0 ||	// off to the left.
 	     fXYWH[1] + fXYWH[3] < 0 ) {	// off above
 //		printf ( "text cut\n");

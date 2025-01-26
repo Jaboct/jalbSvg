@@ -1,8 +1,5 @@
 #pragma once
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-
 #include <jalbXml/jalbXml_02.h>
 #include <jalb/jalbStr.h>
 
@@ -67,12 +64,6 @@ enum {
 	lineTo_hor,
 };
 
-
-
-struct cursorIconInfo {
-	char *dir;
-	int hotXY[2];
-};
 
 
 
@@ -152,15 +143,6 @@ void compile_path_style ( struct path *path );
 /** should be auto generated for the naked structs */
 
 int nakedStru_nameToIndex ( char *body, ArrayList *eles, void *ret, char **strPtr );
-
-
-/** Cursor Stuff */
-
-//void changeCursor ( );
-
-void set_cursorInputMode ( int i );
-void set_cursor_iconI ( int i );
-void set_cursor_icon ( struct cursorIconInfo *icon );
 
 
 /** Toggle */

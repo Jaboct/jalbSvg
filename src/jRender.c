@@ -118,6 +118,11 @@ void jNaked_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct j
 		jText_render ( screenDims, glBuffers, XYWHpass, text,
 			viewLoc, viewScale );
 
+	} else if ( uni->type == jNaked_Rect ) {
+		struct jRect *rect = uni->rect;
+		jRectRender ( screenDims, glBuffers, XYWHpass, rect,
+			viewLoc, viewScale );
+
 	} else if ( uni->type == jNaked_Circ ) {
 		struct jCirc *circ = uni->circ;
 		jCircRender ( screenDims, glBuffers, XYWHpass, circ,
@@ -577,6 +582,75 @@ void jText_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jT
 	if ( debugPrint_jvg_render ) {
 		printf ( "jText_render ( ) OVER\n" );
 	}
+}
+
+void jRectRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jRect *rect,
+		float *viewLoc, float viewScale ) {
+//	printf ( "jRectRender ( )\n" );
+//	sayFloatArray ( "rect->XYWH", rect->XYWH, 4 );
+
+	float screenXY[2];
+	point_to_loc ( rect->XYWH, screenXY, viewLoc, viewScale );
+	screenXY[0] += XYWHpass[0];
+	screenXY[1] += XYWHpass[1];
+
+	float WH[2] = {
+		rect->XYWH[2] / viewScale,
+		rect->XYWH[3] / viewScale,
+	};
+
+	int iXYWH[4] = {
+		screenXY[0],
+		screenXY[1],
+		WH[0],
+		WH[1],
+	};
+
+//	sayIntArray ( "iXYWH", iXYWH, 4 );
+
+	draw2dApi->drawRect ( iXYWH, colorWhite, screenDims, glBuffers );
+
+	int thisObjEdit = thisEdit ( thisSel );
+	if ( thisObjEdit ) {
+		// top left and bottom right corner for changing the XYWH.
+		// top right circle to change the roundness of the rect (TODO)
+
+		int parentSel = thisSel;
+
+		int i = 1;
+		thisSel = 0;
+		isThisSel;
+
+		// top left square
+		float corner[4] = {
+			screenXY[0] - vertWidth/2,
+			screenXY[1] - vertWidth/2,
+			vertWidth,
+			vertWidth,
+		};
+		if ( thisSel ) {
+			draw2dApi->fillRectF ( corner, colorOrange, screenDims, glBuffers );
+		} else {
+			draw2dApi->drawRectF ( corner, colorWhite, screenDims, glBuffers );
+		}
+
+		i = 2;
+		thisSel = 0;
+		isThisSel;
+
+		// bottom right square
+		corner[0] += WH[0];
+		corner[1] += WH[1];
+		if ( thisSel ) {
+			draw2dApi->fillRectF ( corner, colorOrange, screenDims, glBuffers );
+		} else {
+			draw2dApi->drawRectF ( corner, colorWhite, screenDims, glBuffers );
+		}
+
+		// top right circle
+	}
+
+//	printf ( "jRectRender ( ) OVER\n" );
 }
 
 void jCircRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jCirc *circ,

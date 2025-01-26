@@ -148,6 +148,60 @@ zoomed out means you can see more.<br>
 
 <div class="myParagraph" id="event">
 <b>Jvg Event</b><br>
+<br>
+<div class="codeBlock">int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
+		float *viewLoc, float viewScale ); (jHand.h)
+</div>
+If mouse button down:<br>
+check to see if i have a cursorInputMode.<br>
+<br>
+if not do:
+jNakedList_mEvent_start ( ) (jEvent.h)<br>
+which sees if i am trying to place down a new line.<br>
+if not then:<br>
+<br>
+jNakedList_mEvent ( ) (jEvent.h)<br>
+which iterates through every ele, and runs the specific mEvent funct for each one.<br>
+If they return 1, then they are set as the selected element, and the function returns.<br>
+<br>
+<br>
+
+If mouse motion:
+<div class="codeBlock">int jalbJvg_mMotion ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jvg *jvgEle,
+		float *viewLoc, float viewScale ); (jHand.h)
+</div>
+<br>
+<br>
+jIterateToSelected ( ) (jEvent.h)<br>
+is important<br>
+<br>
+<br>
+Used for rendering: (recursiveCursor.h)<br>
+isThisSel;<br>
+if ( selected and parentSel )<br>
+then check the cursorMemlist to see if cursorList[cursor_depth]->selI == i<br>
+if so, thisSel = 1;<br>
+<br>
+isThisIt;<br>
+if ( thisSel and cursorDepth == cursorLen-1)<br>
+then set thisSel = 1;<br>
+else thisSel = 0;<br>
+<br>
+<br>
+
+onHover cursorChange<br>
+onHoverCheck ( ) (jHand.h)<br>
+onHoverType ( )<br>
+<br>
+isOnVert<br>
+isOnLine (doenst get used?)<br>
+isOnText<br>
+isOnRect<br>
+isOnCirc<br>
+
+
+<br>
+<br>
 
 jText_mEvent uses:<br>
 pointInsideI ( )<br>
@@ -157,9 +211,21 @@ pointInsideI ( )<br>
 I feel like i wnat the option, to have control point size scale with zoon, vs remain constant.<br>
 int jText_box_width<br>
 int controlPointWidth<br>
+int vertWidth<br>
+<br>
+<br>
 
+<b>tempEle</b><br>
+When i try and place a new ele, dont immedietly add it to the eleList, make it a tempEle, which can then be tweaked, or undone.<br>
+Then on mouseUp, add tempEle to the actual eleList.<br>
 <br>
+at the start of:<br>
+jalbJvg_renderDyn ( )<br>
+i render the tempEle via:<br>
+jNaked_render ( )<br>
 <br>
+So i want to indicate to that function i am dealing with the temp ele,<br>
+ so that it knows to render it appropriatly.<br>
 
 <br>
 </div>
@@ -252,6 +318,27 @@ which relies on the uiGen file:<br>
 
 <br>
 <br>
+
+
+<div class="myParagraph" id="cursorIcon">
+<b>Cursor Icon</b><br>
+<br>
+
+This should probably be in jalbSvg.<br>
+<br>
+
+How do i go about setting up a cursor icon?<br>
+/usr/share/inkscape/icons/hicolor/cursors/<br>
+<br>
+
+is where inkscape saves its icons.<br>
+I need them to be images, so i bring them to:<br>
+/home/jadoo/workspace/jHigh/jalbSvg/res/cursor/<br>
+<br>
+I open the svg in inkscape, then export to png.<br>
+
+<br>
+</div>
 
 <br>
 <br>

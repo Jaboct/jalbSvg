@@ -131,7 +131,7 @@
   <name>eleList.xml</name>
   <data></data>
   <dataTypeDef>
-    <>-1</>
+    <struType></struType>
   </dataTypeDef>
   <strBuffer></strBuffer>
   <cursor>

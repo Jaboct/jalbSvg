@@ -15,6 +15,9 @@
 #include "svg.h"
 #include "mod_ext.h"
 
+#include "cursorIcon.h"
+
+
 /** Functions */
 
 int svg_event ( SDL_Event *e, int *clickXYpass, int *eleWH, struct svg *svg,

@@ -63,7 +63,6 @@ struct jvg {
 #include "complexMod.h"
 #include "complexEle_ext.h"
 
-
 /** Functions */
 
 /** jGroup */

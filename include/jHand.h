@@ -62,6 +62,12 @@ void jalbJvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void
 int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 		float *viewLoc, float viewScale );
 
+int jalbJvg_mDown ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jvg *jvg,
+		float *viewLoc, float viewScale );
+int jalbJvg_mMotion ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jvg *jvgEle,
+		float *viewLoc, float viewScale );
+int keySpecialChar ( SDL_Event *e, ArrayList *sb );
+
 void jalbJvg_close ( void *data );
 
 
@@ -119,6 +125,7 @@ int onHoverType ( int *XY );
 int isOnVert ( struct jPath *path, int *XY );
 int isOnLine ( struct jVert *v0, struct jVert *v1, int *XY );
 int isOnText ( struct jText *text, int *XY );
+int isOnRect ( struct jRect *rect, int *XY );
 int isOnCirc ( struct jCirc *circ, int *XY );
 
 float pointLineDist ( float *p, float *v0, float *v1 );

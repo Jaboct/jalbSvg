@@ -32,6 +32,11 @@ void move_jPathVert ( struct jPath *path, int vertI, float dx, float dy );
 int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *text,
 		float *viewLoc, float viewScale );
 
+int jRect_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jRect *rect,
+		float *viewLoc, float viewScale );
+int jRect_mPos ( int *clickXYpass, struct jRect *rect,
+		float *viewLoc, float viewScale );
+
 int jCirc_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jCirc *circ,
 		float *viewLoc, float viewScale );
 

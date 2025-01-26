@@ -47,35 +47,6 @@ struct cursorMem {
 
 /// enum
 
-// for inputting data via the cursor.
-enum cursorInputTypes {
-	ci_reg = 0,
-	ci_text,
-	ci_pen,
-	ci_circ,
-	ci_complex,
-	ci_num,
-};
-
-enum cursorRenderTypes {
-	cr_reg = 0,
-	cr_text,
-	cr_pen,
-	cr_circ,
-	cr_move,
-	cr_num,
-};
-
-
-// for whatever my cursor is currently selecting.
-enum cursorSelect {
-	cs_object = 0,
-	cs_vert,
-	cs_control,
-	cs_text,
-	cs_circ,
-	cs_complex,
-};
 
 
 /// More Includes

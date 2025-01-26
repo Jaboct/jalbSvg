@@ -69,6 +69,7 @@ jalbSvgFiles = mod mod_ext \
  svg path text shapes parse \
  autoTests \
  hand proof \
+ cursorIcon \
  backbone_jalbSvg xmlFunctGrouper_jalbSvg
 
 # can i make these 2 generic, so i dont need to copy paste it for each mod.

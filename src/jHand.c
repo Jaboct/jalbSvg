@@ -219,7 +219,8 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 
 	viewScale = 1.0 / viewScale;
 
-	ArrayList *eles = glob_jvg->eles;
+	struct jvg *jvgEle = glob_jvg;
+	ArrayList *eles = jvgEle->eles;
 
 	if ( e->type == SDL_KEYDOWN ) {
 
@@ -244,6 +245,7 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 
 		int selType = jIterateToSelected ( global_jEles, &parent, &ele, &vertI, &controlI, &lastCursor );
 
+		// ctrl-click on selected ele to open a uiGen pane to edit it.
 		if ( selected &&
 		     altKeys[akCtrl] ) {
 			if ( e->key.keysym.sym == SDLK_RETURN ) {
@@ -279,69 +281,7 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 //			printf ( "maxCols: %d\n", maxCols );
 
 			if ( altKeys[akCtrl] ) {
-				if ( e->key.keysym.sym == SDLK_h ) {		// Math characters
-					add_special ( sb, spec_therefore );
-					ret = 1;
-					goto functEnd;
-				} else if ( e->key.keysym.sym == SDLK_7 ) {
-					add_special ( sb, spec_and );
-					ret = 1;
-					goto functEnd;
-				} else if ( e->key.keysym.sym == SDLK_BACKSLASH ) {
-					add_special ( sb, spec_or );
-					ret = 1;
-					goto functEnd;
-				} else if ( e->key.keysym.sym == SDLK_m ) {
-					add_special ( sb, spec_micro );
-					ret = 1;
-					goto functEnd;
-				} else if ( e->key.keysym.sym == SDLK_j ) {
-					add_special ( sb, spec_emptySet );
-					ret = 1;
-					goto functEnd;
-
-				} else if ( e->key.keysym.sym == SDLK_k ) {	// Greek Letters
-					add_special ( sb, spec_alphaL );
-					ret = 1;
-					goto functEnd;
-				} else if ( e->key.keysym.sym == SDLK_b ) {
-					add_special ( sb, spec_betaL );
-					ret = 1;
-					goto functEnd;
-				} else if ( e->key.keysym.sym == SDLK_d ) {
-					if ( altKeys[akShift] ) {
-						add_special ( sb, spec_deltaU );
-					} else {
-						add_special ( sb, spec_deltaL );
-					}
-					ret = 1;
-					goto functEnd;
-				} else if ( e->key.keysym.sym == SDLK_y ) {
-					add_special ( sb, spec_thetaL );
-					ret = 1;
-					goto functEnd;
-				} else if ( e->key.keysym.sym == SDLK_u ) {
-					add_special ( sb, spec_lambdaL );
-					ret = 1;
-					goto functEnd;
-				} else if ( e->key.keysym.sym == SDLK_p ) {
-					add_special ( sb, spec_pi );
-					ret = 1;
-					goto functEnd;
-				} else if ( e->key.keysym.sym == SDLK_i ) {
-//					add_special ( sb, spec_rhoL );
-					add_special ( sb, spec_integral );
-					ret = 1;
-					goto functEnd;
-				} else if ( e->key.keysym.sym == SDLK_o ) {
-					if ( altKeys[akShift] ) {
-						add_special ( sb, spec_omegaU );
-					} else {
-						add_special ( sb, spec_omegaL );
-					}
-					ret = 1;
-					goto functEnd;
-				}
+				ret = keySpecialChar ( e, sb );
 			}
 			if ( ret ) {
 				goto functEnd;
@@ -363,25 +303,108 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 		     renderMode != renderM_edit ) {
 			return 0;
 		}
-		mouseHeld = 1;
 
-		// adding a new ele.
-		if ( cursorInputMode == ci_pen ) {
-			// create a new path.
+		ret = jalbJvg_mDown ( e, clickXYpass, eleWH, jvgEle,
+			viewLoc, viewScale );
+
+
+	} else if ( e->type == SDL_MOUSEBUTTONUP ) {
+		mouseHeld = 0;
+
+		// if left mouse button is down, then held is still true.
+		int XY[2];
+		Uint32 state = SDL_GetMouseState ( &XY[0], &XY[1] );
+		if ( ( state & SDL_BUTTON_LMASK ) != 0 ) {
+			mouseHeld = 1;
+		} else {
+			heldType = ht_none;
+		}
+
+		if ( tempEle ) {
+			printf ( "BUTTON UP ADD TEMP ELE\n" );
+			arrayListAddEndPointer ( eles, tempEle );
+			tempEle = NULL;
+		}
+
+	} else if ( e->type == SDL_MOUSEMOTION ) {
+//		printf ( "selected: %d\n", selected );
+//		printf ( "mouseHeld: %d\n", mouseHeld );
+
+
+		ret = jalbJvg_mMotion ( e, clickXYpass, eleWH, jvgEle,
+			viewLoc, viewScale );
+
+	}
+
+	functEnd:;
+
+	if ( debugPrint_jvg_event ) {
+		printf ( "jalbJvg_mEvent ( ) OVER\n" );
+	}
+
+
+	return ret;
+}
+
+// return 1 if the event is consumed
+int jalbJvg_mDown ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jvg *jvgEle,
+		float *viewLoc, float viewScale ) {
+
+	ArrayList *eles = jvgEle->eles;
+
+	int ret = 0;
+	mouseHeld = 1;
+
+	// adding a new ele.
+	if ( cursorInputMode == ci_pen ) {
+		// create a new path.
+
+		float worldXY[2];
+		loc_to_pointI ( clickXYpass, worldXY, viewLoc, viewScale );
+
+		struct jNakedUnion *ele = jNakedUnionInit ( );
+		arrayListAddEndPointer ( eles, ele );
+		jNakedUnionTypeChange0 ( ele, jNaked_Path );
+		struct jPath *path = ele->path;
+		struct jVert *vert = jVertInit ( );
+		arrayListAddEndPointer ( path->verts, vert );
+		vert->XY[0] = worldXY[0];
+		vert->XY[1] = worldXY[1];
+
+		set_cursorInputMode ( ci_reg );
+
+		ret = 1;
+		goto functEnd;
+
+	} else if ( cursorInputMode == ci_rect ) {
+			if ( tempEle ) {
+				printf ( "TEMP ELE ERROR\n" );
+			}
+			tempEle = jNakedUnionInit ( );
+			jNakedUnionTypeChange0 ( tempEle, jNaked_Rect );
+			struct jRect *rect = tempEle->rect;
 
 			float worldXY[2];
 			loc_to_pointI ( clickXYpass, worldXY, viewLoc, viewScale );
 
-			struct jNakedUnion *ele = jNakedUnionInit ( );
-			arrayListAddEndPointer ( eles, ele );
-			jNakedUnionTypeChange0 ( ele, jNaked_Path );
-			struct jPath *path = ele->path;
-			struct jVert *vert = jVertInit ( );
-			arrayListAddEndPointer ( path->verts, vert );
-			vert->XY[0] = worldXY[0];
-			vert->XY[1] = worldXY[1];
+			rect->XYWH[0] = worldXY[0];
+			rect->XYWH[1] = worldXY[1];
+			rect->XYWH[2] = 10;
+			rect->XYWH[3] = 10;
 
 			set_cursorInputMode ( ci_reg );
+
+/*
+			cursorDown;
+			printf ( "cursor_depth: %d\n", cursor_depth );
+
+			int i = 2;
+			handleCursor_start;
+			selected = 1;
+
+			cursorUp;
+			handleCursor;
+*/
 
 			ret = 1;
 			goto functEnd;
@@ -528,41 +551,34 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 			heldType = ht_none;
 		}
 
-	} else if ( e->type == SDL_MOUSEBUTTONUP ) {
-		mouseHeld = 0;
+	functEnd:;
 
-		// if left mouse button is down, then held is still true.
-		int XY[2];
-		Uint32 state = SDL_GetMouseState ( &XY[0], &XY[1] );
-		if ( ( state & SDL_BUTTON_LMASK ) != 0 ) {
-			mouseHeld = 1;
-		} else {
-			heldType = ht_none;
+	return ret;
+}
+
+
+int jalbJvg_mMotion ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jvg *jvgEle,
+		float *viewLoc, float viewScale ) {
+
+	int ret = 0;
+
+	float dx = e->motion.xrel * viewScale;
+	float dy = e->motion.yrel * viewScale;
+	float dXY[2] = { dx, dy };
+
+	if ( tempEle ) {
+//		printf ( "tempEle->type: %d\n", tempEle->type );
+		if ( tempEle->type == jNaked_Rect ) {
+			struct jRect *rect = tempEle->rect;
+			rect->XYWH[2] += dx;
+			rect->XYWH[3] += dy;
+		} else if ( tempEle->type == jNaked_Circ ) {
+			struct jCirc *circ = tempEle->circ;
+			circ->radius += dx;
 		}
-
-		if ( tempEle ) {
-			printf ( "BUTTON UP ADD TEMP ELE\n" );
-			arrayListAddEndPointer ( eles, tempEle );
-			tempEle = NULL;
-		}
-
-	} else if ( e->type == SDL_MOUSEMOTION ) {
-//		printf ( "selected: %d\n", selected );
-//		printf ( "mouseHeld: %d\n", mouseHeld );
-
-		float dx = e->motion.xrel * viewScale;
-		float dy = e->motion.yrel * viewScale;
-		float dXY[2] = { dx, dy };
-
-		if ( tempEle ) {
-//			printf ( "tempEle->type: %d\n", tempEle->type );
-			if ( tempEle->type == jNaked_Circ ) {
-				struct jCirc *circ = tempEle->circ;
-				circ->radius += dx;
-			}
-			ret = 1;
-			goto functEnd;
-		}
+		ret = 1;
+		goto functEnd;
+	}
 
 		float fXY[2] = { clickXYpass[0], clickXYpass[1] };
 		loc_to_point ( fXY, cursorWorldLoc, viewLoc, viewScale );
@@ -587,7 +603,7 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 
 		int selType = jIterateToSelected ( global_jEles, &parent, &ele, &vertI, &controlI, &lastCursor );
 
-/*
+
 		printf ( "selType: %d\n", selType );
 		printf ( "parent: %p\n", parent );
 		printf ( "ele: %p\n", ele );
@@ -597,7 +613,7 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 		if ( lastCursor ) {
 			printf ( "lastCursor->selI: %d\n", lastCursor->selI );
 		}
-*/
+
 
 		if ( selType == cs_object ) {
 			if ( ele->type == jNaked_Path ) {
@@ -640,6 +656,27 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 				text->XYWH[2] += dx;
 				text->XYWH[3] += dy;
 			}
+
+		} else if ( selType == cs_rect ) {
+			struct jRect *rect = ele->rect;
+			if ( vertI == 0 ) {
+				// move the whole thing.
+				rect->XYWH[0] += dx;
+				rect->XYWH[1] += dy;
+
+			} else if ( vertI == 1 ) {
+				// top right corner
+				rect->XYWH[0] += dx;
+				rect->XYWH[1] += dy;
+				rect->XYWH[2] -= dx;
+				rect->XYWH[3] -= dy;
+
+			} else if ( vertI == 2 ) {
+				// bot left corner
+				rect->XYWH[2] += dx;
+				rect->XYWH[3] += dy;
+			}
+
 		} else if ( selType == cs_circ ) {
 			struct jCirc *circ = ele->circ;
 
@@ -662,14 +699,76 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 		} else {
 			printf ( "unhandled selType: %d\n", selType );
 		}
-	}
 
 	functEnd:;
+	return ret;
+}
 
-	if ( debugPrint_jvg_event ) {
-		printf ( "jalbJvg_mEvent ( ) OVER\n" );
+int keySpecialChar ( SDL_Event *e, ArrayList *sb ) {
+	int ret = 0;
+	if ( e->key.keysym.sym == SDLK_h ) {		// Math characters
+		add_special ( sb, spec_therefore );
+		ret = 1;
+
+	} else if ( e->key.keysym.sym == SDLK_7 ) {
+		add_special ( sb, spec_and );
+		ret = 1;
+
+	} else if ( e->key.keysym.sym == SDLK_BACKSLASH ) {
+		add_special ( sb, spec_or );
+		ret = 1;
+
+	} else if ( e->key.keysym.sym == SDLK_m ) {
+		add_special ( sb, spec_micro );
+		ret = 1;
+
+	} else if ( e->key.keysym.sym == SDLK_j ) {
+		add_special ( sb, spec_emptySet );
+		ret = 1;
+
+
+	} else if ( e->key.keysym.sym == SDLK_k ) {	// Greek Letters
+		add_special ( sb, spec_alphaL );
+		ret = 1;
+
+	} else if ( e->key.keysym.sym == SDLK_b ) {
+		add_special ( sb, spec_betaL );
+		ret = 1;
+
+	} else if ( e->key.keysym.sym == SDLK_d ) {
+		if ( altKeys[akShift] ) {
+			add_special ( sb, spec_deltaU );
+		} else {
+			add_special ( sb, spec_deltaL );
+		}
+		ret = 1;
+
+	} else if ( e->key.keysym.sym == SDLK_y ) {
+		add_special ( sb, spec_thetaL );
+		ret = 1;
+
+	} else if ( e->key.keysym.sym == SDLK_u ) {
+		add_special ( sb, spec_lambdaL );
+		ret = 1;
+
+	} else if ( e->key.keysym.sym == SDLK_p ) {
+		add_special ( sb, spec_pi );
+		ret = 1;
+
+	} else if ( e->key.keysym.sym == SDLK_i ) {
+//		add_special ( sb, spec_rhoL );
+		add_special ( sb, spec_integral );
+		ret = 1;
+
+	} else if ( e->key.keysym.sym == SDLK_o ) {
+		if ( altKeys[akShift] ) {
+			add_special ( sb, spec_omegaU );
+		} else {
+			add_special ( sb, spec_omegaL );
+		}
+		ret = 1;
+
 	}
-
 
 	return ret;
 }
@@ -1049,6 +1148,7 @@ void UTF_stuff ( ) {
 	exit ( 12 );
 }
 
+// relies on the global cStart[]
 void add_special ( ArrayList *sb, int index ) {
 	char *str = NULL;
 
@@ -1502,12 +1602,21 @@ int onHoverType ( int *XY ) {
 			if ( isOnVert ( path, XY ) ) {
 				return 1;
 			}
+
 		} else if ( uni->type == jNaked_Text ) {
 			struct jText *text = uni->text;
 
 			if ( isOnText ( text, XY ) ) {
 				return 1;
 			}
+
+		} else if ( uni->type == jNaked_Rect ) {
+			struct jRect *rect = uni->rect;
+
+			if ( isOnRect ( rect, XY ) ) {
+				return 1;
+			}
+
 		} else if ( uni->type == jNaked_Circ ) {
 			struct jCirc *circ = uni->circ;
 
@@ -1631,6 +1740,19 @@ int isOnText ( struct jText *text, int *XY ) {
 	boxXYWH[3] = jText_box_width;
 	if ( pointInside ( cXY, boxXYWH ) ) {
 		// its inside the main box.
+		return 1;
+	}
+
+	return 0;
+}
+
+int isOnRect ( struct jRect *rect, int *XY ) {
+	float viewScale = glob_viewScale;
+	float *viewLoc = glob_viewLoc;
+
+	int ret = jRect_mPos ( XY, rect,
+		viewLoc, viewScale );
+	if ( ret >= 0 ) {
 		return 1;
 	}
 
@@ -2049,8 +2171,8 @@ void open_left_toolbar ( ) {
 
 float retColor[4] = { 0.0 };
 float *toolBar_icon_color ( int i ) {
-	printf ( "toolBar_icon_color ( )\n" );
-	printf ( "i: %d\n", i );
+//	printf ( "toolBar_icon_color ( )\n" );
+//	printf ( "i: %d\n", i );
 
 	if ( cursorInputMode == i ) {
 		retColor[0] = 0.8;

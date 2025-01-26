@@ -125,23 +125,22 @@ int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct
 		} else if ( uni->type == jNaked_Text ) {
 			i += 1;
 			mem = arrayListGetPointer ( cursorList, i );
-
 			*vertI = mem->selI;
-
 			*lastCursor = mem;
-
-//			printf ( "SELECTED TEXT\n" );
-
 			return cs_text;
+
+		} else if ( uni->type == jNaked_Rect ) {
+			i += 1;
+			mem = arrayListGetPointer ( cursorList, i );
+			*vertI = mem->selI;
+			*lastCursor = mem;
+			return cs_rect;
 
 		} else if ( uni->type == jNaked_Circ ) {
 			i += 1;
 			mem = arrayListGetPointer ( cursorList, i );
-
 			*vertI = mem->selI;
-
 			*lastCursor = mem;
-
 			return cs_circ;
 
 		} else if ( uni->type == jNaked_Complex ) {
@@ -228,6 +227,8 @@ int jNakedList_mEvent_start ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayL
 		viewLoc, viewScale );
 }
 
+// which iterates through every ele, and runs the specific mEvent funct for each one.
+// If they return 1, then they are set as the selected element, and the function returns.
 int jNakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *eles,
 		float *viewLoc, float viewScale ) {
 	if ( debugPrint_jvg_event ) {
@@ -266,6 +267,7 @@ int jNakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *e
 				handleCursor;
 				return ret;
 			}
+
 		} else if ( uni->type == jNaked_Text ) {
 			struct jText *text = uni->text;
 			cursorDown;
@@ -278,6 +280,19 @@ int jNakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *e
 				handleCursor;
 				return ret;
 			}
+
+		} else if ( uni->type == jNaked_Rect ) {
+			struct jRect *rect = uni->rect;
+			cursorDown;
+			int ret = jRect_mEvent ( e, clickXYpass, eleWH, rect,
+				viewLoc, viewScale );
+			cursorUp;
+			if ( ret == 1 ) {
+//				selI = i;
+				handleCursor;
+				return ret;
+			}
+
 		} else if ( uni->type == jNaked_Circ ) {
 			struct jCirc *circ = uni->circ;
 			cursorDown;
@@ -289,6 +304,7 @@ int jNakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *e
 				handleCursor;
 				return ret;
 			}
+
 		} else if ( uni->type == jNaked_Complex ) {
 			struct complexEle *complex = uni->complex;
 
@@ -360,6 +376,10 @@ int jPath_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jPath *pat
 	}
 
 	// only check this path if it, or one of its sub eles is being edited.
+
+	// first check the verts
+	// then the control poitns of the lines
+	// then see if im close enough to a line to drag the object around.
 
 	int i;
 	int len;
@@ -762,6 +782,166 @@ int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *tex
 	}
 
 	return 0;
+}
+
+
+int jRect_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jRect *rect,
+		float *viewLoc, float viewScale ) {
+	int ret = jRect_mPos ( clickXYpass, rect,
+		viewLoc, viewScale );
+
+	printf ( "cursor_depth: %d\n", cursor_depth );
+
+	if ( ret == 0 ) {
+		int i = 0;
+		handleCursor_start;
+		selected = 1;
+
+		return 1;
+	} else if ( ret == 1 ) {
+		int i = 1;
+		handleCursor_start;
+		selected = 1;
+
+		return 1;
+	} else if ( ret == 2 ) {
+		int i = 2;
+		handleCursor_start;
+		selected = 1;
+
+		return 1;
+	}
+
+	return 0;
+}
+
+// return 1 if its on the top left corner
+// 2 if bottom right
+// 0 is close enough to an edge
+// -1 else
+int jRect_mPos ( int *clickXYpass, struct jRect *rect,
+		float *viewLoc, float viewScale ) {
+//	printf ( "jRect_mEvent ( )\n" );
+
+	// vertWidth
+
+	// first check the 2 corners, then check to see if i clicked on a line.
+
+
+//	struct jVert *v0 = arrayListGetPointer ( path->verts, line->v0 );
+//	struct jVert *v1 = arrayListGetPointer ( path->verts, line->v1 );
+
+	// i feel like i should not convert the click to the world, but convert the shape to the screen.
+	// whatever
+	float fXY[2] = { clickXYpass[0], clickXYpass[1] };
+	loc_to_point ( fXY, fXY, viewLoc, viewScale );
+/*
+	sayFloatArray ( "click to screen", fXY, 2 );
+	sayFloatArray ( "rect->XYWH", rect->XYWH, 4 );
+*/
+
+	/// 2 corners
+
+	// top left
+	float rendWidth = vertWidth * viewScale;
+//	printf ( "rendWidth: %f\n", rendWidth );
+
+	float box[4] = {
+		rect->XYWH[0] - rendWidth/2,
+		rect->XYWH[1] - rendWidth/2,
+		rendWidth,
+		rendWidth,
+	};
+//	sayFloatArray ( "box", box, 4 );
+
+	if ( pointInside ( fXY, box ) ) {
+/*
+		int i = 1;
+		handleCursor_start;
+		selected = 1;
+
+		return 1;
+*/
+		return 1;
+	}
+
+	// bot right
+	box[0] += rect->XYWH[2];
+	box[1] += rect->XYWH[3];
+	if ( pointInside ( fXY, box ) ) {
+/*
+		int i = 2;
+		handleCursor_start;
+		selected = 1;
+
+		return 1;
+*/
+		return 2;
+	}
+
+
+
+	/// 4 lines
+
+	// top line
+
+	float topLeft[2] = {
+		rect->XYWH[0],
+		rect->XYWH[1],
+	};
+	float topRight[2] = {
+		rect->XYWH[0] + rect->XYWH[2],
+		rect->XYWH[1],
+	};
+	float botRight[2] = {
+		rect->XYWH[0] + rect->XYWH[2],
+		rect->XYWH[1] + rect->XYWH[3],
+	};
+	float botLeft[2] = {
+		rect->XYWH[0],
+		rect->XYWH[1] + rect->XYWH[3],
+	};
+/*
+	loc_to_point ( topLeft, topLeft, viewLoc, viewScale );
+	loc_to_point ( topRight, topRight, viewLoc, viewScale );
+	loc_to_point ( botRight, botRight, viewLoc, viewScale );
+	loc_to_point ( botLeft, botLeft, viewLoc, viewScale );
+*/
+
+	float dist_top = pointSegDist ( fXY, topLeft, topRight );
+//	printf ( "line dist: %f\n", dist );
+	float dist_right = pointSegDist ( fXY, topRight, botRight );
+	float dist_bot = pointSegDist ( fXY, botRight, botLeft );
+	float dist_left = pointSegDist ( fXY, botLeft, topLeft );
+
+	dist_top /= viewScale;
+	dist_right /= viewScale;
+	dist_bot /= viewScale;
+	dist_left /= viewScale;
+
+/*
+	printf ( "pointDist: %d\n", pointDist );
+	printf ( "dist_top: %f\n", dist_top );
+	printf ( "dist_right: %f\n", dist_right );
+	printf ( "dist_bot: %f\n", dist_bot );
+	printf ( "dist_left: %f\n", dist_left );
+*/
+
+	if ( dist_top < pointDist ||
+	     dist_right < pointDist ||
+	     dist_bot < pointDist ||
+	     dist_left < pointDist ) {
+/*
+		int i = 0;
+		handleCursor_start;
+		selected = 1;
+
+		return 1;
+*/
+		return 0;
+	}
+
+	return -1;
 }
 
 extern int controlPointWidth;

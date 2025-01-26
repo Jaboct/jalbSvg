@@ -338,7 +338,7 @@ struct xmlFuncts jvgXml = {
 	jvgInitMask,
 	jvgNameToIndex,
 	jvgBodyToVal,
-	.postInit = jvgPostInit,
+	.postInit = (void (*)(void *))jvgPostInit,
 };
 
 void jvg_print ( struct jvg *stru ) {
