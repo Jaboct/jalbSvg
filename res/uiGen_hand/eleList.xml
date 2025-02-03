@@ -50,9 +50,26 @@
                           <compRender>
                             <comp_type>2</comp_type>
                             <list>
-
                               <uiUnion_list>
                                 <list>
+                                  <uiUnion>
+                                    <literalVar>
+                                      <data>
+                                        <str>group</str>
+                                        <useData>0</useData>
+                                      </data>
+                                      <pxMove>
+                                        <XYWH>
+                                          0,
+                                          1,
+                                          0,
+                                          0,
+                                        </XYWH>
+                                      </pxMove>
+                                    </literalVar>
+                                    <eventList>
+                                    </eventList>
+                                  </uiUnion>
                                 </list>
                                 <cursor>
                                   0,
@@ -61,9 +78,26 @@
                                   0,
                                 </cursor>
                               </uiUnion_list>
-
                               <uiUnion_list>
                                 <list>
+                                  <uiUnion>
+                                    <literalVar>
+                                      <data>
+                                        <str>path</str>
+                                        <useData>0</useData>
+                                      </data>
+                                      <pxMove>
+                                        <XYWH>
+                                          0,
+                                          1,
+                                          0,
+                                          0,
+                                        </XYWH>
+                                      </pxMove>
+                                    </literalVar>
+                                    <eventList>
+                                    </eventList>
+                                  </uiUnion>
                                 </list>
                                 <cursor>
                                   0,
@@ -72,7 +106,6 @@
                                   0,
                                 </cursor>
                               </uiUnion_list>
-
                             </list>
                             <literalSubVar>0</literalSubVar>
                           </compRender>
@@ -113,7 +146,7 @@
           <type>2</type>
           <xyOffsetScale>
             0.000000,
-            0.000000,
+            1.000000,
           </xyOffsetScale>
         </alRender>
         <modI>14</modI>
@@ -131,7 +164,11 @@
   <name>eleList.xml</name>
   <data></data>
   <dataTypeDef>
-    <struType></struType>
+    <struType>
+      <modI>14</modI>
+      <modName>jalbJvg</modName>
+      <struI>6</struI>
+    </struType>
   </dataTypeDef>
   <strBuffer></strBuffer>
   <cursor>
