@@ -1,7 +1,7 @@
 #! /bin/bash -x
 cd "$(dirname "$0")"
 
-testEnvDir=/home/jadoo/workspace/jHigh/testEnv/lib/
+testEnvDir=~/workspace/jHigh/testEnv/lib/
 
 
 #echo $testEnvDir

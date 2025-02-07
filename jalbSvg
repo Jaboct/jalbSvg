@@ -9,36 +9,36 @@ jHigh-IDE [jalbSvg]
 
 Button:
 0	1	C:\Users\jacob\workspace\jHigh\testEnv/modCore lay\jHigh_jalbSvg
-#1	1	mingw32-make -C /home/jadoo/workspace/jHigh\jalbSvg\ CompType=win
-#1	1	mingw32-make -C /home/jadoo/workspace/jHigh\jalbSvg\ clean CompType=win
-1	1	make -C /home/jadoo/workspace/jHigh/jalbSvg/
-1	1	make -C /home/jadoo/workspace/jHigh/jalbSvg/ clean
-0	1	/home/jadoo/workspace/jHigh\testEnv/modCore lay\jHigh_jalbSvg
-#1	1	/home/jadoo/workspace/jHigh\jalbSvg\soSend.bat
-1	1	/home/jadoo/workspace/jHigh/jalbSvg/soSend.sh
-1	1	/home/jadoo/workspace/jHigh\jalbSvg\compSend.bat
+#1	1	mingw32-make -C /home/jadeb/workspace/jHigh\jalbSvg\ CompType=win
+#1	1	mingw32-make -C /home/jadeb/workspace/jHigh\jalbSvg\ clean CompType=win
+1	1	make -C /home/jadeb/workspace/jHigh/jalbSvg/
+1	1	make -C /home/jadeb/workspace/jHigh/jalbSvg/ clean
+0	1	/home/jadeb/workspace/jHigh\testEnv/modCore lay\jHigh_jalbSvg
+#1	1	/home/jadeb/workspace/jHigh\jalbSvg\soSend.bat
+1	1	/home/jadeb/workspace/jHigh/jalbSvg/soSend.sh
+1	1	/home/jadeb/workspace/jHigh\jalbSvg\compSend.bat
 
 
 Dir:
-/home/jadoo/workspace/jHigh/jalbSvg/src/
-/home/jadoo/workspace/jHigh/jalbSvg/include/
-/home/jadoo/workspace/jHigh/jalbSvg/
-/home/jadoo/workspace/jHigh/testEnv/lay/
-/home/jadoo/programs/modCore/
+/home/jadeb/workspace/jHigh/jalbSvg/src/
+/home/jadeb/workspace/jHigh/jalbSvg/include/
+/home/jadeb/workspace/jHigh/jalbSvg/
+/home/jadeb/workspace/jHigh/testEnv/lay/
+/home/jadeb/programs/modCore/
 
 #C:\Users\jacob\workspace\jHigh\testEnv/lay\
 #C:\Users\jacob\programs\modCore\
 
 
 #Text:
-/home/jadoo/workspace/jHigh/jalbSvg/makefile
-/home/jadoo/workspace/jHigh/jalbSvg/src/hand.c
+/home/jadeb/workspace/jHigh/jalbSvg/makefile
+/home/jadeb/workspace/jHigh/jalbSvg/src/hand.c
 
 Text:
-/home/jadoo/workspace/jHigh/jalbSvg/makefile
-/home/jadoo/workspace/jHigh/jalbSvg/lay/jalbJvg
-/home/jadoo/workspace/jHigh/jalbSvg/src/jHand.c
-/home/jadoo/workspace/jHigh/jalbSvg/src/complexEle_ext.c
+/home/jadeb/workspace/jHigh/jalbSvg/makefile
+/home/jadeb/workspace/jHigh/jalbSvg/lay/jalbJvg
+/home/jadeb/workspace/jHigh/jalbSvg/src/jHand.c
+/home/jadeb/workspace/jHigh/jalbSvg/src/complexEle_ext.c
 
 
 jHighLoad:
@@ -78,8 +78,8 @@ layoutUi	takeTop	loop	setLastStageData
 
 
 jHighXmlGroup:
-#/home/jadoo/workspace/jHigh\jalbSvg\jh\_xmlGroup
-/home/jadoo/workspace/jHigh/jalbSvg/jh/_xmlGroup
+#/home/jadeb/workspace/jHigh\jalbSvg\jh\_xmlGroup
+/home/jadeb/workspace/jHigh/jalbSvg/jh/_xmlGroup
 
 
 Run:

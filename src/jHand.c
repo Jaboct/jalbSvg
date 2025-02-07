@@ -254,7 +254,7 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 					if ( ele->type == jNaked_Path ) {
 						printf ( "load path uiGen\n" );
 
-						char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/uiGen_hand/jPath.xml";
+						char *dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/jPath.xml";
 
 						uiGen_api->load_and_set_norm ( dir, ele->path );
 
@@ -1002,7 +1002,7 @@ void jHand_save ( ) {
 	if ( saveDir[0] != '\0' ) {
 		jalbJvg_glob_save ( saveDir );
 	} else {
-		char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/test_00.xml";
+		char *dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/jvg/test_00.xml";
 		jalbJvg_glob_save ( dir );
 	}
 
@@ -1030,7 +1030,7 @@ void jalbJvg_save ( struct jvg *jvgEle, char *dir ) {
 void jHand_load ( ) {
 	printf ( "jHand_load ( )\n" );
 
-	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/test_00.xml";
+	char *dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/jvg/test_00.xml";
 
 	jalbJvg_load ( dir );
 }
@@ -1866,12 +1866,12 @@ void jType_spawnEditUi ( struct jNakedUnion *uni ) {
 		case jNaked_G:
 			break;
 		case jNaked_Path:
-			dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/uiGen_hand/jPath.xml";
+			dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/jPath.xml";
 			data = uni->path;
 
 			break;
 		case jNaked_Text:
-			dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/uiGen_hand/jText.xml";
+			dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/jText.xml";
 			data = uni->text;
 
 			break;
@@ -1882,7 +1882,7 @@ void jType_spawnEditUi ( struct jNakedUnion *uni ) {
 		case jNaked_Ellipse:
 			break;
 		case jNaked_Complex:
-			dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/uiGen_hand/complexEle.xml";
+			dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/complexEle.xml";
 			data = uni->text;
 
 			break;
@@ -2068,7 +2068,7 @@ void load_jvg_dirList ( ) {
 		return;
 	}
 
-	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/";
+	char *dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/jvg/";
 	jalbDir_loadPane ( dir );
 
 	printf ( "load_jvg_dirList ( ) OVER\n" );
@@ -2156,7 +2156,7 @@ struct jvg *load_jvg_example_eleList ( ) {
 void open_left_toolbar ( ) {
 	printf ( "open_left_toolbar ( )\n" );
 
-	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/uiGen_hand/eleSpawner.xml";
+	char *dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/eleSpawner.xml";
 	void *data = NULL;
 	int type = 1; // no red bar.
 

@@ -19,34 +19,34 @@ int cursorRenderMode = 0;	// enum cursorRenderTypes;
 // cur_num
 struct cursorIconInfo cursorIcons[6] = {
 	{
-		.dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/cursor/cursor_32.png",
+		.dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/cursor/cursor_32.png",
 		.hotXY = { 10, 4 },
 	},
 	{
-		.dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/cursor/cursor_text_32.png",
+		.dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/cursor/cursor_text_32.png",
 		.hotXY = { 10, 10 },
 	},
 	{
-		.dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/cursor/pen_32.png",
+		.dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/cursor/pen_32.png",
 		.hotXY = { 10, 10 },
 	},
 	{
-		.dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/cursor/rect.png",
+		.dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/cursor/rect.png",
 		.hotXY = { 10, 10 },
 	},
 	{
-		.dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/cursor/arc_32.png",
+		.dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/cursor/arc_32.png",
 		.hotXY = { 10, 10 },
 	},
 	{
-		.dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/cursor/select-mouseover.png",
+		.dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/cursor/select-mouseover.png",
 		.hotXY = { 0, 0 },
 	},
 };
 
 /*
 void changeCursor ( ) {
-	char *filename = "/home/jadoo/workspace/jHigh/jalbSvg/res/cursor/xterm_32.png";
+	char *filename = "/home/jadeb/workspace/jHigh/jalbSvg/res/cursor/xterm_32.png";
 	int hotX = 10;
 	int hotY = 10;
 
@@ -55,13 +55,13 @@ void changeCursor ( ) {
 
 
 	if ( cursorRenderMode == 0 ) {
-//		filename = "/home/jadoo/workspace/jHigh/jalbSvg/res/cursor/xterm_32.png";
-		filename = "/home/jadoo/workspace/jHigh/jalbSvg/res/cursor/cursor_text_32.png";
+//		filename = "/home/jadeb/workspace/jHigh/jalbSvg/res/cursor/xterm_32.png";
+		filename = "/home/jadeb/workspace/jHigh/jalbSvg/res/cursor/cursor_text_32.png";
 		hotX = 10;
 		hotY = 10;
 	} else {
-//		filename = "/home/jadoo/workspace/jHigh/jalbSvg/res/cursor/cursor_48.png";
-		filename = "/home/jadoo/workspace/jHigh/jalbSvg/res/cursor/cursor_32.png";
+//		filename = "/home/jadeb/workspace/jHigh/jalbSvg/res/cursor/cursor_48.png";
+		filename = "/home/jadeb/workspace/jHigh/jalbSvg/res/cursor/cursor_32.png";
 		hotX = 10;
 		hotY = 4;
 	}

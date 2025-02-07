@@ -39,7 +39,7 @@ int jText_box_width = 10;
 
 // uiGen
 extern struct uiGen_api *uiGenApi;
-char *uiGen_jTextEdit = "/home/jadoo/workspace/jHigh/jalbSvg/res/uiGen_hand/jText.xml";
+char *uiGen_jTextEdit = "/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/jText.xml";
 
 
 /** Functions */

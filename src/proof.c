@@ -15,7 +15,8 @@ extern struct backbone_structStruct *backbone_arr_jalbSvg[];
 extern int svg_attributes[];
 extern struct backbone_structStruct svg;
 
-
+// todo
+char *homeDir = "/home/jadeb/";
 
 /** Functions */
 

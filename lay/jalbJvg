@@ -6,7 +6,7 @@ lay/layoutFile_default
 #jalbDir	jalbDir2
 
 Lib:
-dir	jalbDir2
+dir	jalbDir
 jalbJvg	jalbJvg
 jalbCalc	jalbCalc
 uiGen	uiGen
@@ -120,8 +120,8 @@ Hotkey:
 jalbJvg	e	toggle_renderMode
 jalbJvg	s	jHand_save
 #jalbJvg	l	jHand_load
-#jalbJvg	l	jalbJvg_load_global	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/test/embedTest_00.xml"
-jalbJvg	l	jalbJvg_load_global	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvgTest/test_02.xml"
+#jalbJvg	l	jalbJvg_load_global	"/home/jadeb/workspace/jHigh/jalbSvg/res/jvg/test/embedTest_00.xml"
+jalbJvg	l	jalbJvg_load_global	"/home/jadeb/workspace/jHigh/jalbSvg/res/jvgTest/test_02.xml"
 
 
 // complexEle development
@@ -134,21 +134,21 @@ jalbJvg	4	set_jvg_viewScale	0.5
 
 #Hotkey:
 // For struct mapper, output from jHigh?
-jalbJvg	1	jalbJvg_load	"/home/jadoo/workspace/jHigh/jHighMapper/res/output.xml"
+jalbJvg	1	jalbJvg_load	"/home/jadeb/workspace/jHigh/jHighMapper/res/output.xml"
 
 
 #Hotkey:
 // For proofs
 jalbJvg	0	jProof_test_all
 jalbJvg	f	fullTest
-jalbJvg	e	load_global_svg	"/home/jadoo/workspace/jHigh/jalbJvg/res/firstproof/ellipse.svg"
+jalbJvg	e	load_global_svg	"/home/jadeb/workspace/jHigh/jalbJvg/res/firstproof/ellipse.svg"
 jalbJvg	r	load_png
 jalbJvg	w	hand_screenshot
 jalbJvg	q	start_allTests
 jalbJvg	i	changeCursor
-#jalbJvg	h	hand_doStuff2	"/home/jadoo/workspace/jHigh/jalbSvg/res/proofs/svg/test_00.svg"
-#jalbJvg	h	hand_doStuff2	"/home/jadoo/workspace/jHigh/jalbSvg/res/proofs/svg/test_text_01.svg"
-#jalbJvg	h	hand_doStuff2	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/test_00.svg"
+#jalbJvg	h	hand_doStuff2	"/home/jadeb/workspace/jHigh/jalbSvg/res/proofs/svg/test_00.svg"
+#jalbJvg	h	hand_doStuff2	"/home/jadeb/workspace/jHigh/jalbSvg/res/proofs/svg/test_text_01.svg"
+#jalbJvg	h	hand_doStuff2	"/home/jadeb/workspace/jHigh/jalbSvg/res/svgProof/test_00.svg"
 #jalbJvg	d	hand_doStuff
 //jalbJvg	t	changeCursor
 
@@ -170,8 +170,8 @@ Hotkey:
 
 
 Hotkey:
-#jalbDir	d	hand_layDirTab_uiGen_dir	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/"
-dir	d	hand_layDirTab_uiGen_dir	"/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/"
+#jalbDir	d	hand_layDirTab_uiGen_dir	"/home/jadeb/workspace/jHigh/jalbSvg/res/jvg/"
+dir	d	hand_layDirTab_uiGen_dir	"/home/jadeb/workspace/jHigh/jalbSvg/res/jvg/"
 
 
 Hotkey:
@@ -187,8 +187,8 @@ uiGen	r	set_uiGen_debug_render	1
 
 
 Hotkey:
-#uiGen	p	hand_load_deepList	"/home/jadoo/workspace/jHigh/uiGen/res/hand_uiGen/uiGen_maker.xml"
-#uiGen	p	hand_load_uiGen	"/home/jadoo/workspace/jHigh/uiGen/res/hand_uiGen/uiGen_maker.xml"
+#uiGen	p	hand_load_deepList	"/home/jadeb/workspace/jHigh/uiGen/res/hand_uiGen/uiGen_maker.xml"
+#uiGen	p	hand_load_uiGen	"/home/jadeb/workspace/jHigh/uiGen/res/hand_uiGen/uiGen_maker.xml"
 
 
 # complex script stuff
@@ -262,7 +262,7 @@ jalbJvg	hand_test_01
 
 
 Run:
-jalbJvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbJvg/res/svgProof/1_line_trim.svg"
+jalbJvg	load_global_svg	"/home/jadeb/workspace/jHigh/jalbJvg/res/svgProof/1_line_trim.svg"
 jalbJvg	empty_global_svg
 
 
@@ -326,10 +326,10 @@ jalbJvg	subVar_setName	jalbJvg	set_subVar_setName
 
 
 uiGen_globList_load:
-#/home/jadoo/workspace/jHigh/uiGen/res/hand_uiGen/uiGen_maker.xml
-/home/jadoo/workspace/jHigh/jalbSvg/res/uiGen_hand/eleList.xml
-/home/jadoo/workspace/jHigh/jalbSvg/res/uiGen_hand/jPath.xml
-/home/jadoo/workspace/jHigh/jalbSvg/res/uiGen_hand/jText.xml
+#/home/jadeb/workspace/jHigh/uiGen/res/hand_uiGen/uiGen_maker.xml
+/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/eleList.xml
+/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/jPath.xml
+/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/jText.xml
 
 
 

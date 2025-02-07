@@ -109,34 +109,34 @@ jalbSvg	e	hand_errand_00
 jalbSvg	1	hand_stru_00
 jalbSvg	2	hand_test
 jalbSvg	3	hand_test_load
-#jalbSvg	p	screenshot_02	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/ss.ppm"
-#jalbSvg	p	window_screenshot_bmp	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/ss.bmp"
-#jalbSvg	p	screenShot	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/ss.tga"
-#jalbSvg	p	saveBmp	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/ss.bmp"
+#jalbSvg	p	screenshot_02	"/home/jadeb/workspace/jHigh/testEnv/res/jalbSvg/ss.ppm"
+#jalbSvg	p	window_screenshot_bmp	"/home/jadeb/workspace/jHigh/testEnv/res/jalbSvg/ss.bmp"
+#jalbSvg	p	screenShot	"/home/jadeb/workspace/jHigh/testEnv/res/jalbSvg/ss.tga"
+#jalbSvg	p	saveBmp	"/home/jadeb/workspace/jHigh/testEnv/res/jalbSvg/ss.bmp"
 
 
 #Hotkey:
-jalbSvg	p	hand_p	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/ss.ppm"
-#jalbSvg	s	save_global_xml	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/saveProof/save_00.xml"
-#jalbSvg	s	save_global_svg	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/saveProof/save_00.svg"
+jalbSvg	p	hand_p	"/home/jadeb/workspace/jHigh/testEnv/res/jalbSvg/ss.ppm"
+#jalbSvg	s	save_global_xml	"/home/jadeb/workspace/jHigh/testEnv/res/jalbSvg/saveProof/save_00.xml"
+#jalbSvg	s	save_global_svg	"/home/jadeb/workspace/jHigh/testEnv/res/jalbSvg/saveProof/save_00.svg"
 
 
 #Hotkey:
-#jalbSvg	0	hand_load	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/proof_text_00_trim.svg"
-jalbSvg	0	load_global_svg	"/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/saveProof/save_00.svg"
+#jalbSvg	0	hand_load	"/home/jadeb/workspace/jHigh/jalbSvg/res/svgProof/proof_text_00_trim.svg"
+jalbSvg	0	load_global_svg	"/home/jadeb/workspace/jHigh/testEnv/res/jalbSvg/saveProof/save_00.svg"
 
 
 
 Hotkey:
-jalbSvg	h	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/test_00.svg"
-#jalbSvg	h	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/proofs/svg/test_text_00.svg"
-#jalbSvg	h	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/proofs/svg/test_text_01.svg"
+jalbSvg	h	load_global_svg	"/home/jadeb/workspace/jHigh/jalbSvg/res/svgProof/test_00.svg"
+#jalbSvg	h	load_global_svg	"/home/jadeb/workspace/jHigh/jalbSvg/res/proofs/svg/test_text_00.svg"
+#jalbSvg	h	load_global_svg	"/home/jadeb/workspace/jHigh/jalbSvg/res/proofs/svg/test_text_01.svg"
 
 Hotkey:
 jalbSvg	f	fullTest
 jalbSvg	d	toggle_svg_debugPrint_render
 jalbSvg	t	toggle_svg_debugPrint_event
-jalbSvg	e	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/firstproof/ellipse.svg"
+jalbSvg	e	load_global_svg	"/home/jadeb/workspace/jHigh/jalbSvg/res/firstproof/ellipse.svg"
 jalbSvg	r	load_png
 jalbSvg	w	hand_screenshot
 jalbSvg	q	start_allTests
@@ -180,14 +180,14 @@ jalbSvg	proof_parseD
 jalbSvg	hand_test_01
 
 Run:
-jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/1_line_trim.svg"
-#jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/curve_line_trim.svg"
-#jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/proof_text_00_trim.svg"
-#jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/curve_line_text_trim.svg"
-#jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/10_10_square.svg"
-#jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/shapes_00_trim.svg"
-#jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/shapes_01_trim.svg"
-#jalbSvg	load_global_svg	"/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/shapes_02_trim.svg"
+jalbSvg	load_global_svg	"/home/jadeb/workspace/jHigh/jalbSvg/res/svgProof/1_line_trim.svg"
+#jalbSvg	load_global_svg	"/home/jadeb/workspace/jHigh/jalbSvg/res/svgProof/curve_line_trim.svg"
+#jalbSvg	load_global_svg	"/home/jadeb/workspace/jHigh/jalbSvg/res/svgProof/proof_text_00_trim.svg"
+#jalbSvg	load_global_svg	"/home/jadeb/workspace/jHigh/jalbSvg/res/svgProof/curve_line_text_trim.svg"
+#jalbSvg	load_global_svg	"/home/jadeb/workspace/jHigh/jalbSvg/res/svgProof/10_10_square.svg"
+#jalbSvg	load_global_svg	"/home/jadeb/workspace/jHigh/jalbSvg/res/svgProof/shapes_00_trim.svg"
+#jalbSvg	load_global_svg	"/home/jadeb/workspace/jHigh/jalbSvg/res/svgProof/shapes_01_trim.svg"
+#jalbSvg	load_global_svg	"/home/jadeb/workspace/jHigh/jalbSvg/res/svgProof/shapes_02_trim.svg"
 jalbSvg	empty_global_svg
 
 
