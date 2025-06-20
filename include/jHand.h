@@ -167,6 +167,11 @@ void load_jvg_dirList ( );
 
 void jvg_toggle_CAD ( );
 
+void jvg_toggle_grid ( );
+void jvg_toggle_gridRender ( );
+// should snap ever be enabled when render isnt?
+void jvg_toggle_gridSnap ( );
+
 /// tools
 
 void set_cursor_pen ( );
@@ -182,7 +187,12 @@ struct jvg *load_jvg_example_eleList ( );
 
 
 
+/** UiGen spawning */
 
+void open_left_toolbar ( );
+void uiGen_open_eleList ( );
+
+float *toolBar_icon_color ( int i );
 
 
 

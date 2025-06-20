@@ -40,6 +40,11 @@ extern float glob_viewScale;
 extern float glob_viewLoc[];
 
 
+extern int renderCAD;
+extern int gridRender;
+extern int gridSnap;
+extern float gridWH[];
+
 // debug
 int debugPrint_jvg_render = 0;
 extern int debugPrint_jvg_event;
@@ -61,6 +66,9 @@ int heldType = 0;
 float heldStart[2];
 float cursorWorldLoc[2] = { 0, 0 };
 extern int thisSel; // used during rendering to figure if the ele, or a subEle, being rendered is currently selected.
+
+// this is relative to the elements top left position, not to the entire window.
+int cursorScreenXY[2];
 
 extern int renderMode;
 
@@ -129,6 +137,19 @@ void jalbJvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void
 
 	glob_viewScale = viewScale;
 
+//	sayIntArray ( "XYWHpass", XYWHpass, 4 );
+
+	if ( gridRender ) {
+		// draw grid lines
+		grid_render ( screenDims, glBuffers, XYWHpass, gridWH,
+			viewLoc, viewScale );
+
+		// draw an x at the grid position closest to the cursor.
+		grid_render_cursor ( screenDims, glBuffers, XYWHpass, gridWH,
+			viewLoc, viewScale, cursorScreenXY );
+	}
+
+
 	thisSel = selected;
 	cursor_depth = 0;
 	jNakedList_render ( screenDims, glBuffers, XYWHpass, glob_jvg->eles,
@@ -162,6 +183,7 @@ void jalbJvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void
 
 		draw2dApi->drawRect ( XYWH, colorWhite, screenDims, glBuffers );
 	}
+
 
 	/// at the top render the save dir
 	int XYWH[4] = {
@@ -216,6 +238,10 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 		glob_jvg = jvgInit ( );
 		global_jEles = glob_jvg->eles;
 	}
+
+	// clickXYpass is relative to the element, not to the screen.
+	cursorScreenXY[0] = clickXYpass[0];
+	cursorScreenXY[1] = clickXYpass[1];
 
 	viewScale = 1.0 / viewScale;
 
@@ -2019,6 +2045,26 @@ void jvg_pass_toolbar ( ) {
 	topEle = api_toolbar->spawn_toolbarEle ( "CAD", rt_funct, NULL, f );
 	api_toolbar->add_toolbarEle ( topEle );
 
+	f = jvg_toggle_grid;
+	topEle = api_toolbar->spawn_toolbarEle ( "grid", rt_funct, NULL, f );
+	api_toolbar->add_toolbarEle ( topEle );
+
+
+
+	// User Interface
+	topEle = api_toolbar->spawn_toolbarEle ( "User Interface", rt_drop, NULL, NULL );
+	api_toolbar->add_toolbarEle ( topEle );
+
+	f = uiGen_open_eleList;
+	dropEle = api_toolbar->spawn_toolbarEle ( "Ele List", rt_funct, NULL, f );
+	api_toolbar->add_drop_toolbarEle ( topEle, dropEle );
+	f = open_left_toolbar;
+	dropEle = api_toolbar->spawn_toolbarEle ( "Tool Bar", rt_funct, NULL, f );
+	api_toolbar->add_drop_toolbarEle ( topEle, dropEle );
+
+
+	api_toolbar->crunch_drop ( topEle );
+
 	printf ( "jvg_pass_toolbar ( ) OVER\n" );
 }
 
@@ -2074,8 +2120,6 @@ void load_jvg_dirList ( ) {
 	printf ( "load_jvg_dirList ( ) OVER\n" );
 }
 
-extern int renderCAD;
-
 void jvg_toggle_CAD ( ) {
 	printf ( "jvg_toggle_CAD ( )\n" );
 
@@ -2088,6 +2132,40 @@ void jvg_toggle_CAD ( ) {
 	printf ( "jvg_toggle_CAD ( ) OVER\n" );
 }
 
+void jvg_toggle_grid ( ) {
+	if ( gridRender ) {
+		gridRender = 0;
+		gridSnap = 0;
+	} else {
+		gridRender = 1;
+		gridSnap = 1;
+	}
+}
+
+void jvg_toggle_gridRender ( ) {
+	printf ( "jvg_toggle_gridRender ( )\n" );
+
+	if ( gridRender ) {
+		gridRender = 0;
+	} else {
+		gridRender = 1;
+	}
+
+	printf ( "jvg_toggle_gridRender ( ) OVER\n" );
+}
+
+// should snap ever be enabled when render isnt?
+void jvg_toggle_gridSnap ( ) {
+	printf ( "jvg_toggle_gridSnap ( )\n" );
+
+	if ( gridSnap ) {
+		gridSnap = 0;
+	} else {
+		gridSnap = 1;
+	}
+
+	printf ( "jvg_toggle_gridSnap ( ) OVER\n" );
+}
 
 /// tools
 
@@ -2153,17 +2231,42 @@ struct jvg *load_jvg_example_eleList ( ) {
 
 /** UiGen spawning */
 
+char *projectDir = "/home/jadeb/workspace/jHigh/jalbSvg";
+
 void open_left_toolbar ( ) {
 	printf ( "open_left_toolbar ( )\n" );
 
-	char *dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/eleSpawner.xml";
+//	char *fullDir = "/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/eleSpawner.xml";
+
+	char *dir = "res/uiGen_hand/eleSpawner.xml";
+	char fullDir[256];
+	sprintf ( fullDir, "%s/%s", projectDir, dir );
+
+
 	void *data = NULL;
 	int type = 1; // no red bar.
 
 	int XYWH[4] = { 0, 54, 100, 400 };
-	uiGen_api->load_and_set_XYWH ( dir, data, XYWH, type );
+	uiGen_api->load_and_set_XYWH ( fullDir, data, XYWH, type );
 
 	printf ( "open_left_toolbar ( ) OVER\n" );
+}
+
+void uiGen_open_eleList ( ) {
+	printf ( "uiGen_open_eleList ( )\n" );
+
+	char *dir = "res/uiGen_hand/eleList.xml";
+
+	char fullDir[256];
+	sprintf ( fullDir, "%s/%s", projectDir, dir );
+
+	void *data = glob_jvg;
+	int type = 0; // red bar.
+
+	int XYWH[4] = { 40, 40, 400, 400 };
+	uiGen_api->load_and_set_XYWH ( fullDir, data, XYWH, type );
+
+	printf ( "uiGen_open_eleList ( ) OVER\n" );
 }
 
 

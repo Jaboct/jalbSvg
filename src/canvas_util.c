@@ -29,6 +29,10 @@ void point_to_loc ( float *p0, float *pSet, float *viewLoc, float viewScale ) {
 //	sayFloatArray ( "pSet", pSet, 2 );
 }
 
+void world_to_screen ( float *pWorld, float *pScreen, float *viewLoc, float viewScale ) {
+	point_to_loc ( pWorld, pScreen, viewLoc, viewScale );
+}
+
 
 // convert a screen loc to a world loc.
 void loc_to_point ( float *p0, float *pSet, float *viewLoc, float viewScale ) {
@@ -39,9 +43,17 @@ void loc_to_point ( float *p0, float *pSet, float *viewLoc, float viewScale ) {
 	pSet[1] = p0[1] * viewScale + viewLoc[1];
 }
 
+void screen_to_world ( float *pScreen, float *pWorld, float *viewLoc, float viewScale ) {
+	loc_to_point ( pScreen, pWorld, viewLoc, viewScale );
+}
+
 void loc_to_pointI ( int *p0, float *pSet, float *viewLoc, float viewScale ) {
 	pSet[0] = p0[0] * viewScale + viewLoc[0];
 	pSet[1] = p0[1] * viewScale + viewLoc[1];
+}
+
+void screen_to_world_i ( int *pScreen, float *pWorld, float *viewLoc, float viewScale ) {
+	loc_to_pointI ( pScreen, pWorld, viewLoc, viewScale );
 }
 
 

@@ -56,6 +56,16 @@ void jCircRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jCi
 void complexEleRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct complexEle *complex,
 		float *viewLoc, float viewScale );
 
+void grid_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *gridWH,
+		float *viewLoc, float viewScale );
+void grid_render_cursor ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *gridWH,
+		float *viewLoc, float viewScale, int *cursorScreenXY );
+
+// always rounds up
+float roundUp ( float val, float roundTo );
+// round up or down, depending on what closer.
+float roundClose ( float val, float roundTo );
+
 /** Util */
 
 void path_lrtb ( struct jPath *path, float *lrtb );

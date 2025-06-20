@@ -22,6 +22,11 @@ extern int numFonts;
 
 extern struct jvg *glob_jvg;
 
+int renderCAD = 0;
+
+int gridRender = 0;
+int gridSnap = 0;
+float gridWH[2] = { 100, 100 };
 
 
 /// normal vars
@@ -47,9 +52,6 @@ extern int thisSel;
 
 // i generally use squares for control point.
 int controlPointWidth = 10;
-
-
-int renderCAD = 1;
 
 
 /// debug
@@ -850,6 +852,205 @@ void complexEleRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struc
 	}
 }
 
+void grid_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *gridWH,
+		float *viewLoc, float viewScale ) {
+	printf ( "grid_render ( )\n" );
+	sayFloatArray ( "gridWH", gridWH, 2 );
+
+	float topLeft[2] = {
+		viewLoc[0],
+		viewLoc[1],
+	};
+// void loc_to_point ( float *p0, float *pSet, float *viewLoc, float viewScale );
+
+
+	// if offset is 0, then there is an error, so break.
+	float offset[2] = {
+		gridWH[0] / viewScale,
+		gridWH[1] / viewScale,
+	};
+
+	if ( offset[0] == 0 ) {
+		return;
+	}
+	if ( offset[1] == 0 ) {
+		return;
+	}
+
+	// to stop too many lines from being rendered when zoomed out.
+	while ( offset[0] < 1 ) {
+		offset[0] *= 10;
+	}
+	while ( offset[1] < 1 ) {
+		offset[1] *= 10;
+	}
+
+
+	// x rounding
+/*
+	int i = ((topLeft[0] - 1) / gridWH[0]);
+	if ( i > 0 ) {
+		i += 1;
+	}
+	float v = i * gridWH[0];
+*/
+	float vx = roundUp ( topLeft[0], gridWH[0] );
+	float dx = vx - topLeft[0];
+
+	// y rounding
+/*
+	i = ((topLeft[1] - 1) / gridWH[1]);
+	if ( i > 0 ) {
+		i += 1;
+	}
+	v = i * gridWH[1];
+*/
+	float vy = roundUp ( topLeft[1], gridWH[1] );
+	float dy = vy - topLeft[1];
+
+	sayFloatArray ( "viewLoc", viewLoc, 2 );
+	sayFloatArray ( "offset", offset, 2 );
+
+	printf ( "vx: %f\n", vx );
+	printf ( "vy: %f\n", vy );
+
+	printf ( "dx: %f\n", dx );
+	printf ( "dy: %f\n", dy );
+
+	float XYWH[4] = {
+		XYWHpass[0] + dx / viewScale,
+		XYWHpass[1],
+		1,
+		XYWHpass[3],
+	};
+
+	sayFloatArray ( "XYWH verts", XYWH, 4 );
+
+	// draws verticle lines
+	while ( 1 ) {
+		draw2dApi->drawRectF ( XYWH, colorGrayOpaque, screenDims, glBuffers );
+		XYWH[0] += offset[0];
+
+		if ( XYWH[0] > screenDims[0] ) {
+			break;
+		}
+	}
+
+	XYWH[0] = XYWHpass[0];
+	XYWH[1] = XYWHpass[1] + dy / viewScale,
+	XYWH[2] = XYWHpass[2];
+	XYWH[3] = 1.0;
+
+	sayFloatArray ( "XYWH hors", XYWH, 4 );
+
+	// draws horizontal lines
+	while ( 1 ) {
+		draw2dApi->drawRectF ( XYWH, colorGrayOpaque, screenDims, glBuffers );
+		XYWH[1] += offset[1];
+
+		if ( XYWH[1] > screenDims[1] ) {
+			break;
+		}
+	}
+
+	float firstPoint[2] = {
+		dx / viewScale,
+		dy / viewScale,
+	};
+	sayFloatArray ( "firstPoint", firstPoint, 2 );
+
+	float worldPoint[2] = { gridWH[0], gridWH[1] };
+	loc_to_point ( worldPoint, worldPoint, viewLoc, viewScale );
+	sayFloatArray ( "worldPoint", worldPoint, 2 );
+
+	printf ( "grid_render ( ) OVER\n" );
+}
+
+// cursorScreenXY is the cursor position relative to the JLUI element, not to the window, or screen.
+void grid_render_cursor ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *gridWH,
+		float *viewLoc, float viewScale, int *cursorScreenXY ) {
+	// take cursor loc, convert it to world loc, round that, convert to screen loc.
+	// should it be possible to shap to positions off of the screen?
+
+	// if offset is 0, then there is an error, so break.
+	float offset[2] = {
+		gridWH[0] / viewScale,
+		gridWH[1] / viewScale,
+	};
+
+	if ( offset[0] == 0 ) {
+		return;
+	}
+	if ( offset[1] == 0 ) {
+		return;
+	}
+
+	// to stop too many lines from being rendered when zoomed out.
+	while ( offset[0] < 1 ) {
+		offset[0] *= 10;
+	}
+	while ( offset[1] < 1 ) {
+		offset[1] *= 10;
+	}
+
+
+	float worldCursor[2];
+	screen_to_world_i ( cursorScreenXY, worldCursor, viewLoc, viewScale );
+
+	float roundX = roundClose ( worldCursor[0], offset[0] );
+	float roundY = roundClose ( worldCursor[1], offset[1] );
+
+	sayIntArray ( "cursorScreenXY", cursorScreenXY, 2 );
+	printf ( "roundXY (%f, %f)\n", roundX, roundY );
+
+	float roundedWorld[2] = {
+		roundX,
+		roundY,
+	};
+
+	float newScreen[2];
+	world_to_screen ( roundedWorld, newScreen, viewLoc, viewScale );
+
+	sayFloatArray ( "newScreen", newScreen, 2 );
+}
+
+
+// always rounds up
+float roundUp ( float val, float roundTo ) {
+	// do (val * 0.999)?
+	int i = (val - 1) / roundTo;
+	if ( i > 0 ) {
+		i += 1;
+	}
+	float v = i * roundTo;
+//	float dx = v - val;
+	return v;
+}
+
+// round up or down, depending on what closer.
+float roundClose ( float val, float roundTo ) {
+	int i = (val + 0.5) / roundTo;
+	if ( i > 0 ) {
+		i += 1;
+	}
+	float v = i * roundTo;
+//	float dx = v - val;
+	return v;
+}
+
+// how to handle this, non efficiently.
+// get the world position of the top left of my screen.
+// round up to the nearest x'th.
+// convert that world position to a screen position.
+// render there
+
+// how to do it more effeciently.
+// 1 px on my screen = viewScale pixels in the canvas.
+
+// get the world position of the top left of my screen.
+// round up to the nearest x'th.
+// get the difference in those 2 numbers, then my first line is rendered at
+// x = 0 + offset * viewScale
 
 /** Util */
 

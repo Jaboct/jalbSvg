@@ -59,6 +59,8 @@ body{
     <li><a href="#selected">Selected + Cursor</a></li>
     <li><a href="complexEle.html">Complex Ele</a></li>
     <li><a href="#dir">Dir</a></li>
+    <li><a href="#userInterface">User Interface</a></li>
+    <li><a href="#hotkeys">Hotkeys</a></li>
   </ul>
 </nav>
 </div>
@@ -86,6 +88,13 @@ extern ArrayList *global_jEles; // (struct jNakedUnion*)	(global_jvg->eles)
 </div>
 
 <br>
+int renderCAD<br>
+int gridRender<br>
+int gridSnap<br>
+float gridWH[2];<br>
+
+<br>
+<br>
 </div>
 
 <br>
@@ -94,7 +103,11 @@ extern ArrayList *global_jEles; // (struct jNakedUnion*)	(global_jvg->eles)
 <div class="myParagraph" id="baseFunctions">
 <b>Base Functions:</b><br>
 <u>Render:</u><br>
-<div class="codeBlock">void jNaked_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jNakedUnion *uni,
+<div class="codeBlock">void jalbJvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void *data,
+		float *viewLoc, float viewScale );
+
+<u>Individual Elements:</u>
+void jNaked_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jNakedUnion *uni,
 		float *viewLoc, float viewScale ); (jRender.c)
 void jPath_render ( );
 void jText_render ( );
@@ -343,14 +356,95 @@ I open the svg in inkscape, then export to png.<br>
 <br>
 <br>
 
-<br>
-<br>
+<div class="myParagraph" id="toolbar">
+<b>Toolbar</b><br>
+
+Rn there are 4 toolbar dropdowns:<br>
+- jvg<br>
+- jvg tools<br>
+- jvg complex<br>
+- CAD<br>
 
 <br>
 <br>
 
+set up in jHand.c.<br>
+
 <br>
 <br>
+
+CAD - jvg_toggle_CAD ( ) (jHand.c)<br>
+
+<br>
+</div>
+
+<br>
+<br>
+
+<div class="myParagraph" id="CAD">
+<b>CAD</b><br>
+<br>
+
+Variable:<br>
+int renderCAD (jRender.c)<br>
+Function:<br>
+jvg_toggle_CAD ( ) (jHand.c)<br>
+
+<br>
+</div>
+
+<br>
+<br>
+
+<div class="myParagraph" id="userInterface">
+<b>User Interface</b><br>
+I have:<br>
+Toolbar: (ctrl-b) Clickable pane of all the elements i can spawn, shows what element the cursor is currently set to.<br>
+<br>
+I want:<br>
+Ele List: shows all the elements that exist.<br>
+has collapsable groups.<br>
+<br>
+
+<div class="codeBlock">From uiGen_liveDev
+eleList.xml
+jPath.xml
+jText.xml
+complexEle.xml
+complexDec.xml
+complexWrangler
+eleSpawner (left toolbar)
+</div>
+<br>
+</div>
+
+<br>
+<br>
+
+<div class="myParagraph" id="hotkeys">
+<b>Hotkeys</b><br>
+
+<div class="codeBlock">ctrl-e: toggle_renderMode
+ctrl-s: save
+ctrl-l: load global (testing purposes)
+
+ctrl-t: spawn text
+ctrl-6: spawn line
+ctrl-5: spawn circle
+ctrl-g: spawn complex
+
+ctrl-d open the directory (to load a jvg)
+
+ctrl-u: enable event debug
+ctrl-r: enable render debug
+
+ctrl-n: add_global_complexMod
+
+ctrl-b: open left toolbar
+</div>
+
+<br>
+</div>
 
 <br>
 <br>
