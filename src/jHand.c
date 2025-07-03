@@ -1882,6 +1882,9 @@ char *jType_to_str ( struct jNakedUnion *uni ) {
 	return "Type out of Range";
 }
 
+
+/// spawning uiGen eles
+
 void jType_spawnEditUi ( struct jNakedUnion *uni ) {
 	printf ( "jType_spawnEditUi ( )\n" );
 
@@ -1902,10 +1905,13 @@ void jType_spawnEditUi ( struct jNakedUnion *uni ) {
 
 			break;
 		case jNaked_Rect:
+
 			break;
 		case jNaked_Circ:
+
 			break;
 		case jNaked_Ellipse:
+
 			break;
 		case jNaked_Complex:
 			dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/complexEle.xml";
@@ -1919,6 +1925,24 @@ void jType_spawnEditUi ( struct jNakedUnion *uni ) {
 	if ( dir ) {
 		uiGen_api->load_and_set_norm ( dir, data );
 	}
+}
+
+void open_jVert_edit ( struct jVert *vert ) {
+	printf ( "open_jVert_edit ( )\n" );
+	printf ( "vert: %p\n", vert );
+	sayFloatArray ( "vert->XY", vert->XY, 2 );
+
+	printf ( "open_jVert_edit ( ) OVER\n" );
+}
+
+void open_jLine_edit ( struct jLine *line ) {
+	printf ( "open_jLine_edit ( )\n" );
+	printf ( "line: %p\n", line );
+
+	printf ( "line->v0: %d\n", line->v0 );
+	printf ( "line->v1: %d\n", line->v1 );
+
+	printf ( "open_jLine_edit ( ) OVER\n" );
 }
 
 /// uiGen
@@ -2228,10 +2252,36 @@ struct jvg *load_jvg_example_eleList ( ) {
 	return jvg;
 }
 
+struct jPath *load_jvg_example_jPath ( ) {
+	printf ( "load_jvg_example_jPath ( )\n" );
+
+	struct jPath *path = jPathInit ( );
+
+	struct jVert *vert = jVertInit ( );
+	arrayListAddEndPointer ( path->verts, vert );
+	vert->XY[0] = 1.0;
+	vert->XY[1] = -1.0;
+
+	vert = jVertInit ( );
+	arrayListAddEndPointer ( path->verts, vert );
+	vert->XY[0] = 2.0;
+	vert->XY[1] = -2.0;
+
+	struct jLine *line = jLineInit ( );
+	arrayListAddEndPointer ( path->lines, line );
+	line->v0 = 0;
+	line->v1 = 0;
+
+	printf ( "load_jvg_example_jPath ( ) OVER\n" );
+
+	return path;
+}
+
+
 
 /** UiGen spawning */
 
-char *projectDir = "/home/jadeb/workspace/jHigh/jalbSvg";
+char *jvg_projectDir = "/home/jadeb/workspace/jHigh/jalbSvg";
 
 void open_left_toolbar ( ) {
 	printf ( "open_left_toolbar ( )\n" );
@@ -2240,7 +2290,7 @@ void open_left_toolbar ( ) {
 
 	char *dir = "res/uiGen_hand/eleSpawner.xml";
 	char fullDir[256];
-	sprintf ( fullDir, "%s/%s", projectDir, dir );
+	sprintf ( fullDir, "%s/%s", jvg_projectDir, dir );
 
 
 	void *data = NULL;
@@ -2258,7 +2308,7 @@ void uiGen_open_eleList ( ) {
 	char *dir = "res/uiGen_hand/eleList.xml";
 
 	char fullDir[256];
-	sprintf ( fullDir, "%s/%s", projectDir, dir );
+	sprintf ( fullDir, "%s/%s", jvg_projectDir, dir );
 
 	void *data = glob_jvg;
 	int type = 0; // red bar.
@@ -2267,6 +2317,50 @@ void uiGen_open_eleList ( ) {
 	uiGen_api->load_and_set_XYWH ( fullDir, data, XYWH, type );
 
 	printf ( "uiGen_open_eleList ( ) OVER\n" );
+}
+
+void uiGen_open_jNaked ( struct jNakedUnion *jNaked ) {
+	printf ( "uiGen_open_jNaked ( )\n" );
+
+	printf ( "projectDir: %s\n", jvg_projectDir );
+
+	printf ( "jNaked: %p\n", jNaked );
+	printf ( "jNaked->type: %d\n", jNaked->type );
+
+//	char *dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/";
+	char *midDir = "res/uiGen_hand";
+
+	int type = 0; // red bar.
+
+	if ( jNaked->type == jNaked_G ) {
+	} else if ( jNaked->type == jNaked_Path ) {
+		char *name = "jPath.xml";
+		char fullDir[1024];
+//		sprintf ( fullDir, "%s%s", dir, name );
+		sprintf ( fullDir, "%s/%s/%s", jvg_projectDir, midDir, name );
+
+		void *data = jNaked->path;
+
+		int XYWH[4] = { 40, 40, 400, 400 };
+		uiGen_api->load_and_set_XYWH ( fullDir, data, XYWH, type );
+
+	} else if ( jNaked->type == jNaked_Text ) {
+		char *name = "jText.xml";
+		char fullDir[1024];
+		sprintf ( fullDir, "%s/%s/%s", jvg_projectDir, midDir, name );
+
+		void *data = jNaked->text;
+
+		int XYWH[4] = { 40, 40, 400, 400 };
+		uiGen_api->load_and_set_XYWH ( fullDir, data, XYWH, type );
+
+	} else if ( jNaked->type == jNaked_Rect ) {
+	} else if ( jNaked->type == jNaked_Circ ) {
+	} else if ( jNaked->type == jNaked_Ellipse ) {
+	} else if ( jNaked->type == jNaked_Complex ) {
+	}
+
+	printf ( "uiGen_open_jNaked ( ) OVER\n" );
 }
 
 

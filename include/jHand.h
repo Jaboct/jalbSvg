@@ -141,7 +141,14 @@ void dragJPath ( struct jPath *path, float *dXY );
 /// util stuff
 
 char *jType_to_str ( struct jNakedUnion *uni );
+
+
+/// spawning uiGen eles
+
 void jType_spawnEditUi ( struct jNakedUnion *uni );
+
+void open_jVert_edit ( struct jVert *vert );
+void open_jLine_edit ( struct jLine *line );
 
 
 /// uiGen
@@ -172,6 +179,7 @@ void jvg_toggle_gridRender ( );
 // should snap ever be enabled when render isnt?
 void jvg_toggle_gridSnap ( );
 
+
 /// tools
 
 void set_cursor_pen ( );
@@ -184,13 +192,14 @@ void set_cursor_complex ( );
 /** Loading examples for uiGen_liveDev */
 
 struct jvg *load_jvg_example_eleList ( );
-
+struct jPath *load_jvg_example_jPath ( );
 
 
 /** UiGen spawning */
 
 void open_left_toolbar ( );
 void uiGen_open_eleList ( );
+void uiGen_open_jNaked ( struct jNakedUnion *jNaked );
 
 float *toolBar_icon_color ( int i );
 

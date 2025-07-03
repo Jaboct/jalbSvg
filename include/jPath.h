@@ -31,6 +31,7 @@ struct jVert {
 	float XY[2];
 };
 struct jLine {
+	// (enum pathUniEnum, path.h)
 	int type;
 	int v0;
 	int v1;

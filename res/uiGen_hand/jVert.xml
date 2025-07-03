@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<uiGen>
+  <vertList>
+  </vertList>
+  <eventList>
+  </eventList>
+  <scroll>0</scroll>
+  <name></name>
+  <data></data>
+  <strBuffer></strBuffer>
+  <cursor>
+    0,
+    0,
+    0,
+    0,
+  </cursor>
+  <dataList>
+  </dataList>
+  <macroList>
+  </macroList>
+  <scrollable>0</scrollable>
+  <globData>
+  </globData>
+</uiGen>

@@ -55,7 +55,7 @@
                                   <uiUnion>
                                     <literalVar>
                                       <data>
-                                        <str>group</str>
+                                        <str>Group</str>
                                         <useData>0</useData>
                                       </data>
                                       <pxMove>
@@ -83,13 +83,153 @@
                                   <uiUnion>
                                     <literalVar>
                                       <data>
-                                        <str>path</str>
+                                        <str>Path</str>
                                         <useData>0</useData>
                                       </data>
                                       <pxMove>
                                         <XYWH>
                                           0,
                                           1,
+                                          0,
+                                          0,
+                                        </XYWH>
+                                      </pxMove>
+                                    </literalVar>
+                                    <eventList>
+                                    </eventList>
+                                  </uiUnion>
+                                </list>
+                                <cursor>
+                                  0,
+                                  0,
+                                  0,
+                                  0,
+                                </cursor>
+                              </uiUnion_list>
+                              <uiUnion_list>
+                                <list>
+                                  <uiUnion>
+                                    <literalVar>
+                                      <data>
+                                        <str>Text</str>
+                                        <useData>0</useData>
+                                      </data>
+                                      <pxMove>
+                                        <XYWH>
+                                          0,
+                                          0,
+                                          0,
+                                          0,
+                                        </XYWH>
+                                      </pxMove>
+                                    </literalVar>
+                                    <eventList>
+                                    </eventList>
+                                  </uiUnion>
+                                </list>
+                                <cursor>
+                                  0,
+                                  0,
+                                  0,
+                                  0,
+                                </cursor>
+                              </uiUnion_list>
+                              <uiUnion_list>
+                                <list>
+                                  <uiUnion>
+                                    <literalVar>
+                                      <data>
+                                        <str>Rect</str>
+                                        <useData>0</useData>
+                                      </data>
+                                      <pxMove>
+                                        <XYWH>
+                                          0,
+                                          0,
+                                          0,
+                                          0,
+                                        </XYWH>
+                                      </pxMove>
+                                    </literalVar>
+                                    <eventList>
+                                    </eventList>
+                                  </uiUnion>
+                                </list>
+                                <cursor>
+                                  0,
+                                  0,
+                                  0,
+                                  0,
+                                </cursor>
+                              </uiUnion_list>
+                              <uiUnion_list>
+                                <list>
+                                  <uiUnion>
+                                    <literalVar>
+                                      <data>
+                                        <str>Circ</str>
+                                        <useData>0</useData>
+                                      </data>
+                                      <pxMove>
+                                        <XYWH>
+                                          0,
+                                          0,
+                                          0,
+                                          0,
+                                        </XYWH>
+                                      </pxMove>
+                                    </literalVar>
+                                    <eventList>
+                                    </eventList>
+                                  </uiUnion>
+                                </list>
+                                <cursor>
+                                  0,
+                                  0,
+                                  0,
+                                  0,
+                                </cursor>
+                              </uiUnion_list>
+                              <uiUnion_list>
+                                <list>
+                                  <uiUnion>
+                                    <literalVar>
+                                      <data>
+                                        <str>Ellipse</str>
+                                        <useData>0</useData>
+                                      </data>
+                                      <pxMove>
+                                        <XYWH>
+                                          0,
+                                          0,
+                                          0,
+                                          0,
+                                        </XYWH>
+                                      </pxMove>
+                                    </literalVar>
+                                    <eventList>
+                                    </eventList>
+                                  </uiUnion>
+                                </list>
+                                <cursor>
+                                  0,
+                                  0,
+                                  0,
+                                  0,
+                                </cursor>
+                              </uiUnion_list>
+                              <uiUnion_list>
+                                <list>
+                                  <uiUnion>
+                                    <literalVar>
+                                      <data>
+                                        <str>Complex</str>
+                                        <useData>0</useData>
+                                      </data>
+                                      <pxMove>
+                                        <XYWH>
+                                          0,
+                                          0,
                                           0,
                                           0,
                                         </XYWH>
@@ -133,6 +273,35 @@
                   <scroll>0</scroll>
                 </renderObj>
                 <eventList>
+
+                                        <uiEvent>
+                                          <key>
+                                            <trigger>
+                                              <click></click>
+                                            </trigger>
+                                            <action>
+          <funct>
+            <retType>5</retType>
+            <functRef>
+              <modI>8</modI>
+              <modName>jalbJvg</modName>
+              <functI>-1</functI>
+            </functRef>
+            <params>
+              <functRef_param>
+                <back>0</back>
+              </functRef_param>
+            </params>
+            <name>uiGen_open_jNaked</name>
+            <type>0</type>
+            <globalI>0</globalI>
+          </funct>
+                                              <eventList>
+                                              </eventList>
+                                            </action>
+                                          </key>
+                                        </uiEvent>
+
                 </eventList>
               </uiUnion>
             </list>
@@ -177,7 +346,6 @@
     0,
     0,
   </cursor>
-  <saveDir>/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/</saveDir>
   <dataList>
   </dataList>
   <macroList>

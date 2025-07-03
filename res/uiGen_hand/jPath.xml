@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <uiGen>
   <vertList>
     <uiUnion>
@@ -16,6 +16,8 @@
           </XYWH>
         </pxMove>
       </literalVar>
+      <eventList>
+      </eventList>
     </uiUnion>
     <uiUnion>
       <renderObj>
@@ -49,17 +51,21 @@
                   </XYWH>
                 </pxMove>
               </literalVar>
+              <eventList>
+              </eventList>
             </uiUnion>
             <uiUnion>
               <subVar>
                 <struI>0</struI>
                 <subVarI>0</subVarI>
                 <>-1</>
-                <modI>0</modI>
+                <modI>14</modI>
                 <modName>jalbJvg</modName>
                 <editable>1</editable>
                 <preStr></preStr>
               </subVar>
+              <eventList>
+              </eventList>
             </uiUnion>
           </list>
           <cursor>
@@ -76,66 +82,206 @@
         <scrollable>0</scrollable>
         <scroll>0</scroll>
       </renderObj>
+      <eventList>
+      </eventList>
     </uiUnion>
     <uiUnion>
-      <renderObj>
-        <locType>1</locType>
-        <absLoc>
-          0.000000,
-          0.000000,
-        </absLoc>
-        <relLoc>
-          0.000000,
-          0.000000,
-        </relLoc>
-        <WH>
-          1000.000000,
-          22.000000,
-        </WH>
-        <uniList>
-          <list>
-            <uiUnion>
-              <literalVar>
-                <data>
-                  <str>lines: </str>
-                  <useData>0</useData>
-                </data>
-                <pxMove>
-                  <XYWH>
-                    7,
-                    0,
-                    0,
-                    0,
-                  </XYWH>
-                </pxMove>
-              </literalVar>
-            </uiUnion>
-            <uiUnion>
-              <subVar>
-                <struI>0</struI>
-                <subVarI>1</subVarI>
-                <>-1</>
-                <modI>0</modI>
-                <modName>jalbJvg</modName>
-                <editable>1</editable>
-                <preStr></preStr>
-              </subVar>
-            </uiUnion>
-          </list>
-          <cursor>
+      <subVar>
+        <struI>0</struI>
+        <subVarI>0</subVarI>
+        <alRender>
+          <uniList>
+            <list>
+              <uiUnion>
+                <literalVar>
+                  <data>
+                    <str>vert</str>
+                    <useData>0</useData>
+                  </data>
+                  <pxMove>
+                    <XYWH>
+                      0,
+                      1,
+                      0,
+                      0,
+                    </XYWH>
+                  </pxMove>
+                </literalVar>
+                <eventList>
+                  <uiEvent>
+                    <key>
+                      <trigger>
+                        <click>
+                          <altKeys>
+                            0,
+                            0,
+                            0,
+                          </altKeys>
+                        </click>
+                      </trigger>
+                      <action>
+                        <funct>
+                          <retType>5</retType>
+                          <functRef>
+                            <modI>14</modI>
+                            <modName>jalbJvg</modName>
+                            <functI>-1</functI>
+                          </functRef>
+                          <params>
+                            <functRef_param>
+                              <back>0</back>
+                            </functRef_param>
+                          </params>
+                          <name>open_jVert_edit</name>
+                          <type>0</type>
+                          <globalI>0</globalI>
+                        </funct>
+                        <eventList>
+                        </eventList>
+                      </action>
+                    </key>
+                  </uiEvent>
+                </eventList>
+              </uiUnion>
+            </list>
+            <cursor>
+              0,
+              0,
+              0,
+              0,
+            </cursor>
+          </uniList>
+          <type>2</type>
+          <xyOffsetScale>
+            0.000000,
+            0.000000,
+          </xyOffsetScale>
+        </alRender>
+        <modI>14</modI>
+        <modName>jalbJvg</modName>
+        <editable>1</editable>
+        <preStr></preStr>
+      </subVar>
+      <eventList>
+      </eventList>
+    </uiUnion>
+    <uiUnion>
+      <literalVar>
+        <data>
+          <str></str>
+          <useData>0</useData>
+        </data>
+        <pxMove>
+          <XYWH>
+            0,
+            1,
             0,
             0,
+          </XYWH>
+        </pxMove>
+      </literalVar>
+      <eventList>
+      </eventList>
+    </uiUnion>
+    <uiUnion>
+      <literalVar>
+        <data>
+          <str>lines</str>
+          <useData>0</useData>
+        </data>
+        <pxMove>
+          <XYWH>
+            0,
+            1,
             0,
             0,
-          </cursor>
-        </uniList>
-        <xyOffsetScales>
-          0.000000,
-          1.000000,
-        </xyOffsetScales>
-        <scrollable>0</scrollable>
-        <scroll>0</scroll>
-      </renderObj>
+          </XYWH>
+        </pxMove>
+      </literalVar>
+      <eventList>
+      </eventList>
+    </uiUnion>
+    <uiUnion>
+      <subVar>
+        <struI>0</struI>
+        <subVarI>0</subVarI>
+        <alRender>
+          <uniList>
+            <list>
+              <uiUnion>
+                <literalVar>
+                  <data>
+                    <str>line</str>
+                    <useData>0</useData>
+                  </data>
+                  <pxMove>
+                    <XYWH>
+                      0,
+                      1,
+                      0,
+                      0,
+                    </XYWH>
+                  </pxMove>
+                </literalVar>
+                <eventList>
+
+                  <uiEvent>
+                    <key>
+                      <trigger>
+                        <click>
+                          <altKeys>
+                            0,
+                            0,
+                            0,
+                          </altKeys>
+                        </click>
+                      </trigger>
+                      <action>
+                        <funct>
+                          <retType>5</retType>
+                          <functRef>
+                            <modI>14</modI>
+                            <modName>jalbJvg</modName>
+                            <functI>-1</functI>
+                          </functRef>
+                          <params>
+                            <functRef_param>
+                              <back>0</back>
+                            </functRef_param>
+                          </params>
+                          <name>open_jLine_edit</name>
+                          <type>0</type>
+                          <globalI>0</globalI>
+                        </funct>
+                        <eventList>
+                        </eventList>
+                      </action>
+                    </key>
+                  </uiEvent>
+
+                </eventList>
+              </uiUnion>
+            </list>
+            <cursor>
+              0,
+              0,
+              0,
+              0,
+            </cursor>
+          </uniList>
+          <type>2</type>
+          <xyOffsetScale>
+            0.000000,
+            0.000000,
+          </xyOffsetScale>
+        </alRender>
+        <modI>14</modI>
+        <modName>jalbJvg</modName>
+        <editable>1</editable>
+        <preStr></preStr>
+      </subVar>
+      <eventList>
+      </eventList>
     </uiUnion>
   </vertList>
   <eventList>
@@ -150,10 +296,11 @@
     0,
     0,
   </cursor>
-  <saveDir></saveDir>
   <dataList>
   </dataList>
   <macroList>
   </macroList>
   <scrollable>0</scrollable>
+  <globData>
+  </globData>
 </uiGen>
