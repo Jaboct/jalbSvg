@@ -11,9 +11,11 @@
 #include &quot;jPath.h&quot;
 #include &quot;jText.h&quot;
 #include &quot;jShapes.h&quot;
-#include &quot;complexMod.h&quot;
 </preInc>
-  <postInc></postInc>
+  <postInc>
+#include &quot;complexMod.h&quot;
+#include &quot;complexEle_ext.h&quot;
+</postInc>
   <structIds>
     19,
     20,

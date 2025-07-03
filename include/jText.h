@@ -41,6 +41,6 @@ void jTextFill ( struct jText *var );
 void *jTextInitMask ( );
 void jTextClose ( struct jText *var );
 void jTextBodyToVal ( void *varPass, int nameI, char *body );
-int jTextNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+int jTextNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** Other Functs */

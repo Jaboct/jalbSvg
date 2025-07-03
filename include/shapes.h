@@ -19,6 +19,8 @@
 void shapes_preInit ( );
 
 
+
+
 /** Structs */
 
 struct rect {
@@ -61,7 +63,7 @@ void rectFill ( struct rect *var );
 void *rectInitMask ( );
 void rectClose ( struct rect *var );
 void rectBodyToVal ( void *varPass, int nameI, char *body );
-int rectNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+int rectNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** circle */
 struct circle *circleInit ( );
@@ -69,7 +71,7 @@ void circleFill ( struct circle *var );
 void *circleInitMask ( );
 void circleClose ( struct circle *var );
 void circleBodyToVal ( void *varPass, int nameI, char *body );
-int circleNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+int circleNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** ellipse */
 struct ellipse *ellipseInit ( );
@@ -77,6 +79,6 @@ void ellipseFill ( struct ellipse *var );
 void *ellipseInitMask ( );
 void ellipseClose ( struct ellipse *var );
 void ellipseBodyToVal ( void *varPass, int nameI, char *body );
-int ellipseNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+int ellipseNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** Other Functs */

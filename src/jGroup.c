@@ -25,6 +25,8 @@ extern int jvgEditId;
 extern int debugPrint_projectName_init;
 
 
+/** Variables */
+
 extern struct draw2dStruct *draw2dApi;
 extern struct draw3dStruct *draw3dApi;
 extern struct jalbFont *fonts[];
@@ -32,9 +34,9 @@ extern struct jalbFont *fonts[];
 //extern void (*addCanvas)(int id, void *data, int *xywh);
 extern addCanvasF *addCanvas;
 
-extern struct backbone_structStruct jGroup;
-extern struct backbone_structStruct jNakedUnion;
-extern struct backbone_structStruct jvg;
+extern struct backbone_structStruct backboneStru_jGroup;
+extern struct backbone_structStruct backboneStru_jNakedUnion;
+extern struct backbone_structStruct backboneStru_jvg;
 
 /** Functions */
 
@@ -338,7 +340,7 @@ struct xmlFuncts jvgXml = {
 	jvgInitMask,
 	jvgNameToIndex,
 	jvgBodyToVal,
-	.postInit = (void (*)(void *))jvgPostInit,
+	.postInit = (void(*)(void*))jvgPostInit,
 };
 
 void jvg_print ( struct jvg *stru ) {

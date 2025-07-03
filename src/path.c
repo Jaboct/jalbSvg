@@ -28,6 +28,8 @@ extern int ellipArcEditId;
 extern int debugPrint_projectName_init;
 
 
+/** Variables */
+
 extern struct draw2dStruct *draw2dApi;
 extern struct draw3dStruct *draw3dApi;
 extern struct jalbFont *fonts[];
@@ -35,12 +37,12 @@ extern struct jalbFont *fonts[];
 //extern void (*addCanvas)(int id, void *data, int *xywh);
 extern addCanvasF *addCanvas;
 
-extern struct backbone_structStruct pathUni;
-extern struct backbone_structStruct moveTo;
-extern struct backbone_structStruct lineTo;
-extern struct backbone_structStruct cubicBez;
-extern struct backbone_structStruct quadBez;
-extern struct backbone_structStruct ellipArc;
+extern struct backbone_structStruct backboneStru_pathUni;
+extern struct backbone_structStruct backboneStru_moveTo;
+extern struct backbone_structStruct backboneStru_lineTo;
+extern struct backbone_structStruct backboneStru_cubicBez;
+extern struct backbone_structStruct backboneStru_quadBez;
+extern struct backbone_structStruct backboneStru_ellipArc;
 
 /** Functions */
 
@@ -126,7 +128,7 @@ void pathUniBodyToVal ( void *varPass, int nameI, char *body ) {
 	}
 }
 
-int pathUniNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+int pathUniNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	struct pathUni *var = data;
 	if ( strcmp ( body, "moveTo" ) == 0 ) {
@@ -171,7 +173,7 @@ struct xmlFuncts pathUniXml = {
 	pathUniInitMask,
 	pathUniNameToIndex,
 	pathUniBodyToVal,
-	(void (*) (void*, int))pathUniTypeChange0,
+	.typeChange = (void (*) (void*, int))pathUniTypeChange0,
 };
 
 void pathUni_print ( struct pathUni *stru ) {
@@ -218,7 +220,7 @@ void moveToBodyToVal ( void *varPass, int nameI, char *body ) {
 	}
 }
 
-int moveToNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+int moveToNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	if ( strcmp ( body, "rel" ) == 0 ) {
 		return 0;
@@ -283,7 +285,7 @@ void lineToBodyToVal ( void *varPass, int nameI, char *body ) {
 	}
 }
 
-int lineToNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+int lineToNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	if ( strcmp ( body, "rel" ) == 0 ) {
 		return 0;
@@ -362,7 +364,7 @@ void cubicBezBodyToVal ( void *varPass, int nameI, char *body ) {
 	}
 }
 
-int cubicBezNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+int cubicBezNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	if ( strcmp ( body, "rel" ) == 0 ) {
 		return 0;
@@ -439,7 +441,7 @@ void quadBezBodyToVal ( void *varPass, int nameI, char *body ) {
 	}
 }
 
-int quadBezNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+int quadBezNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	if ( strcmp ( body, "rel" ) == 0 ) {
 		return 0;
@@ -522,7 +524,7 @@ void ellipArcBodyToVal ( void *varPass, int nameI, char *body ) {
 	}
 }
 
-int ellipArcNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+int ellipArcNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	if ( strcmp ( body, "rel" ) == 0 ) {
 		return 0;

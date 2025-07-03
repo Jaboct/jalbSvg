@@ -557,11 +557,6 @@ void textRender ( int *screenDims, GLuint *glBuffers, int *XYWH, struct text *te
 //	glyphWH[0] = fonts[0]->atlasInfo.glyphW / glob_viewScale;
 //	glyphWH[1] = fonts[0]->atlasInfo.glyphH / glob_viewScale;
 
-	float ratio = text->fontSize / fonts[0]->atlasInfo.glyphH;
-
-	glyphWH[0] = fonts[0]->atlasInfo.glyphW * ratio / glob_viewScale;
-	glyphWH[1] = fonts[0]->atlasInfo.glyphH * ratio / glob_viewScale;
-
 	float fXYWH[4];
 	fXYWH[2] = XYWH[2];
 	fXYWH[3] = XYWH[3];
@@ -573,6 +568,10 @@ void textRender ( int *screenDims, GLuint *glBuffers, int *XYWH, struct text *te
 	len = arrayListGetLength ( text->spanList );
 	while ( i < len ) {
 		struct tspan *span = arrayListGetPointer ( text->spanList, i );
+
+		float ratio = span->fontSize / fonts[0]->atlasInfo.glyphH;
+		glyphWH[0] = fonts[0]->atlasInfo.glyphW * ratio / glob_viewScale;
+		glyphWH[1] = fonts[0]->atlasInfo.glyphH * ratio / glob_viewScale;
 
 //		fXYWH[0] = XYWH[0] + span->x - glob_viewLoc[0];
 //		fXYWH[1] = XYWH[1] + span->y - glob_viewLoc[1];

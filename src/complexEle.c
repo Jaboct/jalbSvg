@@ -26,6 +26,8 @@ extern int complexRefEditId;
 extern int debugPrint_projectName_init;
 
 
+/** Variables */
+
 extern struct draw2dStruct *draw2dApi;
 extern struct draw3dStruct *draw3dApi;
 extern struct jalbFont *fonts[];
@@ -33,10 +35,10 @@ extern struct jalbFont *fonts[];
 //extern void (*addCanvas)(int id, void *data, int *xywh);
 extern addCanvasF *addCanvas;
 
-extern struct backbone_structStruct complexDec;
-extern struct backbone_structStruct complexEle;
-extern struct backbone_structStruct jLiveData;
-extern struct backbone_structStruct complexRef;
+extern struct backbone_structStruct backboneStru_complexDec;
+extern struct backbone_structStruct backboneStru_complexEle;
+extern struct backbone_structStruct backboneStru_jLiveData;
+extern struct backbone_structStruct backboneStru_complexRef;
 
 /** Functions */
 

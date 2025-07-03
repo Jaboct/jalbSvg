@@ -13,7 +13,7 @@ extern int len_backbone_arr_jalbSvg;
 extern struct backbone_structStruct *backbone_arr_jalbSvg[];
 
 extern int svg_attributes[];
-extern struct backbone_structStruct svg;
+extern struct backbone_structStruct backboneStru_svg;
 
 // todo
 char *homeDir = "/home/jadeb/";
@@ -30,7 +30,7 @@ void hand_test ( ) {
 
 	char *dirSave = "/home/jadoo/workspace/jHigh/jalbSvg/res/test_save_00.xml";
 
-	fwriteXml_backbone ( dirSave, &svg, svgEle,
+	fwriteXml_backbone ( dirSave, &backboneStru_svg, svgEle,
 		svg_attributes, backbone_arr_jalbSvg, len_backbone_arr_jalbSvg );
 
 	printf ( "hand_test ( ) OVER\n" );
@@ -49,7 +49,7 @@ void hand_test_load ( ) {
 
 	char *dirSave = "/home/jadoo/workspace/jHigh/jalbSvg/res/test_save_01.xml";
 
-	fwriteXml_backbone ( dirSave, &svg, svgEle,
+	fwriteXml_backbone ( dirSave, &backboneStru_svg, svgEle,
 		svg_attributes, backbone_arr_jalbSvg, len_backbone_arr_jalbSvg );
 
 	printf ( "hand_test_load ( ) OVER\n" );
@@ -70,7 +70,7 @@ void hand_test_01 ( ) {
 //	prepair_d ( svgEle->eles );
 	preSave_nakedList ( svgEle->eles );
 
-	fwriteXml_backbone ( dirSave, &svg, svgEle,
+	fwriteXml_backbone ( dirSave, &backboneStru_svg, svgEle,
 		svg_attributes, backbone_arr_jalbSvg, len_backbone_arr_jalbSvg );
 
 	printf ( "hand_test_01 ( ) OVER\n" );

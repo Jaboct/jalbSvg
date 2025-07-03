@@ -19,6 +19,8 @@
 void path_preInit ( );
 
 
+
+
 /** Structs */
 
 struct pathUni {
@@ -84,7 +86,7 @@ void pathUniTypeChange0 ( struct pathUni *var, int type );
 void *pathUniInitMask ( );
 void pathUniClose ( struct pathUni *var );
 void pathUniBodyToVal ( void *varPass, int nameI, char *body );
-int pathUniNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+int pathUniNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** moveTo */
 struct moveTo *moveToInit ( );
@@ -92,7 +94,7 @@ void moveToFill ( struct moveTo *var );
 void *moveToInitMask ( );
 void moveToClose ( struct moveTo *var );
 void moveToBodyToVal ( void *varPass, int nameI, char *body );
-int moveToNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+int moveToNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** lineTo */
 struct lineTo *lineToInit ( );
@@ -100,7 +102,7 @@ void lineToFill ( struct lineTo *var );
 void *lineToInitMask ( );
 void lineToClose ( struct lineTo *var );
 void lineToBodyToVal ( void *varPass, int nameI, char *body );
-int lineToNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+int lineToNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** cubicBez */
 struct cubicBez *cubicBezInit ( );
@@ -108,7 +110,7 @@ void cubicBezFill ( struct cubicBez *var );
 void *cubicBezInitMask ( );
 void cubicBezClose ( struct cubicBez *var );
 void cubicBezBodyToVal ( void *varPass, int nameI, char *body );
-int cubicBezNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+int cubicBezNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** quadBez */
 struct quadBez *quadBezInit ( );
@@ -116,7 +118,7 @@ void quadBezFill ( struct quadBez *var );
 void *quadBezInitMask ( );
 void quadBezClose ( struct quadBez *var );
 void quadBezBodyToVal ( void *varPass, int nameI, char *body );
-int quadBezNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+int quadBezNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** ellipArc */
 struct ellipArc *ellipArcInit ( );
@@ -124,6 +126,6 @@ void ellipArcFill ( struct ellipArc *var );
 void *ellipArcInitMask ( );
 void ellipArcClose ( struct ellipArc *var );
 void ellipArcBodyToVal ( void *varPass, int nameI, char *body );
-int ellipArcNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+int ellipArcNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** Other Functs */

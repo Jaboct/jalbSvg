@@ -25,6 +25,8 @@ extern int ellipseEditId;
 extern int debugPrint_projectName_init;
 
 
+/** Variables */
+
 extern struct draw2dStruct *draw2dApi;
 extern struct draw3dStruct *draw3dApi;
 extern struct jalbFont *fonts[];
@@ -32,9 +34,9 @@ extern struct jalbFont *fonts[];
 //extern void (*addCanvas)(int id, void *data, int *xywh);
 extern addCanvasF *addCanvas;
 
-extern struct backbone_structStruct rect;
-extern struct backbone_structStruct circle;
-extern struct backbone_structStruct ellipse;
+extern struct backbone_structStruct backboneStru_rect;
+extern struct backbone_structStruct backboneStru_circle;
+extern struct backbone_structStruct backboneStru_ellipse;
 
 /** Functions */
 
@@ -109,7 +111,7 @@ void rectBodyToVal ( void *varPass, int nameI, char *body ) {
 	}
 }
 
-int rectNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+int rectNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	if ( strcmp ( body, "style" ) == 0 ) {
 		return 0;
@@ -196,7 +198,7 @@ void circleBodyToVal ( void *varPass, int nameI, char *body ) {
 	}
 }
 
-int circleNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+int circleNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	if ( strcmp ( body, "style" ) == 0 ) {
 		return 0;
@@ -277,7 +279,7 @@ void ellipseBodyToVal ( void *varPass, int nameI, char *body ) {
 	}
 }
 
-int ellipseNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+int ellipseNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	if ( strcmp ( body, "style" ) == 0 ) {
 		return 0;

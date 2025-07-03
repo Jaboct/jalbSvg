@@ -26,6 +26,8 @@ extern int pathEditId;
 extern int debugPrint_projectName_init;
 
 
+/** Variables */
+
 extern struct draw2dStruct *draw2dApi;
 extern struct draw3dStruct *draw3dApi;
 extern struct jalbFont *fonts[];
@@ -33,10 +35,10 @@ extern struct jalbFont *fonts[];
 //extern void (*addCanvas)(int id, void *data, int *xywh);
 extern addCanvasF *addCanvas;
 
-extern struct backbone_structStruct svg;
-extern struct backbone_structStruct nakedUnion;
-extern struct backbone_structStruct g;
-extern struct backbone_structStruct path;
+extern struct backbone_structStruct backboneStru_svg;
+extern struct backbone_structStruct backboneStru_nakedUnion;
+extern struct backbone_structStruct backboneStru_g;
+extern struct backbone_structStruct backboneStru_path;
 
 /** Functions */
 
@@ -97,7 +99,7 @@ void svgBodyToVal ( void *varPass, int nameI, char *body ) {
 	}
 }
 
-int svgNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+int svgNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	struct svg *var = data;
 	if ( strcmp ( body, "width" ) == 0 ) {
@@ -229,7 +231,7 @@ void nakedUnionBodyToVal ( void *varPass, int nameI, char *body ) {
 	}
 }
 
-int nakedUnionNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+int nakedUnionNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	struct nakedUnion *var = data;
 	if ( strcmp ( body, "g" ) == 0 ) {
@@ -277,7 +279,7 @@ struct xmlFuncts nakedUnionXml = {
 	nakedUnionInitMask,
 	nakedUnionNameToIndex,
 	nakedUnionBodyToVal,
-	(void (*) (void*, int))nakedUnionTypeChange0,
+	.typeChange = (void (*) (void*, int))nakedUnionTypeChange0,
 };
 
 void nakedUnion_print ( struct nakedUnion *stru ) {
@@ -324,7 +326,7 @@ void gBodyToVal ( void *varPass, int nameI, char *body ) {
 	}
 }
 
-int gNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+int gNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	struct g *var = data;
 	if ( strcmp ( body, "id" ) == 0 ) {
@@ -421,7 +423,7 @@ void pathBodyToVal ( void *varPass, int nameI, char *body ) {
 	}
 }
 
-int pathNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+int pathNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	struct path *var = data;
 	if ( strcmp ( body, "style" ) == 0 ) {
@@ -455,7 +457,7 @@ struct xmlFuncts pathXml = {
 	pathInitMask,
 	pathNameToIndex,
 	pathBodyToVal,
-	.postInit = pathPostInit,
+	.postInit = (void(*)(void*))pathPostInit,
 };
 
 void path_print ( struct path *stru ) {

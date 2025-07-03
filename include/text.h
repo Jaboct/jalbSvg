@@ -14,7 +14,11 @@
 
 #include <jalbXml/jalbXml_02.h>
 
+
+
 void text_preInit ( );
+
+
 
 
 /** Structs */
@@ -24,8 +28,7 @@ struct text {
 	char style[256];
 	float x;
 	float y;
-	float fontSize;
-	ArrayList *spanList;	// (struct text*)
+	ArrayList *spanList;	// (struct tspan*)
 };
 struct tspan {
 	char role[256];
@@ -51,7 +54,7 @@ void textFill ( struct text *var );
 void *textInitMask ( );
 void textClose ( struct text *var );
 void textBodyToVal ( void *varPass, int nameI, char *body );
-int textNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+int textNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** tspan */
 struct tspan *tspanInit ( );
@@ -59,6 +62,6 @@ void tspanFill ( struct tspan *var );
 void *tspanInitMask ( );
 void tspanClose ( struct tspan *var );
 void tspanBodyToVal ( void *varPass, int nameI, char *body );
-int tspanNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+int tspanNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** Other Functs */

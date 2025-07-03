@@ -175,7 +175,7 @@ void addText ( struct svg *svg, int *clickXY,
 	text->y = worldXY[1];
 
 	// TODO, this should come from my default.
-	text->fontSize = fonts[0]->atlasInfo.glyphH;
+//	text->fontSize = fonts[0]->atlasInfo.glyphH;
 
 	struct tspan *span = tspanInit ( );
 	arrayListAddEndPointer ( text->spanList, span );
@@ -185,7 +185,7 @@ void addText ( struct svg *svg, int *clickXY,
 	span->x = worldXY[0];
 	span->y = worldXY[1];
 
-	tspan_postInit ( span );
+	tspanPostInit ( span );
 
 	// set cursor
 	{

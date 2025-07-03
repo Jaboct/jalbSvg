@@ -19,6 +19,8 @@
 void svg_preInit ( );
 
 
+
+
 /** Structs */
 
 struct svg {
@@ -82,7 +84,7 @@ void svgFill ( struct svg *var );
 void *svgInitMask ( );
 void svgClose ( struct svg *var );
 void svgBodyToVal ( void *varPass, int nameI, char *body );
-int svgNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+int svgNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** nakedUnion */
 struct nakedUnion *nakedUnionInit ( );
@@ -91,7 +93,7 @@ void nakedUnionTypeChange0 ( struct nakedUnion *var, int type );
 void *nakedUnionInitMask ( );
 void nakedUnionClose ( struct nakedUnion *var );
 void nakedUnionBodyToVal ( void *varPass, int nameI, char *body );
-int nakedUnionNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+int nakedUnionNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** g */
 struct g *gInit ( );
@@ -99,7 +101,7 @@ void gFill ( struct g *var );
 void *gInitMask ( );
 void gClose ( struct g *var );
 void gBodyToVal ( void *varPass, int nameI, char *body );
-int gNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+int gNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** path */
 struct path *pathInit ( );
@@ -107,6 +109,6 @@ void pathFill ( struct path *var );
 void *pathInitMask ( );
 void pathClose ( struct path *var );
 void pathBodyToVal ( void *varPass, int nameI, char *body );
-int pathNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+int pathNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** Other Functs */

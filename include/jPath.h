@@ -31,7 +31,6 @@ struct jVert {
 	float XY[2];
 };
 struct jLine {
-	// (enum pathUniEnum, path.h)
 	int type;
 	int v0;
 	int v1;
@@ -51,7 +50,7 @@ void jPathFill ( struct jPath *var );
 void *jPathInitMask ( );
 void jPathClose ( struct jPath *var );
 void jPathBodyToVal ( void *varPass, int nameI, char *body );
-int jPathNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+int jPathNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** jVert */
 struct jVert *jVertInit ( );
@@ -59,7 +58,7 @@ void jVertFill ( struct jVert *var );
 void *jVertInitMask ( );
 void jVertClose ( struct jVert *var );
 void jVertBodyToVal ( void *varPass, int nameI, char *body );
-int jVertNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+int jVertNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** jLine */
 struct jLine *jLineInit ( );
@@ -67,6 +66,6 @@ void jLineFill ( struct jLine *var );
 void *jLineInitMask ( );
 void jLineClose ( struct jLine *var );
 void jLineBodyToVal ( void *varPass, int nameI, char *body );
-int jLineNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+int jLineNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** Other Functs */

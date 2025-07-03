@@ -24,6 +24,8 @@ extern int tspanEditId;
 extern int debugPrint_projectName_init;
 
 
+/** Variables */
+
 extern struct draw2dStruct *draw2dApi;
 extern struct draw3dStruct *draw3dApi;
 extern struct jalbFont *fonts[];
@@ -31,8 +33,8 @@ extern struct jalbFont *fonts[];
 //extern void (*addCanvas)(int id, void *data, int *xywh);
 extern addCanvasF *addCanvas;
 
-extern struct backbone_structStruct text;
-extern struct backbone_structStruct tspan;
+extern struct backbone_structStruct backboneStru_text;
+extern struct backbone_structStruct backboneStru_tspan;
 
 /** Functions */
 
@@ -51,9 +53,7 @@ void textFill ( struct text *var ) {
 	var->style[0] = '\0';
 	var->x = 0.0;
 	var->y = 0.0;
-	var->spanList = initArrayList ( 10, sizeof ( struct text* ), 10 );
-
-	printf ( "var->spanList: %p\n", var->spanList );
+	var->spanList = initArrayList ( 10, sizeof ( struct tspan* ), 10 );
 }
 
 void *textInitMask ( ) {
@@ -63,16 +63,16 @@ void *textInitMask ( ) {
 }
 void textClose ( struct text *var ) {
 	if ( var->spanList ) {
-		freeArrayListPointerFunction ( var->spanList, (void (*)(void*))textClose );
+		freeArrayListPointerFunction ( var->spanList, (void (*)(void*))tspanClose );
 	}
 	free ( var );
 
 }
 int text_attrib_arr[] = {
 	0,
-	0,
-	0,
-	0,
+	1,
+	1,
+	1,
 	0,
 };
 void textBodyToVal ( void *varPass, int nameI, char *body ) {
@@ -91,7 +91,7 @@ void textBodyToVal ( void *varPass, int nameI, char *body ) {
 	}
 }
 
-int textNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+int textNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	struct text *var = data;
 	if ( strcmp ( body, "space" ) == 0 ) {
@@ -133,8 +133,7 @@ struct xmlFuncts textXml = {
 	textInitMask,
 	textNameToIndex,
 	textBodyToVal,
-
-	.postInit = (void (*)(void*)) text_postInit,
+	.postInit = (void(*)(void*))textPostInit,
 };
 
 void text_print ( struct text *stru ) {
@@ -157,6 +156,7 @@ void tspanFill ( struct tspan *var ) {
 	var->x = 0.0;
 	var->y = 0.0;
 	var->body[0] = '\0';
+	var->fontSize = 0.0;
 	var->stringBuilder = initArrayList ( 200, sizeof ( char ), 160 );
 }
 
@@ -173,10 +173,11 @@ void tspanClose ( struct tspan *var ) {
 
 }
 int tspan_attrib_arr[] = {
-	0,
-	0,
-	0,
-	0,
+	1,
+	1,
+	1,
+	1,
+	1,
 	0,
 	0,
 	0,
@@ -198,7 +199,8 @@ void tspanBodyToVal ( void *varPass, int nameI, char *body ) {
 	} else if ( nameI == 5 ) {
 		strcpy ( var->body, body );
 	} else if ( nameI == 6 ) {
-		// 
+		var->fontSize = atof ( body );
+	} else if ( nameI == 7 ) {
 	} else if ( nameI == -2 ) {
 		// load this string into the body.
 
@@ -209,7 +211,7 @@ void tspanBodyToVal ( void *varPass, int nameI, char *body ) {
 	}
 }
 
-int tspanNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+int tspanNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 //	struct tspan *var = data;
 	if ( strcmp ( body, "role" ) == 0 ) {
@@ -224,8 +226,10 @@ int tspanNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
 		return 4;
 	} else if ( strcmp ( body, "body" ) == 0 ) {
 		return 5;
-	} else if ( strcmp ( body, "stringBuilder" ) == 0 ) {
+	} else if ( strcmp ( body, "fontSize" ) == 0 ) {
 		return 6;
+	} else if ( strcmp ( body, "stringBuilder" ) == 0 ) {
+		return 7;
 	}
 	return -1;
 }
@@ -235,8 +239,7 @@ struct xmlFuncts tspanXml = {
 	tspanInitMask,
 	tspanNameToIndex,
 	tspanBodyToVal,
-
-	.postInit = (void (*)(void*)) tspan_postInit,
+	.postInit = (void(*)(void*))tspanPostInit,
 };
 
 void tspan_print ( struct tspan *stru ) {

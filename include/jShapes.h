@@ -50,7 +50,7 @@ void jRectFill ( struct jRect *var );
 void *jRectInitMask ( );
 void jRectClose ( struct jRect *var );
 void jRectBodyToVal ( void *varPass, int nameI, char *body );
-int jRectNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+int jRectNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** jCirc */
 struct jCirc *jCircInit ( );
@@ -58,7 +58,7 @@ void jCircFill ( struct jCirc *var );
 void *jCircInitMask ( );
 void jCircClose ( struct jCirc *var );
 void jCircBodyToVal ( void *varPass, int nameI, char *body );
-int jCircNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+int jCircNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** jEllipse */
 struct jEllipse *jEllipseInit ( );
@@ -66,6 +66,6 @@ void jEllipseFill ( struct jEllipse *var );
 void *jEllipseInitMask ( );
 void jEllipseClose ( struct jEllipse *var );
 void jEllipseBodyToVal ( void *varPass, int nameI, char *body );
-int jEllipseNameToIndex ( char *body, void *data, void *ret, char **strPtr );
+int jEllipseNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** Other Functs */

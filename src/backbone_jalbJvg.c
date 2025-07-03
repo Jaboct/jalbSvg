@@ -19,7 +19,7 @@ struct backbone_subAl jPath_verts_subAl = {
 	.length = -1,
 	.naked = 0,
 };
-struct backbone_subVar jPath_verts = {
+struct backbone_subVar backboneVar_jPath_verts = {
 	.name = "verts",
 	.type = 0,
 	.typeIndex = 3,
@@ -42,7 +42,7 @@ struct backbone_subAl jPath_lines_subAl = {
 	.length = -1,
 	.naked = 0,
 };
-struct backbone_subVar jPath_lines = {
+struct backbone_subVar backboneVar_jPath_lines = {
 	.name = "lines",
 	.type = 0,
 	.typeIndex = 3,
@@ -58,10 +58,10 @@ struct backbone_subVar jPath_lines = {
 	.naked = 0,
 };
 struct backbone_subVar *jPath_varArr[] = {
-	&jPath_verts,
-	&jPath_lines,
+	&backboneVar_jPath_verts,
+	&backboneVar_jPath_lines,
 };
-struct backbone_structStruct jPath = {
+struct backbone_structStruct backboneStru_jPath = {
 	.name = "jPath",
 	.varsLen = 2,
 	.vars = jPath_varArr,
@@ -78,7 +78,7 @@ struct backbone_structStruct jPath = {
 int jVert_attributes[] = {
 	0,
 };
-struct backbone_subVar jVert_XY = {
+struct backbone_subVar backboneVar_jVert_XY = {
 	.name = "XY",
 	.type = 0,
 	.typeIndex = 1,
@@ -93,9 +93,9 @@ struct backbone_subVar jVert_XY = {
 	.naked = 0,
 };
 struct backbone_subVar *jVert_varArr[] = {
-	&jVert_XY,
+	&backboneVar_jVert_XY,
 };
-struct backbone_structStruct jVert = {
+struct backbone_structStruct backboneStru_jVert = {
 	.name = "jVert",
 	.varsLen = 1,
 	.vars = jVert_varArr,
@@ -116,7 +116,7 @@ int jLine_attributes[] = {
 	0,
 	0,
 };
-struct backbone_subVar jLine_type = {
+struct backbone_subVar backboneVar_jLine_type = {
 	.name = "type",
 	.type = 0,
 	.typeIndex = 0,
@@ -130,7 +130,7 @@ struct backbone_subVar jLine_type = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar jLine_v0 = {
+struct backbone_subVar backboneVar_jLine_v0 = {
 	.name = "v0",
 	.type = 0,
 	.typeIndex = 0,
@@ -144,7 +144,7 @@ struct backbone_subVar jLine_v0 = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar jLine_v1 = {
+struct backbone_subVar backboneVar_jLine_v1 = {
 	.name = "v1",
 	.type = 0,
 	.typeIndex = 0,
@@ -158,7 +158,7 @@ struct backbone_subVar jLine_v1 = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar jLine_c0 = {
+struct backbone_subVar backboneVar_jLine_c0 = {
 	.name = "c0",
 	.type = 0,
 	.typeIndex = 1,
@@ -172,7 +172,7 @@ struct backbone_subVar jLine_c0 = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar jLine_c1 = {
+struct backbone_subVar backboneVar_jLine_c1 = {
 	.name = "c1",
 	.type = 0,
 	.typeIndex = 1,
@@ -187,13 +187,13 @@ struct backbone_subVar jLine_c1 = {
 	.naked = 0,
 };
 struct backbone_subVar *jLine_varArr[] = {
-	&jLine_type,
-	&jLine_v0,
-	&jLine_v1,
-	&jLine_c0,
-	&jLine_c1,
+	&backboneVar_jLine_type,
+	&backboneVar_jLine_v0,
+	&backboneVar_jLine_v1,
+	&backboneVar_jLine_c0,
+	&backboneVar_jLine_c1,
 };
-struct backbone_structStruct jLine = {
+struct backbone_structStruct backboneStru_jLine = {
 	.name = "jLine",
 	.varsLen = 5,
 	.vars = jLine_varArr,
@@ -216,7 +216,7 @@ int jText_attributes[] = {
 	0,
 	0,
 };
-struct backbone_subVar jText_XYWH = {
+struct backbone_subVar backboneVar_jText_XYWH = {
 	.name = "XYWH",
 	.type = 0,
 	.typeIndex = 1,
@@ -238,7 +238,7 @@ struct backbone_subAl jText_sb_subAl = {
 	.length = -1,
 	.naked = 0,
 };
-struct backbone_subVar jText_sb = {
+struct backbone_subVar backboneVar_jText_sb = {
 	.name = "sb",
 	.type = 0,
 	.typeIndex = 3,
@@ -253,7 +253,7 @@ struct backbone_subVar jText_sb = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar jText_fontSize = {
+struct backbone_subVar backboneVar_jText_fontSize = {
 	.name = "fontSize",
 	.type = 0,
 	.typeIndex = 1,
@@ -268,11 +268,11 @@ struct backbone_subVar jText_fontSize = {
 	.naked = 0,
 };
 struct backbone_subVar *jText_varArr[] = {
-	&jText_XYWH,
-	&jText_sb,
-	&jText_fontSize,
+	&backboneVar_jText_XYWH,
+	&backboneVar_jText_sb,
+	&backboneVar_jText_fontSize,
 };
-struct backbone_structStruct jText = {
+struct backbone_structStruct backboneStru_jText = {
 	.name = "jText",
 	.varsLen = 3,
 	.vars = jText_varArr,
@@ -301,7 +301,7 @@ struct backbone_subAl jGroup_eles_subAl = {
 	.length = -1,
 	.naked = 0,
 };
-struct backbone_subVar jGroup_eles = {
+struct backbone_subVar backboneVar_jGroup_eles = {
 	.name = "eles",
 	.type = 0,
 	.typeIndex = 3,
@@ -317,9 +317,9 @@ struct backbone_subVar jGroup_eles = {
 	.naked = 0,
 };
 struct backbone_subVar *jGroup_varArr[] = {
-	&jGroup_eles,
+	&backboneVar_jGroup_eles,
 };
-struct backbone_structStruct jGroup = {
+struct backbone_structStruct backboneStru_jGroup = {
 	.name = "jGroup",
 	.varsLen = 1,
 	.vars = jGroup_varArr,
@@ -345,7 +345,7 @@ int jNakedUnion__attributes[] = {
 	0,
 	0,
 };
-struct backbone_subVar jNakedUnion__g = {
+struct backbone_subVar backboneVar_jNakedUnion__g = {
 	.name = "g",
 	.type = 1,
 	.typeIndex = 4,
@@ -359,7 +359,7 @@ struct backbone_subVar jNakedUnion__g = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar jNakedUnion__path = {
+struct backbone_subVar backboneVar_jNakedUnion__path = {
 	.name = "path",
 	.type = 1,
 	.typeIndex = 0,
@@ -373,7 +373,7 @@ struct backbone_subVar jNakedUnion__path = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar jNakedUnion__text = {
+struct backbone_subVar backboneVar_jNakedUnion__text = {
 	.name = "text",
 	.type = 1,
 	.typeIndex = 3,
@@ -387,7 +387,7 @@ struct backbone_subVar jNakedUnion__text = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar jNakedUnion__rect = {
+struct backbone_subVar backboneVar_jNakedUnion__rect = {
 	.name = "rect",
 	.type = 1,
 	.typeIndex = 7,
@@ -401,7 +401,7 @@ struct backbone_subVar jNakedUnion__rect = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar jNakedUnion__circ = {
+struct backbone_subVar backboneVar_jNakedUnion__circ = {
 	.name = "circ",
 	.type = 1,
 	.typeIndex = 8,
@@ -415,7 +415,7 @@ struct backbone_subVar jNakedUnion__circ = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar jNakedUnion__ellipse = {
+struct backbone_subVar backboneVar_jNakedUnion__ellipse = {
 	.name = "ellipse",
 	.type = 1,
 	.typeIndex = 9,
@@ -429,7 +429,7 @@ struct backbone_subVar jNakedUnion__ellipse = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar jNakedUnion__complex = {
+struct backbone_subVar backboneVar_jNakedUnion__complex = {
 	.name = "complex",
 	.type = 1,
 	.typeIndex = 11,
@@ -444,15 +444,15 @@ struct backbone_subVar jNakedUnion__complex = {
 	.naked = 0,
 };
 struct backbone_subVar *jNakedUnion__varArr[] = {
-	&jNakedUnion__g,
-	&jNakedUnion__path,
-	&jNakedUnion__text,
-	&jNakedUnion__rect,
-	&jNakedUnion__circ,
-	&jNakedUnion__ellipse,
-	&jNakedUnion__complex,
+	&backboneVar_jNakedUnion__g,
+	&backboneVar_jNakedUnion__path,
+	&backboneVar_jNakedUnion__text,
+	&backboneVar_jNakedUnion__rect,
+	&backboneVar_jNakedUnion__circ,
+	&backboneVar_jNakedUnion__ellipse,
+	&backboneVar_jNakedUnion__complex,
 };
-struct backbone_subComplex jNakedUnion_complex = {
+struct backbone_subComplex jNakedUnion__complex = {
 	.type = {
 	},
 	.typeDec = 0,
@@ -460,7 +460,7 @@ struct backbone_subComplex jNakedUnion_complex = {
 	.arr = jNakedUnion__varArr,
 	.prefix = "jNaked_"
 };
-struct backbone_subVar jNakedUnion_ = {
+struct backbone_subVar backboneVar_jNakedUnion_ = {
 	.name = "",
 	.type = 0,
 	.typeIndex = 6,
@@ -469,16 +469,16 @@ struct backbone_subVar jNakedUnion_ = {
 	.literal = 1,
 	.data = {
 		.id = 0,
-		.ptr = &jNakedUnion_complex,
+		.ptr = &jNakedUnion__complex,
 	},
 	.external = offsetof ( struct jNakedUnion, type ),
 	.saveFlag = 1,
 	.naked = 1,
 };
 struct backbone_subVar *jNakedUnion_varArr[] = {
-	&jNakedUnion_,
+	&backboneVar_jNakedUnion_,
 };
-struct backbone_structStruct jNakedUnion = {
+struct backbone_structStruct backboneStru_jNakedUnion = {
 	.name = "jNakedUnion",
 	.varsLen = 1,
 	.vars = jNakedUnion_varArr,
@@ -505,7 +505,7 @@ struct backbone_subAl jvg_eles_subAl = {
 	.length = -1,
 	.naked = 0,
 };
-struct backbone_subVar jvg_eles = {
+struct backbone_subVar backboneVar_jvg_eles = {
 	.name = "eles",
 	.type = 0,
 	.typeIndex = 3,
@@ -528,7 +528,7 @@ struct backbone_subAl jvg_moduleList_subAl = {
 	.length = -1,
 	.naked = 0,
 };
-struct backbone_subVar jvg_moduleList = {
+struct backbone_subVar backboneVar_jvg_moduleList = {
 	.name = "moduleList",
 	.type = 0,
 	.typeIndex = 3,
@@ -551,7 +551,7 @@ struct backbone_subAl jvg_moduleDataList_subAl = {
 	.length = -1,
 	.naked = 0,
 };
-struct backbone_subVar jvg_moduleDataList = {
+struct backbone_subVar backboneVar_jvg_moduleDataList = {
 	.name = "moduleDataList",
 	.type = 0,
 	.typeIndex = 3,
@@ -567,11 +567,11 @@ struct backbone_subVar jvg_moduleDataList = {
 	.naked = 0,
 };
 struct backbone_subVar *jvg_varArr[] = {
-	&jvg_eles,
-	&jvg_moduleList,
-	&jvg_moduleDataList,
+	&backboneVar_jvg_eles,
+	&backboneVar_jvg_moduleList,
+	&backboneVar_jvg_moduleDataList,
 };
-struct backbone_structStruct jvg = {
+struct backbone_structStruct backboneStru_jvg = {
 	.name = "jvg",
 	.varsLen = 3,
 	.vars = jvg_varArr,
@@ -592,7 +592,7 @@ struct backbone_structStruct jvg = {
 int jRect_attributes[] = {
 	0,
 };
-struct backbone_subVar jRect_XYWH = {
+struct backbone_subVar backboneVar_jRect_XYWH = {
 	.name = "XYWH",
 	.type = 0,
 	.typeIndex = 1,
@@ -607,9 +607,9 @@ struct backbone_subVar jRect_XYWH = {
 	.naked = 0,
 };
 struct backbone_subVar *jRect_varArr[] = {
-	&jRect_XYWH,
+	&backboneVar_jRect_XYWH,
 };
-struct backbone_structStruct jRect = {
+struct backbone_structStruct backboneStru_jRect = {
 	.name = "jRect",
 	.varsLen = 1,
 	.vars = jRect_varArr,
@@ -627,7 +627,7 @@ int jCirc_attributes[] = {
 	0,
 	0,
 };
-struct backbone_subVar jCirc_XY = {
+struct backbone_subVar backboneVar_jCirc_XY = {
 	.name = "XY",
 	.type = 0,
 	.typeIndex = 1,
@@ -641,7 +641,7 @@ struct backbone_subVar jCirc_XY = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar jCirc_radius = {
+struct backbone_subVar backboneVar_jCirc_radius = {
 	.name = "radius",
 	.type = 0,
 	.typeIndex = 1,
@@ -656,10 +656,10 @@ struct backbone_subVar jCirc_radius = {
 	.naked = 0,
 };
 struct backbone_subVar *jCirc_varArr[] = {
-	&jCirc_XY,
-	&jCirc_radius,
+	&backboneVar_jCirc_XY,
+	&backboneVar_jCirc_radius,
 };
-struct backbone_structStruct jCirc = {
+struct backbone_structStruct backboneStru_jCirc = {
 	.name = "jCirc",
 	.varsLen = 2,
 	.vars = jCirc_varArr,
@@ -680,7 +680,7 @@ int jEllipse_attributes[] = {
 	0,
 	0,
 };
-struct backbone_subVar jEllipse_XY = {
+struct backbone_subVar backboneVar_jEllipse_XY = {
 	.name = "XY",
 	.type = 0,
 	.typeIndex = 1,
@@ -694,7 +694,7 @@ struct backbone_subVar jEllipse_XY = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar jEllipse_cx = {
+struct backbone_subVar backboneVar_jEllipse_cx = {
 	.name = "cx",
 	.type = 0,
 	.typeIndex = 1,
@@ -708,7 +708,7 @@ struct backbone_subVar jEllipse_cx = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar jEllipse_cy = {
+struct backbone_subVar backboneVar_jEllipse_cy = {
 	.name = "cy",
 	.type = 0,
 	.typeIndex = 1,
@@ -722,7 +722,7 @@ struct backbone_subVar jEllipse_cy = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar jEllipse_rx = {
+struct backbone_subVar backboneVar_jEllipse_rx = {
 	.name = "rx",
 	.type = 0,
 	.typeIndex = 1,
@@ -736,7 +736,7 @@ struct backbone_subVar jEllipse_rx = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar jEllipse_ry = {
+struct backbone_subVar backboneVar_jEllipse_ry = {
 	.name = "ry",
 	.type = 0,
 	.typeIndex = 1,
@@ -751,13 +751,13 @@ struct backbone_subVar jEllipse_ry = {
 	.naked = 0,
 };
 struct backbone_subVar *jEllipse_varArr[] = {
-	&jEllipse_XY,
-	&jEllipse_cx,
-	&jEllipse_cy,
-	&jEllipse_rx,
-	&jEllipse_ry,
+	&backboneVar_jEllipse_XY,
+	&backboneVar_jEllipse_cx,
+	&backboneVar_jEllipse_cy,
+	&backboneVar_jEllipse_rx,
+	&backboneVar_jEllipse_ry,
 };
-struct backbone_structStruct jEllipse = {
+struct backbone_structStruct backboneStru_jEllipse = {
 	.name = "jEllipse",
 	.varsLen = 5,
 	.vars = jEllipse_varArr,
@@ -786,7 +786,7 @@ int complexDec_attributes[] = {
 	0,
 	0,
 };
-struct backbone_subVar complexDec_name = {
+struct backbone_subVar backboneVar_complexDec_name = {
 	.name = "name",
 	.type = 0,
 	.typeIndex = 4,
@@ -810,7 +810,7 @@ struct backbone_subAl complexDec_subVars_subAl = {
 	.modNick = "jHigh",
 	.typeName = "subVar",
 };
-struct backbone_subVar complexDec_subVars = {
+struct backbone_subVar backboneVar_complexDec_subVars = {
 	.name = "subVars",
 	.type = 0,
 	.typeIndex = 3,
@@ -825,7 +825,7 @@ struct backbone_subVar complexDec_subVars = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar complexDec_modName = {
+struct backbone_subVar backboneVar_complexDec_modName = {
 	.name = "modName",
 	.type = 0,
 	.typeIndex = 4,
@@ -839,7 +839,7 @@ struct backbone_subVar complexDec_modName = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar complexDec_renderFunct_name = {
+struct backbone_subVar backboneVar_complexDec_renderFunct_name = {
 	.name = "renderFunct_name",
 	.type = 0,
 	.typeIndex = 4,
@@ -853,7 +853,7 @@ struct backbone_subVar complexDec_renderFunct_name = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar complexDec_renderFunct = {
+struct backbone_subVar backboneVar_complexDec_renderFunct = {
 	.name = "renderFunct",
 	.type = 0,
 	.typeIndex = 5,
@@ -875,7 +875,7 @@ struct backbone_subAl complexDec_renderParams_subAl = {
 	.length = -1,
 	.naked = 0,
 };
-struct backbone_subVar complexDec_renderParams = {
+struct backbone_subVar backboneVar_complexDec_renderParams = {
 	.name = "renderParams",
 	.type = 0,
 	.typeIndex = 3,
@@ -890,7 +890,7 @@ struct backbone_subVar complexDec_renderParams = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar complexDec_eventFunct_name = {
+struct backbone_subVar backboneVar_complexDec_eventFunct_name = {
 	.name = "eventFunct_name",
 	.type = 0,
 	.typeIndex = 4,
@@ -904,7 +904,7 @@ struct backbone_subVar complexDec_eventFunct_name = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar complexDec_eventFunct = {
+struct backbone_subVar backboneVar_complexDec_eventFunct = {
 	.name = "eventFunct",
 	.type = 0,
 	.typeIndex = 5,
@@ -926,7 +926,7 @@ struct backbone_subAl complexDec_eventParams_subAl = {
 	.length = -1,
 	.naked = 0,
 };
-struct backbone_subVar complexDec_eventParams = {
+struct backbone_subVar backboneVar_complexDec_eventParams = {
 	.name = "eventParams",
 	.type = 0,
 	.typeIndex = 3,
@@ -942,17 +942,17 @@ struct backbone_subVar complexDec_eventParams = {
 	.naked = 0,
 };
 struct backbone_subVar *complexDec_varArr[] = {
-	&complexDec_name,
-	&complexDec_subVars,
-	&complexDec_modName,
-	&complexDec_renderFunct_name,
-	&complexDec_renderFunct,
-	&complexDec_renderParams,
-	&complexDec_eventFunct_name,
-	&complexDec_eventFunct,
-	&complexDec_eventParams,
+	&backboneVar_complexDec_name,
+	&backboneVar_complexDec_subVars,
+	&backboneVar_complexDec_modName,
+	&backboneVar_complexDec_renderFunct_name,
+	&backboneVar_complexDec_renderFunct,
+	&backboneVar_complexDec_renderParams,
+	&backboneVar_complexDec_eventFunct_name,
+	&backboneVar_complexDec_eventFunct,
+	&backboneVar_complexDec_eventParams,
 };
-struct backbone_structStruct complexDec = {
+struct backbone_structStruct backboneStru_complexDec = {
 	.name = "complexDec",
 	.varsLen = 9,
 	.vars = complexDec_varArr,
@@ -972,7 +972,7 @@ int complexEle_attributes[] = {
 	0,
 	0,
 };
-struct backbone_subVar complexEle_XYWH = {
+struct backbone_subVar backboneVar_complexEle_XYWH = {
 	.name = "XYWH",
 	.type = 0,
 	.typeIndex = 1,
@@ -986,7 +986,7 @@ struct backbone_subVar complexEle_XYWH = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar complexEle_decModI = {
+struct backbone_subVar backboneVar_complexEle_decModI = {
 	.name = "decModI",
 	.type = 0,
 	.typeIndex = 0,
@@ -1000,7 +1000,7 @@ struct backbone_subVar complexEle_decModI = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar complexEle_decType = {
+struct backbone_subVar backboneVar_complexEle_decType = {
 	.name = "decType",
 	.type = 0,
 	.typeIndex = 0,
@@ -1022,7 +1022,7 @@ struct backbone_subAl complexEle_liveSubVars_subAl = {
 	.length = 0,
 	.naked = 0,
 };
-struct backbone_subVar complexEle_liveSubVars = {
+struct backbone_subVar backboneVar_complexEle_liveSubVars = {
 	.name = "liveSubVars",
 	.type = 0,
 	.typeIndex = 3,
@@ -1038,12 +1038,12 @@ struct backbone_subVar complexEle_liveSubVars = {
 	.naked = 0,
 };
 struct backbone_subVar *complexEle_varArr[] = {
-	&complexEle_XYWH,
-	&complexEle_decModI,
-	&complexEle_decType,
-	&complexEle_liveSubVars,
+	&backboneVar_complexEle_XYWH,
+	&backboneVar_complexEle_decModI,
+	&backboneVar_complexEle_decType,
+	&backboneVar_complexEle_liveSubVars,
 };
-struct backbone_structStruct complexEle = {
+struct backbone_structStruct backboneStru_complexEle = {
 	.name = "complexEle",
 	.varsLen = 4,
 	.vars = complexEle_varArr,
@@ -1065,7 +1065,7 @@ int jLiveData__attributes[] = {
 	0,
 	0,
 };
-struct backbone_subVar jLiveData__i = {
+struct backbone_subVar backboneVar_jLiveData__i = {
 	.name = "i",
 	.type = 0,
 	.typeIndex = 0,
@@ -1079,7 +1079,7 @@ struct backbone_subVar jLiveData__i = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar jLiveData__f = {
+struct backbone_subVar backboneVar_jLiveData__f = {
 	.name = "f",
 	.type = 0,
 	.typeIndex = 1,
@@ -1093,7 +1093,7 @@ struct backbone_subVar jLiveData__f = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar jLiveData__complexRef = {
+struct backbone_subVar backboneVar_jLiveData__complexRef = {
 	.name = "complexRef",
 	.type = 1,
 	.typeIndex = 17,
@@ -1108,9 +1108,9 @@ struct backbone_subVar jLiveData__complexRef = {
 	.naked = 0,
 };
 struct backbone_subVar *jLiveData__varArr[] = {
-	&jLiveData__i,
-	&jLiveData__f,
-	&jLiveData__complexRef,
+	&backboneVar_jLiveData__i,
+	&backboneVar_jLiveData__f,
+	&backboneVar_jLiveData__complexRef,
 };
 struct backbone_subComplex jLiveData__complex = {
 	.type = {
@@ -1120,7 +1120,7 @@ struct backbone_subComplex jLiveData__complex = {
 	.arr = jLiveData__varArr,
 	.prefix = "jld_"
 };
-struct backbone_subVar jLiveData_ = {
+struct backbone_subVar backboneVar_jLiveData_ = {
 	.name = "",
 	.type = 0,
 	.typeIndex = 6,
@@ -1136,9 +1136,9 @@ struct backbone_subVar jLiveData_ = {
 	.naked = 0,
 };
 struct backbone_subVar *jLiveData_varArr[] = {
-	&jLiveData_,
+	&backboneVar_jLiveData_,
 };
-struct backbone_structStruct jLiveData = {
+struct backbone_structStruct backboneStru_jLiveData = {
 	.name = "jLiveData",
 	.varsLen = 1,
 	.vars = jLiveData_varArr,
@@ -1156,7 +1156,7 @@ int complexRef_attributes[] = {
 	0,
 	0,
 };
-struct backbone_subVar complexRef_eleI = {
+struct backbone_subVar backboneVar_complexRef_eleI = {
 	.name = "eleI",
 	.type = 0,
 	.typeIndex = 0,
@@ -1170,7 +1170,7 @@ struct backbone_subVar complexRef_eleI = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar complexRef_complexPtr = {
+struct backbone_subVar backboneVar_complexRef_complexPtr = {
 	.name = "complexPtr",
 	.type = 1,
 	.typeIndex = 11,
@@ -1185,10 +1185,10 @@ struct backbone_subVar complexRef_complexPtr = {
 	.naked = 0,
 };
 struct backbone_subVar *complexRef_varArr[] = {
-	&complexRef_eleI,
-	&complexRef_complexPtr,
+	&backboneVar_complexRef_eleI,
+	&backboneVar_complexRef_complexPtr,
 };
-struct backbone_structStruct complexRef = {
+struct backbone_structStruct backboneStru_complexRef = {
 	.name = "complexRef",
 	.varsLen = 2,
 	.vars = complexRef_varArr,
@@ -1212,7 +1212,7 @@ int complexMod_attributes[] = {
 	0,
 	0,
 };
-struct backbone_subVar complexMod_name = {
+struct backbone_subVar backboneVar_complexMod_name = {
 	.name = "name",
 	.type = 0,
 	.typeIndex = 4,
@@ -1234,7 +1234,7 @@ struct backbone_subAl complexMod_complexDecList_subAl = {
 	.length = -1,
 	.naked = 0,
 };
-struct backbone_subVar complexMod_complexDecList = {
+struct backbone_subVar backboneVar_complexMod_complexDecList = {
 	.name = "complexDecList",
 	.type = 0,
 	.typeIndex = 3,
@@ -1259,7 +1259,7 @@ struct backbone_subAl complexMod_globalVars_subAl = {
 	.modNick = "jHigh",
 	.typeName = "subVar",
 };
-struct backbone_subVar complexMod_globalVars = {
+struct backbone_subVar backboneVar_complexMod_globalVars = {
 	.name = "globalVars",
 	.type = 0,
 	.typeIndex = 3,
@@ -1282,7 +1282,7 @@ struct backbone_subAl complexMod_globalScripts_subAl = {
 	.length = -1,
 	.naked = 0,
 };
-struct backbone_subVar complexMod_globalScripts = {
+struct backbone_subVar backboneVar_complexMod_globalScripts = {
 	.name = "globalScripts",
 	.type = 0,
 	.typeIndex = 3,
@@ -1298,12 +1298,12 @@ struct backbone_subVar complexMod_globalScripts = {
 	.naked = 0,
 };
 struct backbone_subVar *complexMod_varArr[] = {
-	&complexMod_name,
-	&complexMod_complexDecList,
-	&complexMod_globalVars,
-	&complexMod_globalScripts,
+	&backboneVar_complexMod_name,
+	&backboneVar_complexMod_complexDecList,
+	&backboneVar_complexMod_globalVars,
+	&backboneVar_complexMod_globalScripts,
 };
-struct backbone_structStruct complexMod = {
+struct backbone_structStruct backboneStru_complexMod = {
 	.name = "complexMod",
 	.varsLen = 4,
 	.vars = complexMod_varArr,
@@ -1328,7 +1328,7 @@ struct backbone_subAl complexModData_globalData_subAl = {
 	.length = -1,
 	.naked = 0,
 };
-struct backbone_subVar complexModData_globalData = {
+struct backbone_subVar backboneVar_complexModData_globalData = {
 	.name = "globalData",
 	.type = 0,
 	.typeIndex = 3,
@@ -1344,9 +1344,9 @@ struct backbone_subVar complexModData_globalData = {
 	.naked = 0,
 };
 struct backbone_subVar *complexModData_varArr[] = {
-	&complexModData_globalData,
+	&backboneVar_complexModData_globalData,
 };
-struct backbone_structStruct complexModData = {
+struct backbone_structStruct backboneStru_complexModData = {
 	.name = "complexModData",
 	.varsLen = 1,
 	.vars = complexModData_varArr,
@@ -1368,7 +1368,7 @@ int complexScript_attributes[] = {
 	0,
 	0,
 };
-struct backbone_subVar complexScript_name = {
+struct backbone_subVar backboneVar_complexScript_name = {
 	.name = "name",
 	.type = 0,
 	.typeIndex = 4,
@@ -1390,7 +1390,7 @@ struct backbone_subAl complexScript_eleList_subAl = {
 	.length = -1,
 	.naked = 0,
 };
-struct backbone_subVar complexScript_eleList = {
+struct backbone_subVar backboneVar_complexScript_eleList = {
 	.name = "eleList",
 	.type = 0,
 	.typeIndex = 3,
@@ -1406,10 +1406,10 @@ struct backbone_subVar complexScript_eleList = {
 	.naked = 0,
 };
 struct backbone_subVar *complexScript_varArr[] = {
-	&complexScript_name,
-	&complexScript_eleList,
+	&backboneVar_complexScript_name,
+	&backboneVar_complexScript_eleList,
 };
-struct backbone_structStruct complexScript = {
+struct backbone_structStruct backboneStru_complexScript = {
 	.name = "complexScript",
 	.varsLen = 2,
 	.vars = complexScript_varArr,
@@ -1430,7 +1430,7 @@ int cScriptEle__attributes[] = {
 	0,
 	0,
 };
-struct backbone_subVar cScriptEle__varDec = {
+struct backbone_subVar backboneVar_cScriptEle__varDec = {
 	.name = "varDec",
 	.type = 0,
 	.typeIndex = -1,
@@ -1446,7 +1446,7 @@ struct backbone_subVar cScriptEle__varDec = {
 	.modNick = "jHigh",
 	.typeName = "subVar",
 };
-struct backbone_subVar cScriptEle__operator = {
+struct backbone_subVar backboneVar_cScriptEle__operator = {
 	.name = "operator",
 	.type = 0,
 	.typeIndex = -1,
@@ -1461,8 +1461,8 @@ struct backbone_subVar cScriptEle__operator = {
 	.naked = 0,
 };
 struct backbone_subVar *cScriptEle__varArr[] = {
-	&cScriptEle__varDec,
-	&cScriptEle__operator,
+	&backboneVar_cScriptEle__varDec,
+	&backboneVar_cScriptEle__operator,
 };
 struct backbone_subComplex cScriptEle__complex = {
 	.type = {
@@ -1472,7 +1472,7 @@ struct backbone_subComplex cScriptEle__complex = {
 	.arr = cScriptEle__varArr,
 	.prefix = ""
 };
-struct backbone_subVar cScriptEle_ = {
+struct backbone_subVar backboneVar_cScriptEle_ = {
 	.name = "",
 	.type = 0,
 	.typeIndex = 6,
@@ -1488,9 +1488,9 @@ struct backbone_subVar cScriptEle_ = {
 	.naked = 0,
 };
 struct backbone_subVar *cScriptEle_varArr[] = {
-	&cScriptEle_,
+	&backboneVar_cScriptEle_,
 };
-struct backbone_structStruct cScriptEle = {
+struct backbone_structStruct backboneStru_cScriptEle = {
 	.name = "cScriptEle",
 	.varsLen = 1,
 	.vars = cScriptEle_varArr,
@@ -1508,24 +1508,24 @@ struct backbone_structStruct cScriptEle = {
 
 int len_backbone_arr_jalbJvg = 18;
 struct backbone_structStruct *backbone_arr_jalbJvg[] = {
-	&jPath,
-	&jVert,
-	&jLine,
-	&jText,
-	&jGroup,
-	&jNakedUnion,
-	&jvg,
-	&jRect,
-	&jCirc,
-	&jEllipse,
-	&complexDec,
-	&complexEle,
-	&jLiveData,
-	&complexMod,
-	&complexScript,
-	&cScriptEle,
-	&complexModData,
-	&complexRef,
+	&backboneStru_jPath,
+	&backboneStru_jVert,
+	&backboneStru_jLine,
+	&backboneStru_jText,
+	&backboneStru_jGroup,
+	&backboneStru_jNakedUnion,
+	&backboneStru_jvg,
+	&backboneStru_jRect,
+	&backboneStru_jCirc,
+	&backboneStru_jEllipse,
+	&backboneStru_complexDec,
+	&backboneStru_complexEle,
+	&backboneStru_jLiveData,
+	&backboneStru_complexMod,
+	&backboneStru_complexScript,
+	&backboneStru_cScriptEle,
+	&backboneStru_complexModData,
+	&backboneStru_complexRef,
 };
 
 

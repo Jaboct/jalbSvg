@@ -1016,7 +1016,7 @@ extern int len_backbone_arr_jalbJvg;
 extern struct backbone_structStruct *backbone_arr_jalbJvg[];
 
 extern int jvg_attributes[];
-extern struct backbone_structStruct jvg;
+extern struct backbone_structStruct backboneStru_jvg;
 
 extern int num_structStruct_jalbJvg;
 extern struct xmlFuncts *xmlFuncts_arr_jalbJvg[];
@@ -1049,7 +1049,7 @@ void jalbJvg_save ( struct jvg *jvgEle, char *dir ) {
 	printf ( "jvgEle: %p\n", jvgEle );
 
 	jvgPreSave ( jvgEle );
-	fwriteXml_backbone ( dir, &jvg, jvgEle,
+	fwriteXml_backbone ( dir, &backboneStru_jvg, jvgEle,
 		jvg_attributes, backbone_arr_jalbJvg, len_backbone_arr_jalbJvg );
 }
 

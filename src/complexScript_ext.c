@@ -263,7 +263,7 @@ extern int len_backbone_arr_jalbJvg;
 extern struct backbone_structStruct *backbone_arr_jalbJvg[];
 
 extern int complexMod_attributes[];
-extern struct backbone_structStruct complexMod;
+extern struct backbone_structStruct backboneStru_complexMod;
 
 
 extern int num_structStruct_jalbJvg;
@@ -293,7 +293,7 @@ void save_complexMod ( char *dir, struct complexMod *mod ) {
 	printf ( "save_complexMod ( )\n" );
 
 
-	fwriteXml_backbone ( dir, &complexMod, mod,
+	fwriteXml_backbone ( dir, &backboneStru_complexMod, mod,
 		complexMod_attributes, backbone_arr_jalbJvg, len_backbone_arr_jalbJvg );
 
 

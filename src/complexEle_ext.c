@@ -350,10 +350,13 @@ int complexEle_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct compl
 
 		float worldXY[2];
 		loc_to_pointI ( clickXYpass, worldXY, viewLoc, viewScale );
+
+/*
 		int clickXY[2] = {
 			worldXY[0],
 			worldXY[1],
 		};
+*/
 
 //		int (*funct)(SDL_Event *e, int *clickXYpass, int *eleWH, void *data) = dec->eventFunct;
 //		ret = funct ( e, clickXY, eleWH, ele );

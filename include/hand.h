@@ -111,8 +111,8 @@ void hand_p ( char *dir );
 
 /** postInit */
 
-void text_postInit ( struct text *text );
-void tspan_postInit ( struct tspan *tspan );
+void textPostInit ( struct text *text );
+void tspanPostInit ( struct tspan *tspan );
 void tspan_style_handle ( struct tspan *tspan, char *name, char *value );
 void text_style_handle ( struct text *text, char *name, char *value );
 

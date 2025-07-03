@@ -25,6 +25,8 @@ extern int jLineEditId;
 extern int debugPrint_projectName_init;
 
 
+/** Variables */
+
 extern struct draw2dStruct *draw2dApi;
 extern struct draw3dStruct *draw3dApi;
 extern struct jalbFont *fonts[];
@@ -32,9 +34,9 @@ extern struct jalbFont *fonts[];
 //extern void (*addCanvas)(int id, void *data, int *xywh);
 extern addCanvasF *addCanvas;
 
-extern struct backbone_structStruct jPath;
-extern struct backbone_structStruct jVert;
-extern struct backbone_structStruct jLine;
+extern struct backbone_structStruct backboneStru_jPath;
+extern struct backbone_structStruct backboneStru_jVert;
+extern struct backbone_structStruct backboneStru_jLine;
 
 /** Functions */
 
@@ -81,7 +83,7 @@ void jPathBodyToVal ( void *varPass, int nameI, char *body ) {
 	}
 }
 
-int jPathNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+int jPathNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	struct jPath *var = data;
 	if ( strcmp ( body, "verts" ) == 0 ) {
@@ -143,7 +145,7 @@ void jVertBodyToVal ( void *varPass, int nameI, char *body ) {
 	}
 }
 
-int jVertNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+int jVertNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	if ( strcmp ( body, "XY" ) == 0 ) {
 		return 0;
@@ -216,7 +218,7 @@ void jLineBodyToVal ( void *varPass, int nameI, char *body ) {
 	}
 }
 
-int jLineNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+int jLineNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	if ( strcmp ( body, "type" ) == 0 ) {
 		return 0;

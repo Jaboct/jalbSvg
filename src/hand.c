@@ -486,8 +486,8 @@ void hand_p ( char *dir ) {
 
 /** postInit */
 
-void text_postInit ( struct text *text ) {
-	printf ( "text_postInit ( )\n" );
+void textPostInit ( struct text *text ) {
+	printf ( "textPostInit ( )\n" );
 	printf ( "text->style: %s\n", text->style );
 
 	generic_postInit ( text, text->style, (void (*)(void *, char *, char *))text_style_handle );
@@ -533,10 +533,12 @@ void text_postInit ( struct text *text ) {
 */
 
 //	strToFloatIndex
+
+	printf ( "textPostInit ( ) OVER\n" );
 }
 
-void tspan_postInit ( struct tspan *tspan ) {
-	printf ( "tspan_postInit ( )\n" );
+void tspanPostInit ( struct tspan *tspan ) {
+	printf ( "tspanPostInit ( )\n" );
 	printf ( "tspan->style: %s\n", tspan->style );
 	printf ( "tspan->body: %s\n", tspan->body );
 
@@ -589,6 +591,8 @@ void tspan_postInit ( struct tspan *tspan ) {
 		*c = tspan->body[i];
 		i += 1;
 	}
+
+	printf ( "tspanPostInit ( ) OVER\n" );
 }
 
 void tspan_style_handle ( struct tspan *tspan, char *name, char *value ) {
@@ -608,8 +612,9 @@ void text_style_handle ( struct text *text, char *name, char *value ) {
 	printf ( "value: %s\n", value );
 
 	if ( strcmp ( name, "font-size" ) == 0 ) {
-		text->fontSize = atof ( value );
-		printf ( "text->fontSize: %f\n", text->fontSize );
+		// TODO font size is in span only now.
+//		text->fontSize = atof ( value );
+//		printf ( "text->fontSize: %f\n", text->fontSize );
 	}
 }
 
@@ -759,7 +764,7 @@ void add_errand ( struct g *g, float *XY, char *name, char *desc ) {
 
 	nakedUnionTypeChange0 ( uni, Text );
 	struct text *text = uni->text;
-	text->fontSize = 8;
+//	text->fontSize = 8;
 
 	float fontSize = 8.0;
 	float gap = 2.0;
@@ -770,7 +775,7 @@ void add_errand ( struct g *g, float *XY, char *name, char *desc ) {
 	span->x = XY[0] + indent;
 	span->y = XY[1] + indent;
 	strcpy ( span->body, name );
-	tspan_postInit ( span );
+	tspanPostInit ( span );
 	printSb ( span->stringBuilder );
 
 
@@ -780,7 +785,7 @@ void add_errand ( struct g *g, float *XY, char *name, char *desc ) {
 	span->x = XY[0] + indent;
 	span->y = XY[1] + indent + fontSize + gap;
 	strcpy ( span->body, desc );
-	tspan_postInit ( span );
+	tspanPostInit ( span );
 	printSb ( span->stringBuilder );
 }
 
@@ -792,7 +797,7 @@ extern int len_backbone_arr_jalbSvg;
 extern struct backbone_structStruct *backbone_arr_jalbSvg[];
 
 extern int svg_attributes[];
-extern struct backbone_structStruct svg;
+extern struct backbone_structStruct backboneStru_svg;
 
 void save_global_xml ( char *dir ) {
 	printf ( "save_global_xml ( )\n" );
@@ -801,7 +806,7 @@ void save_global_xml ( char *dir ) {
 	struct svg *svgEle = global_svg;
 
 	// fwriteXml_backbone
-	fwriteXml_backbone ( dir, &svg, svgEle,
+	fwriteXml_backbone ( dir, &backboneStru_svg, svgEle,
 		svg_attributes, backbone_arr_jalbSvg, len_backbone_arr_jalbSvg );
 
 	printf ( "save_global_xml ( ) OVER\n" );
@@ -814,7 +819,7 @@ void save_global_svg ( char *dir ) {
 	struct svg *svgEle = global_svg;
 	svg_preSave ( svgEle );
 
-	fwriteXml_backbone ( dir, &svg, svgEle,
+	fwriteXml_backbone ( dir, &backboneStru_svg, svgEle,
 		svg_attributes, backbone_arr_jalbSvg, len_backbone_arr_jalbSvg );
 
 	printf ( "save_global_svg ( ) OVER\n" );
@@ -890,10 +895,10 @@ void preSave_path ( struct path *path ) {
 void preSave_text ( struct text *text ) {
 	printf ( "preSave_text ( )\n" );
 
-	char *buffer = text->style;
-	int bi = 0;
-
-	sprintf ( &buffer[bi], "font-size:%fpx", text->fontSize );
+	// TODO, do this in span now.
+//	char *buffer = text->style;
+//	int bi = 0;
+//	sprintf ( &buffer[bi], "font-size:%fpx", text->fontSize );
 
 	int i;
 	int len;

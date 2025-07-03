@@ -15,7 +15,7 @@ int svg_attributes[] = {
 	1,
 	0,
 };
-struct backbone_subVar svg_width = {
+struct backbone_subVar backboneVar_svg_width = {
 	.name = "width",
 	.type = 0,
 	.typeIndex = 4,
@@ -29,7 +29,7 @@ struct backbone_subVar svg_width = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar svg_height = {
+struct backbone_subVar backboneVar_svg_height = {
 	.name = "height",
 	.type = 0,
 	.typeIndex = 4,
@@ -43,7 +43,7 @@ struct backbone_subVar svg_height = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar svg_viewBox = {
+struct backbone_subVar backboneVar_svg_viewBox = {
 	.name = "viewBox",
 	.type = 0,
 	.typeIndex = 4,
@@ -57,7 +57,7 @@ struct backbone_subVar svg_viewBox = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar svg_version = {
+struct backbone_subVar backboneVar_svg_version = {
 	.name = "version",
 	.type = 0,
 	.typeIndex = 4,
@@ -71,7 +71,7 @@ struct backbone_subVar svg_version = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar svg_id = {
+struct backbone_subVar backboneVar_svg_id = {
 	.name = "id",
 	.type = 0,
 	.typeIndex = 4,
@@ -93,7 +93,7 @@ struct backbone_subAl svg_eles_subAl = {
 	.length = -1,
 	.naked = 1,
 };
-struct backbone_subVar svg_eles = {
+struct backbone_subVar backboneVar_svg_eles = {
 	.name = "eles",
 	.type = 0,
 	.typeIndex = 3,
@@ -109,14 +109,14 @@ struct backbone_subVar svg_eles = {
 	.naked = 1,
 };
 struct backbone_subVar *svg_varArr[] = {
-	&svg_width,
-	&svg_height,
-	&svg_viewBox,
-	&svg_version,
-	&svg_id,
-	&svg_eles,
+	&backboneVar_svg_width,
+	&backboneVar_svg_height,
+	&backboneVar_svg_viewBox,
+	&backboneVar_svg_version,
+	&backboneVar_svg_id,
+	&backboneVar_svg_eles,
 };
-struct backbone_structStruct svg = {
+struct backbone_structStruct backboneStru_svg = {
 	.name = "svg",
 	.varsLen = 6,
 	.vars = svg_varArr,
@@ -141,7 +141,7 @@ int nakedUnion__attributes[] = {
 	0,
 	0,
 };
-struct backbone_subVar nakedUnion__g = {
+struct backbone_subVar backboneVar_nakedUnion__g = {
 	.name = "g",
 	.type = 1,
 	.typeIndex = 2,
@@ -155,7 +155,7 @@ struct backbone_subVar nakedUnion__g = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar nakedUnion__path = {
+struct backbone_subVar backboneVar_nakedUnion__path = {
 	.name = "path",
 	.type = 1,
 	.typeIndex = 3,
@@ -169,7 +169,7 @@ struct backbone_subVar nakedUnion__path = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar nakedUnion__text = {
+struct backbone_subVar backboneVar_nakedUnion__text = {
 	.name = "text",
 	.type = 1,
 	.typeIndex = 10,
@@ -183,7 +183,7 @@ struct backbone_subVar nakedUnion__text = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar nakedUnion__rect = {
+struct backbone_subVar backboneVar_nakedUnion__rect = {
 	.name = "rect",
 	.type = 1,
 	.typeIndex = 12,
@@ -197,7 +197,7 @@ struct backbone_subVar nakedUnion__rect = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar nakedUnion__circle = {
+struct backbone_subVar backboneVar_nakedUnion__circle = {
 	.name = "circle",
 	.type = 1,
 	.typeIndex = 13,
@@ -211,7 +211,7 @@ struct backbone_subVar nakedUnion__circle = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar nakedUnion__ellipse = {
+struct backbone_subVar backboneVar_nakedUnion__ellipse = {
 	.name = "ellipse",
 	.type = 1,
 	.typeIndex = 14,
@@ -226,12 +226,12 @@ struct backbone_subVar nakedUnion__ellipse = {
 	.naked = 0,
 };
 struct backbone_subVar *nakedUnion__varArr[] = {
-	&nakedUnion__g,
-	&nakedUnion__path,
-	&nakedUnion__text,
-	&nakedUnion__rect,
-	&nakedUnion__circle,
-	&nakedUnion__ellipse,
+	&backboneVar_nakedUnion__g,
+	&backboneVar_nakedUnion__path,
+	&backboneVar_nakedUnion__text,
+	&backboneVar_nakedUnion__rect,
+	&backboneVar_nakedUnion__circle,
+	&backboneVar_nakedUnion__ellipse,
 };
 struct backbone_subComplex nakedUnion__complex = {
 	.type = {
@@ -241,7 +241,7 @@ struct backbone_subComplex nakedUnion__complex = {
 	.arr = nakedUnion__varArr,
 	.prefix = ""
 };
-struct backbone_subVar nakedUnion_ = {
+struct backbone_subVar backboneVar_nakedUnion_ = {
 	.name = "",
 	.type = 0,
 	.typeIndex = 6,
@@ -257,9 +257,9 @@ struct backbone_subVar nakedUnion_ = {
 	.naked = 1,
 };
 struct backbone_subVar *nakedUnion_varArr[] = {
-	&nakedUnion_,
+	&backboneVar_nakedUnion_,
 };
-struct backbone_structStruct nakedUnion = {
+struct backbone_structStruct backboneStru_nakedUnion = {
 	.name = "nakedUnion",
 	.varsLen = 1,
 	.vars = nakedUnion_varArr,
@@ -277,7 +277,7 @@ int g_attributes[] = {
 	1,
 	0,
 };
-struct backbone_subVar g_id = {
+struct backbone_subVar backboneVar_g_id = {
 	.name = "id",
 	.type = 0,
 	.typeIndex = 4,
@@ -299,7 +299,7 @@ struct backbone_subAl g_eles_subAl = {
 	.length = -1,
 	.naked = 1,
 };
-struct backbone_subVar g_eles = {
+struct backbone_subVar backboneVar_g_eles = {
 	.name = "eles",
 	.type = 0,
 	.typeIndex = 3,
@@ -315,10 +315,10 @@ struct backbone_subVar g_eles = {
 	.naked = 1,
 };
 struct backbone_subVar *g_varArr[] = {
-	&g_id,
-	&g_eles,
+	&backboneVar_g_id,
+	&backboneVar_g_eles,
 };
-struct backbone_structStruct g = {
+struct backbone_structStruct backboneStru_g = {
 	.name = "g",
 	.varsLen = 2,
 	.vars = g_varArr,
@@ -344,7 +344,7 @@ int path_attributes[] = {
 	0,
 	0,
 };
-struct backbone_subVar path_style = {
+struct backbone_subVar backboneVar_path_style = {
 	.name = "style",
 	.type = 0,
 	.typeIndex = 4,
@@ -358,7 +358,7 @@ struct backbone_subVar path_style = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar path_d = {
+struct backbone_subVar backboneVar_path_d = {
 	.name = "d",
 	.type = 0,
 	.typeIndex = 4,
@@ -372,7 +372,7 @@ struct backbone_subVar path_d = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar path_id = {
+struct backbone_subVar backboneVar_path_id = {
 	.name = "id",
 	.type = 0,
 	.typeIndex = 4,
@@ -394,7 +394,7 @@ struct backbone_subAl path_eles_subAl = {
 	.length = -1,
 	.naked = 0,
 };
-struct backbone_subVar path_eles = {
+struct backbone_subVar backboneVar_path_eles = {
 	.name = "eles",
 	.type = 0,
 	.typeIndex = 3,
@@ -409,7 +409,7 @@ struct backbone_subVar path_eles = {
 	.saveFlag = 99,
 	.naked = 0,
 };
-struct backbone_subVar path_fill = {
+struct backbone_subVar backboneVar_path_fill = {
 	.name = "fill",
 	.type = 0,
 	.typeIndex = 4,
@@ -423,7 +423,7 @@ struct backbone_subVar path_fill = {
 	.saveFlag = 99,
 	.naked = 0,
 };
-struct backbone_subVar path_stroke = {
+struct backbone_subVar backboneVar_path_stroke = {
 	.name = "stroke",
 	.type = 0,
 	.typeIndex = 4,
@@ -437,7 +437,7 @@ struct backbone_subVar path_stroke = {
 	.saveFlag = 99,
 	.naked = 0,
 };
-struct backbone_subVar path_stroke_width = {
+struct backbone_subVar backboneVar_path_stroke_width = {
 	.name = "stroke_width",
 	.type = 0,
 	.typeIndex = 4,
@@ -451,7 +451,7 @@ struct backbone_subVar path_stroke_width = {
 	.saveFlag = 99,
 	.naked = 0,
 };
-struct backbone_subVar path_stroke_linecap = {
+struct backbone_subVar backboneVar_path_stroke_linecap = {
 	.name = "stroke_linecap",
 	.type = 0,
 	.typeIndex = 4,
@@ -465,7 +465,7 @@ struct backbone_subVar path_stroke_linecap = {
 	.saveFlag = 99,
 	.naked = 0,
 };
-struct backbone_subVar path_stroke_linejoin = {
+struct backbone_subVar backboneVar_path_stroke_linejoin = {
 	.name = "stroke_linejoin",
 	.type = 0,
 	.typeIndex = 4,
@@ -479,7 +479,7 @@ struct backbone_subVar path_stroke_linejoin = {
 	.saveFlag = 99,
 	.naked = 0,
 };
-struct backbone_subVar path_stroke_opacity = {
+struct backbone_subVar backboneVar_path_stroke_opacity = {
 	.name = "stroke_opacity",
 	.type = 0,
 	.typeIndex = 4,
@@ -494,18 +494,18 @@ struct backbone_subVar path_stroke_opacity = {
 	.naked = 0,
 };
 struct backbone_subVar *path_varArr[] = {
-	&path_style,
-	&path_d,
-	&path_id,
-	&path_eles,
-	&path_fill,
-	&path_stroke,
-	&path_stroke_width,
-	&path_stroke_linecap,
-	&path_stroke_linejoin,
-	&path_stroke_opacity,
+	&backboneVar_path_style,
+	&backboneVar_path_d,
+	&backboneVar_path_id,
+	&backboneVar_path_eles,
+	&backboneVar_path_fill,
+	&backboneVar_path_stroke,
+	&backboneVar_path_stroke_width,
+	&backboneVar_path_stroke_linecap,
+	&backboneVar_path_stroke_linejoin,
+	&backboneVar_path_stroke_opacity,
 };
-struct backbone_structStruct path = {
+struct backbone_structStruct backboneStru_path = {
 	.name = "path",
 	.varsLen = 10,
 	.vars = path_varArr,
@@ -534,7 +534,7 @@ int pathUni__attributes[] = {
 	0,
 	0,
 };
-struct backbone_subVar pathUni__moveTo = {
+struct backbone_subVar backboneVar_pathUni__moveTo = {
 	.name = "moveTo",
 	.type = 1,
 	.typeIndex = 5,
@@ -548,7 +548,7 @@ struct backbone_subVar pathUni__moveTo = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar pathUni__lineTo = {
+struct backbone_subVar backboneVar_pathUni__lineTo = {
 	.name = "lineTo",
 	.type = 1,
 	.typeIndex = 6,
@@ -562,7 +562,7 @@ struct backbone_subVar pathUni__lineTo = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar pathUni__cubicBez = {
+struct backbone_subVar backboneVar_pathUni__cubicBez = {
 	.name = "cubicBez",
 	.type = 1,
 	.typeIndex = 7,
@@ -576,7 +576,7 @@ struct backbone_subVar pathUni__cubicBez = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar pathUni__quadBez = {
+struct backbone_subVar backboneVar_pathUni__quadBez = {
 	.name = "quadBez",
 	.type = 1,
 	.typeIndex = 8,
@@ -590,7 +590,7 @@ struct backbone_subVar pathUni__quadBez = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar pathUni__ellipArc = {
+struct backbone_subVar backboneVar_pathUni__ellipArc = {
 	.name = "ellipArc",
 	.type = 1,
 	.typeIndex = 9,
@@ -604,7 +604,7 @@ struct backbone_subVar pathUni__ellipArc = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar pathUni__PathEnd = {
+struct backbone_subVar backboneVar_pathUni__PathEnd = {
 	.name = "PathEnd",
 	.type = 0,
 	.typeIndex = 0,
@@ -619,12 +619,12 @@ struct backbone_subVar pathUni__PathEnd = {
 	.naked = 0,
 };
 struct backbone_subVar *pathUni__varArr[] = {
-	&pathUni__moveTo,
-	&pathUni__lineTo,
-	&pathUni__cubicBez,
-	&pathUni__quadBez,
-	&pathUni__ellipArc,
-	&pathUni__PathEnd,
+	&backboneVar_pathUni__moveTo,
+	&backboneVar_pathUni__lineTo,
+	&backboneVar_pathUni__cubicBez,
+	&backboneVar_pathUni__quadBez,
+	&backboneVar_pathUni__ellipArc,
+	&backboneVar_pathUni__PathEnd,
 };
 struct backbone_subComplex pathUni__complex = {
 	.type = {
@@ -634,7 +634,7 @@ struct backbone_subComplex pathUni__complex = {
 	.arr = pathUni__varArr,
 	.prefix = "path_"
 };
-struct backbone_subVar pathUni_ = {
+struct backbone_subVar backboneVar_pathUni_ = {
 	.name = "",
 	.type = 0,
 	.typeIndex = 6,
@@ -650,9 +650,9 @@ struct backbone_subVar pathUni_ = {
 	.naked = 0,
 };
 struct backbone_subVar *pathUni_varArr[] = {
-	&pathUni_,
+	&backboneVar_pathUni_,
 };
-struct backbone_structStruct pathUni = {
+struct backbone_structStruct backboneStru_pathUni = {
 	.name = "pathUni",
 	.varsLen = 1,
 	.vars = pathUni_varArr,
@@ -670,7 +670,7 @@ int moveTo_attributes[] = {
 	0,
 	0,
 };
-struct backbone_subVar moveTo_rel = {
+struct backbone_subVar backboneVar_moveTo_rel = {
 	.name = "rel",
 	.type = 0,
 	.typeIndex = 0,
@@ -684,7 +684,7 @@ struct backbone_subVar moveTo_rel = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar moveTo_XY = {
+struct backbone_subVar backboneVar_moveTo_XY = {
 	.name = "XY",
 	.type = 0,
 	.typeIndex = 1,
@@ -699,10 +699,10 @@ struct backbone_subVar moveTo_XY = {
 	.naked = 0,
 };
 struct backbone_subVar *moveTo_varArr[] = {
-	&moveTo_rel,
-	&moveTo_XY,
+	&backboneVar_moveTo_rel,
+	&backboneVar_moveTo_XY,
 };
-struct backbone_structStruct moveTo = {
+struct backbone_structStruct backboneStru_moveTo = {
 	.name = "moveTo",
 	.varsLen = 2,
 	.vars = moveTo_varArr,
@@ -721,7 +721,7 @@ int lineTo_attributes[] = {
 	0,
 	0,
 };
-struct backbone_subVar lineTo_rel = {
+struct backbone_subVar backboneVar_lineTo_rel = {
 	.name = "rel",
 	.type = 0,
 	.typeIndex = 0,
@@ -735,7 +735,7 @@ struct backbone_subVar lineTo_rel = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar lineTo_XY = {
+struct backbone_subVar backboneVar_lineTo_XY = {
 	.name = "XY",
 	.type = 0,
 	.typeIndex = 1,
@@ -749,7 +749,7 @@ struct backbone_subVar lineTo_XY = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar lineTo_type = {
+struct backbone_subVar backboneVar_lineTo_type = {
 	.name = "type",
 	.type = 0,
 	.typeIndex = 0,
@@ -764,11 +764,11 @@ struct backbone_subVar lineTo_type = {
 	.naked = 0,
 };
 struct backbone_subVar *lineTo_varArr[] = {
-	&lineTo_rel,
-	&lineTo_XY,
-	&lineTo_type,
+	&backboneVar_lineTo_rel,
+	&backboneVar_lineTo_XY,
+	&backboneVar_lineTo_type,
 };
-struct backbone_structStruct lineTo = {
+struct backbone_structStruct backboneStru_lineTo = {
 	.name = "lineTo",
 	.varsLen = 3,
 	.vars = lineTo_varArr,
@@ -789,7 +789,7 @@ int cubicBez_attributes[] = {
 	0,
 	0,
 };
-struct backbone_subVar cubicBez_rel = {
+struct backbone_subVar backboneVar_cubicBez_rel = {
 	.name = "rel",
 	.type = 0,
 	.typeIndex = 0,
@@ -803,7 +803,7 @@ struct backbone_subVar cubicBez_rel = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar cubicBez_XY = {
+struct backbone_subVar backboneVar_cubicBez_XY = {
 	.name = "XY",
 	.type = 0,
 	.typeIndex = 1,
@@ -817,7 +817,7 @@ struct backbone_subVar cubicBez_XY = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar cubicBez_c0 = {
+struct backbone_subVar backboneVar_cubicBez_c0 = {
 	.name = "c0",
 	.type = 0,
 	.typeIndex = 1,
@@ -831,7 +831,7 @@ struct backbone_subVar cubicBez_c0 = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar cubicBez_c1 = {
+struct backbone_subVar backboneVar_cubicBez_c1 = {
 	.name = "c1",
 	.type = 0,
 	.typeIndex = 1,
@@ -845,7 +845,7 @@ struct backbone_subVar cubicBez_c1 = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar cubicBez_type = {
+struct backbone_subVar backboneVar_cubicBez_type = {
 	.name = "type",
 	.type = 0,
 	.typeIndex = 0,
@@ -860,13 +860,13 @@ struct backbone_subVar cubicBez_type = {
 	.naked = 0,
 };
 struct backbone_subVar *cubicBez_varArr[] = {
-	&cubicBez_rel,
-	&cubicBez_XY,
-	&cubicBez_c0,
-	&cubicBez_c1,
-	&cubicBez_type,
+	&backboneVar_cubicBez_rel,
+	&backboneVar_cubicBez_XY,
+	&backboneVar_cubicBez_c0,
+	&backboneVar_cubicBez_c1,
+	&backboneVar_cubicBez_type,
 };
-struct backbone_structStruct cubicBez = {
+struct backbone_structStruct backboneStru_cubicBez = {
 	.name = "cubicBez",
 	.varsLen = 5,
 	.vars = cubicBez_varArr,
@@ -886,7 +886,7 @@ int quadBez_attributes[] = {
 	0,
 	0,
 };
-struct backbone_subVar quadBez_rel = {
+struct backbone_subVar backboneVar_quadBez_rel = {
 	.name = "rel",
 	.type = 0,
 	.typeIndex = 0,
@@ -900,7 +900,7 @@ struct backbone_subVar quadBez_rel = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar quadBez_XY = {
+struct backbone_subVar backboneVar_quadBez_XY = {
 	.name = "XY",
 	.type = 0,
 	.typeIndex = 1,
@@ -914,7 +914,7 @@ struct backbone_subVar quadBez_XY = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar quadBez_control = {
+struct backbone_subVar backboneVar_quadBez_control = {
 	.name = "control",
 	.type = 0,
 	.typeIndex = 1,
@@ -928,7 +928,7 @@ struct backbone_subVar quadBez_control = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar quadBez_type = {
+struct backbone_subVar backboneVar_quadBez_type = {
 	.name = "type",
 	.type = 0,
 	.typeIndex = 0,
@@ -943,12 +943,12 @@ struct backbone_subVar quadBez_type = {
 	.naked = 0,
 };
 struct backbone_subVar *quadBez_varArr[] = {
-	&quadBez_rel,
-	&quadBez_XY,
-	&quadBez_control,
-	&quadBez_type,
+	&backboneVar_quadBez_rel,
+	&backboneVar_quadBez_XY,
+	&backboneVar_quadBez_control,
+	&backboneVar_quadBez_type,
 };
-struct backbone_structStruct quadBez = {
+struct backbone_structStruct backboneStru_quadBez = {
 	.name = "quadBez",
 	.varsLen = 4,
 	.vars = quadBez_varArr,
@@ -970,7 +970,7 @@ int ellipArc_attributes[] = {
 	0,
 	0,
 };
-struct backbone_subVar ellipArc_rel = {
+struct backbone_subVar backboneVar_ellipArc_rel = {
 	.name = "rel",
 	.type = 0,
 	.typeIndex = 0,
@@ -984,7 +984,7 @@ struct backbone_subVar ellipArc_rel = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar ellipArc_XY = {
+struct backbone_subVar backboneVar_ellipArc_XY = {
 	.name = "XY",
 	.type = 0,
 	.typeIndex = 1,
@@ -998,7 +998,7 @@ struct backbone_subVar ellipArc_XY = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar ellipArc_rXY = {
+struct backbone_subVar backboneVar_ellipArc_rXY = {
 	.name = "rXY",
 	.type = 0,
 	.typeIndex = 1,
@@ -1012,7 +1012,7 @@ struct backbone_subVar ellipArc_rXY = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar ellipArc_angle = {
+struct backbone_subVar backboneVar_ellipArc_angle = {
 	.name = "angle",
 	.type = 0,
 	.typeIndex = 1,
@@ -1026,7 +1026,7 @@ struct backbone_subVar ellipArc_angle = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar ellipArc_largeArcFlag = {
+struct backbone_subVar backboneVar_ellipArc_largeArcFlag = {
 	.name = "largeArcFlag",
 	.type = 0,
 	.typeIndex = 0,
@@ -1040,7 +1040,7 @@ struct backbone_subVar ellipArc_largeArcFlag = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar ellipArc_sweepFlag = {
+struct backbone_subVar backboneVar_ellipArc_sweepFlag = {
 	.name = "sweepFlag",
 	.type = 0,
 	.typeIndex = 0,
@@ -1055,14 +1055,14 @@ struct backbone_subVar ellipArc_sweepFlag = {
 	.naked = 0,
 };
 struct backbone_subVar *ellipArc_varArr[] = {
-	&ellipArc_rel,
-	&ellipArc_XY,
-	&ellipArc_rXY,
-	&ellipArc_angle,
-	&ellipArc_largeArcFlag,
-	&ellipArc_sweepFlag,
+	&backboneVar_ellipArc_rel,
+	&backboneVar_ellipArc_XY,
+	&backboneVar_ellipArc_rXY,
+	&backboneVar_ellipArc_angle,
+	&backboneVar_ellipArc_largeArcFlag,
+	&backboneVar_ellipArc_sweepFlag,
 };
-struct backbone_structStruct ellipArc = {
+struct backbone_structStruct backboneStru_ellipArc = {
 	.name = "ellipArc",
 	.varsLen = 6,
 	.vars = ellipArc_varArr,
@@ -1087,7 +1087,7 @@ int text_attributes[] = {
 	1,
 	0,
 };
-struct backbone_subVar text_space = {
+struct backbone_subVar backboneVar_text_space = {
 	.name = "space",
 	.type = 0,
 	.typeIndex = 4,
@@ -1101,7 +1101,7 @@ struct backbone_subVar text_space = {
 	.saveFlag = 99,
 	.naked = 0,
 };
-struct backbone_subVar text_style = {
+struct backbone_subVar backboneVar_text_style = {
 	.name = "style",
 	.type = 0,
 	.typeIndex = 4,
@@ -1115,7 +1115,7 @@ struct backbone_subVar text_style = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar text_x = {
+struct backbone_subVar backboneVar_text_x = {
 	.name = "x",
 	.type = 0,
 	.typeIndex = 1,
@@ -1129,7 +1129,7 @@ struct backbone_subVar text_x = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar text_y = {
+struct backbone_subVar backboneVar_text_y = {
 	.name = "y",
 	.type = 0,
 	.typeIndex = 1,
@@ -1151,7 +1151,7 @@ struct backbone_subAl text_spanList_subAl = {
 	.length = -1,
 	.naked = 0,
 };
-struct backbone_subVar text_spanList = {
+struct backbone_subVar backboneVar_text_spanList = {
 	.name = "spanList",
 	.type = 0,
 	.typeIndex = 3,
@@ -1167,13 +1167,13 @@ struct backbone_subVar text_spanList = {
 	.naked = 1,
 };
 struct backbone_subVar *text_varArr[] = {
-	&text_space,
-	&text_style,
-	&text_x,
-	&text_y,
-	&text_spanList,
+	&backboneVar_text_space,
+	&backboneVar_text_style,
+	&backboneVar_text_x,
+	&backboneVar_text_y,
+	&backboneVar_text_spanList,
 };
-struct backbone_structStruct text = {
+struct backbone_structStruct backboneStru_text = {
 	.name = "text",
 	.varsLen = 5,
 	.vars = text_varArr,
@@ -1197,7 +1197,7 @@ int tspan_attributes[] = {
 	0,
 	0,
 };
-struct backbone_subVar tspan_role = {
+struct backbone_subVar backboneVar_tspan_role = {
 	.name = "role",
 	.type = 0,
 	.typeIndex = 4,
@@ -1211,7 +1211,7 @@ struct backbone_subVar tspan_role = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar tspan_id = {
+struct backbone_subVar backboneVar_tspan_id = {
 	.name = "id",
 	.type = 0,
 	.typeIndex = 4,
@@ -1225,7 +1225,7 @@ struct backbone_subVar tspan_id = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar tspan_style = {
+struct backbone_subVar backboneVar_tspan_style = {
 	.name = "style",
 	.type = 0,
 	.typeIndex = 4,
@@ -1239,7 +1239,7 @@ struct backbone_subVar tspan_style = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar tspan_x = {
+struct backbone_subVar backboneVar_tspan_x = {
 	.name = "x",
 	.type = 0,
 	.typeIndex = 1,
@@ -1253,7 +1253,7 @@ struct backbone_subVar tspan_x = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar tspan_y = {
+struct backbone_subVar backboneVar_tspan_y = {
 	.name = "y",
 	.type = 0,
 	.typeIndex = 1,
@@ -1267,7 +1267,7 @@ struct backbone_subVar tspan_y = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar tspan_body = {
+struct backbone_subVar backboneVar_tspan_body = {
 	.name = "body",
 	.type = 0,
 	.typeIndex = 4,
@@ -1279,9 +1279,9 @@ struct backbone_subVar tspan_body = {
 	},
 	.external = offsetof ( struct tspan, body ),
 	.saveFlag = 1,
-	.naked = 1,
+	.naked = 0,
 };
-struct backbone_subVar tspan_fontSize = {
+struct backbone_subVar backboneVar_tspan_fontSize = {
 	.name = "fontSize",
 	.type = 0,
 	.typeIndex = 1,
@@ -1303,7 +1303,7 @@ struct backbone_subAl tspan_stringBuilder_subAl = {
 	.length = -1,
 	.naked = 0,
 };
-struct backbone_subVar tspan_stringBuilder = {
+struct backbone_subVar backboneVar_tspan_stringBuilder = {
 	.name = "stringBuilder",
 	.type = 0,
 	.typeIndex = 3,
@@ -1319,16 +1319,16 @@ struct backbone_subVar tspan_stringBuilder = {
 	.naked = 0,
 };
 struct backbone_subVar *tspan_varArr[] = {
-	&tspan_role,
-	&tspan_id,
-	&tspan_style,
-	&tspan_x,
-	&tspan_y,
-	&tspan_body,
-	&tspan_fontSize,
-	&tspan_stringBuilder,
+	&backboneVar_tspan_role,
+	&backboneVar_tspan_id,
+	&backboneVar_tspan_style,
+	&backboneVar_tspan_x,
+	&backboneVar_tspan_y,
+	&backboneVar_tspan_body,
+	&backboneVar_tspan_fontSize,
+	&backboneVar_tspan_stringBuilder,
 };
-struct backbone_structStruct tspan = {
+struct backbone_structStruct backboneStru_tspan = {
 	.name = "tspan",
 	.varsLen = 8,
 	.vars = tspan_varArr,
@@ -1358,7 +1358,7 @@ int rect_attributes[] = {
 	0,
 	0,
 };
-struct backbone_subVar rect_style = {
+struct backbone_subVar backboneVar_rect_style = {
 	.name = "style",
 	.type = 0,
 	.typeIndex = 4,
@@ -1372,7 +1372,7 @@ struct backbone_subVar rect_style = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar rect_id = {
+struct backbone_subVar backboneVar_rect_id = {
 	.name = "id",
 	.type = 0,
 	.typeIndex = 4,
@@ -1386,7 +1386,7 @@ struct backbone_subVar rect_id = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar rect_x = {
+struct backbone_subVar backboneVar_rect_x = {
 	.name = "x",
 	.type = 0,
 	.typeIndex = 1,
@@ -1400,7 +1400,7 @@ struct backbone_subVar rect_x = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar rect_y = {
+struct backbone_subVar backboneVar_rect_y = {
 	.name = "y",
 	.type = 0,
 	.typeIndex = 1,
@@ -1414,7 +1414,7 @@ struct backbone_subVar rect_y = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar rect_width = {
+struct backbone_subVar backboneVar_rect_width = {
 	.name = "width",
 	.type = 0,
 	.typeIndex = 1,
@@ -1428,7 +1428,7 @@ struct backbone_subVar rect_width = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar rect_height = {
+struct backbone_subVar backboneVar_rect_height = {
 	.name = "height",
 	.type = 0,
 	.typeIndex = 1,
@@ -1442,7 +1442,7 @@ struct backbone_subVar rect_height = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar rect_fill = {
+struct backbone_subVar backboneVar_rect_fill = {
 	.name = "fill",
 	.type = 0,
 	.typeIndex = 4,
@@ -1456,7 +1456,7 @@ struct backbone_subVar rect_fill = {
 	.saveFlag = 99,
 	.naked = 0,
 };
-struct backbone_subVar rect_stroke = {
+struct backbone_subVar backboneVar_rect_stroke = {
 	.name = "stroke",
 	.type = 0,
 	.typeIndex = 4,
@@ -1470,7 +1470,7 @@ struct backbone_subVar rect_stroke = {
 	.saveFlag = 99,
 	.naked = 0,
 };
-struct backbone_subVar rect_stroke_width = {
+struct backbone_subVar backboneVar_rect_stroke_width = {
 	.name = "stroke_width",
 	.type = 0,
 	.typeIndex = 4,
@@ -1484,7 +1484,7 @@ struct backbone_subVar rect_stroke_width = {
 	.saveFlag = 99,
 	.naked = 0,
 };
-struct backbone_subVar rect_stroke_opacity = {
+struct backbone_subVar backboneVar_rect_stroke_opacity = {
 	.name = "stroke_opacity",
 	.type = 0,
 	.typeIndex = 4,
@@ -1499,18 +1499,18 @@ struct backbone_subVar rect_stroke_opacity = {
 	.naked = 0,
 };
 struct backbone_subVar *rect_varArr[] = {
-	&rect_style,
-	&rect_id,
-	&rect_x,
-	&rect_y,
-	&rect_width,
-	&rect_height,
-	&rect_fill,
-	&rect_stroke,
-	&rect_stroke_width,
-	&rect_stroke_opacity,
+	&backboneVar_rect_style,
+	&backboneVar_rect_id,
+	&backboneVar_rect_x,
+	&backboneVar_rect_y,
+	&backboneVar_rect_width,
+	&backboneVar_rect_height,
+	&backboneVar_rect_fill,
+	&backboneVar_rect_stroke,
+	&backboneVar_rect_stroke_width,
+	&backboneVar_rect_stroke_opacity,
 };
-struct backbone_structStruct rect = {
+struct backbone_structStruct backboneStru_rect = {
 	.name = "rect",
 	.varsLen = 10,
 	.vars = rect_varArr,
@@ -1531,7 +1531,7 @@ int circle_attributes[] = {
 	1,
 	1,
 };
-struct backbone_subVar circle_style = {
+struct backbone_subVar backboneVar_circle_style = {
 	.name = "style",
 	.type = 0,
 	.typeIndex = 4,
@@ -1545,7 +1545,7 @@ struct backbone_subVar circle_style = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar circle_id = {
+struct backbone_subVar backboneVar_circle_id = {
 	.name = "id",
 	.type = 0,
 	.typeIndex = 4,
@@ -1559,7 +1559,7 @@ struct backbone_subVar circle_id = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar circle_cx = {
+struct backbone_subVar backboneVar_circle_cx = {
 	.name = "cx",
 	.type = 0,
 	.typeIndex = 1,
@@ -1573,7 +1573,7 @@ struct backbone_subVar circle_cx = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar circle_cy = {
+struct backbone_subVar backboneVar_circle_cy = {
 	.name = "cy",
 	.type = 0,
 	.typeIndex = 1,
@@ -1587,7 +1587,7 @@ struct backbone_subVar circle_cy = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar circle_r = {
+struct backbone_subVar backboneVar_circle_r = {
 	.name = "r",
 	.type = 0,
 	.typeIndex = 1,
@@ -1602,13 +1602,13 @@ struct backbone_subVar circle_r = {
 	.naked = 0,
 };
 struct backbone_subVar *circle_varArr[] = {
-	&circle_style,
-	&circle_id,
-	&circle_cx,
-	&circle_cy,
-	&circle_r,
+	&backboneVar_circle_style,
+	&backboneVar_circle_id,
+	&backboneVar_circle_cx,
+	&backboneVar_circle_cy,
+	&backboneVar_circle_r,
 };
-struct backbone_structStruct circle = {
+struct backbone_structStruct backboneStru_circle = {
 	.name = "circle",
 	.varsLen = 5,
 	.vars = circle_varArr,
@@ -1630,7 +1630,7 @@ int ellipse_attributes[] = {
 	0,
 	0,
 };
-struct backbone_subVar ellipse_style = {
+struct backbone_subVar backboneVar_ellipse_style = {
 	.name = "style",
 	.type = 0,
 	.typeIndex = 4,
@@ -1644,7 +1644,7 @@ struct backbone_subVar ellipse_style = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar ellipse_id = {
+struct backbone_subVar backboneVar_ellipse_id = {
 	.name = "id",
 	.type = 0,
 	.typeIndex = 4,
@@ -1658,7 +1658,7 @@ struct backbone_subVar ellipse_id = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar ellipse_cx = {
+struct backbone_subVar backboneVar_ellipse_cx = {
 	.name = "cx",
 	.type = 0,
 	.typeIndex = 1,
@@ -1672,7 +1672,7 @@ struct backbone_subVar ellipse_cx = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar ellipse_cy = {
+struct backbone_subVar backboneVar_ellipse_cy = {
 	.name = "cy",
 	.type = 0,
 	.typeIndex = 1,
@@ -1686,7 +1686,7 @@ struct backbone_subVar ellipse_cy = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar ellipse_rx = {
+struct backbone_subVar backboneVar_ellipse_rx = {
 	.name = "rx",
 	.type = 0,
 	.typeIndex = 1,
@@ -1700,7 +1700,7 @@ struct backbone_subVar ellipse_rx = {
 	.saveFlag = 1,
 	.naked = 0,
 };
-struct backbone_subVar ellipse_ry = {
+struct backbone_subVar backboneVar_ellipse_ry = {
 	.name = "ry",
 	.type = 0,
 	.typeIndex = 1,
@@ -1715,14 +1715,14 @@ struct backbone_subVar ellipse_ry = {
 	.naked = 0,
 };
 struct backbone_subVar *ellipse_varArr[] = {
-	&ellipse_style,
-	&ellipse_id,
-	&ellipse_cx,
-	&ellipse_cy,
-	&ellipse_rx,
-	&ellipse_ry,
+	&backboneVar_ellipse_style,
+	&backboneVar_ellipse_id,
+	&backboneVar_ellipse_cx,
+	&backboneVar_ellipse_cy,
+	&backboneVar_ellipse_rx,
+	&backboneVar_ellipse_ry,
 };
-struct backbone_structStruct ellipse = {
+struct backbone_structStruct backboneStru_ellipse = {
 	.name = "ellipse",
 	.varsLen = 6,
 	.vars = ellipse_varArr,
@@ -1740,21 +1740,21 @@ struct backbone_structStruct ellipse = {
 
 int len_backbone_arr_jalbSvg = 15;
 struct backbone_structStruct *backbone_arr_jalbSvg[] = {
-	&svg,
-	&nakedUnion,
-	&g,
-	&path,
-	&pathUni,
-	&moveTo,
-	&lineTo,
-	&cubicBez,
-	&quadBez,
-	&ellipArc,
-	&text,
-	&tspan,
-	&rect,
-	&circle,
-	&ellipse,
+	&backboneStru_svg,
+	&backboneStru_nakedUnion,
+	&backboneStru_g,
+	&backboneStru_path,
+	&backboneStru_pathUni,
+	&backboneStru_moveTo,
+	&backboneStru_lineTo,
+	&backboneStru_cubicBez,
+	&backboneStru_quadBez,
+	&backboneStru_ellipArc,
+	&backboneStru_text,
+	&backboneStru_tspan,
+	&backboneStru_rect,
+	&backboneStru_circle,
+	&backboneStru_ellipse,
 };
 
 

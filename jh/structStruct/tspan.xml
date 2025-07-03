@@ -117,7 +117,7 @@
       <external>0</external>
       <attribute>0</attribute>
       <saveFlag>1</saveFlag>
-      <naked>1</naked>
+      <naked>0</naked>
       <comment></comment>
       <modNick></modNick>
       <typeName></typeName>
@@ -181,5 +181,5 @@
   <isTypedef>0</isTypedef>
   <typedefType>0</typedefType>
   <typedefTypeIndex>0</typedefTypeIndex>
-  <postInit>0</postInit>
+  <postInit>1</postInit>
 </structStruct>

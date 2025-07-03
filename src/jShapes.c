@@ -25,6 +25,8 @@ extern int jEllipseEditId;
 extern int debugPrint_projectName_init;
 
 
+/** Variables */
+
 extern struct draw2dStruct *draw2dApi;
 extern struct draw3dStruct *draw3dApi;
 extern struct jalbFont *fonts[];
@@ -32,9 +34,9 @@ extern struct jalbFont *fonts[];
 //extern void (*addCanvas)(int id, void *data, int *xywh);
 extern addCanvasF *addCanvas;
 
-extern struct backbone_structStruct jRect;
-extern struct backbone_structStruct jCirc;
-extern struct backbone_structStruct jEllipse;
+extern struct backbone_structStruct backboneStru_jRect;
+extern struct backbone_structStruct backboneStru_jCirc;
+extern struct backbone_structStruct backboneStru_jEllipse;
 
 /** Functions */
 
@@ -77,7 +79,7 @@ void jRectBodyToVal ( void *varPass, int nameI, char *body ) {
 	}
 }
 
-int jRectNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+int jRectNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	if ( strcmp ( body, "XYWH" ) == 0 ) {
 		return 0;
@@ -136,7 +138,7 @@ void jCircBodyToVal ( void *varPass, int nameI, char *body ) {
 	}
 }
 
-int jCircNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+int jCircNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	if ( strcmp ( body, "XY" ) == 0 ) {
 		return 0;
@@ -209,7 +211,7 @@ void jEllipseBodyToVal ( void *varPass, int nameI, char *body ) {
 	}
 }
 
-int jEllipseNameToIndex ( char *body, void *data, void *ret, char **strPtr ) {
+int jEllipseNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	if ( strcmp ( body, "XY" ) == 0 ) {
 		return 0;

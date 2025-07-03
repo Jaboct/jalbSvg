@@ -57,7 +57,27 @@ extern struct backbone_structStruct *backbone_arr_jalbJvg[];
 void *get_backbone_arr ( ) {
 	return backbone_arr_jalbJvg;
 }
-int num_projectVars_jalbJvg = 1;
+int num_projectVars_jalbJvg = 2;
+
+extern struct jvg glob_jvg;// (jMod.c)
+
+struct backbone_projectVar proj_glob_jvg = {
+	{
+		.name = "glob_jvg",
+		.type = 1,
+		.typeIndex = 6,
+		.initType = 0,
+		.length = 0,
+		.literal = 1,
+		.data = {
+			.id = 0,
+		},
+		.saveFlag = 1,
+		.naked = 0,
+	},
+	.data = &glob_jvg,
+};
+
 
 extern ArrayList global_jEles;// (jMod.c)
 struct backbone_subAl global_jEles_global_jEles_subAl = {
@@ -88,6 +108,7 @@ struct backbone_projectVar proj_global_jEles = {
 };
 
 struct backbone_projectVar *projectVar_arr_jalbJvg[] = {
+	&proj_glob_jvg,
 	&proj_global_jEles,
 };
 
