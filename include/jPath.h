@@ -27,16 +27,22 @@ struct jPath {
 	ArrayList *verts;	// (struct jVert*)
 	ArrayList *lines;	// (struct jLine*)
 };
+
 struct jVert {
 	float XY[2];
 };
+
 struct jLine {
 	int type;
 	int v0;
 	int v1;
 	float c0[2];
 	float c1[2];
+	int markerStart;
+	int markerMid;
+	int markerEnd;
 };
+
 
 
 /** Post Includes */

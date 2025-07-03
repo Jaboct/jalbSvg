@@ -8,7 +8,7 @@
   <drawCutString>0</drawCutString>
   <scrollHandle>0</scrollHandle>
   <preInc>
-#include "jGroup.h"
+#include &quot;jGroup.h&quot;
 </preInc>
   <postInc></postInc>
   <structIds>

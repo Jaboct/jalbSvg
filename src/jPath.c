@@ -183,6 +183,9 @@ void jLineFill ( struct jLine *var ) {
 	var->c1[0] = 0.0;
 	var->c1[1] = 0.0;
 
+	var->markerStart = 0;
+	var->markerMid = 0;
+	var->markerEnd = 0;
 }
 
 void *jLineInitMask ( ) {
@@ -195,6 +198,9 @@ void jLineClose ( struct jLine *var ) {
 
 }
 int jLine_attrib_arr[] = {
+	0,
+	0,
+	0,
 	0,
 	0,
 	0,
@@ -215,6 +221,12 @@ void jLineBodyToVal ( void *varPass, int nameI, char *body ) {
 		consumeStdArr ( body, 1, 1, var->c0, 2 );
 	} else if ( nameI == 4 ) {
 		consumeStdArr ( body, 1, 1, var->c1, 2 );
+	} else if ( nameI == 5 ) {
+		var->markerStart = atoi ( body );
+	} else if ( nameI == 6 ) {
+		var->markerMid = atoi ( body );
+	} else if ( nameI == 7 ) {
+		var->markerEnd = atoi ( body );
 	}
 }
 
@@ -230,6 +242,12 @@ int jLineNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **
 		return 3;
 	} else if ( strcmp ( body, "c1" ) == 0 ) {
 		return 4;
+	} else if ( strcmp ( body, "markerStart" ) == 0 ) {
+		return 5;
+	} else if ( strcmp ( body, "markerMid" ) == 0 ) {
+		return 6;
+	} else if ( strcmp ( body, "markerEnd" ) == 0 ) {
+		return 7;
 	}
 	return -1;
 }
