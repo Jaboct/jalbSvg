@@ -193,7 +193,8 @@ void set_cursor_complex ( );
 
 struct jvg *load_jvg_example_eleList ( );
 struct jPath *load_jvg_example_jPath ( );
-
+struct jVert *load_jvg_example_jVert ( );
+struct jLine *load_jvg_example_jLine ( );
 
 /** UiGen spawning */
 

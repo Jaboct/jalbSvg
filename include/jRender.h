@@ -22,6 +22,11 @@ enum vert_subModes {
 	vSubM_verts,
 };
 
+enum line_markers {
+	lineMark_none = 0,
+	lineMark_arrow,
+};
+
 
 /** Functions */
 

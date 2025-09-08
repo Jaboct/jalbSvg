@@ -86,6 +86,9 @@ enum heldTypes {	// u can have highlight and camera move at the same time.
 extern ArrayList *glob_ctrlKeys;
 
 
+// this aint right
+char *workspaceDir_jalbJvg = "/home/jadeb/workspace/jHigh/jalbSvg/";
+
 
 
 /** Functions */
@@ -1933,6 +1936,8 @@ void open_jVert_edit ( struct jVert *vert ) {
 	sayFloatArray ( "vert->XY", vert->XY, 2 );
 
 	printf ( "open_jVert_edit ( ) OVER\n" );
+
+//	exit ( 12 );
 }
 
 void open_jLine_edit ( struct jLine *line ) {
@@ -1941,6 +1946,16 @@ void open_jLine_edit ( struct jLine *line ) {
 
 	printf ( "line->v0: %d\n", line->v0 );
 	printf ( "line->v1: %d\n", line->v1 );
+
+//	char *workspaceDir_jalbJvg = "/home/jadeb/workspace/jHigh/jalbSvg/";
+	char *fileDir = "res/uiGen_hand/jLine.xml";
+
+	char fullDir[1024];
+	sprintf ( fullDir, "%s%s", workspaceDir_jalbJvg, fileDir );
+
+	if ( uiGen_api ) {
+		uiGen_api->load_and_set_norm ( fullDir, line );
+	}
 
 	printf ( "open_jLine_edit ( ) OVER\n" );
 }
@@ -2270,11 +2285,35 @@ struct jPath *load_jvg_example_jPath ( ) {
 	struct jLine *line = jLineInit ( );
 	arrayListAddEndPointer ( path->lines, line );
 	line->v0 = 0;
-	line->v1 = 0;
+	line->v1 = 1;
 
 	printf ( "load_jvg_example_jPath ( ) OVER\n" );
 
 	return path;
+}
+
+struct jVert *load_jvg_example_jVert ( ) {
+	printf ( "load_jvg_example_jVert ( )\n" );
+
+	struct jVert *vert = jVertInit ( );
+	vert->XY[0] = 1.0;
+	vert->XY[1] = -1.0;
+
+	printf ( "load_jvg_example_jvert ( ) OVER\n" );
+
+	return vert;
+}
+
+struct jLine *load_jvg_example_jLine ( ) {
+	printf ( "load_jvg_example_jLine ( )\n" );
+
+	struct jLine *line = jLineInit ( );
+	line->v0 = 0;
+	line->v1 = 0;
+
+	printf ( "load_jvg_example_jLine ( ) OVER\n" );
+
+	return line;
 }
 
 
@@ -2385,6 +2424,31 @@ float *toolBar_icon_color ( int i ) {
 
 	return retColor;
 }
+
+
+/** Specific Loading Examples */
+
+void load_CAD_00 ( ) {
+	char *dir = "../jalbSvg/res/jvg/CAD/test_00.xml";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -156,7 +156,7 @@ void jPath_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jP
 
 	int thisObjEdit = thisEdit ( thisSel );
 
-	int endArrow = 1;
+//	int endArrow = 1;
 
 	// left, right, top, bottom
 	// to draw the bounding box.
@@ -180,7 +180,8 @@ void jPath_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jP
 			seg_render ( screenDims, glBuffers, v0->XY, v1->XY, lineW,
 				viewLoc, viewScale, XYWHpass );
 
-			if ( endArrow ) {
+//			if ( endArrow ) {
+			if ( line->markerEnd == lineMark_arrow ) {
 				float vect[2];
 				vectSub ( v0->XY, v1->XY, vect, 2 );
 				float arrowLen = 10.0;	// maybe do 10 * lineW? so the thicker the line the larger the arrow.

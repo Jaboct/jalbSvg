@@ -115,6 +115,9 @@ int jLine_attributes[] = {
 	0,
 	0,
 	0,
+	0,
+	0,
+	0,
 };
 struct backbone_subVar backboneVar_jLine_type = {
 	.name = "type",
@@ -186,16 +189,61 @@ struct backbone_subVar backboneVar_jLine_c1 = {
 	.saveFlag = 1,
 	.naked = 0,
 };
+struct backbone_subVar backboneVar_jLine_markerStart = {
+	.name = "markerStart",
+	.type = 0,
+	.typeIndex = 0,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct jLine, markerStart ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar backboneVar_jLine_markerMid = {
+	.name = "markerMid",
+	.type = 0,
+	.typeIndex = 0,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct jLine, markerMid ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar backboneVar_jLine_markerEnd = {
+	.name = "markerEnd",
+	.type = 0,
+	.typeIndex = 0,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct jLine, markerEnd ),
+	.saveFlag = 1,
+	.naked = 0,
+};
 struct backbone_subVar *jLine_varArr[] = {
 	&backboneVar_jLine_type,
 	&backboneVar_jLine_v0,
 	&backboneVar_jLine_v1,
 	&backboneVar_jLine_c0,
 	&backboneVar_jLine_c1,
+	&backboneVar_jLine_markerStart,
+	&backboneVar_jLine_markerMid,
+	&backboneVar_jLine_markerEnd,
 };
 struct backbone_structStruct backboneStru_jLine = {
 	.name = "jLine",
-	.varsLen = 5,
+	.varsLen = 8,
 	.vars = jLine_varArr,
 	.overloadRenderEdit = "",
 	.overloadEventEdit = "",
