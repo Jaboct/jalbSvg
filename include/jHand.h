@@ -9,17 +9,21 @@
 #include <jalb/jalbArrayList.h>
 #include <jalbApi/api_uiGen.h>
 
-#include "jGroup.h"
-#include "jPath.h"
-#include "svg.h"
-#include "path.h"
 
-#include "jEvent.h"
-#include "event_sb.h"
+/** Foward Declaring */
 
-#include "jRender.h"
+struct jvg;
+struct path;
+struct jNakedUnion;
 
-#include "complexEle_ext.h"
+struct jPath;
+struct jVert;
+struct jText;
+struct jRect;
+struct jCirc;
+
+struct jLine;
+
 
 
 /** Structs */
@@ -118,17 +122,6 @@ void iterateCharArr ( unsigned char *arr, int numChars );
 void decreaseCharArr ( unsigned char *arr, int numChars );
 
 
-/** hover cursor */
-
-void onHoverCheck ( int *XY );
-int onHoverType ( int *XY );
-int isOnVert ( struct jPath *path, int *XY );
-int isOnLine ( struct jVert *v0, struct jVert *v1, int *XY );
-int isOnText ( struct jText *text, int *XY );
-int isOnRect ( struct jRect *rect, int *XY );
-int isOnCirc ( struct jCirc *circ, int *XY );
-
-float pointLineDist ( float *p, float *v0, float *v1 );
 
 
 /** Dragging */
@@ -205,6 +198,8 @@ void uiGen_open_jNaked ( struct jNakedUnion *jNaked );
 float *toolBar_icon_color ( int i );
 
 
+/** Specific Loading Examples */
 
-
+void load_CAD_00 ( );
+void firstRender_todo ( );
 

@@ -1,6 +1,20 @@
 #include "jRender.h"
 
 
+/** Includes */
+
+#include "jGroup.h"
+#include "jPath.h"
+#include "jText.h"
+
+#include "path.h"	// for enums
+#include "mod_ext.h"	// for enums
+#include "render.h"
+
+#include "cursor.h"
+#include "hover.h"
+
+
 /** Variables */
 
 /// modCore
@@ -11,6 +25,7 @@ extern float colorWhite[];
 extern float colorOrange[];
 extern float colorBlue[];
 float colorGrayOpaque[4] = { 0.24, 0.24, 0.24, 0.6 };
+float colorLightGrayOpaque[4] = { 0.6, 0.6, 0.6, 0.6 };
 
 extern struct draw2dStruct *draw2dApi;
 
@@ -54,6 +69,14 @@ extern int thisSel;
 int controlPointWidth = 10;
 
 
+/// NEW cursor globals
+
+extern int hoverIndex_render;
+extern struct cursor_ele *hoverMem;
+struct cursor_ele *temp_hoverMem = NULL;	// TEMP, instead of passing through the params i just keep it global for now.
+extern int isHover;
+int render_payload = 0;
+
 /// debug
 
 extern int debugPrint_jvg_render;
@@ -69,6 +92,10 @@ void jNakedList_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, Arra
 		printf ( "thisSel: %d\n", thisSel );
 	}
 
+	if ( !hoverMem ) {
+		init_jvg_cursor ( );
+	}
+
 	int i;
 	int len;
 
@@ -81,6 +108,12 @@ void jNakedList_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, Arra
 
 	int parentSel = thisSel;
 
+	render_payload = 0;
+	temp_hoverMem = 0;
+	if ( isHover ) {
+		temp_hoverMem = hoverMem;
+	}
+
 	while ( i < len ) {
 		struct jNakedUnion *uni = arrayListGetPointer ( eles, i );
 
@@ -89,8 +122,26 @@ void jNakedList_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, Arra
 			printf ( "uni->type: %d\n", uni->type );
 		}
 
+		// old cursor check
 		thisSel = 0;
 		isThisSel;
+
+		// new cursor check
+		if ( temp_hoverMem ) {
+			int len = arrayListGetLength ( temp_hoverMem->address );
+			if ( hoverIndex_render < len ) {
+				int *hoverArr = arrayListDataPointer ( temp_hoverMem->address, hoverIndex_render );
+				if ( *hoverArr == i ) {
+					// this subEle is selected
+
+					if ( hoverIndex_render == len - 1 ) {
+						// send down the payload.
+printf ( "send down payload\n" );
+						render_payload = 1;
+					}
+				}
+			}
+		}
 
 		cursorDown;
 		jNaked_render ( screenDims, glBuffers, XYWHpass, uni,
@@ -238,7 +289,7 @@ void jPath_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jP
 		if ( vert_subMode == vSubM_move ) {
 			// draw red for scale.
 			float subXYWH[4];
-			int boxW = 10;
+			int boxW = controlPointWidth;
 			subXYWH[0] = XYWH[0] - boxW / 2;
 			subXYWH[1] = XYWH[1] - boxW / 2;
 			subXYWH[2] = boxW;
@@ -300,6 +351,18 @@ void jVerts_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, ArrayLis
 		thisSel = 0;
 		isThisSel;
 		isThisIt;
+
+		if ( render_payload ) {
+			// todo type check
+			struct cursor_path *cuPath = hoverMem->payload->path;
+			if ( cuPath->itself ) {
+				// ignore the verts
+			} else {
+				if ( cuPath->vertI == i ) {
+					thisSel = 1;
+				}
+			}
+		}
 
 		float XYWH[4];
 		point_to_loc ( vert->XY, XYWH, viewLoc, viewScale );
@@ -853,18 +916,26 @@ void complexEleRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struc
 	}
 }
 
+int jvg_debugPrint_grid = 0;
+
 void grid_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *gridWH,
 		float *viewLoc, float viewScale ) {
-	printf ( "grid_render ( )\n" );
-	sayFloatArray ( "gridWH", gridWH, 2 );
+	if ( jvg_debugPrint_grid ) {
+		printf ( "grid_render ( )\n" );
+		sayFloatArray ( "gridWH", gridWH, 2 );
+	}
+
+	// viewLoc is the world offset that the top left renderPos is from the origin, so negative means the camera has been moved up and to the left.
 
 	float topLeft[2] = {
 		viewLoc[0],
 		viewLoc[1],
 	};
-// void loc_to_point ( float *p0, float *pSet, float *viewLoc, float viewScale );
+
+	// void loc_to_point ( float *p0, float *pSet, float *viewLoc, float viewScale );
 
 
+	// px between each line
 	// if offset is 0, then there is an error, so break.
 	float offset[2] = {
 		gridWH[0] / viewScale,
@@ -879,6 +950,7 @@ void grid_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *gri
 	}
 
 	// to stop too many lines from being rendered when zoomed out.
+	// TODO, if i change it from 1 to 10 it glitches, i assume there is a glitch at 1 aswell i just cant see it.
 	while ( offset[0] < 1 ) {
 		offset[0] *= 10;
 	}
@@ -887,36 +959,30 @@ void grid_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *gri
 	}
 
 
+
 	// x rounding
-/*
-	int i = ((topLeft[0] - 1) / gridWH[0]);
-	if ( i > 0 ) {
-		i += 1;
-	}
-	float v = i * gridWH[0];
-*/
 	float vx = roundUp ( topLeft[0], gridWH[0] );
 	float dx = vx - topLeft[0];
 
 	// y rounding
-/*
-	i = ((topLeft[1] - 1) / gridWH[1]);
-	if ( i > 0 ) {
-		i += 1;
-	}
-	v = i * gridWH[1];
-*/
 	float vy = roundUp ( topLeft[1], gridWH[1] );
 	float dy = vy - topLeft[1];
 
-	sayFloatArray ( "viewLoc", viewLoc, 2 );
-	sayFloatArray ( "offset", offset, 2 );
+	if ( jvg_debugPrint_grid ) {
+		sayFloatArray ( "viewLoc", viewLoc, 2 );
+		sayFloatArray ( "offset", offset, 2 );
 
-	printf ( "vx: %f\n", vx );
-	printf ( "vy: %f\n", vy );
+		printf ( "vx: %f\n", vx );
+		printf ( "vy: %f\n", vy );
 
-	printf ( "dx: %f\n", dx );
-	printf ( "dy: %f\n", dy );
+		printf ( "dx: %f\n", dx );
+		printf ( "dy: %f\n", dy );
+	}
+
+	// to remember which line is the origin and render it lighter
+	int worldPos[2] = { vx, vy };
+
+	// dx, dy is the worldPos to the first line.
 
 	float XYWH[4] = {
 		XYWHpass[0] + dx / viewScale,
@@ -925,12 +991,20 @@ void grid_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *gri
 		XYWHpass[3],
 	};
 
-	sayFloatArray ( "XYWH verts", XYWH, 4 );
+	if ( jvg_debugPrint_grid ) {
+		sayFloatArray ( "XYWH verts", XYWH, 4 );
+	}
 
 	// draws verticle lines
 	while ( 1 ) {
-		draw2dApi->drawRectF ( XYWH, colorGrayOpaque, screenDims, glBuffers );
+		if ( worldPos[0] == 0 ) {
+			draw2dApi->drawRectF ( XYWH, colorLightGrayOpaque, screenDims, glBuffers );
+		} else {
+			draw2dApi->drawRectF ( XYWH, colorGrayOpaque, screenDims, glBuffers );
+		}
 		XYWH[0] += offset[0];
+
+		worldPos[0] += gridWH[0];
 
 		if ( XYWH[0] > screenDims[0] ) {
 			break;
@@ -942,12 +1016,20 @@ void grid_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *gri
 	XYWH[2] = XYWHpass[2];
 	XYWH[3] = 1.0;
 
-	sayFloatArray ( "XYWH hors", XYWH, 4 );
+	if ( jvg_debugPrint_grid ) {
+		sayFloatArray ( "XYWH hors", XYWH, 4 );
+	}
 
 	// draws horizontal lines
 	while ( 1 ) {
-		draw2dApi->drawRectF ( XYWH, colorGrayOpaque, screenDims, glBuffers );
+		if ( worldPos[1] == 0 ) {
+			draw2dApi->drawRectF ( XYWH, colorLightGrayOpaque, screenDims, glBuffers );
+		} else {
+			draw2dApi->drawRectF ( XYWH, colorGrayOpaque, screenDims, glBuffers );
+		}
 		XYWH[1] += offset[1];
+
+		worldPos[1] += gridWH[0];
 
 		if ( XYWH[1] > screenDims[1] ) {
 			break;
@@ -958,25 +1040,32 @@ void grid_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *gri
 		dx / viewScale,
 		dy / viewScale,
 	};
-	sayFloatArray ( "firstPoint", firstPoint, 2 );
 
-	float worldPoint[2] = { gridWH[0], gridWH[1] };
-	loc_to_point ( worldPoint, worldPoint, viewLoc, viewScale );
-	sayFloatArray ( "worldPoint", worldPoint, 2 );
+	if ( jvg_debugPrint_grid ) {
+		sayFloatArray ( "firstPoint", firstPoint, 2 );
 
-	printf ( "grid_render ( ) OVER\n" );
+		float worldPoint[2] = { gridWH[0], gridWH[1] };
+		loc_to_point ( worldPoint, worldPoint, viewLoc, viewScale );
+		sayFloatArray ( "worldPoint", worldPoint, 2 );
+
+		printf ( "grid_render ( ) OVER\n" );
+	}
 }
 
 // cursorScreenXY is the cursor position relative to the JLUI element, not to the window, or screen.
 void grid_render_cursor ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *gridWH,
 		float *viewLoc, float viewScale, int *cursorScreenXY ) {
+	if ( jvg_debugPrint_grid ) {
+		printf ( "grid_render_cursor ( )\n" );
+	}
+
 	// take cursor loc, convert it to world loc, round that, convert to screen loc.
 	// should it be possible to shap to positions off of the screen?
 
 	// if offset is 0, then there is an error, so break.
 	float offset[2] = {
-		gridWH[0] / viewScale,
-		gridWH[1] / viewScale,
+		gridWH[0],
+		gridWH[1],
 	};
 
 	if ( offset[0] == 0 ) {
@@ -994,15 +1083,22 @@ void grid_render_cursor ( int *screenDims, GLuint *glBuffers, int *XYWHpass, flo
 		offset[1] *= 10;
 	}
 
-
 	float worldCursor[2];
 	screen_to_world_i ( cursorScreenXY, worldCursor, viewLoc, viewScale );
+
+	if ( jvg_debugPrint_grid ) {
+		printf ( "viewScale: %f\n", viewScale );
+		sayFloatArray ( "worldCursor", worldCursor, 2 );
+		sayFloatArray ( "offset", offset, 2 );
+	}
 
 	float roundX = roundClose ( worldCursor[0], offset[0] );
 	float roundY = roundClose ( worldCursor[1], offset[1] );
 
-	sayIntArray ( "cursorScreenXY", cursorScreenXY, 2 );
-	printf ( "roundXY (%f, %f)\n", roundX, roundY );
+	if ( jvg_debugPrint_grid ) {
+		sayIntArray ( "cursorScreenXY", cursorScreenXY, 2 );
+		printf ( "roundXY (%f, %f)\n", roundX, roundY );
+	}
 
 	float roundedWorld[2] = {
 		roundX,
@@ -1012,10 +1108,22 @@ void grid_render_cursor ( int *screenDims, GLuint *glBuffers, int *XYWHpass, flo
 	float newScreen[2];
 	world_to_screen ( roundedWorld, newScreen, viewLoc, viewScale );
 
-	sayFloatArray ( "newScreen", newScreen, 2 );
+	if ( jvg_debugPrint_grid ) {
+		sayFloatArray ( "newScreen", newScreen, 2 );
+	}
+
+	newScreen[0] += XYWHpass[0];
+	newScreen[1] += XYWHpass[1];
+
+	// draw a circle at this pos.
+	draw2dApi->drawCircle_f ( newScreen, 10, colorWhite, screenDims, glBuffers );
+
+	if ( jvg_debugPrint_grid ) {
+		printf ( "grid_render_cursor ( ) OVER\n" );
+	}
 }
 
-
+// takes in 2 floats, and rounds up val to the nearest roundTo
 // always rounds up
 float roundUp ( float val, float roundTo ) {
 	// do (val * 0.999)?
@@ -1030,10 +1138,16 @@ float roundUp ( float val, float roundTo ) {
 
 // round up or down, depending on what closer.
 float roundClose ( float val, float roundTo ) {
-	int i = (val + 0.5) / roundTo;
-	if ( i > 0 ) {
-		i += 1;
+//	int i = (val + 0.5) / roundTo;
+//	printf ( "f: %f\n", val / roundTo );
+
+	float f = (val / roundTo) + 0.5;
+	int i = (val / roundTo) + 0.5;
+
+	if ( f < 0 ) {
+		i -= 1;
 	}
+
 	float v = i * roundTo;
 //	float dx = v - val;
 	return v;
@@ -1091,5 +1205,35 @@ void path_lrtb ( struct jPath *path, float *lrtb ) {
 }
 
 
+/** unitTests */
 
+void roundClose_unitTests ( ) {
+	float val = 1.0;
+	float roundTo = 100.0;
+
+	float round = roundClose ( val, roundTo );
+	printf ( "%f (%f -> %f)\n", roundTo, val, round );
+
+	val = 49.0;
+	round = roundClose ( val, roundTo );
+	printf ( "%f (%f -> %f)\n", roundTo, val, round );
+
+	val = 51.0;
+	round = roundClose ( val, roundTo );
+	printf ( "%f (%f -> %f)\n", roundTo, val, round );
+
+	val = 99.0;
+	round = roundClose ( val, roundTo );
+	printf ( "%f (%f -> %f)\n", roundTo, val, round );
+
+	val = 101.0;
+	round = roundClose ( val, roundTo );
+	printf ( "%f (%f -> %f)\n", roundTo, val, round );
+
+	val = 110.0;
+	round = roundClose ( val, roundTo );
+	printf ( "%f (%f -> %f)\n", roundTo, val, round );
+
+	exit ( 12 );
+}
 

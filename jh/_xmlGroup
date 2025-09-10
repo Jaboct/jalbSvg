@@ -34,6 +34,11 @@ jh/structStruct/complexScript.xml
 jh/structStruct/cScriptEle.xml
 jh/structStruct/complexModData.xml
 jh/structStruct/complexRef.xml
+jh/structStruct/CAD_history.xml
+jh/structStruct/cursor_ele.xml
+jh/structStruct/cursor_union.xml
+jh/structStruct/cursor_path.xml
+jh/structStruct/cursor_group.xml
 
 # fileStructs
 jh/fileStruct/mod.xml
@@ -49,6 +54,8 @@ jh/fileStruct/jShapes.xml
 jh/fileStruct/complexEle.xml
 jh/fileStruct/complexMod.xml
 jh/fileStruct/complexScript.xml
+jh/fileStruct/CAD_history.xml
+jh/fileStruct/cursor.xml
 
 # functions
 jh/function/funct.xml

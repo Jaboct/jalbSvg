@@ -103,10 +103,12 @@ float gridWH[2];<br>
 <div class="myParagraph" id="baseFunctions">
 <b>Base Functions:</b><br>
 <u>Render:</u><br>
-<div class="codeBlock">void jalbJvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void *data,
+<div class="codeBlock">(jHand.h)
+void jalbJvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void *data,
 		float *viewLoc, float viewScale );
 
 <u>Individual Elements:</u>
+(jRender.h)
 void jNaked_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jNakedUnion *uni,
 		float *viewLoc, float viewScale ); (jRender.c)
 void jPath_render ( );
@@ -115,7 +117,13 @@ void jCircRender ( );
 void jComplexRender ( );
 </div>
 <u>Event:</u><br>
+<div class="codeBlock">(jHand.h)
+int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
+		float *viewLoc, float viewScale );
+</div>
 <br>
+<br>
+
 <u>Adding Eles:</u><br>
 set_cursorInputMode (hand.c)<br>
 Gets ran throught hotkey.<br>
@@ -306,6 +314,38 @@ For example, a textBox needs 1 extra int, to signify if i am moving it, editing 
 set_cursor_iconI<br>
 onHoverCheck<br>
 <br>
+
+<br>
+<br>
+
+<br>
+<br>
+
+(2025-09-10 10:10:02)<br>
+<div class="codeBlock">Vars:
+extern ArrayList *cursorList;
+extern int cursor_depth;
+
+extern int cursorInputMode;
+
+// text cursor info.
+int cStart[3];
+int cEnd[3];
+
+
+extern int selected;
+extern int mouseHeld;
+int heldType = 0;
+float heldStart[2];
+float cursorWorldLoc[2] = { 0, 0 };
+extern int thisSel; // used during rendering to figure if the ele, or a subEle, being rendered is currently selected.
+
+// this is relative to the elements top left position, not to the entire window.
+int cursorScreenXY[2];
+</div>
+
+
+<br>
 </div>
 
 <br>
@@ -335,6 +375,21 @@ load_jvg_dirList<br>
 relies on jalbDir: hand_layDirTab_uiGen_dir<br>
 which relies on the uiGen file:<br>
 /home/jadoo/workspace/jHigh/jalbDir/res/hand_ui/layDirTab.xml<br>
+<br>
+<br>
+
+<br>
+<br>
+
+<div class="codeBlock">jalbJvg_load_global
+jalbJvg_load
+
+jHand_load, idk what this is
+
+then a bunch of specific element loading function, for testing i believe.
+</div>
+
+<br>
 </div>
 
 <br>
@@ -372,7 +427,15 @@ Rn there are 4 toolbar dropdowns:<br>
 - jvg tools<br>
 - jvg complex<br>
 - CAD<br>
+- grid<br>
+- user interface<br>
+<br>
 
+jvg_toggle_CAD<br>
+jvg_toggle_grid<br>
+UI<br>
+  uiGen_open_eleList<br>
+  open_left_toolbar<br>
 <br>
 <br>
 
@@ -424,6 +487,15 @@ complexWrangler
 eleSpawner (left toolbar)
 </div>
 <br>
+<br>
+
+
+<div class="codeBlock"><u>jPath.xml</u>
+open_jLine_edit ( )
+	char *fileDir = "res/uiGen_hand/jLine.xml";
+</div>
+
+<br>
 </div>
 
 <br>
@@ -456,6 +528,13 @@ ctrl-b: open left toolbar
 
 <br>
 <br>
+
+<div class="myParagraph" id="grid">
+<b>Grid</b><br>
+grid_render ( )<br>
+
+<br>
+</div>
 
 <br>
 <br>

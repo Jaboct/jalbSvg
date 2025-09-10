@@ -1,18 +1,30 @@
 #pragma once
 
-
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <SDL2/SDL.h>
+#include <GL/glew.h>
+
 #include <jalb/jalbArrayList.h>
 
-#include "jGroup.h"
-#include "jPath.h"
-#include "jText.h"
 
-#include "path.h"	// for enums
-#include "mod_ext.h"	// for enums
-#include "render.h"
+/** Foward Declaring */
+
+struct jvg;
+struct path;
+struct jNakedUnion;
+
+struct jPath;
+struct jVert;
+struct jText;
+struct jRect;
+struct jCirc;
+
+struct jLine;
+
+struct complexEle;
+
 
 /** Structs */
 
@@ -71,8 +83,13 @@ float roundUp ( float val, float roundTo );
 // round up or down, depending on what closer.
 float roundClose ( float val, float roundTo );
 
+
 /** Util */
 
+// get path { Left, Right, Top, Bottom }
 void path_lrtb ( struct jPath *path, float *lrtb );
+
+
+
 
 

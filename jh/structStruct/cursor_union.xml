@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<structStruct>
+  <name>cursor_union</name>
+  <vars>
+    <subVar>
+      <name></name>
+      <type>0</type>
+      <typeIndex>6</typeIndex>
+      <initType>0</initType>
+      <initTypeData>
+        <>-1</>
+      </initTypeData>
+      <closeType>0</closeType>
+      <length>0</length>
+      <literal>1</literal>
+      <subComplex>
+        <typeDec>-1</typeDec>
+        <typeName></typeName>
+        <list>
+
+    <subVar>
+      <name>path</name>
+      <type>1</type>
+      <typeIndex>36</typeIndex>
+      <initType>0</initType>
+      <initTypeData>
+        <>-1</>
+      </initTypeData>
+      <closeType>0</closeType>
+      <length>0</length>
+      <literal>1</literal>
+      <>-1</>
+      <external>0</external>
+      <attribute>0</attribute>
+      <saveFlag>1</saveFlag>
+      <naked>0</naked>
+      <comment></comment>
+      <modNick></modNick>
+      <typeName></typeName>
+    </subVar>
+
+        </list>
+        <prefix>cu_</prefix>
+      </subComplex>
+      <external>0</external>
+      <attribute>0</attribute>
+      <saveFlag>1</saveFlag>
+      <naked>0</naked>
+      <comment></comment>
+      <modNick></modNick>
+      <typeName></typeName>
+    </subVar>
+  </vars>
+  <overloadRenderEdit></overloadRenderEdit>
+  <overloadEventEdit></overloadEventEdit>
+  <structDeclaration>0</structDeclaration>
+  <hide_edit>1</hide_edit>
+  <isTypedef>0</isTypedef>
+  <typedefType>0</typedefType>
+  <typedefTypeIndex>0</typedefTypeIndex>
+  <postInit>0</postInit>
+</structStruct>

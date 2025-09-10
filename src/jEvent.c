@@ -44,6 +44,17 @@ char *uiGen_jTextEdit = "/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/jTex
 
 /** Functions */
 
+// much like iterateToSelected ( ) (event.h)
+
+// iterate to the object that cursor is selecting.
+/* return enum cursorType
+ * object:
+ *  the object itself, and its parent.
+ * vert:
+ *  the object and, vert index, the cursorMem so i can update it to the newly created ele.
+ * control:
+ *  the object, vert index, and control index.
+ */
 int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct jNakedUnion **ele,
 		int *vertI, int *controlI, struct cursorMem **lastCursor ) {
 	if ( debugPrint_jIterate ) {

@@ -84,6 +84,7 @@ $(LDIR)jalbSvg.so: $(jalbSvgOs)
 jalbJvgFiles = jMod \
  jPath jText jShapes jGroup \
  jHand jEvent jRender \
+ cursor hover \
  complexMod complexEle complexEle_ext complexScript complexScript_ext \
  jProof jHand_proof \
  api \
