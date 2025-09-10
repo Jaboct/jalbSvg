@@ -3,28 +3,17 @@
   <name>cursor_ele</name>
   <vars>
     <subVar>
-      <name>address</name>
+      <name>index</name>
       <type>0</type>
-      <typeIndex>3</typeIndex>
+      <typeIndex>0</typeIndex>
       <initType>0</initType>
       <initTypeData>
         <>-1</>
       </initTypeData>
       <closeType>0</closeType>
-      <length>0</length>
+      <length>-1</length>
       <literal>1</literal>
-      <subAl>
-        <curEles>10</curEles>
-        <eleSize>0</eleSize>
-        <overflow>10</overflow>
-        <literal>1</literal>
-        <type>0</type>
-        <typeIndex>0</typeIndex>
-        <length>-1</length>
-        <naked>0</naked>
-        <modNick></modNick>
-        <typeName></typeName>
-      </subAl>
+      <>-1</>
       <external>0</external>
       <attribute>0</attribute>
       <saveFlag>1</saveFlag>
@@ -49,7 +38,7 @@
       <attribute>0</attribute>
       <saveFlag>1</saveFlag>
       <naked>0</naked>
-      <comment></comment>
+      <comment>this should just be the union?</comment>
       <modNick></modNick>
       <typeName></typeName>
     </subVar>

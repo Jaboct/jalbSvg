@@ -14,6 +14,8 @@
 #include "cursor.h"
 #include "hover.h"
 
+#include "api/structStruct.h"
+
 
 /** Variables */
 
@@ -73,9 +75,15 @@ int controlPointWidth = 10;
 
 extern int hoverIndex_render;
 extern struct cursor_ele *hoverMem;
-struct cursor_ele *temp_hoverMem = NULL;	// TEMP, instead of passing through the params i just keep it global for now.
+// TEMP, instead of passing through the params i just keep it global for now.
+// also used in event, it is filled on the way down.
+struct cursor_ele *temp_hoverMem = NULL;
+struct cursor_ele *temp_actualMem = NULL;	// actually selected cursor eles
 extern int isHover;
-int render_payload = 0;
+int render_hoverPayload = 0;
+int render_actualPayload = 0;
+extern ArrayList *cursorList_new;	// (struct cursor_ele*)
+int render_cursorDepth = 0;
 
 /// debug
 
@@ -92,9 +100,8 @@ void jNakedList_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, Arra
 		printf ( "thisSel: %d\n", thisSel );
 	}
 
-	if ( !hoverMem ) {
-		init_jvg_cursor ( );
-	}
+//	printf ( "jNakedList_render ( )\n" );
+
 
 	int i;
 	int len;
@@ -108,11 +115,20 @@ void jNakedList_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, Arra
 
 	int parentSel = thisSel;
 
-	render_payload = 0;
+	render_hoverPayload = 0;
 	temp_hoverMem = 0;
 	if ( isHover ) {
 		temp_hoverMem = hoverMem;
 	}
+
+	render_actualPayload = 0;
+	struct cursor_ele *mem_cursor = temp_actualMem;
+
+/*
+	printf ( "mem_cursor: %p\n", mem_cursor );
+	printf ( "mem_cursor.len: %d\n", arrayListGetLength ( mem_cursor->payload->group->eles ) );
+	say_cursor_ele ( mem_cursor );
+*/
 
 	while ( i < len ) {
 		struct jNakedUnion *uni = arrayListGetPointer ( eles, i );
@@ -126,8 +142,17 @@ void jNakedList_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, Arra
 		thisSel = 0;
 		isThisSel;
 
-		// new cursor check
+		// new HOVER cursor check
 		if ( temp_hoverMem ) {
+			if ( temp_hoverMem->index == i ) {
+				// dont necessarily render payload...
+				// keep checking as you go down
+				// temp_hoverMem = tempHoverMem->payload;
+				render_hoverPayload = 1;
+			} else {
+				// temp_hoverMem = NULL;
+			}
+/*
 			int len = arrayListGetLength ( temp_hoverMem->address );
 			if ( hoverIndex_render < len ) {
 				int *hoverArr = arrayListDataPointer ( temp_hoverMem->address, hoverIndex_render );
@@ -136,11 +161,39 @@ void jNakedList_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, Arra
 
 					if ( hoverIndex_render == len - 1 ) {
 						// send down the payload.
-printf ( "send down payload\n" );
+//						printf ( "send down payload\n" );
 						render_payload = 1;
 					}
 				}
 			}
+*/
+		}
+
+		// new ACTUAL cursor check
+		// mem_cursor->index has already been matched, and we know mem_cursor is a group.
+		ArrayList *eleList_new = mem_cursor->payload->group->eles;
+		if ( mem_cursor ) {
+			// does it contain an ele relevent to this index?
+//			int subIndex = al_getIndex_int ( eleList_new, i );
+			int subIndex = eleList_getIndex ( eleList_new, i );
+//			printf ( "subIndex: %d\n", subIndex );
+			if ( subIndex != -1 ) {
+				// it does.
+				temp_actualMem = arrayListGetPointer ( eleList_new, subIndex );
+				// now for all subEles deal with temp_actualMem.
+				// but once it gets back to the next ele of this list, it will revert to mem_cursor.
+			} else {
+				// no subEles match.
+				temp_actualMem = NULL;
+			}
+
+/*
+			if ( mem_cursor->index == i ) {
+//				render_actualPayload = 1;
+			} else {
+				temp_actualMem = NULL;
+			}
+*/
 		}
 
 		cursorDown;
@@ -161,6 +214,15 @@ void jNaked_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct j
 	}
 
 	if ( uni->type == jNaked_G ) {
+/*
+		printf ( "TODO group\n" );
+		if ( temp_actualMem->payload->type == cu_Group ) {
+			temp_actualMem = temp_actualMem->payload->group->
+			// this gets handled elsewhere?
+		} else {
+			printf ( "ERROR\n" );
+		}
+*/
 	} else if ( uni->type == jNaked_Path ) {
 		struct jPath *path = uni->path;
 		jPath_render ( screenDims, glBuffers, XYWHpass, path,
@@ -194,6 +256,11 @@ void jPath_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jP
 		printf ( "jPath_render ( )\n" );
 		printf ( "thisSel: %d\n", thisSel );
 	}
+
+/*
+	printf ( "jPath_render ( )\n" );
+	printf ( "temp_actualMem: %p\n", temp_actualMem );
+*/
 
 	int i;
 	int len;
@@ -352,17 +419,47 @@ void jVerts_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, ArrayLis
 		isThisSel;
 		isThisIt;
 
-		if ( render_payload ) {
+		if ( render_hoverPayload ) {
+			struct cursor_ele *ele = temp_hoverMem;
 			// todo type check
-			struct cursor_path *cuPath = hoverMem->payload->path;
-			if ( cuPath->itself ) {
-				// ignore the verts
-			} else {
-				if ( cuPath->vertI == i ) {
-					thisSel = 1;
+			if ( ele->payload->type == cu_Path ) {
+				struct cursor_path *cuPath = ele->payload->path;
+				if ( cuPath->itself ) {
+					// ignore the verts
+				} else {
+					int has = al_hasInt ( cuPath->verts, i );
+					if ( has ) {
+						thisSel = 1;
+					}
 				}
+			} else {
+				printf ( "HOVER ELE MISMATCH\n" );
 			}
 		}
+		if ( temp_actualMem ) {
+			struct cursor_ele *ele = temp_actualMem;
+			// todo type check
+			if ( ele->payload->type == cu_Path ) {
+				struct cursor_path *cuPath = ele->payload->path;
+				if ( cuPath->itself ) {
+					// ignore the verts
+				} else {
+					int has = al_hasInt ( cuPath->verts, i );
+					if ( has ) {
+						thisSel = 1;
+					}
+				}
+			} else {
+				printf ( "ACTUAL ELE MISMATCH\n" );
+			}
+		}
+
+/*
+		if ( render_actualPayload ) {
+			struct cursor_ele *ele = temp_actualMem;
+			if ( ele->payload->type == cu_Path ) {
+		}
+*/
 
 		float XYWH[4];
 		point_to_loc ( vert->XY, XYWH, viewLoc, viewScale );
@@ -386,6 +483,7 @@ void jVerts_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, ArrayLis
 
 	thisSel = parentSel;
 }
+
 
 // should this be in the same funct as jVerts_render?
 void controlPoints_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jPath *path,

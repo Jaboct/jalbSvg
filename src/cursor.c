@@ -53,7 +53,7 @@ struct cursor_ele *cursor_eleInit ( ) {
 	return var;
 }
 void cursor_eleFill ( struct cursor_ele *var ) {
-	var->address = initArrayList ( 10, sizeof ( int ), 10 );
+	var->index = 0;
 	var->payload = cursor_unionInit ( );
 }
 
@@ -63,9 +63,6 @@ void *cursor_eleInitMask ( ) {
 
 }
 void cursor_eleClose ( struct cursor_ele *var ) {
-	if ( var->address ) {
-		freeArrayList ( var->address );
-	}
 	if ( var->payload ) {
 		cursor_unionClose ( var->payload );
 	}
@@ -81,7 +78,7 @@ void cursor_eleBodyToVal ( void *varPass, int nameI, char *body ) {
 	struct cursor_ele *var = varPass;
 
 	if ( nameI == 0 ) {
-		consumeStdAl ( body, 0, 1, var->address );
+		var->index = atoi ( body );
 	} else if ( nameI == 1 ) {
 		// wont get called?
 	}
@@ -90,7 +87,7 @@ void cursor_eleBodyToVal ( void *varPass, int nameI, char *body ) {
 int cursor_eleNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
 	struct cursor_ele *var = data;
-	if ( strcmp ( body, "address" ) == 0 ) {
+	if ( strcmp ( body, "index" ) == 0 ) {
 		return 0;
 	} else if ( strcmp ( body, "payload" ) == 0 ) {
 		*strPtr = "cursor_union";
@@ -130,9 +127,12 @@ void cursor_unionTypeChange0 ( struct cursor_union *var, int type ) {
 		return;
 	}
 	if ( var->type == 0 ) {
+	} else if ( var->type == 1 ) {
 	}
 	if ( type == 0 ) {
 		var->path = cursor_pathInit ( );
+	} else if ( type == 1 ) {
+		var->group = cursor_groupInit ( );
 	}
 	var->type = type;
 }
@@ -145,6 +145,7 @@ void *cursor_unionInitMask ( ) {
 }
 void cursor_unionClose ( struct cursor_union *var ) {
 	if ( var->type == 0 ) {
+	} else if ( var->type == 1 ) {
 	}
 	free ( var );
 
@@ -159,6 +160,8 @@ void cursor_unionBodyToVal ( void *varPass, int nameI, char *body ) {
 	if ( nameI == 0 ) {
 		if ( var->type == 0 ) {
 			// wont get called?
+		} else if ( var->type == 1 ) {
+			// wont get called?
 		}
 	}
 }
@@ -171,6 +174,12 @@ int cursor_unionNameToIndex ( char *body, void *data, void *ret, char **strPtr, 
 		*strPtr = "cursor_path";
 		void **retPtr = ret;
 		*retPtr = &var->path;
+		return jxnPtr;
+	} else if ( strcmp ( body, "group" ) == 0 ) {
+		cursor_unionTypeChange0 ( var, 1 );
+		*strPtr = "cursor_group";
+		void **retPtr = ret;
+		*retPtr = &var->group;
 		return jxnPtr;
 	}
 	return -1;
@@ -199,7 +208,7 @@ struct cursor_path *cursor_pathInit ( ) {
 }
 void cursor_pathFill ( struct cursor_path *var ) {
 	var->itself = 0;
-	var->vertI = 0;
+	var->verts = initArrayList ( 10, sizeof ( int ), 10 );
 }
 
 void *cursor_pathInitMask ( ) {
@@ -208,6 +217,9 @@ void *cursor_pathInitMask ( ) {
 
 }
 void cursor_pathClose ( struct cursor_path *var ) {
+	if ( var->verts ) {
+		freeArrayList ( var->verts );
+	}
 	free ( var );
 
 }
@@ -222,15 +234,16 @@ void cursor_pathBodyToVal ( void *varPass, int nameI, char *body ) {
 	if ( nameI == 0 ) {
 		var->itself = atoi ( body );
 	} else if ( nameI == 1 ) {
-		var->vertI = atoi ( body );
+		consumeStdAl ( body, 0, 1, var->verts );
 	}
 }
 
 int cursor_pathNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
+	struct cursor_path *var = data;
 	if ( strcmp ( body, "itself" ) == 0 ) {
 		return 0;
-	} else if ( strcmp ( body, "vertI" ) == 0 ) {
+	} else if ( strcmp ( body, "verts" ) == 0 ) {
 		return 1;
 	}
 	return -1;
@@ -257,6 +270,8 @@ struct cursor_group *cursor_groupInit ( ) {
 	return var;
 }
 void cursor_groupFill ( struct cursor_group *var ) {
+	var->this = 0;
+	var->eles = initArrayList ( 10, sizeof ( struct cursor_ele* ), 10 );
 }
 
 void *cursor_groupInitMask ( ) {
@@ -265,18 +280,36 @@ void *cursor_groupInitMask ( ) {
 
 }
 void cursor_groupClose ( struct cursor_group *var ) {
+	if ( var->eles ) {
+		freeArrayListPointerFunction ( var->eles, (void (*)(void*))cursor_eleClose );
+	}
 	free ( var );
 
 }
 int cursor_group_attrib_arr[] = {
+	0,
+	0,
 };
 void cursor_groupBodyToVal ( void *varPass, int nameI, char *body ) {
 
+	struct cursor_group *var = varPass;
 
+	if ( nameI == 0 ) {
+		var->this = atoi ( body );
+	} else if ( nameI == 1 ) {
+	}
 }
 
 int cursor_groupNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
+	struct cursor_group *var = data;
+	if ( strcmp ( body, "this" ) == 0 ) {
+		return 0;
+	} else if ( strcmp ( body, "eles" ) == 0 ) {
+		void **ptrPtr = (void**)ret;
+		*ptrPtr = var->eles;
+		return jxnAlPtr;
+	}
 	return -1;
 }
 

@@ -122,6 +122,7 @@ jalbJvg	s	jHand_save
 #jalbJvg	l	jHand_load
 #jalbJvg	l	jalbJvg_load_global	"/home/jadeb/workspace/jHigh/jalbSvg/res/jvg/test/embedTest_00.xml"
 jalbJvg	l	jalbJvg_load_global	"/home/jadeb/workspace/jHigh/jalbSvg/res/jvgTest/test_02.xml"
+jalbJvg	c	say_cursorList_new
 
 
 // complexEle development
@@ -317,6 +318,11 @@ Run:
 #jalbJvg	set_debugPrint_jvg_event	1
 #jalbJvg	set_debugPrint_jvg_render	1
 #jalbJvg	set_debugPrint_jalbXml_macro	1
+
+
+#Run:
+jalbJvg	set_debugPrint_jvg_event	1
+jalbJvg	set_debugPrint_jvg_render	1
 
 
 Getter:

@@ -1,6 +1,15 @@
 #include "jEvent.h"
 
 
+/** Includes */
+
+#include "hand.h"
+#include "jGroup.h"
+
+#include "cursor.h"
+#include "hover.h"
+
+
 /** Variables */
 
 extern char altKeys[];
@@ -11,7 +20,13 @@ extern int numFonts;
 
 extern ArrayList *cursorList;
 extern int cursor_depth;
-
+// new cursor data
+int temp_clickIndex = 0;
+struct cursor_ele *temp_clickMem = NULL;
+struct cursor_ele *temp_clickMem_parent = NULL;
+extern ArrayList *cursorList_new;	// (struct cursor_ele*)
+extern struct cursor_ele *glob_cursor_ele;	// contains cursorList_new
+extern struct cursor_ele *temp_actualMem;
 
 extern int renderMode;
 
@@ -22,7 +37,7 @@ extern int controlPointR;
 extern int selected;
 
 int debugPrint_jvg_event = 0;
-int debugPrint_jIterate = 1;
+int debugPrint_jIterate = 0;
 
 extern int cStart[];
 extern int cEnd[];
@@ -40,6 +55,128 @@ int jText_box_width = 10;
 // uiGen
 extern struct uiGen_api *uiGenApi;
 char *uiGen_jTextEdit = "/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/jText.xml";
+
+
+
+/// TODO move
+// shift is held down, so if this partially exists, add the new info.
+// if it doesnt exist at all, add it.
+// if it full exists, then untoggle it.
+// return 1 if it was found and handled.
+// return 0 if none of it was found and needs to be added wholesale
+// return 2 if it was found and unselected, and its payload is now empty, so check as u go up to see if this needs to be deleted.
+int toggle_cursorEle ( ArrayList *cursorList, struct cursor_ele *temp ) {
+	printf ( "toggle_cursorEle  ( )\n" );
+
+	printf ( "temp->index: %d\n", temp->index );
+	printf ( "temp->payload->type: %d\n", temp->payload->type );
+
+	int i = 0;
+	int len = arrayListGetLength ( cursorList_new );
+	printf ( "cursorList_new.len: %d\n", len );
+
+	while ( i < len ) {
+		struct cursor_ele *ele = arrayListGetPointer ( cursorList_new, i );
+
+		printf ( "ele->index: %d\n", ele->index );
+
+		if ( ele->index == temp->index ) {
+			int ret = toggle_cursorEle_child ( ele, temp );
+			if ( ret == 2 ) {
+				// todo free
+				arrayListRemove ( cursorList, i );
+			}
+			return ret;
+		}
+	}
+	return 0;
+}
+
+// split these into 2 parts, cuz the parent needs to see if the ele needs to be deleted...
+// actually that doesnt make a ton of sense.
+
+int toggle_cursorEle_child ( struct cursor_ele *ele, struct cursor_ele *temp ) {
+	printf ( "toggle_cursorEle_child ( )\n" );
+
+/*
+	printf ( "toggle_cursorEle ( )\n" );
+
+	printf ( "temp->index: %d\n", temp->index );
+	printf ( "temp->payload->type: %d\n", temp->payload->type );
+
+	int i = 0;
+	int len = arrayListGetLength ( cursorList_new );
+	printf ( "cursorList_new.len: %d\n", len );
+
+	while ( i < len ) {
+		struct cursor_ele *ele = arrayListGetPointer ( cursorList_new, i );
+
+		printf ( "ele->index: %d\n", ele->index );
+
+		if ( ele->index == temp->index ) {
+			// partially exists
+*/
+
+			printf ( "partial match\n" );
+			printf ( "ele->payload->type: %d\n", ele->payload->type );
+
+			if ( ele->payload->type == cu_Group ) {
+				// TODO
+				printf ( "TODO group recur\n" );
+
+			} else if ( ele->payload->type == cu_Path ) {
+				// see if the index is already there.
+
+				struct cursor_path *elePath = ele->payload->path;
+				struct cursor_path *tempPath = temp->payload->path;	// todo type check
+
+				if ( elePath->itself ) {
+// todo
+				}
+				// this ought to return the index.
+				// al_getIndex_int
+
+				printf ( "tempPath->verts.len: %d\n", arrayListGetLength ( tempPath->verts ) );
+				printf ( "elePath->verts.len: %d\n", arrayListGetLength ( elePath->verts ) );
+
+				int *tempIndex = arrayListDataPointer ( tempPath->verts, 0 ); // rn it only has 1 ele, but eventually allow me to select multiple at once?
+printf ( "tempIndex: %p\n", tempIndex );
+printf ( "*tempIndex: %d\n", *tempIndex );
+				int has = al_hasInt ( elePath->verts, *tempIndex );
+printf ( "has: %d\n", has );
+				if ( has ) {
+					printf ( "REMOVE: %d\n", *tempIndex );
+					int index = al_getIndex_int ( elePath->verts, *tempIndex );
+					arrayListRemove ( elePath->verts, index );
+
+					if ( arrayListGetLength ( elePath->verts ) == 0 ) {
+						// no eles are selected, so delete this.
+						return 2;
+					}
+				} else {
+					int *next = arrayListGetNext ( elePath->verts );
+					*next = *tempIndex;
+				}
+			}
+
+			printf ( "toggle_cursorEle  ( ) OVER b\n" );
+			return 1;
+
+/*
+		}
+
+		i += 1;
+	}
+
+	printf ( "toggle_cursorEle  ( ) OVER a\n" );
+*/
+	return 0;
+}
+
+void remove_pathEle ( ) {
+	// todo
+	// this might lead to the deletion of this entire cursorEle.
+}
 
 
 /** Functions */
@@ -185,9 +322,9 @@ int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct
 
 int jNakedList_mEvent_start ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *eles,
 		float *viewLoc, float viewScale ) {
-	if ( debugPrint_jvg_event ) {
+//	if ( debugPrint_jvg_event ) {
 		printf ( "jNakedList_mEvent_start ( )\n" );
-	}
+//	}
 
 	if ( renderMode != renderM_editAll &&
 	     renderMode != renderM_edit ) {
@@ -199,8 +336,22 @@ int jNakedList_mEvent_start ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayL
 		return 0;
 	}
 
-	if ( altKeys[akShift] ||
-	     altKeys[akCtrl] ) {
+	if ( altKeys[akShift] ) {
+		// now allow the user to select multple verts.
+
+		// might be selecting a new ele, so init a new hoverMem.
+//		temp_clickMem = cursor_eleInit ( );
+	} else {
+//		temp_hoverMem = // not shfit, so replacing the current mem.
+	}
+//	temp_clickIndex = 0;
+	temp_clickMem_parent = cursor_eleInit ( );
+	temp_clickMem = temp_clickMem_parent;
+
+
+//	if ( altKeys[akShift] ||
+//	     altKeys[akCtrl] ) {
+	if ( altKeys[akCtrl] ) {
 		// if i currently have a vert seleted, the add to it the place i clicked.
 		// but if i clicked on a different vert, the draw a line between them.
 
@@ -238,7 +389,7 @@ int jNakedList_mEvent_start ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayL
 		viewLoc, viewScale );
 }
 
-// which iterates through every ele, and runs the specific mEvent funct for each one.
+// iterate through every ele, and runs the specific mEvent funct for each one.
 // If they return 1, then they are set as the selected element, and the function returns.
 int jNakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *eles,
 		float *viewLoc, float viewScale ) {
@@ -253,6 +404,8 @@ int jNakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *e
 	len = arrayListGetLength ( eles );
 	while ( i < len ) {
 		struct jNakedUnion *uni = arrayListGetPointer ( eles, i );
+
+		temp_clickIndex = i;
 
 		if ( uni->type == jNaked_G ) {
 //			printf ( "TODO\n" );
@@ -381,6 +534,7 @@ void add_line ( struct jPath *path, int vertI, int lineType, int *clickXYpass,
 // return 1 if i select this ele
 int jPath_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jPath *path,
 		float *viewLoc, float viewScale ) {
+printf ( "\n" );
 	if ( debugPrint_jvg_event ) {
 		printf ( "jPath_mEvent ( )\n" );
 		sayIntArray ( "clickXYpass", clickXYpass, 2 );
@@ -413,6 +567,47 @@ int jPath_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jPath *pat
 				printf ( "CLICK ON VERT\n" );
 
 				selected = 1;
+
+if ( altKeys[akShift] ) {
+	// is this already selected?
+	// if so unselect it.
+
+	cursor_unionTypeChange0 ( temp_clickMem->payload, cu_Path );
+	struct cursor_path *cuPath = temp_clickMem->payload->path;
+
+	int *tempNext = arrayListGetNext ( cuPath->verts );
+	*tempNext = i;
+
+
+	// see if there is a cursor with this address already.
+
+	//int i = 0;
+
+	// if so, see if this vert is already selected.
+	// if so, remove it.
+	// if not, add it, might need to turn off ->itself
+
+	// if not, add this address.
+
+
+printf ( "SHIFT CLICK\n" );
+	say_cursor_ele ( temp_clickMem );
+	int ret = toggle_cursorEle ( cursorList_new, temp_clickMem_parent );
+	printf ( "toggle_cursorEle ret: %d\n", ret );
+	if ( !ret ) {
+		arrayListAddEndPointer ( cursorList_new, temp_clickMem_parent );
+	} else {
+		// TODO free temp_clickMen_parent
+		if ( ret == 2 ) {
+			// idk
+		}
+	}
+
+	printf ( "cursorList_new.len: %d\n", arrayListGetLength ( cursorList_new ) );
+
+} else {
+	// wipe the current cursorInfo and add this
+}
 
 				handleCursor_start;
 

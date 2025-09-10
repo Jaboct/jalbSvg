@@ -7,9 +7,21 @@
 
 #include <jalbApi/api_uiGen.h>
 
-#include "hand.h"
-#include "jGroup.h"
 
+/** Foward Declaring */
+
+struct cursorMem;
+struct jNakedUnion;
+struct jPath;
+struct jText;
+struct jRect;
+struct jCirc;
+
+
+/// temp
+
+struct cursor_ele;
+int toggle_cursorEle_child ( struct cursor_ele *ele, struct cursor_ele *temp );
 
 /** Functions */
 

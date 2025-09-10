@@ -7,6 +7,7 @@
 #include "jGroup.h"
 #include "cursorIcon.h"
 
+#include "canvas_util.c"
 
 /** Variables */
 
@@ -25,7 +26,8 @@ extern int controlPointWidth;
 
 int hoverIndex_render = 0;
 struct cursor_ele *hoverMem = NULL;
-//ArrayList *cursorList = NULL;	// (struct cursor_ele*)	// TODO
+ArrayList *cursorList_new = NULL;	// (struct cursor_ele*)	// TODO
+struct cursor_ele *glob_cursor_ele = NULL;	// of type group, used to contain cursorList
 int isHover = 0;
 
 /** Functions */
@@ -35,6 +37,13 @@ int isHover = 0;
 void init_jvg_cursor ( ) {
 	if ( !hoverMem ) {
 		hoverMem = cursor_eleInit ( );
+	}
+	if ( !cursorList_new ) {
+		// instead of using this, wrap it in a cursor_group;
+		glob_cursor_ele = cursor_eleInit ( );
+		cursor_unionTypeChange0 ( glob_cursor_ele->payload, cu_Group );
+//		cursorList_new = initArrayList ( 10, sizeof ( struct cursor_ele* ), 10 );
+		cursorList_new = glob_cursor_ele->payload->group->eles;
 	}
 }
 
@@ -66,6 +75,11 @@ void onHoverCheck ( int *XY ) {
 // either simply return the icon i want.
 // i think i should return something more complicated and then it gets translated into an icon.
 int onHoverType ( int *XY ) {
+
+	if ( hoverMem ) {
+		cursor_unionTypeChange0 ( hoverMem->payload, -1 );
+	}
+
 	int ret = onHoverType_eleList ( XY, glob_jvg->eles );
 	return ret;
 }
@@ -84,14 +98,17 @@ int onHoverType_eleList ( int *XY, ArrayList *eleList ) {
 //			printf ( "isOnVert: %d\n", ret );
 
 			if ( ret ) {
-				emptyArrayList ( hoverMem->address );
+//				emptyArrayList ( hoverMem->address );
+
 				// i need to know the current depth...
 				// i could just add to 0 and keep shuffling it deeper, slow but works.
 				// idk if i have that ability cuz its not a list of ptrs.
-				int *val = arrayListGetNext ( hoverMem->address );
-				*val = i;
+//				int *val = arrayListGetNext ( hoverMem->address );
+//				*val = i;
 
-				say_cursor_ele ( hoverMem );
+				hoverMem->index = i;
+
+//				say_cursor_ele ( hoverMem );
 
 				isHover = 1;
 
@@ -165,11 +182,13 @@ int isOnVert ( struct jPath *path, int *XY ) {
 		int boxW = controlPointWidth;
 
 		if ( d < boxW ) {
-			printf ( "vert hover\n" );
+//			printf ( "vert hover\n" );
 
 			cursor_unionTypeChange0 ( hoverMem->payload, cu_Path );
 			struct cursor_path *cuPath = hoverMem->payload->path;
-			cuPath->vertI = i;
+			emptyArrayList ( cuPath->verts );
+			int *vertI = arrayListGetNext ( cuPath->verts );
+			*vertI = i;
 
 			return 2;
 		}
@@ -289,23 +308,104 @@ int isOnCirc ( struct jCirc *circ, int *XY ) {
 }
 
 
+/** Util */
+
+// return 1 if the arraylist has the int i, 0 otherwise
+int al_hasInt ( ArrayList *al, int i ) {
+	int j = 0;
+	int len = arrayListGetLength ( al );
+	while ( j < len ) {
+		int *ptr = arrayListDataPointer ( al, j );
+		if ( *ptr == i ) {
+			return 1;
+		}
+		j += 1;
+	}
+	return 0;
+}
+
+// return -1 if the arraylist does not have the int i, otherwise it returns its index.
+int al_getIndex_int ( ArrayList *al, int i ) {
+	int j = 0;
+	int len = arrayListGetLength ( al );
+	while ( j < len ) {
+		int *ptr = arrayListDataPointer ( al, j );
+		if ( *ptr == i ) {
+			return j;
+		}
+		j += 1;
+	}
+	return -1;
+}
+
+// al is of type (cursor_ele*)
+int eleList_getIndex ( ArrayList *al, int i ) {
+	int j = 0;
+	int len = arrayListGetLength ( al );
+	while ( j < len ) {
+		struct cursor_ele *ele = arrayListGetPointer ( al, j );
+		if ( ele->index == i ) {
+			return j;
+		}
+		j += 1;
+	}
+	return -1;
+}
 
 void say_cursor_ele ( struct cursor_ele *cursorEle ) {
 	printf ( "say_cursor_ele ( )\n" );
-	int len = arrayListGetLength ( cursorEle->address );
-	printf ( "cursorEle->address.len: %d\n", len );
-	sayIntArrayList ( "cursorEle->address", cursorEle->address );
+
+//	int len = arrayListGetLength ( cursorEle->address );
+//	printf ( "cursorEle->address.len: %d\n", len );
+//	sayIntArrayList ( "cursorEle->address", cursorEle->address );
+
+	printf ( "cursorEle->index: %d\n", cursorEle->index );
 
 	// cursor_union
 	struct cursor_union *uni = cursorEle->payload;
 	printf ( "uni->type: %d\n", uni->type );
+
 	if ( uni->type == cu_Path ) {
 		struct cursor_path *cuPath = uni->path;
-		printf ( "cuPath->vertI: %d\n", cuPath->vertI );
+//		printf ( "cuPath->vertI: %d\n", cuPath->vertI );
+		sayIntArrayList ( "cuPath->verts", cuPath->verts );
+	} else if ( uni->type == cu_Group ) {
+		struct cursor_group *cuGroup = uni->group;
+		printf ( "group indexes: { " );
+		int i = 0;
+		int len = arrayListGetLength ( cuGroup->eles );
+		while ( i < len ) {
+			struct cursor_ele *ele = arrayListGetPointer ( cuGroup->eles, i );
+			printf ( "%d, ", ele->index );
+			i += 1;
+		}
+		printf ( "}\n" );
+	} else {
+		printf ( "ERROR, say_cursor_ele ->type unhandled (%d)\n", uni->type );
 	}
+
+	printf ( "say_cursor_ele ( ) OVER\n" );
 }
 
+void say_cursorList_new ( ) {
+	printf ( "\n" );
+	printf ( "say_cursorList_new ( )\n" );
 
+	int len = arrayListGetLength ( cursorList_new );
+	printf ( "cursorList_new.len: %d\n", len );
+
+	int i = 0;
+	while ( i < len ) {
+		struct cursor_ele *ele = arrayListGetPointer ( cursorList_new, i );
+
+		say_cursor_ele ( ele );
+
+		i += 1;
+	}
+
+	printf ( "say_cursorList_new ( ) OVER\n" );
+	printf ( "\n" );
+}
 
 
 

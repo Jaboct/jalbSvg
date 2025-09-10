@@ -24,7 +24,8 @@ void cursor_preInit ( );
 /** Structs */
 
 struct cursor_ele {
-	ArrayList *address;	// (int)
+	int index;
+	// this should just be the union?
 	struct cursor_union *payload;
 };
 
@@ -32,18 +33,22 @@ struct cursor_union {
 	int type;
 	union  {
 		struct cursor_path *path;
+		struct cursor_group *group;
 	};
 };
 
 enum cursor_unionEnum {
 	cu_Path = 0,
+	cu_Group,
 };
 struct cursor_path {
 	int itself;
-	int vertI;
+	ArrayList *verts;	// (int)
 };
 
 struct cursor_group {
+	int this;
+	ArrayList *eles;	// (struct cursor_ele*)
 };
 
 

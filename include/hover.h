@@ -4,7 +4,7 @@
 /** Includes */
 
 #include <jalb/jalbArrayList.h>
-
+#include <jalb/jama.h>
 
 /** Forward Declaring */
 
@@ -39,7 +39,16 @@ int isOnCirc ( struct jCirc *circ, int *XY );
 //float pointLineDist ( float *p, float *v0, float *v1 );
 
 
+/** Util */
+
+// return 1 if the arraylist has the int i, 0 otherwise
+int al_hasInt ( ArrayList *al, int i );
+// return -1 if the arraylist does not have the int i, otherwise it returns its index.
+int al_getIndex_int ( ArrayList *al, int i );
+
+// al is of type (cursor_ele*)
+int eleList_getIndex ( ArrayList *al, int i );
+
 void say_cursor_ele ( struct cursor_ele *cursorEle );
-
-
+void say_cursorList_new ( );
 

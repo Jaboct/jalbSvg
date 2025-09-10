@@ -23,17 +23,28 @@
       <typeName></typeName>
     </subVar>
     <subVar>
-      <name>vertI</name>
+      <name>verts</name>
       <type>0</type>
-      <typeIndex>0</typeIndex>
+      <typeIndex>3</typeIndex>
       <initType>0</initType>
       <initTypeData>
         <>-1</>
       </initTypeData>
       <closeType>0</closeType>
-      <length>-1</length>
+      <length>0</length>
       <literal>1</literal>
-      <>-1</>
+      <subAl>
+        <curEles>10</curEles>
+        <eleSize>0</eleSize>
+        <overflow>10</overflow>
+        <literal>1</literal>
+        <type>0</type>
+        <typeIndex>0</typeIndex>
+        <length>-1</length>
+        <naked>0</naked>
+        <modNick></modNick>
+        <typeName></typeName>
+      </subAl>
       <external>0</external>
       <attribute>0</attribute>
       <saveFlag>1</saveFlag>

@@ -1,6 +1,19 @@
 #include "complexEle_ext.h"
 
 
+/** Includes */
+
+#include "cursorIcon.h"
+#include "recursiveCursor.h"
+
+#include "api/structStruct.h"
+#include "canvas_util.h"
+
+
+#include "complexEle.h"
+#include "complexScript_ext.h"
+
+
 /** Variables */
 
 extern struct jvg *glob_jvg;

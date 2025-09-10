@@ -87,6 +87,11 @@ extern int thisSel; // used during rendering to figure if the ele, or a subEle, 
 // this is relative to the elements top left position, not to the entire window.
 int cursorScreenXY[2];
 
+// new cursor stuff
+extern struct cursor_ele *glob_cursor_ele;
+extern struct cursor_ele *temp_actualMem;
+
+
 extern int renderMode;
 
 int vert_subMode = 0;
@@ -179,6 +184,11 @@ void jalbJvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void
 			viewLoc, viewScale, cursorScreenXY );
 	}
 
+
+	if ( !glob_cursor_ele ) {
+		init_jvg_cursor ( );
+	}
+	temp_actualMem = glob_cursor_ele;
 
 	thisSel = selected;
 	cursor_depth = 0;
@@ -465,7 +475,7 @@ int jalbJvg_mDown ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jvg *jvgE
 			ret = 1;
 			goto functEnd;
 
-		} else if ( cursorInputMode == ci_circ ) {
+	} else if ( cursorInputMode == ci_circ ) {
 			if ( tempEle ) {
 				printf ( "TEMP ELE ERROR\n" );
 			}
@@ -485,7 +495,7 @@ int jalbJvg_mDown ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jvg *jvgE
 			ret = 1;
 			goto functEnd;
 
-		} else if ( cursorInputMode == ci_complex ) {
+	} else if ( cursorInputMode == ci_complex ) {
 			if ( tempEle ) {
 				printf ( "TEMP ELE ERROR\n" );
 			}
@@ -510,7 +520,16 @@ int jalbJvg_mDown ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jvg *jvgE
 
 			ret = 1;
 			goto functEnd;
-		}
+	}
+
+//	} else if ( cursorInputMode == ci_reg ) {
+//	} else {
+//		printf ( "cursorInputMode: %d. unhandled\n", cursorInputMode );
+//	}
+
+
+
+	// presumably ( cursorInputMode == ci_reg )
 
 //		selected = 0;
 

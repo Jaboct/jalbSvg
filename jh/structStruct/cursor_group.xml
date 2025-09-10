@@ -2,6 +2,57 @@
 <structStruct>
   <name>cursor_group</name>
   <vars>
+    <subVar>
+      <name>this</name>
+      <type>0</type>
+      <typeIndex>0</typeIndex>
+      <initType>0</initType>
+      <initTypeData>
+        <>-1</>
+      </initTypeData>
+      <closeType>0</closeType>
+      <length>-1</length>
+      <literal>1</literal>
+      <>-1</>
+      <external>0</external>
+      <attribute>0</attribute>
+      <saveFlag>1</saveFlag>
+      <naked>0</naked>
+      <comment></comment>
+      <modNick></modNick>
+      <typeName></typeName>
+    </subVar>
+    <subVar>
+      <name>eles</name>
+      <type>0</type>
+      <typeIndex>3</typeIndex>
+      <initType>0</initType>
+      <initTypeData>
+        <>-1</>
+      </initTypeData>
+      <closeType>0</closeType>
+      <length>0</length>
+      <literal>1</literal>
+      <subAl>
+        <curEles>10</curEles>
+        <eleSize>0</eleSize>
+        <overflow>10</overflow>
+        <literal>0</literal>
+        <type>1</type>
+        <typeIndex>34</typeIndex>
+        <length>-1</length>
+        <naked>0</naked>
+        <modNick></modNick>
+        <typeName></typeName>
+      </subAl>
+      <external>0</external>
+      <attribute>0</attribute>
+      <saveFlag>1</saveFlag>
+      <naked>0</naked>
+      <comment></comment>
+      <modNick></modNick>
+      <typeName></typeName>
+    </subVar>
   </vars>
   <overloadRenderEdit></overloadRenderEdit>
   <overloadEventEdit></overloadEventEdit>
