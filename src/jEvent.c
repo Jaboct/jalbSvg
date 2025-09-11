@@ -4,10 +4,13 @@
 /** Includes */
 
 #include "hand.h"
+#include "jHand.h"
 #include "jGroup.h"
 
 #include "cursor.h"
 #include "hover.h"
+
+#include "jEvent_path.h"
 
 
 /** Variables */
@@ -18,7 +21,7 @@ extern struct jalbFont *fonts[];
 extern int numFonts;
 
 
-extern ArrayList *cursorList;
+//extern ArrayList *cursorList;
 extern int cursor_depth;
 // new cursor data
 int temp_clickIndex = 0;
@@ -27,6 +30,8 @@ struct cursor_ele *temp_clickMem_parent = NULL;
 extern ArrayList *cursorList_new;	// (struct cursor_ele*)
 extern struct cursor_ele *glob_cursor_ele;	// contains cursorList_new
 extern struct cursor_ele *temp_actualMem;
+extern int heldType;
+
 
 extern int renderMode;
 
@@ -34,7 +39,9 @@ extern int renderMode;
 extern int vertWidth;
 extern int controlPointR;
 
+
 extern int selected;
+
 
 int debugPrint_jvg_event = 0;
 int debugPrint_jIterate = 0;
@@ -140,10 +147,14 @@ int toggle_cursorEle_child ( struct cursor_ele *ele, struct cursor_ele *temp ) {
 				printf ( "elePath->verts.len: %d\n", arrayListGetLength ( elePath->verts ) );
 
 				int *tempIndex = arrayListDataPointer ( tempPath->verts, 0 ); // rn it only has 1 ele, but eventually allow me to select multiple at once?
+
 printf ( "tempIndex: %p\n", tempIndex );
 printf ( "*tempIndex: %d\n", *tempIndex );
+
 				int has = al_hasInt ( elePath->verts, *tempIndex );
+
 printf ( "has: %d\n", has );
+
 				if ( has ) {
 					printf ( "REMOVE: %d\n", *tempIndex );
 					int index = al_getIndex_int ( elePath->verts, *tempIndex );
@@ -198,6 +209,7 @@ int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct
 		printf ( "jIterateToSelected ( )\n" );
 	}
 
+/*
 	int i = 0;
 	int len = arrayListGetLength ( cursorList );
 
@@ -241,7 +253,9 @@ int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct
 	if ( debugPrint_jIterate ) {
 		printf ( "exited while: %d\n", i );
 	}
-/*
+*/
+
+/* old
 	*parent = uni;
 
 	i += 1;
@@ -251,6 +265,7 @@ int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct
 	*ele = uni;
 */
 
+/*
 	*ele = uni;
 //	printf ( "set ele\n" );
 	if ( i == len - 1 ) {	// == len, cuz i do i += 1 directly above
@@ -315,7 +330,7 @@ int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct
 	if ( debugPrint_jIterate ) {
 		printf ( "jIterateToSelected ( ) OVER\n" );
 	}
-
+*/
 	return -1;
 }
 
@@ -405,6 +420,7 @@ int jNakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *e
 	while ( i < len ) {
 		struct jNakedUnion *uni = arrayListGetPointer ( eles, i );
 
+		temp_clickMem->index = i;
 		temp_clickIndex = i;
 
 		if ( uni->type == jNaked_G ) {
@@ -425,10 +441,12 @@ int jNakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *e
 			cursorDown;
 			int ret = jPath_mEvent ( e, clickXYpass, eleWH, path,
 				viewLoc, viewScale );
+printf ( "jPath_mEvent AFTER ret: %d\n", ret );
 			cursorUp;
 			if ( ret == 1 ) {
 //				selI = i;
 				handleCursor;
+printf ( "final ret\n" );
 				return ret;
 			}
 
@@ -493,361 +511,6 @@ int jNakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *e
 	return 0;
 }
 
-void add_line ( struct jPath *path, int vertI, int lineType, int *clickXYpass,
-		float *viewLoc, float viewScale ) {
-//	printf ( "add_line ( )\n" );
-//	printf ( "lineType: %d\n", lineType );
-
-	float worldXY[2];
-	loc_to_pointI ( clickXYpass, worldXY, viewLoc, viewScale );
-	struct jVert *v = jVertInit ( );
-	v->XY[0] = worldXY[0];
-	v->XY[1] = worldXY[1];
-	int numVerts = arrayListGetLength ( path->verts );
-	arrayListAddEndPointer ( path->verts, v );
-	struct jLine *l = jLineInit ( );
-	l->v0 = vertI;
-	l->v1 = numVerts;
-
-	if ( lineType == path_LineTo ) {
-		l->type = path_LineTo;
-	} else if ( lineType == path_CubicBez ) {
-		l->type = path_CubicBez;
-		// calc the vector, and put the control point.
-		float vect[2];
-		struct jVert *v0 = arrayListGetPointer ( path->verts, vertI );
-		vectSub ( v0->XY, worldXY, vect, 2 );
-		l->c0[0] = v0->XY[0] - (vect[0] / 10.0);
-		l->c0[1] = v0->XY[1] - (vect[1] / 10.0);
-
-		l->c1[0] = worldXY[0] + (vect[0] / 10.0);
-		l->c1[1] = worldXY[1] + (vect[1] / 10.0);
-	} else {
-		printf ( "add_line ( ) ERROR\n" );
-	}
-
-	arrayListAddEndPointer ( path->lines, l );
-
-	// set the cursor to here?
-}
-
-// return 1 if i select this ele
-int jPath_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jPath *path,
-		float *viewLoc, float viewScale ) {
-printf ( "\n" );
-	if ( debugPrint_jvg_event ) {
-		printf ( "jPath_mEvent ( )\n" );
-		sayIntArray ( "clickXYpass", clickXYpass, 2 );
-	}
-
-	// only check this path if it, or one of its sub eles is being edited.
-
-	// first check the verts
-	// then the control poitns of the lines
-	// then see if im close enough to a line to drag the object around.
-
-	int i;
-	int len;
-
-	i = 0;
-	len = arrayListGetLength ( path->verts );
-	while ( i < len ) {
-		struct jVert *vert = arrayListGetPointer ( path->verts, i );
-
-		float screenXY[2];
-
-		point_to_loc ( vert->XY, screenXY, viewLoc,  viewScale );
-
-//		sayFloatArray ( "screenXY", screenXY, 2 );
-
-		if ( clickXYpass[0] >= screenXY[0] - (vertWidth / 2.0) &&
-		     clickXYpass[0] <= screenXY[0] + (vertWidth / 2.0) ) {
-			if ( clickXYpass[1] >= screenXY[1] - (vertWidth / 2.0) &&
-			     clickXYpass[1] <= screenXY[1] + (vertWidth / 2.0) ) {
-				printf ( "CLICK ON VERT\n" );
-
-				selected = 1;
-
-if ( altKeys[akShift] ) {
-	// is this already selected?
-	// if so unselect it.
-
-	cursor_unionTypeChange0 ( temp_clickMem->payload, cu_Path );
-	struct cursor_path *cuPath = temp_clickMem->payload->path;
-
-	int *tempNext = arrayListGetNext ( cuPath->verts );
-	*tempNext = i;
-
-
-	// see if there is a cursor with this address already.
-
-	//int i = 0;
-
-	// if so, see if this vert is already selected.
-	// if so, remove it.
-	// if not, add it, might need to turn off ->itself
-
-	// if not, add this address.
-
-
-printf ( "SHIFT CLICK\n" );
-	say_cursor_ele ( temp_clickMem );
-	int ret = toggle_cursorEle ( cursorList_new, temp_clickMem_parent );
-	printf ( "toggle_cursorEle ret: %d\n", ret );
-	if ( !ret ) {
-		arrayListAddEndPointer ( cursorList_new, temp_clickMem_parent );
-	} else {
-		// TODO free temp_clickMen_parent
-		if ( ret == 2 ) {
-			// idk
-		}
-	}
-
-	printf ( "cursorList_new.len: %d\n", arrayListGetLength ( cursorList_new ) );
-
-} else {
-	// wipe the current cursorInfo and add this
-}
-
-				handleCursor_start;
-
-				return 1;
-			}
-		}
-
-		i += 1;
-	}
-
-
-	i = 0;
-	len = arrayListGetLength ( path->lines );
-	while ( i < len ) {
-		struct jLine *line = arrayListGetPointer ( path->lines, i );
-
-		if ( line->type == path_CubicBez ) {
-			// check both control points.
-
-			float cXY[2];
-			point_to_loc ( line->c0, cXY, viewLoc,  viewScale );
-			cXY[0] -= clickXYpass[0];
-			cXY[1] -= clickXYpass[1];
-			float delta = vectNorm ( cXY, 2 );
-			if ( delta < controlPointR ) {
-				printf ( "CLICK ON CONTROL\n");
-				{
-					selected = 1;
-					cursorDown;
-					int i = 0;
-					handleCursor_start;
-					cursorUp;
-				}
-				handleCursor;
-
-				return 1;
-			}
-
-			point_to_loc ( line->c1, cXY, viewLoc,  viewScale );
-			cXY[0] -= clickXYpass[0];
-			cXY[1] -= clickXYpass[1];
-			delta = vectNorm ( cXY, 2 );
-			if ( delta < controlPointR ) {
-				printf ( "CLICK ON CONTROL\n");
-				{
-					selected = 1;
-					cursorDown;
-					int i = 1;
-					handleCursor_start;
-					cursorUp;
-				}
-				handleCursor;
-
-				return 1;
-			}
-		} else if ( line->type == path_QuadBez ) {
-			// check 1 control point.
-
-			float cXY[2];
-			point_to_loc ( line->c0, cXY, viewLoc,  viewScale );
-			cXY[0] -= clickXYpass[0];
-			cXY[1] -= clickXYpass[1];
-			float delta = vectNorm ( cXY, 2 );
-			if ( delta < controlPointR ) {
-				printf ( "CLICK ON CONTROL\n");
-				{
-					selected = 1;
-					cursorDown;
-					int i = 0;
-					handleCursor_start;
-					cursorUp;
-				}
-				handleCursor;
-
-				return 1;
-			}
-
-		}
-
-		i += 1;
-	}
-
-	// ok, i didnt click on a control point, now see if im trying to drag a line.
-
-	i = 0;
-	len = arrayListGetLength ( path->lines );
-	while ( i < len ) {
-		struct jLine *line = arrayListGetPointer ( path->lines, i );
-
-		struct jVert *v0 = arrayListGetPointer ( path->verts, line->v0 );
-		struct jVert *v1 = arrayListGetPointer ( path->verts, line->v1 );
-
-		float fXY[2] = { clickXYpass[0], clickXYpass[1] };
-		loc_to_point ( fXY, fXY, viewLoc, viewScale );
-		float dist = pointSegDist ( fXY, v0->XY, v1->XY );
-
-//		printf ( "line dist: %f\n", dist );
-
-		if ( dist < pointDist ) {
-			// im not effecting this line.
-
-			cursorUp;
-			// i dont want this specific line to be selected rn.
-			handleCursor_start;
-			cursorDown;
-
-//			printf ( "CLICK ON LINE\n" );
-			selected = 1;
-
-			return 1;
-		}
-
-		i += 1;
-	}
-
-
-
-/*
-	// what is this stuff?
-		float XY[2];
-		get_pathUni_XY ( uni, XY );
-
-		point_to_loc_glob ( XY, XY );
-
-		sayFloatArray ( "XY", XY, 2 );
-
-		if ( clickXYpass[0] >= XY[0] &&
-		     clickXYpass[0] <= XY[0] + vertWidth ) {
-			if ( clickXYpass[1] >= XY[1] &&
-			     clickXYpass[1] <= XY[1] + vertWidth ) {
-				selected = 1;
-//				selP = i;
-
-				printf ( "SELECTED ELE\n" );
-				handleCursor_start;
-
-				return 1;
-			}
-		}
-
-		printf ( "uni->type: %d\n", uni->type );
-
-		// eventually only check this in a few situations.
-		if ( uni->type == path_CubicBez ) {
-			printf ( "CHECK CONTROL\n" );
-
-			// check the control points.
-			float cXY[2];
-			cXY[0] = uni->cubicBez->c0[0];
-			cXY[1] = uni->cubicBez->c0[1];
-			point_to_loc_glob ( cXY, cXY );
-			cXY[0] -= clickXYpass[0];
-			cXY[1] -= clickXYpass[1];
-
-			sayFloatArray ( "cXY", cXY, 2 );
-
-			float delta = vectNorm ( cXY, 2 );
-			if ( delta < controlPointR ) {
-				selected = 1;
-				{
-					cursorDown;
-					int i = 0;
-					handleCursor_start;
-					cursorUp;
-				}
-
-				handleCursor;
-
-				return 1;
-			}
-
-			// check c1
-			cXY[0] = uni->cubicBez->c1[0];
-			cXY[1] = uni->cubicBez->c1[1];
-			point_to_loc_glob ( cXY, cXY );
-			cXY[0] -= clickXYpass[0];
-			cXY[1] -= clickXYpass[1];
-
-			sayFloatArray ( "cXY", cXY, 2 );
-
-			delta = vectNorm ( cXY, 2 );
-			if ( delta < controlPointR ) {
-				selected = 1;
-				{
-					cursorDown;
-					int i = 1;
-					handleCursor_start;
-					cursorUp;
-				}
-
-				handleCursor;
-
-				return 1;
-			}
-		}
-
-		i += 1;
-	}
-*/
-
-	if ( debugPrint_jvg_event ) {
-		printf ( "path_mEvent ( ) OVER\n" );
-	}
-
-	return 0;
-}
-
-
-void move_jPathVert ( struct jPath *path, int vertI, float dx, float dy ) {
-	printf ( "move_jPathUni ( )\n" );
-
-	struct jVert *vert = arrayListGetPointer ( path->verts, vertI );
-
-	vert->XY[0] += dx;
-	vert->XY[1] += dy;
-
-	// iterate all the lines, if they use this vert, move the control point.
-	int i;
-	int len;
-
-	i = 0;
-	len = arrayListGetLength ( path->lines );
-	while ( i < len ) {
-		struct jLine *line = arrayListGetPointer ( path->lines, i );
-
-		if ( line->type == path_CubicBez ) {
-			if ( line->v0 == vertI ) {
-				line->c0[0] += dx;
-				line->c0[1] += dy;
-			}
-			if ( line->v1 == vertI ) {
-				line->c1[0] += dx;
-				line->c1[1] += dy;
-			}
-		}
-
-		i += 1;
-	}
-
-}
 
 int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *text,
 		float *viewLoc, float viewScale ) {

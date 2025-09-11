@@ -4,7 +4,6 @@
 #include <stdlib.h>
 
 #include <jalb/jalbArrayList.h>
-
 #include <jalbApi/api_uiGen.h>
 
 
@@ -21,7 +20,9 @@ struct jCirc;
 /// temp
 
 struct cursor_ele;
+int toggle_cursorEle ( ArrayList *cursorList, struct cursor_ele *temp );
 int toggle_cursorEle_child ( struct cursor_ele *ele, struct cursor_ele *temp );
+
 
 /** Functions */
 
@@ -32,14 +33,6 @@ int jNakedList_mEvent_start ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayL
 		float *viewLoc, float viewScale );
 int jNakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *eles,
 		float *viewLoc, float viewScale );
-
-void add_line ( struct jPath *path, int vertI, int lineType, int *clickXYpass,
-		float *viewLoc, float viewScale );
-int jPath_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jPath *path,
-		float *viewLoc, float viewScale );
-
-void move_jPathVert ( struct jPath *path, int vertI, float dx, float dy );
-
 
 int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *text,
 		float *viewLoc, float viewScale );

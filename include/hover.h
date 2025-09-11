@@ -23,6 +23,8 @@ struct cursor_ele;
 
 void init_jvg_cursor ( );
 
+// isnt used at all.
+int click_drill ( ArrayList *eleList, int *XY, int type );
 
 /// hover cursor
 
@@ -30,7 +32,12 @@ void onHoverCheck ( int *XY );
 int onHoverType ( int *XY );
 int onHoverType_eleList ( int *XY, ArrayList *eleList );
 
-int isOnVert ( struct jPath *path, int *XY );
+int isOnPath ( struct jPath *path, int *XY );
+
+// return the index of the vert that this cursor is on.
+int isOnVert ( struct jPath *path, int *screenXY );
+int isOnVert_world ( struct jPath *path, float *worldXY );
+
 int isOnLine ( struct jVert *v0, struct jVert *v1, int *XY );
 int isOnText ( struct jText *text, int *XY );
 int isOnRect ( struct jRect *rect, int *XY );

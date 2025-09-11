@@ -6,7 +6,7 @@
 //extern float glob_viewLoc[];
 
 
-// convert a world loc to a screen loc.
+// convert a world loc to a screen loc. (world_to_screen)
 void point_to_loc ( float *p0, float *pSet, float *viewLoc, float viewScale ) {
 /*
 	printf ( "point_to_loc ( )\n" );

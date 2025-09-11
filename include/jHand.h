@@ -24,10 +24,11 @@ struct jCirc;
 
 struct jLine;
 
-
+struct cursor_path;
 
 /** Structs */
 
+// special keys for adding unicode chars
 enum spec_keys {
 	spec_therefore = 0,
 	spec_and,
@@ -47,6 +48,15 @@ enum spec_keys {
 
 	spec_integral,
 };
+
+
+enum heldTypes {	// u can have highlight and camera move at the same time.
+	ht_none = 0,
+	ht_cameraMove,
+	ht_eleMove,
+	ht_highlight,
+};
+
 
 
 /** Functions */
@@ -70,6 +80,10 @@ int jalbJvg_mDown ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jvg *jvg,
 		float *viewLoc, float viewScale );
 int jalbJvg_mMotion ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jvg *jvgEle,
 		float *viewLoc, float viewScale );
+
+void drag_cursor_new ( SDL_Event *e, ArrayList *cursorList, ArrayList *eleList );
+void drag_cursor_path ( struct jNakedUnion *ele, struct cursor_path *cuPath, float *dXY );
+
 int keySpecialChar ( SDL_Event *e, ArrayList *sb );
 
 void jalbJvg_close ( void *data );
@@ -170,6 +184,7 @@ void jvg_toggle_CAD ( );
 void jvg_toggle_grid ( );
 void jvg_toggle_gridRender ( );
 // should snap ever be enabled when render isnt?
+void jvg_set_gridSnap ( int i );
 void jvg_toggle_gridSnap ( );
 
 

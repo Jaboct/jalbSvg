@@ -9,6 +9,7 @@
 #include "path.h"
 
 #include "jEvent.h"
+#include "jEvent_path.h"
 #include "event_sb.h"
 
 #include "jRender.h"
@@ -16,6 +17,8 @@
 #include "complexEle_ext.h"
 
 #include "hover.h"
+
+#include "cursor.h"
 
 
 /** Variables */
@@ -90,18 +93,18 @@ int cursorScreenXY[2];
 // new cursor stuff
 extern struct cursor_ele *glob_cursor_ele;
 extern struct cursor_ele *temp_actualMem;
+// cursor hover
+extern int isHover;
+extern struct cursor_ele *hoverMem;
+extern struct cursor_ele *temp_hoverMem;
+
+
+
 
 
 extern int renderMode;
 
 int vert_subMode = 0;
-
-enum heldTypes {	// u can have highlight and camera move at the same time.
-	ht_none = 0,
-	ht_cameraMove,
-	ht_eleMove,
-	ht_highlight,
-};
 
 
 // for text box ctrl jumping.
@@ -178,7 +181,8 @@ void jalbJvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void
 		// draw grid lines
 		grid_render ( screenDims, glBuffers, XYWHpass, gridWH,
 			viewLoc, viewScale );
-
+	}
+	if ( gridSnap ) {
 		// draw an x at the grid position closest to the cursor.
 		grid_render_cursor ( screenDims, glBuffers, XYWHpass, gridWH,
 			viewLoc, viewScale, cursorScreenXY );
@@ -190,8 +194,17 @@ void jalbJvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void
 	}
 	temp_actualMem = glob_cursor_ele;
 
+	if ( isHover ) {
+		temp_hoverMem = hoverMem;
+	} else {
+		temp_hoverMem = NULL;
+	}
+
 	thisSel = selected;
 	cursor_depth = 0;
+
+
+	thisSel = 0;
 	jNakedList_render ( screenDims, glBuffers, XYWHpass, glob_jvg->eles,
 		viewLoc, viewScale );
 
@@ -287,6 +300,23 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 
 	struct jvg *jvgEle = glob_jvg;
 	ArrayList *eles = jvgEle->eles;
+
+	if ( gridSnap ) {
+		float screenXY[2] = {
+			clickXYpass[0],
+			clickXYpass[1],
+		};
+		float worldXY[2];
+		screen_to_world ( screenXY, worldXY, viewLoc, viewScale );
+		// round to nearest
+
+		worldXY[0] = roundClose ( worldXY[0], gridWH[0] );
+		worldXY[1] = roundClose ( worldXY[1], gridWH[1] );
+
+		world_to_screen ( worldXY, screenXY, viewLoc, viewScale );
+		clickXYpass[0] = screenXY[0];
+		clickXYpass[1] = screenXY[1];
+	}
 
 	if ( e->type == SDL_KEYDOWN ) {
 
@@ -412,32 +442,168 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 	return ret;
 }
 
+int click_pen ( ) {
+	// cursor is of type pane.
+	// if i currently have a vert selected, then a click will add a vert.
+
+	// rn ignore the idea that anything is selected.
+//	emptyArrayList ( glob_cursor_ele->payload->group->eles );
+
+	// find the first vert we are hovering over.
+
+	return 0;
+}
+
+// see if only 1 vertex is selected.
+// if so, return that path?
+struct jPath *onlyVertSelected ( struct cursor_ele *cursor, ArrayList *eleList, int *vertI ) {
+	printf ( "onlyVertSelected ( )\n" );
+	printf ( "cursor->payload->type: %d\n", cursor->payload->type );
+
+	struct jNakedUnion *uni = arrayListGetPointer ( eleList, cursor->index );
+
+	if ( cursor->payload->type == cu_Group ) {
+		// iterate through
+		int numSub = arrayListGetLength ( cursor->payload->group->eles );
+
+		if ( numSub == 1 ) {
+			struct cursor_ele *subCursor = arrayListGetPointer ( cursor->payload->group->eles, 0 );
+
+			// because cursor is of type group, then i know this ele is of type group.
+			if ( uni->type == jNaked_G ) {
+				struct jGroup *group = uni->g;
+				struct jPath *path = onlyVertSelected ( subCursor, group->eles, vertI );
+				return path;
+			} else {
+				// ERROR
+				printf ( "ERROR, onlyVertSelected ( ) expected uni of type group, have %d\n", uni->type );
+			}
+
+		} else {
+			return NULL;
+		}
+
+	} else if ( cursor->payload->type == cu_Path ) {
+		struct cursor_path *cursorPath = cursor->payload->path;
+		int numVertsSelected = arrayListGetLength ( cursorPath->verts );
+		if ( numVertsSelected == 1 ) {
+			if ( uni->type == jNaked_Path ) {
+				int *vPtr = arrayListDataPointer ( cursorPath->verts, 0 );
+				*vertI = *vPtr;
+				return uni->path;
+			} else {
+				printf ( "ERROR, onlyVertSelected ( )\n" );
+			}
+		} else {
+			return NULL;
+		}
+	} else {
+		printf ( "TODO\n" );
+	}
+	return NULL;
+}
+
+// already know only 1 vert is selected.
+void update_cursor_path ( struct cursor_ele *cursor, int newI ) {
+	while ( 1 ) {
+		if ( cursor->payload->type == cu_Group ) {
+			cursor = arrayListGetPointer ( cursor->payload->group->eles, 0 );
+		} else if ( cursor->payload->type == cu_Path ) {
+			int *vertPtr = arrayListDataPointer ( cursor->payload->path->verts, 0 );
+			*vertPtr = newI;
+			break;
+		} else {
+			printf ( "error 1\n" );
+			break;
+		}
+	}
+}
+
 // return 1 if the event is consumed
 int jalbJvg_mDown ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jvg *jvgEle,
 		float *viewLoc, float viewScale ) {
 
 	ArrayList *eles = jvgEle->eles;
 
+	float worldXY[2];
+	loc_to_pointI ( clickXYpass, worldXY, viewLoc, viewScale );
+
 	int ret = 0;
 	mouseHeld = 1;
 
 	// adding a new ele.
 	if ( cursorInputMode == ci_pen ) {
-		// create a new path.
+		// see if i am connectign to an already existing path.
+		// if edit all, check every path.
 
-		float worldXY[2];
-		loc_to_pointI ( clickXYpass, worldXY, viewLoc, viewScale );
+		int vertI = -1;
 
-		struct jNakedUnion *ele = jNakedUnionInit ( );
-		arrayListAddEndPointer ( eles, ele );
-		jNakedUnionTypeChange0 ( ele, jNaked_Path );
-		struct jPath *path = ele->path;
-		struct jVert *vert = jVertInit ( );
-		arrayListAddEndPointer ( path->verts, vert );
-		vert->XY[0] = worldXY[0];
-		vert->XY[1] = worldXY[1];
+		int numTopEles = arrayListGetLength ( glob_cursor_ele->payload->group->eles );
 
-		set_cursorInputMode ( ci_reg );
+		if ( numTopEles == 1 ) {
+			struct cursor_ele *subEle = arrayListGetPointer ( glob_cursor_ele->payload->group->eles, 0 );
+
+			struct jPath *path = onlyVertSelected ( subEle, eles, &vertI );
+			printf ( "path: %p\n", path );
+			printf ( "&vertI: %p\n", &vertI );
+			printf ( "vertI: %d\n", vertI );
+			if ( path ) {
+				// in theory only 1 vert is selected.
+
+				// am i clicking on 1?
+				int newVertI = isOnVert_world ( path, worldXY );
+
+				if ( newVertI == -1 ) {
+					struct jVert *vert = jVertInit ( );
+					newVertI = arrayListGetLength ( path->verts );
+					arrayListAddEndPointer ( path->verts, vert );
+					vert->XY[0] = worldXY[0];
+					vert->XY[1] = worldXY[1];
+				}
+
+				printf ( "newVertI: %d\n", newVertI );
+
+				struct jLine *line = jLineInit ( );
+				arrayListAddEndPointer ( path->lines, line );
+				line->v0 = vertI;
+				line->v1 = newVertI;
+				line->type = path_LineTo;
+
+				// update cursor
+				update_cursor_path ( glob_cursor_ele, newVertI );
+
+				ret = 1;
+			}
+		}
+		if ( !ret ) {
+			// add a new path.
+
+			int newEleI = arrayListGetLength ( eles );
+
+			float worldXY[2];
+			loc_to_pointI ( clickXYpass, worldXY, viewLoc, viewScale );
+
+			struct jNakedUnion *ele = jNakedUnionInit ( );
+			arrayListAddEndPointer ( eles, ele );
+			jNakedUnionTypeChange0 ( ele, jNaked_Path );
+			struct jPath *path = ele->path;
+			struct jVert *vert = jVertInit ( );
+			arrayListAddEndPointer ( path->verts, vert );
+			vert->XY[0] = worldXY[0];
+			vert->XY[1] = worldXY[1];
+
+			// set the cursor to this ele.
+			// TODO, am i in a vert.
+			emptyArrayList ( glob_cursor_ele->payload->group->eles );
+			struct cursor_ele *subCursor = cursor_eleInit ( );
+			arrayListAddEndPointer ( glob_cursor_ele->payload->group->eles, subCursor );
+			subCursor->index = newEleI;
+			cursor_unionTypeChange0 ( subCursor->payload, cu_Path );
+			int *vertI = arrayListGetNext ( subCursor->payload->path->verts );
+			*vertI = 0;
+
+//			set_cursorInputMode ( ci_reg );
+		}
 
 		ret = 1;
 		goto functEnd;
@@ -532,6 +698,14 @@ int jalbJvg_mDown ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jvg *jvgE
 	// presumably ( cursorInputMode == ci_reg )
 
 //		selected = 0;
+
+	if ( altKeys[akShift] ) {
+		// leave cursor how it is.
+	} else {
+		// wipe cursor.
+		// TODO use a freeing function.
+		emptyArrayList ( glob_cursor_ele->payload->group->eles );
+	}
 
 		ret = jNakedList_mEvent_start ( e, clickXYpass, eleWH, eles,
 			viewLoc, viewScale );
@@ -631,9 +805,11 @@ int jalbJvg_mDown ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jvg *jvgE
 	return ret;
 }
 
-
+// return?
 int jalbJvg_mMotion ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jvg *jvgEle,
 		float *viewLoc, float viewScale ) {
+//	printf ( "jalbJvg_mMotion ( )\n" );
+
 
 	int ret = 0;
 
@@ -655,21 +831,34 @@ int jalbJvg_mMotion ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jvg *jv
 		goto functEnd;
 	}
 
-		float fXY[2] = { clickXYpass[0], clickXYpass[1] };
-		loc_to_point ( fXY, cursorWorldLoc, viewLoc, viewScale );
 
-		if ( renderMode == renderM_editAll ||
-		     renderMode == renderM_edit ) {
-			onHoverCheck ( clickXYpass );
-		}
+	float fXY[2] = { clickXYpass[0], clickXYpass[1] };
+	loc_to_point ( fXY, cursorWorldLoc, viewLoc, viewScale );
+
+	if ( renderMode == renderM_editAll ||
+	     renderMode == renderM_edit ) {
+		onHoverCheck ( clickXYpass );
+	}
 
 
-		if ( !selected ||
-		     !mouseHeld ) {
-			ret = 0;
-			goto functEnd;
-		}
+	if ( !selected ||
+	     !mouseHeld ) {
+		ret = 0;
+		goto functEnd;
+	}
 
+	printf ( "motion heldType: %d\n", heldType );
+
+	// go to the new eleList and handle them.
+	if ( heldType == ht_eleMove ) {
+
+		drag_cursor_new ( e, glob_cursor_ele->payload->group->eles, global_jEles );
+
+		ret = 1;
+		goto functEnd;
+	}
+
+	/// old
 		struct jNakedUnion *parent;
 		struct jNakedUnion *ele;
 		int vertI = -1;
@@ -777,6 +966,55 @@ int jalbJvg_mMotion ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jvg *jv
 
 	functEnd:;
 	return ret;
+}
+
+// heldType is eleMove
+void drag_cursor_new ( SDL_Event *e, ArrayList *cursorList, ArrayList *eleList ) {
+	printf ( "drag_cursor_new ( )\n" );
+
+	float viewScale = glob_viewScale;
+
+	float dx = e->motion.xrel * viewScale;
+	float dy = e->motion.yrel * viewScale;
+
+	float dXY[2] = { dx, dy };
+
+	int i = 0;
+	int len = arrayListGetLength ( cursorList );
+
+	printf ( "cursorList.len: %d\n", len );
+
+	while ( i < len ) {
+		struct cursor_ele *ele = arrayListGetPointer ( cursorList, i );
+
+		struct jNakedUnion *jUni = arrayListGetPointer ( eleList, ele->index );
+
+		if ( ele->payload->type == cu_Path ) {
+			struct cursor_path *cuPath = ele->payload->path;
+
+			if ( cuPath->itself ) {
+			} else {
+				drag_cursor_path ( jUni, cuPath, dXY );
+				// drag the verts.
+			}
+
+		} else if ( ele->payload->type == cu_Group ) {
+
+		}
+
+		i += 1;
+	}
+}
+
+void drag_cursor_path ( struct jNakedUnion *ele, struct cursor_path *cuPath, float *dXY ) {
+	int i = 0;
+	int len = arrayListGetLength ( cuPath->verts );
+	while ( i < len ) {
+		int *vertI = arrayListDataPointer ( cuPath->verts, i );
+		move_jPathVert ( ele->path, *vertI, dXY[0], dXY[1] );
+
+		i += 1;
+	}
 }
 
 int keySpecialChar ( SDL_Event *e, ArrayList *sb ) {
@@ -2026,6 +2264,12 @@ void jvg_toggle_gridRender ( ) {
 }
 
 // should snap ever be enabled when render isnt?
+void jvg_set_gridSnap ( int i ) {
+	printf ( "jvg_set_gridSnap ( )\n" );
+
+	gridSnap = i;
+}
+
 void jvg_toggle_gridSnap ( ) {
 	printf ( "jvg_toggle_gridSnap ( )\n" );
 
@@ -2269,6 +2513,7 @@ void load_CAD_00 ( ) {
 	jalbJvg_load_global ( dir );
 
 	jvg_toggle_grid ( );	// enable grid
+	jvg_set_gridSnap ( 0 );	// dissable gridSnap
 
 	// user interface
 //	open_left_toolbar ( );

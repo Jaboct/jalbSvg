@@ -7,9 +7,13 @@
 #include "jGroup.h"
 #include "cursorIcon.h"
 
-#include "canvas_util.c"
+#include "canvas_util.h"
+
 
 /** Variables */
+
+extern int debugPrint_jvg_event;
+
 
 extern struct jvg *glob_jvg;
 
@@ -25,7 +29,9 @@ extern int controlPointWidth;
 /// cursor globals
 
 int hoverIndex_render = 0;
-struct cursor_ele *hoverMem = NULL;
+struct cursor_ele *hoverMem = NULL;	// global var, doesnt change after being inited
+struct cursor_ele *temp_hoverMem = NULL;	// temp var, changes as u render and event. internal vars store the stack.
+
 ArrayList *cursorList_new = NULL;	// (struct cursor_ele*)	// TODO
 struct cursor_ele *glob_cursor_ele = NULL;	// of type group, used to contain cursorList
 int isHover = 0;
@@ -48,11 +54,48 @@ void init_jvg_cursor ( ) {
 }
 
 
+// isnt used at all.
+// should this be filling out some cursorInfo?
+// type 1 means i have type pen.
+int click_drill ( ArrayList *eleList, int *XY, int type ) {
+	int i = 0;
+	int len = arrayListGetLength ( eleList );
+	while ( i < len ) {
+		struct jNakedUnion *ele = arrayListGetPointer ( eleList, i );
+
+		if ( ele->type == jNaked_G ) {
+			printf ( "TODO\n" );
+		} else if ( ele->type == jNaked_Path ) {
+			// search its verts
+
+			struct jPath *path = ele->path;
+
+			int vertI = isOnVert ( path, XY );
+
+			if ( vertI != -1 ) {
+				if ( type == 1 ) {
+					// this vert is now selected.
+
+					return 1;
+				}
+			}
+		} else {
+			printf ( "TODO\n" );
+		}
+
+		i += 1;
+	}
+	return 0;
+}
+
+
 /// hover cursor
 
 void onHoverCheck ( int *XY ) {
-//	printf ( "onHoverCheck ( )\n" );
-//	sayIntArray ( "XY", XY, 2 );
+	if ( debugPrint_jvg_event ) {
+		printf ( "onHoverCheck ( )\n" );
+		sayIntArray ( "XY", XY, 2 );
+	}
 
 	isHover = 0;
 
@@ -75,9 +118,16 @@ void onHoverCheck ( int *XY ) {
 // either simply return the icon i want.
 // i think i should return something more complicated and then it gets translated into an icon.
 int onHoverType ( int *XY ) {
+	if ( debugPrint_jvg_event ) {
+		printf ( "onHoverType ( )\n" );
+	}
 
 	if ( hoverMem ) {
-		cursor_unionTypeChange0 ( hoverMem->payload, -1 );
+//		cursor_unionTypeChange0 ( hoverMem->payload, -1 );
+		cursor_unionTypeChange0 ( hoverMem->payload, cu_Group );	// always a group up top to match the jEleList
+		emptyArrayList ( hoverMem->payload->group->eles );	// TODO free these.
+
+		temp_hoverMem = hoverMem;
 	}
 
 	int ret = onHoverType_eleList ( XY, glob_jvg->eles );
@@ -85,6 +135,12 @@ int onHoverType ( int *XY ) {
 }
 
 int onHoverType_eleList ( int *XY, ArrayList *eleList ) {
+	if ( debugPrint_jvg_event ) {
+		printf ( "onHoverType_eleList ( )\n" );
+	}
+
+//	struct cursor_ele *memHover = temp_hoverMem;
+
 	int i = 0;
 	int len = arrayListGetLength ( eleList );
 	while ( i < len ) {
@@ -93,22 +149,17 @@ int onHoverType_eleList ( int *XY, ArrayList *eleList ) {
 		if ( uni->type == jNaked_Path ) {
 			struct jPath *path = uni->path;
 
-			int ret = isOnVert ( path, XY );
+			int ret = isOnPath ( path, XY );
 
-//			printf ( "isOnVert: %d\n", ret );
+//			printf ( "isOnPath: %d\n", ret );
 
 			if ( ret ) {
-//				emptyArrayList ( hoverMem->address );
-
-				// i need to know the current depth...
-				// i could just add to 0 and keep shuffling it deeper, slow but works.
-				// idk if i have that ability cuz its not a list of ptrs.
-//				int *val = arrayListGetNext ( hoverMem->address );
-//				*val = i;
-
-				hoverMem->index = i;
-
-//				say_cursor_ele ( hoverMem );
+				// right now there can only be 1 hover ele, this will change
+				if ( ret == 2 ) { // TODO i should do this for on the line aswell?
+					struct cursor_ele *hoverEle = arrayListGetPointer ( temp_hoverMem->payload->group->eles, 0 );
+					hoverEle->index = i;
+					say_cursor_ele ( hoverMem );
+				}
 
 				isHover = 1;
 
@@ -148,9 +199,12 @@ int pointDist = 4.0;
 // used for path check.
 // return 1 if its hovering over a line
 // return 2 if it is hovering over a vert.
-int isOnVert ( struct jPath *path, int *XY ) {
-//	printf ( "isOnVert ( )\n" );
-//	sayIntArray ( "XY", XY, 2 );
+int isOnPath ( struct jPath *path, int *XY ) {
+	if ( debugPrint_jvg_event ) {
+		printf ( "isOnPath ( )\n" );
+//		sayIntArray ( "XY", XY, 2 );
+	}
+
 
 //	int boxW = 10;
 
@@ -160,42 +214,27 @@ int isOnVert ( struct jPath *path, int *XY ) {
 //	printf ( "viewScale: %f\n", viewScale );
 //	sayFloatArray ( "viewLoc", viewLoc, 2 );
 
-	int i;
-	int len;
+	int vertRet = isOnVert ( path, XY );
+	if ( vertRet != -1 ) {
 
-	i = 0;
-	len = arrayListGetLength ( path->verts );
-	while ( i < len ) {
-		struct jVert *v = arrayListGetPointer ( path->verts, i );
+		// set hover info
+		struct cursor_ele *subHover = cursor_eleInit ( );
+		arrayListAddEndPointer ( temp_hoverMem->payload->group->eles, subHover );
 
-		float cXY[2];
-		point_to_loc ( v->XY, cXY, viewLoc,  viewScale );
+		cursor_unionTypeChange0 ( subHover->payload, cu_Path );
+		struct cursor_path *cuPath = subHover->payload->path;
+		emptyArrayList ( cuPath->verts );
+		int *vertI = arrayListGetNext ( cuPath->verts );
+		*vertI = vertRet;
 
-//		sayFloatArray ( "cXY", cXY, 2 );
-
-		cXY[0] -= XY[0];
-		cXY[1] -= XY[1];
-
-		// this is a circular check, not rect
-		float d = vectNorm ( cXY, 2 );
-
-		int boxW = controlPointWidth;
-
-		if ( d < boxW ) {
-//			printf ( "vert hover\n" );
-
-			cursor_unionTypeChange0 ( hoverMem->payload, cu_Path );
-			struct cursor_path *cuPath = hoverMem->payload->path;
-			emptyArrayList ( cuPath->verts );
-			int *vertI = arrayListGetNext ( cuPath->verts );
-			*vertI = i;
-
-			return 2;
+		if ( debugPrint_jvg_event ) {
+			printf ( "isOnPath ( ) OVER 2\n" );
 		}
-
-		i += 1;
+		return 2;
 	}
 
+	int i;
+	int len;
 
 	// ok now check if its on a line aswell.
 	i = 0;
@@ -211,14 +250,90 @@ int isOnVert ( struct jPath *path, int *XY ) {
 		float dist = pointSegDist ( fXY, v0->XY, v1->XY );
 
 		if ( dist < pointDist ) {
+			if ( debugPrint_jvg_event ) {
+				printf ( "isOnPath ( ) OVER 1\n" );
+			}
 			return 1;
 		}
 
 		i += 1;
 	}
 
-
+	if ( debugPrint_jvg_event ) {
+		printf ( "isOnPath ( ) OVER 0\n" );
+	}
 	return 0;
+}
+
+// return the index of the vert that this cursor is on.
+// takes in screenXY
+int isOnVert ( struct jPath *path, int *screenXY ) {
+	float viewScale = glob_viewScale;
+	float *viewLoc = glob_viewLoc;
+
+	int i;
+	int len;
+
+	i = 0;
+	len = arrayListGetLength ( path->verts );
+	while ( i < len ) {
+		struct jVert *v = arrayListGetPointer ( path->verts, i );
+
+		float cXY[2];
+//		point_to_loc ( v->XY, cXY, viewLoc, viewScale );
+		world_to_screen ( v->XY, cXY, viewLoc, viewScale );
+
+//		sayFloatArray ( "cXY", cXY, 2 );
+
+		cXY[0] -= screenXY[0];
+		cXY[1] -= screenXY[1];
+
+		// this is a circular check, not rect
+		float d = vectNorm ( cXY, 2 );
+
+		int boxW = controlPointWidth;
+
+		if ( d < boxW ) {
+//			printf ( "vert hover\n" );
+
+			return i;
+		}
+
+		i += 1;
+	}
+	return -1;
+}
+
+int isOnVert_world ( struct jPath *path, float *worldXY ) {
+	float viewScale = glob_viewScale;
+
+	int i;
+	int len;
+
+	i = 0;
+	len = arrayListGetLength ( path->verts );
+	while ( i < len ) {
+		struct jVert *v = arrayListGetPointer ( path->verts, i );
+
+		float cXY[2] = {
+			v->XY[0] - worldXY[0],
+			v->XY[1] - worldXY[1],
+		};
+
+		// this is a circular check, not rect
+		float d = vectNorm ( cXY, 2 );
+
+		int boxW = controlPointWidth;
+
+		if ( d < boxW * viewScale ) {
+//			printf ( "vert hover\n" );
+
+			return i;
+		}
+
+		i += 1;
+	}
+	return -1;
 }
 
 int isOnLine ( struct jVert *v0, struct jVert *v1, int *XY ) {
@@ -352,39 +467,66 @@ int eleList_getIndex ( ArrayList *al, int i ) {
 	return -1;
 }
 
+int say_cursor_depth = 0;
+
+void print_space ( int i ) {
+	while ( i > 0 ) {
+		printf ( "  " );
+
+		i -= 1;
+	}
+}
+
+char *cursorTypes[] = {
+	"cu_Path",
+	"cu_Group",
+};
+
 void say_cursor_ele ( struct cursor_ele *cursorEle ) {
-	printf ( "say_cursor_ele ( )\n" );
+//	printf ( "say_cursor_ele ( )\n" );
 
 //	int len = arrayListGetLength ( cursorEle->address );
 //	printf ( "cursorEle->address.len: %d\n", len );
 //	sayIntArrayList ( "cursorEle->address", cursorEle->address );
 
-	printf ( "cursorEle->index: %d\n", cursorEle->index );
+//	printf ( "cursorEle->index: %d\n", cursorEle->index );
+
+	print_space ( say_cursor_depth );
+	printf ( "(%d, %s) ", cursorEle->index, cursorTypes[cursorEle->payload->type] );
 
 	// cursor_union
 	struct cursor_union *uni = cursorEle->payload;
-	printf ( "uni->type: %d\n", uni->type );
+//	printf ( "uni->type: %d\n", uni->type );
 
 	if ( uni->type == cu_Path ) {
 		struct cursor_path *cuPath = uni->path;
 //		printf ( "cuPath->vertI: %d\n", cuPath->vertI );
 		sayIntArrayList ( "cuPath->verts", cuPath->verts );
+
 	} else if ( uni->type == cu_Group ) {
 		struct cursor_group *cuGroup = uni->group;
-		printf ( "group indexes: { " );
+//		printf ( "group indexes: { " );
+		printf ( "{\n" );
+
 		int i = 0;
 		int len = arrayListGetLength ( cuGroup->eles );
 		while ( i < len ) {
 			struct cursor_ele *ele = arrayListGetPointer ( cuGroup->eles, i );
-			printf ( "%d, ", ele->index );
+//			printf ( "(%d, %d) ", ele->index, ele->payload->type );
+
+			say_cursor_depth += 1;
+			say_cursor_ele ( ele );
+			say_cursor_depth -= 1;
+
 			i += 1;
 		}
 		printf ( "}\n" );
+
 	} else {
 		printf ( "ERROR, say_cursor_ele ->type unhandled (%d)\n", uni->type );
 	}
 
-	printf ( "say_cursor_ele ( ) OVER\n" );
+//	printf ( "say_cursor_ele ( ) OVER\n" );
 }
 
 void say_cursorList_new ( ) {

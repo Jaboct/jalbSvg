@@ -222,7 +222,7 @@ onHover cursorChange<br>
 onHoverCheck ( ) (jHand.h)<br>
 onHoverType ( )<br>
 <br>
-isOnVert<br>
+isOnPath<br>
 isOnLine (doenst get used?)<br>
 isOnText<br>
 isOnRect<br>
@@ -551,6 +551,12 @@ int <u>jNakedList_mEvent</u> ( SDL_Event *e, int *clickXYpass, int *eleWH, Array
 		float *viewLoc, float viewScale ) {
 group: jNakedList_mEvent ( )
 path: jPath_mEvent ( )
+}
+
+int <u>jalbJvg_mMotion</u> ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jvg *jvgEle,
+		float *viewLoc, float viewScale ) {
+jIterateToSelected ( )
+}
 </div>
 
 <br>

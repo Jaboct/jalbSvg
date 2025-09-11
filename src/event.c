@@ -187,18 +187,22 @@ void addText ( struct svg *svg, int *clickXY,
 
 	tspanPostInit ( span );
 
+	int i = 0;
+
 	// set cursor
 	{
 		// set cursor to this text index.
 		cursor_depth = 1;
-		int i = numEles;
+		i = numEles;
 		handleCursor_start;
 	}
 	{
 		// set cursor to group 0
 		cursor_depth -= 1;
-		int i = 0;
+		i = 0;
 		handleCursor;
+	}
+	if ( i ) {
 	}
 }
 
@@ -307,6 +311,7 @@ int path_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct path *path,
 			float delta = vectNorm ( cXY, 2 );
 			if ( delta < controlPointR ) {
 				selected = 1;
+
 				{
 					cursorDown;
 					int i = 0;

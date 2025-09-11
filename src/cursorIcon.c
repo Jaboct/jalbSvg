@@ -17,6 +17,7 @@ int cursorRenderMode = 0;	// enum cursorRenderTypes;
 
 
 // cur_num
+// the more positive hotXY is, the farther the even is down and to the right.
 struct cursorIconInfo cursorIcons[6] = {
 	{
 		.dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/cursor/cursor_32.png",
@@ -28,7 +29,7 @@ struct cursorIconInfo cursorIcons[6] = {
 	},
 	{
 		.dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/cursor/pen_32.png",
-		.hotXY = { 10, 10 },
+		.hotXY = { 4, 4 },
 	},
 	{
 		.dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/cursor/rect.png",

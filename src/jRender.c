@@ -77,7 +77,8 @@ extern int hoverIndex_render;
 extern struct cursor_ele *hoverMem;
 // TEMP, instead of passing through the params i just keep it global for now.
 // also used in event, it is filled on the way down.
-struct cursor_ele *temp_hoverMem = NULL;
+extern struct cursor_ele *temp_hoverMem;
+
 struct cursor_ele *temp_actualMem = NULL;	// actually selected cursor eles
 extern int isHover;
 int render_hoverPayload = 0;
@@ -102,7 +103,6 @@ void jNakedList_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, Arra
 
 //	printf ( "jNakedList_render ( )\n" );
 
-
 	int i;
 	int len;
 
@@ -115,20 +115,24 @@ void jNakedList_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, Arra
 
 	int parentSel = thisSel;
 
-	render_hoverPayload = 0;
-	temp_hoverMem = 0;
-	if ( isHover ) {
-		temp_hoverMem = hoverMem;
-	}
+//	render_hoverPayload = 0;
 
 	render_actualPayload = 0;
 	struct cursor_ele *mem_cursor = temp_actualMem;
+	struct cursor_ele *mem_hover = temp_hoverMem;
 
 /*
 	printf ( "mem_cursor: %p\n", mem_cursor );
 	printf ( "mem_cursor.len: %d\n", arrayListGetLength ( mem_cursor->payload->group->eles ) );
 	say_cursor_ele ( mem_cursor );
 */
+
+	if ( temp_hoverMem ) {
+		printf ( "\n" );
+		printf ( "temp_hoverMem\n" );
+		say_cursor_ele ( temp_hoverMem );
+		printf ( "\n" );
+	}
 
 	while ( i < len ) {
 		struct jNakedUnion *uni = arrayListGetPointer ( eles, i );
@@ -143,14 +147,22 @@ void jNakedList_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, Arra
 		isThisSel;
 
 		// new HOVER cursor check
-		if ( temp_hoverMem ) {
-			if ( temp_hoverMem->index == i ) {
+		if ( mem_hover ) {
+			ArrayList *eleList_new = mem_hover->payload->group->eles;
+			// mem_hover->index is irrelevent.
+//			if ( temp_hoverMem->index == i ) {
+
+			// search through eleList_new, to see if it contains an elemet with ->index = i
+			int subIndex = eleList_getIndex ( eleList_new, i );
+			if ( subIndex != -1 ) {
 				// dont necessarily render payload...
 				// keep checking as you go down
 				// temp_hoverMem = tempHoverMem->payload;
-				render_hoverPayload = 1;
+
+//				render_hoverPayload = 1;
+				temp_hoverMem = arrayListGetPointer ( eleList_new, subIndex );
 			} else {
-				// temp_hoverMem = NULL;
+				temp_hoverMem = NULL;
 			}
 /*
 			int len = arrayListGetLength ( temp_hoverMem->address );
@@ -171,10 +183,9 @@ void jNakedList_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, Arra
 
 		// new ACTUAL cursor check
 		// mem_cursor->index has already been matched, and we know mem_cursor is a group.
-		ArrayList *eleList_new = mem_cursor->payload->group->eles;
 		if ( mem_cursor ) {
+			ArrayList *eleList_new = mem_cursor->payload->group->eles;
 			// does it contain an ele relevent to this index?
-//			int subIndex = al_getIndex_int ( eleList_new, i );
 			int subIndex = eleList_getIndex ( eleList_new, i );
 //			printf ( "subIndex: %d\n", subIndex );
 			if ( subIndex != -1 ) {
@@ -186,14 +197,6 @@ void jNakedList_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, Arra
 				// no subEles match.
 				temp_actualMem = NULL;
 			}
-
-/*
-			if ( mem_cursor->index == i ) {
-//				render_actualPayload = 1;
-			} else {
-				temp_actualMem = NULL;
-			}
-*/
 		}
 
 		cursorDown;
@@ -203,6 +206,10 @@ void jNakedList_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, Arra
 
 		i += 1;
 	}
+
+	temp_actualMem = mem_cursor;
+	temp_hoverMem = mem_hover;
+
 	thisSel = parentSel;
 }
 
@@ -415,11 +422,13 @@ void jVerts_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, ArrayLis
 	while ( i < len ) {
 		struct jVert *vert = arrayListGetPointer ( verts, i );
 
+		int thisHover = 0;
 		thisSel = 0;
 		isThisSel;
 		isThisIt;
 
-		if ( render_hoverPayload ) {
+//		if ( render_hoverPayload ) {
+		if ( temp_hoverMem ) {
 			struct cursor_ele *ele = temp_hoverMem;
 			// todo type check
 			if ( ele->payload->type == cu_Path ) {
@@ -429,7 +438,8 @@ void jVerts_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, ArrayLis
 				} else {
 					int has = al_hasInt ( cuPath->verts, i );
 					if ( has ) {
-						thisSel = 1;
+//						thisSel = 1;
+						thisHover = 1;
 					}
 				}
 			} else {
@@ -476,6 +486,16 @@ void jVerts_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, ArrayLis
 			draw2dApi->fillRect ( iXYWH, colorWhite, screenDims, glBuffers );
 		} else {
 			draw2dApi->drawRect ( iXYWH, colorWhite, screenDims, glBuffers );
+		}
+
+		if ( thisHover ) {
+			draw2dApi->drawRect ( iXYWH, colorOrange, screenDims, glBuffers );
+			// shitty way of making it 2 px wide.
+			iXYWH[0] -= 1;
+			iXYWH[1] -= 1;
+			iXYWH[2] += 1;
+			iXYWH[3] += 1;
+			draw2dApi->drawRect ( iXYWH, colorOrange, screenDims, glBuffers );
 		}
 
 		i += 1;

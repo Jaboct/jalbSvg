@@ -160,6 +160,7 @@ Hotkey:
 jalbJvg	t	set_cursorInputMode	1
 // Line
 jalbJvg	6	set_cursorInputMode	2
+jalbJvg	b	set_cursorInputMode	2
 // Circle
 jalbJvg	5	set_cursorInputMode	3
 // Complex
