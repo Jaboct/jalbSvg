@@ -38,7 +38,11 @@ Text:
 /home/jadeb/workspace/jHigh/jalbSvg/makefile
 /home/jadeb/workspace/jHigh/jalbSvg/lay/jalbJvg
 /home/jadeb/workspace/jHigh/jalbSvg/src/jHand.c
-/home/jadeb/workspace/jHigh/jalbSvg/src/complexEle_ext.c
+#/home/jadeb/workspace/jHigh/jalbSvg/src/complexEle_ext.c
+/home/jadeb/workspace/jHigh/jalbSvg/src/jRender.c
+/home/jadeb/workspace/jHigh/jalbSvg/src/jEvent.c
+/home/jadeb/workspace/jHigh/jalbSvg/src/jEvent_path.c
+/home/jadeb/workspace/jHigh/jalbSvg/src/hover.c
 
 
 jHighLoad:

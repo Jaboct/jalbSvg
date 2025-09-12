@@ -84,7 +84,7 @@ uiGen_liveDev does, so mimic that.<br>
 <div class="myParagraph" id="globalVars">
 <b>globalVars</b><br>
 <div class="codeBlock">struct jvg *glob_jvg = NULL;
-extern ArrayList *global_jEles; // (struct jNakedUnion*)	(global_jvg->eles)
+extern ArrayList *global_jEles; // (struct jNakedUnion*)	(global_jvg->eles) // depreciate this?
 </div>
 
 <br>
@@ -236,6 +236,21 @@ jText_mEvent uses:<br>
 pointInsideI ( )<br>
 <br>
 <br>
+
+<br>
+<br>
+
+<b>Placing Eles</b><br>
+Change cursor type, either via hotkeys or the left bar.<br>
+jalbJvg_mDown ( )<br>
+handles: cursorInputMode<br>
+
+<br>
+<br>
+
+<br>
+<br>
+
 <b>Control Points</b><br>
 I feel like i wnat the option, to have control point size scale with zoon, vs remain constant.<br>
 int jText_box_width<br>

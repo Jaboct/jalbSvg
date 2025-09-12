@@ -23,6 +23,9 @@ extern int cursor_eleEditId;
 extern int cursor_unionEditId;
 extern int cursor_pathEditId;
 extern int cursor_groupEditId;
+extern int cursor_circEditId;
+extern int cursor_textEditId;
+extern int cursor_rectEditId;
 extern int debugPrint_projectName_init;
 
 
@@ -39,6 +42,9 @@ extern struct backbone_structStruct backboneStru_cursor_ele;
 extern struct backbone_structStruct backboneStru_cursor_union;
 extern struct backbone_structStruct backboneStru_cursor_path;
 extern struct backbone_structStruct backboneStru_cursor_group;
+extern struct backbone_structStruct backboneStru_cursor_circ;
+extern struct backbone_structStruct backboneStru_cursor_text;
+extern struct backbone_structStruct backboneStru_cursor_rect;
 
 /** Functions */
 
@@ -128,11 +134,20 @@ void cursor_unionTypeChange0 ( struct cursor_union *var, int type ) {
 	}
 	if ( var->type == 0 ) {
 	} else if ( var->type == 1 ) {
+	} else if ( var->type == 2 ) {
+	} else if ( var->type == 3 ) {
+	} else if ( var->type == 4 ) {
 	}
 	if ( type == 0 ) {
 		var->path = cursor_pathInit ( );
 	} else if ( type == 1 ) {
 		var->group = cursor_groupInit ( );
+	} else if ( type == 2 ) {
+		var->circ = cursor_circInit ( );
+	} else if ( type == 3 ) {
+		var->text = cursor_textInit ( );
+	} else if ( type == 4 ) {
+		var->rect = cursor_rectInit ( );
 	}
 	var->type = type;
 }
@@ -146,6 +161,9 @@ void *cursor_unionInitMask ( ) {
 void cursor_unionClose ( struct cursor_union *var ) {
 	if ( var->type == 0 ) {
 	} else if ( var->type == 1 ) {
+	} else if ( var->type == 2 ) {
+	} else if ( var->type == 3 ) {
+	} else if ( var->type == 4 ) {
 	}
 	free ( var );
 
@@ -161,6 +179,12 @@ void cursor_unionBodyToVal ( void *varPass, int nameI, char *body ) {
 		if ( var->type == 0 ) {
 			// wont get called?
 		} else if ( var->type == 1 ) {
+			// wont get called?
+		} else if ( var->type == 2 ) {
+			// wont get called?
+		} else if ( var->type == 3 ) {
+			// wont get called?
+		} else if ( var->type == 4 ) {
 			// wont get called?
 		}
 	}
@@ -180,6 +204,24 @@ int cursor_unionNameToIndex ( char *body, void *data, void *ret, char **strPtr, 
 		*strPtr = "cursor_group";
 		void **retPtr = ret;
 		*retPtr = &var->group;
+		return jxnPtr;
+	} else if ( strcmp ( body, "circ" ) == 0 ) {
+		cursor_unionTypeChange0 ( var, 2 );
+		*strPtr = "cursor_circ";
+		void **retPtr = ret;
+		*retPtr = &var->circ;
+		return jxnPtr;
+	} else if ( strcmp ( body, "text" ) == 0 ) {
+		cursor_unionTypeChange0 ( var, 3 );
+		*strPtr = "cursor_text";
+		void **retPtr = ret;
+		*retPtr = &var->text;
+		return jxnPtr;
+	} else if ( strcmp ( body, "rect" ) == 0 ) {
+		cursor_unionTypeChange0 ( var, 4 );
+		*strPtr = "cursor_rect";
+		void **retPtr = ret;
+		*retPtr = &var->rect;
 		return jxnPtr;
 	}
 	return -1;
@@ -240,7 +282,7 @@ void cursor_pathBodyToVal ( void *varPass, int nameI, char *body ) {
 
 int cursor_pathNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
 
-	struct cursor_path *var = data;
+//	struct cursor_path *var = data;
 	if ( strcmp ( body, "itself" ) == 0 ) {
 		return 0;
 	} else if ( strcmp ( body, "verts" ) == 0 ) {
@@ -322,5 +364,155 @@ struct xmlFuncts cursor_groupXml = {
 
 void cursor_group_print ( struct cursor_group *stru ) {
 	printf ( "cursor_group_print ( )\n" );
+}
+/** cursor_circ */
+
+struct cursor_circ *cursor_circInit ( ) {
+	if ( debugPrint_projectName_init ) {
+		printf ( "cursor_circInit ( )\n" );
+	}
+	struct cursor_circ *var = malloc ( sizeof ( struct cursor_circ ) );
+	cursor_circFill ( var );
+	return var;
+}
+void cursor_circFill ( struct cursor_circ *var ) {
+	var->type = 0;
+}
+
+void *cursor_circInitMask ( ) {
+	void *ret = cursor_circInit ( );
+	return ret;
+
+}
+void cursor_circClose ( struct cursor_circ *var ) {
+	free ( var );
+
+}
+int cursor_circ_attrib_arr[] = {
+	0,
+};
+void cursor_circBodyToVal ( void *varPass, int nameI, char *body ) {
+
+	struct cursor_circ *var = varPass;
+
+	if ( nameI == 0 ) {
+		var->type = atoi ( body );
+	}
+}
+
+int cursor_circNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
+
+	if ( strcmp ( body, "type" ) == 0 ) {
+		return 0;
+	}
+	return -1;
+}
+
+struct xmlFuncts cursor_circXml = {
+	.typeName = "cursor_circ",
+	.init = cursor_circInitMask,
+	.nameToIndex = cursor_circNameToIndex,
+	.bodyToVal = cursor_circBodyToVal,
+};
+
+void cursor_circ_print ( struct cursor_circ *stru ) {
+	printf ( "cursor_circ_print ( )\n" );
+}
+/** cursor_text */
+
+struct cursor_text *cursor_textInit ( ) {
+	if ( debugPrint_projectName_init ) {
+		printf ( "cursor_textInit ( )\n" );
+	}
+	struct cursor_text *var = malloc ( sizeof ( struct cursor_text ) );
+	cursor_textFill ( var );
+	return var;
+}
+void cursor_textFill ( struct cursor_text *var ) {
+}
+
+void *cursor_textInitMask ( ) {
+	void *ret = cursor_textInit ( );
+	return ret;
+
+}
+void cursor_textClose ( struct cursor_text *var ) {
+	free ( var );
+
+}
+int cursor_text_attrib_arr[] = {
+};
+void cursor_textBodyToVal ( void *varPass, int nameI, char *body ) {
+
+
+}
+
+int cursor_textNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
+
+	return -1;
+}
+
+struct xmlFuncts cursor_textXml = {
+	.typeName = "cursor_text",
+	.init = cursor_textInitMask,
+	.nameToIndex = cursor_textNameToIndex,
+	.bodyToVal = cursor_textBodyToVal,
+};
+
+void cursor_text_print ( struct cursor_text *stru ) {
+	printf ( "cursor_text_print ( )\n" );
+}
+/** cursor_rect */
+
+struct cursor_rect *cursor_rectInit ( ) {
+	if ( debugPrint_projectName_init ) {
+		printf ( "cursor_rectInit ( )\n" );
+	}
+	struct cursor_rect *var = malloc ( sizeof ( struct cursor_rect ) );
+	cursor_rectFill ( var );
+	return var;
+}
+void cursor_rectFill ( struct cursor_rect *var ) {
+	var->type = 0;
+}
+
+void *cursor_rectInitMask ( ) {
+	void *ret = cursor_rectInit ( );
+	return ret;
+
+}
+void cursor_rectClose ( struct cursor_rect *var ) {
+	free ( var );
+
+}
+int cursor_rect_attrib_arr[] = {
+	0,
+};
+void cursor_rectBodyToVal ( void *varPass, int nameI, char *body ) {
+
+	struct cursor_rect *var = varPass;
+
+	if ( nameI == 0 ) {
+		var->type = atoi ( body );
+	}
+}
+
+int cursor_rectNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
+
+	if ( strcmp ( body, "type" ) == 0 ) {
+		return 0;
+	}
+	return -1;
+}
+
+struct xmlFuncts cursor_rectXml = {
+	.typeName = "cursor_rect",
+	.init = cursor_rectInitMask,
+	.nameToIndex = cursor_rectNameToIndex,
+	.bodyToVal = cursor_rectBodyToVal,
+};
+
+void cursor_rect_print ( struct cursor_rect *stru ) {
+	printf ( "cursor_rect_print ( )\n" );
 }
 /** Other Functs */

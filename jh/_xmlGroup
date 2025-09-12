@@ -39,6 +39,9 @@ jh/structStruct/cursor_ele.xml
 jh/structStruct/cursor_union.xml
 jh/structStruct/cursor_path.xml
 jh/structStruct/cursor_group.xml
+jh/structStruct/cursor_circ.xml
+jh/structStruct/cursor_text.xml
+jh/structStruct/cursor_rect.xml
 
 # fileStructs
 jh/fileStruct/mod.xml
@@ -70,5 +73,6 @@ jh/projectVar/global_jEles.xml
 # modStructs
 jh/modStruct/jalbSvg.xml
 jh/modStruct/jalbJvg.xml
+
 
 

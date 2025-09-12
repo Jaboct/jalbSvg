@@ -34,12 +34,18 @@ struct cursor_union {
 	union  {
 		struct cursor_path *path;
 		struct cursor_group *group;
+		struct cursor_circ *circ;
+		struct cursor_text *text;
+		struct cursor_rect *rect;
 	};
 };
 
 enum cursor_unionEnum {
 	cu_Path = 0,
 	cu_Group,
+	cu_Circ,
+	cu_Text,
+	cu_Rect,
 };
 struct cursor_path {
 	int itself;
@@ -49,6 +55,18 @@ struct cursor_path {
 struct cursor_group {
 	int this;
 	ArrayList *eles;	// (struct cursor_ele*)
+};
+
+struct cursor_circ {
+	int type;
+};
+
+struct cursor_text {
+	int vertI;
+};
+
+struct cursor_rect {
+	int type;
 };
 
 
@@ -90,5 +108,29 @@ void *cursor_groupInitMask ( );
 void cursor_groupClose ( struct cursor_group *var );
 void cursor_groupBodyToVal ( void *varPass, int nameI, char *body );
 int cursor_groupNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
+
+/** cursor_circ */
+struct cursor_circ *cursor_circInit ( );
+void cursor_circFill ( struct cursor_circ *var );
+void *cursor_circInitMask ( );
+void cursor_circClose ( struct cursor_circ *var );
+void cursor_circBodyToVal ( void *varPass, int nameI, char *body );
+int cursor_circNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
+
+/** cursor_text */
+struct cursor_text *cursor_textInit ( );
+void cursor_textFill ( struct cursor_text *var );
+void *cursor_textInitMask ( );
+void cursor_textClose ( struct cursor_text *var );
+void cursor_textBodyToVal ( void *varPass, int nameI, char *body );
+int cursor_textNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
+
+/** cursor_rect */
+struct cursor_rect *cursor_rectInit ( );
+void cursor_rectFill ( struct cursor_rect *var );
+void *cursor_rectInitMask ( );
+void cursor_rectClose ( struct cursor_rect *var );
+void cursor_rectBodyToVal ( void *varPass, int nameI, char *body );
+int cursor_rectNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** Other Functs */

@@ -894,10 +894,12 @@ int hand_ee_event ( SDL_Event *e, int *clickXYpass, int *eleWH, struct complexEl
 		// this ele is now selected
 		selected = 1;
 
+/*
 		// idk if i need a specific i.
 		int i = 0;
 
 		handleCursor_start;
+*/
 		return 1;
 	}
 

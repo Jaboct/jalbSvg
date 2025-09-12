@@ -16,6 +16,7 @@
 
 #include "recursiveCursor.h"	// TODO, remove once cursor is done.
 
+#include "hover.h"	// say_cursor_ele
 
 /** Variables */
 
@@ -111,8 +112,6 @@ int jPath_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jPath *pat
 
 		point_to_loc ( vert->XY, screenXY, viewLoc,  viewScale );
 
-//		sayFloatArray ( "screenXY", screenXY, 2 );
-
 		if ( clickXYpass[0] >= screenXY[0] - (vertWidth / 2.0) &&
 		     clickXYpass[0] <= screenXY[0] + (vertWidth / 2.0) ) {
 			if ( clickXYpass[1] >= screenXY[1] - (vertWidth / 2.0) &&
@@ -122,8 +121,6 @@ int jPath_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jPath *pat
 				selected = 1;
 
 				path_vert_click ( i );
-
-				handleCursor_start;
 
 				return 1;
 			}
@@ -148,6 +145,7 @@ int jPath_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jPath *pat
 			float delta = vectNorm ( cXY, 2 );
 			if ( delta < controlPointR ) {
 				printf ( "CLICK ON CONTROL\n");
+/*
 				{
 					selected = 1;
 					cursorDown;
@@ -156,7 +154,7 @@ int jPath_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jPath *pat
 					cursorUp;
 				}
 				handleCursor;
-
+*/
 				return 1;
 			}
 
@@ -166,6 +164,7 @@ int jPath_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jPath *pat
 			delta = vectNorm ( cXY, 2 );
 			if ( delta < controlPointR ) {
 				printf ( "CLICK ON CONTROL\n");
+/*
 				{
 					selected = 1;
 					cursorDown;
@@ -174,7 +173,7 @@ int jPath_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jPath *pat
 					cursorUp;
 				}
 				handleCursor;
-
+*/
 				return 1;
 			}
 		} else if ( line->type == path_QuadBez ) {
@@ -187,6 +186,7 @@ int jPath_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jPath *pat
 			float delta = vectNorm ( cXY, 2 );
 			if ( delta < controlPointR ) {
 				printf ( "CLICK ON CONTROL\n");
+/*
 				{
 					selected = 1;
 					cursorDown;
@@ -195,7 +195,7 @@ int jPath_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jPath *pat
 					cursorUp;
 				}
 				handleCursor;
-
+*/
 				return 1;
 			}
 
@@ -239,8 +239,7 @@ int jPath_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jPath *pat
 
 
 
-/*
-	// what is this stuff?
+/* what is this stuff?
 		float XY[2];
 		get_pathUni_XY ( uni, XY );
 
@@ -339,7 +338,14 @@ int path_vert_click ( int i ) {
 	int *tempNext = arrayListGetNext ( cuPath->verts );
 	*tempNext = i;
 
+	printf ( "temp_clickMem: %p\n", temp_clickMem );
+	printf ( "temp_clickMem->payload->type: %d\n", temp_clickMem->payload->type );
+
+	// i want this to be the top ele
 	ArrayList *cursorList = glob_cursor_ele->payload->group->eles;
+
+	printf ( "vert toggle: temp_clickMem_parent\n" );
+	say_cursor_ele ( temp_clickMem_parent );
 
 	int ret = toggle_cursorEle ( cursorList, temp_clickMem_parent );
 	printf ( "toggle_cursorEle ret: %d\n", ret );
@@ -357,8 +363,10 @@ int path_vert_click ( int i ) {
 		if ( !ret ) {
 			heldType = ht_eleMove;
 			arrayListAddEndPointer ( cursorList, temp_clickMem_parent );
+			// this ele is in the list, so nexttime init a new one.
+			temp_clickMem_parent = NULL;
 		} else {
-			// TODO free temp_clickMen_parent
+			// TODO free temp_clickMem_parent
 			if ( ret == 2 ) {
 				// idk
 			} else {
@@ -368,15 +376,21 @@ int path_vert_click ( int i ) {
 		return 1;
 	} else {
 		// current cursor is already wiped, so simply add this.
+		// (this is a bit of an assumption, i should verify?)
 		heldType = ht_eleMove;
 		arrayListAddEndPointer ( cursorList, temp_clickMem_parent );
+		// this ele is in the list, so nexttime init a new one.
+		temp_clickMem_parent = NULL;
 
 		return 1;
 	}
 }
 
+/// TODO
 int path_control_click ( int i ) {
 	// since you are not allowed to select multiple control points
+
+	return 0;
 }
 
 

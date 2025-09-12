@@ -1,8 +1,9 @@
 #include "hover.h"
 
-#include "cursor.h"
 
 /** Includes */
+
+#include "cursor.h"
 
 #include "jGroup.h"
 #include "cursorIcon.h"
@@ -32,9 +33,10 @@ int hoverIndex_render = 0;
 struct cursor_ele *hoverMem = NULL;	// global var, doesnt change after being inited
 struct cursor_ele *temp_hoverMem = NULL;	// temp var, changes as u render and event. internal vars store the stack.
 
-ArrayList *cursorList_new = NULL;	// (struct cursor_ele*)	// TODO
+//ArrayList *cursorList_new = NULL;	// (struct cursor_ele*)	// TODO glob_cursor_ele->eles
 struct cursor_ele *glob_cursor_ele = NULL;	// of type group, used to contain cursorList
-int isHover = 0;
+int isHover = 0;	// shouldnt be necessary? instead just rely on if temp_hoverMem is null?, well set hoverMem->index = -1?
+
 
 /** Functions */
 
@@ -44,12 +46,14 @@ void init_jvg_cursor ( ) {
 	if ( !hoverMem ) {
 		hoverMem = cursor_eleInit ( );
 	}
-	if ( !cursorList_new ) {
+
+//	if ( !cursorList_new ) {
+	if ( !glob_cursor_ele ) {
 		// instead of using this, wrap it in a cursor_group;
 		glob_cursor_ele = cursor_eleInit ( );
 		cursor_unionTypeChange0 ( glob_cursor_ele->payload, cu_Group );
 //		cursorList_new = initArrayList ( 10, sizeof ( struct cursor_ele* ), 10 );
-		cursorList_new = glob_cursor_ele->payload->group->eles;
+//		cursorList_new = glob_cursor_ele->payload->group->eles;
 	}
 }
 
@@ -123,7 +127,6 @@ int onHoverType ( int *XY ) {
 	}
 
 	if ( hoverMem ) {
-//		cursor_unionTypeChange0 ( hoverMem->payload, -1 );
 		cursor_unionTypeChange0 ( hoverMem->payload, cu_Group );	// always a group up top to match the jEleList
 		emptyArrayList ( hoverMem->payload->group->eles );	// TODO free these.
 
@@ -139,16 +142,19 @@ int onHoverType_eleList ( int *XY, ArrayList *eleList ) {
 		printf ( "onHoverType_eleList ( )\n" );
 	}
 
-//	struct cursor_ele *memHover = temp_hoverMem;
+	struct cursor_ele *memHover = temp_hoverMem;
 
 	int i = 0;
 	int len = arrayListGetLength ( eleList );
 	while ( i < len ) {
 		struct jNakedUnion *uni = arrayListGetPointer ( eleList, i );
 
+		temp_hoverMem = memHover;
+
 		if ( uni->type == jNaked_Path ) {
 			struct jPath *path = uni->path;
 
+			// hover info is set in here
 			int ret = isOnPath ( path, XY );
 
 //			printf ( "isOnPath: %d\n", ret );
@@ -158,7 +164,7 @@ int onHoverType_eleList ( int *XY, ArrayList *eleList ) {
 				if ( ret == 2 ) { // TODO i should do this for on the line aswell?
 					struct cursor_ele *hoverEle = arrayListGetPointer ( temp_hoverMem->payload->group->eles, 0 );
 					hoverEle->index = i;
-					say_cursor_ele ( hoverMem );
+//					say_cursor_ele ( hoverMem );
 				}
 
 				isHover = 1;
@@ -176,14 +182,56 @@ int onHoverType_eleList ( int *XY, ArrayList *eleList ) {
 		} else if ( uni->type == jNaked_Rect ) {
 			struct jRect *rect = uni->rect;
 
-			if ( isOnRect ( rect, XY ) ) {
+			int rectRet = jRect_mPos ( XY, rect,
+				glob_viewLoc, glob_viewScale );
+			if ( rectRet >= 0 ) {
+				// set hover info
+				struct cursor_ele *subHover = cursor_eleInit ( );
+				arrayListAddEndPointer ( temp_hoverMem->payload->group->eles, subHover );
+
+				// sub ele
+				cursor_unionTypeChange0 ( subHover->payload, cu_Rect );
+				struct cursor_circ *cuRect = subHover->payload->circ;
+				cuRect->type = rectRet;
+
+				// top ele
+				struct cursor_ele *hoverEle = arrayListGetPointer ( temp_hoverMem->payload->group->eles, 0 );
+				hoverEle->index = i;
+
+//				printf ( "hoverMem: %p\n", hoverMem );
+//				say_cursor_ele ( hoverMem );
+
+				isHover = 1;
+
 				return 1;
 			}
 
 		} else if ( uni->type == jNaked_Circ ) {
 			struct jCirc *circ = uni->circ;
 
-			if ( isOnCirc ( circ, XY ) ) {
+			int circRet = isOnCirc ( circ, XY );
+
+//			printf ( "isOnCirc: %d\n", circRet );
+
+			if ( circRet ) {
+				// set hover info
+				struct cursor_ele *subHover = cursor_eleInit ( );
+				arrayListAddEndPointer ( temp_hoverMem->payload->group->eles, subHover );
+
+				// sub ele
+				cursor_unionTypeChange0 ( subHover->payload, cu_Circ );
+				struct cursor_circ *cuCirc = subHover->payload->circ;
+				cuCirc->type = circRet;
+
+				// top ele
+				struct cursor_ele *hoverEle = arrayListGetPointer ( temp_hoverMem->payload->group->eles, 0 );
+				hoverEle->index = i;
+
+//				printf ( "hoverMem: %p\n", hoverMem );
+//				say_cursor_ele ( hoverMem );
+
+				isHover = 1;
+
 				return 1;
 			}
 		}
@@ -399,6 +447,8 @@ int isOnRect ( struct jRect *rect, int *XY ) {
 	return 0;
 }
 
+// return 1 of its on the center (to move)
+// 2 if its on the outside (to change size)
 int isOnCirc ( struct jCirc *circ, int *XY ) {
 	float viewScale = glob_viewScale;
 	float *viewLoc = glob_viewLoc;
@@ -416,7 +466,7 @@ int isOnCirc ( struct jCirc *circ, int *XY ) {
 	// check the outer box;
 	boxXYWH[0] = circ->XY[0] + circ->radius - controlPointWidth / 2;
 	if ( pointInside ( cXY, boxXYWH ) ) {
-		return 1;
+		return 2;
 	}
 
 	return 0;
@@ -480,7 +530,20 @@ void print_space ( int i ) {
 char *cursorTypes[] = {
 	"cu_Path",
 	"cu_Group",
+	"cu_Circ",
+	"cu_Text",
+	"cu_Rect",
+	"cu_out of range",
 };
+
+char *cursorType_toString ( int i ) {
+	if ( i >= 0 &&
+	     i < 4 ) {
+		return cursorTypes[i];
+	} else {
+		return "Out Of Range";
+	}
+}
 
 void say_cursor_ele ( struct cursor_ele *cursorEle ) {
 //	printf ( "say_cursor_ele ( )\n" );
@@ -510,8 +573,13 @@ void say_cursor_ele ( struct cursor_ele *cursorEle ) {
 
 		int i = 0;
 		int len = arrayListGetLength ( cuGroup->eles );
+
+//		printf ( "cuGroup->eles.len: %d\n", len );
+
 		while ( i < len ) {
 			struct cursor_ele *ele = arrayListGetPointer ( cuGroup->eles, i );
+
+//			printf ( "ele: %p\n", ele );
 //			printf ( "(%d, %d) ", ele->index, ele->payload->type );
 
 			say_cursor_depth += 1;
@@ -521,6 +589,18 @@ void say_cursor_ele ( struct cursor_ele *cursorEle ) {
 			i += 1;
 		}
 		printf ( "}\n" );
+	} else if ( uni->type == cu_Circ ) {
+		struct cursor_circ *cuCirc = uni->circ;
+		printf ( "->type: %d\n", cuCirc->type );
+
+	} else if ( uni->type == cu_Text ) {
+//		struct cursor_text *cuText = uni->text;
+//		printf ( "->type: %d\n", cuText->type );
+		printf ( "\n" );
+
+	} else if ( uni->type == cu_Rect ) {
+		struct cursor_rect *cuRect = uni->rect;
+		printf ( "->type: %d\n", cuRect->type );
 
 	} else {
 		printf ( "ERROR, say_cursor_ele ->type unhandled (%d)\n", uni->type );
@@ -533,8 +613,17 @@ void say_cursorList_new ( ) {
 	printf ( "\n" );
 	printf ( "say_cursorList_new ( )\n" );
 
+	if ( glob_cursor_ele->payload->type != cu_Group ) {
+		printf ( "ERROR, say_cursorList_new ( )\n" );
+	}
+	ArrayList *cursorList_new = glob_cursor_ele->payload->group->eles;
+
 	int len = arrayListGetLength ( cursorList_new );
 	printf ( "cursorList_new.len: %d\n", len );
+
+
+	printf ( "{\n" );
+	say_cursor_depth += 1;
 
 	int i = 0;
 	while ( i < len ) {
@@ -543,6 +632,15 @@ void say_cursorList_new ( ) {
 		say_cursor_ele ( ele );
 
 		i += 1;
+	}
+	say_cursor_depth -= 1;
+	printf ( "}\n" );
+
+
+	printf ( "say HOVER MEM\n" );
+	printf ( "hoverMem: %p\n", hoverMem );
+	if ( hoverMem ) {
+		say_cursor_ele ( hoverMem );
 	}
 
 	printf ( "say_cursorList_new ( ) OVER\n" );

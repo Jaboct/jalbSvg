@@ -76,16 +76,6 @@ void jalbJvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void
 int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 		float *viewLoc, float viewScale );
 
-int jalbJvg_mDown ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jvg *jvg,
-		float *viewLoc, float viewScale );
-int jalbJvg_mMotion ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jvg *jvgEle,
-		float *viewLoc, float viewScale );
-
-void drag_cursor_new ( SDL_Event *e, ArrayList *cursorList, ArrayList *eleList );
-void drag_cursor_path ( struct jNakedUnion *ele, struct cursor_path *cuPath, float *dXY );
-
-int keySpecialChar ( SDL_Event *e, ArrayList *sb );
-
 void jalbJvg_close ( void *data );
 
 

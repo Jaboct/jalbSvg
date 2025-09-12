@@ -86,6 +86,7 @@ int render_actualPayload = 0;
 extern ArrayList *cursorList_new;	// (struct cursor_ele*)
 int render_cursorDepth = 0;
 
+
 /// debug
 
 extern int debugPrint_jvg_render;
@@ -128,10 +129,10 @@ void jNakedList_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, Arra
 */
 
 	if ( temp_hoverMem ) {
-		printf ( "\n" );
-		printf ( "temp_hoverMem\n" );
-		say_cursor_ele ( temp_hoverMem );
-		printf ( "\n" );
+//		printf ( "\n" );
+//		printf ( "temp_hoverMem\n" );
+//		say_cursor_ele ( temp_hoverMem );
+//		printf ( "\n" );
 	}
 
 	while ( i < len ) {
@@ -146,11 +147,12 @@ void jNakedList_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, Arra
 		thisSel = 0;
 		isThisSel;
 
+//		printf ( "mem_hover: %p\n", mem_hover );
+
 		// new HOVER cursor check
 		if ( mem_hover ) {
 			ArrayList *eleList_new = mem_hover->payload->group->eles;
 			// mem_hover->index is irrelevent.
-//			if ( temp_hoverMem->index == i ) {
 
 			// search through eleList_new, to see if it contains an elemet with ->index = i
 			int subIndex = eleList_getIndex ( eleList_new, i );
@@ -699,6 +701,18 @@ void jText_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jT
 
 	float tempXYWH[4] = { text->XYWH[0], text->XYWH[1], text->XYWH[2], text->XYWH[3] };
 
+
+
+	int thisObjEdit = thisEdit ( thisSel );
+
+//	int thisObjEdit = 0;
+	if ( temp_actualMem ) {
+		// todo type check
+		thisObjEdit = 1;
+		thisSel = 1;
+	}
+
+
 	int drawCursor = 0;
 	if ( thisSel ) {
 		drawCursor = 1;
@@ -718,8 +732,6 @@ void jText_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jT
 	spanRender ( screenDims, glBuffers, XYWHpass, glyphWH, tempXYWH, text->sb,
 		drawCursor, cStart, cEnd,
 		viewLoc, viewScale );
-
-	int thisObjEdit = thisEdit ( thisSel );
 
 	if ( thisObjEdit ) {
 		// draw the white edit box around the text.
@@ -805,6 +817,24 @@ void jRectRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jRe
 		thisSel = 0;
 		isThisSel;
 
+
+
+		int hoverType = 0;
+		if ( temp_hoverMem ) {
+			struct cursor_ele *ele = temp_hoverMem;
+			// todo type check
+			if ( ele->payload->type == cu_Rect ) {
+				struct cursor_rect *cuRect= ele->payload->rect;
+				hoverType = cuRect->type;
+			} else {
+				printf ( "HOVER ELE MISMATCH (rect)\n" );
+			}
+		}
+
+		if ( hoverType == 1 ) {
+			thisSel = 1;
+		}
+
 		// top left square
 		float corner[4] = {
 			screenXY[0] - vertWidth/2,
@@ -822,6 +852,12 @@ void jRectRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jRe
 		thisSel = 0;
 		isThisSel;
 
+
+		if ( hoverType == 2 ) {
+			thisSel = 1;
+		}
+
+
 		// bottom right square
 		corner[0] += WH[0];
 		corner[1] += WH[1];
@@ -837,10 +873,12 @@ void jRectRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jRe
 //	printf ( "jRectRender ( ) OVER\n" );
 }
 
+// why is this not jCirc_render like other functs are
 void jCircRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jCirc *circ,
 		float *viewLoc, float viewScale ) {
 //	printf ( "jCircRender ( )\n" );
 //	printf ( "thisSel: %d\n", thisSel );
+//	printf ( "temp_hoverMem: %p\n", temp_hoverMem );
 
 	float screenXY[2];
 	point_to_loc ( circ->XY, screenXY, viewLoc, viewScale );
@@ -879,18 +917,38 @@ void jCircRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jCi
 //		iXYWH[0] = XYWHpass[0] + circ->XY[0] - (controlPointWidth / 2);
 //		iXYWH[1] = XYWHpass[1] + circ->XY[1] - (controlPointWidth / 2);
 
+		int hoverType = 0;
+		if ( temp_hoverMem ) {
+			struct cursor_ele *ele = temp_hoverMem;
+			// todo type check
+			if ( ele->payload->type == cu_Circ ) {
+				struct cursor_circ *cuCirc= ele->payload->circ;
+				hoverType = cuCirc->type;
+			} else {
+				printf ( "HOVER ELE MISMATCH (circ)\n" );
+			}
+		}
+
 		iXYWH[0] = screenXY[0] - (cWidth / 2);
 		iXYWH[1] = screenXY[1] - (cWidth / 2);
 		iXYWH[2] = cWidth;
 		iXYWH[3] = cWidth;
-		draw2dApi->drawRect ( iXYWH, colorOrange, screenDims, glBuffers );
+		if ( hoverType == 1 ) {
+			draw2dApi->fillRect ( iXYWH, colorWhite, screenDims, glBuffers );
+		} else {
+			draw2dApi->drawRect ( iXYWH, colorOrange, screenDims, glBuffers );
+		}
 
 		// square at the right side.
 		iXYWH[0] = screenXY[0] + radius - (cWidth / 2);
 		iXYWH[1] = screenXY[1] - (cWidth / 2);
 		iXYWH[2] = cWidth;
 		iXYWH[3] = cWidth;
-		draw2dApi->drawRect ( iXYWH, colorOrange, screenDims, glBuffers );
+		if ( hoverType == 2 ) {
+			draw2dApi->fillRect ( iXYWH, colorWhite, screenDims, glBuffers );
+		} else {
+			draw2dApi->drawRect ( iXYWH, colorOrange, screenDims, glBuffers );
+		}
 	}
 }
 
