@@ -1701,7 +1701,7 @@ void open_left_toolbar ( ) {
 	void *data = NULL;
 	int type = 1; // no red bar.
 
-	int XYWH[4] = { 0, 54, 100, 400 };
+	int XYWH[4] = { 0, 54, 68, 114 };
 	void *uiGen = uiGen_api->load_and_set_XYWH ( fullDir, data, XYWH, type );
 
 	printf ( "uiGen: %p\n", uiGen );
@@ -1720,8 +1720,10 @@ void uiGen_open_eleList ( ) {
 	void *data = glob_jvg;
 	int type = 0; // red bar.
 
+	int width = 200;
+
 	// open it on the right side of the screen.
-	int XYWH[4] = { screenDim_mem[0] - 400, 74, 400, 400 };
+	int XYWH[4] = { screenDim_mem[0] - width, 74, width, 400 };
 	uiGen_api->load_and_set_XYWH ( fullDir, data, XYWH, type );
 
 	printf ( "uiGen_open_eleList ( ) OVER\n" );

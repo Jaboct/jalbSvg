@@ -68,6 +68,32 @@ complexEle is an instantiation of complexDec, it contains all (or some?) the sub
 <br>
 <br>
 
+<br>
+<br>
+
+To declare a complexDec, you need a render and event function<br>
+<div class="codeBlock">complexDex->renderFunct_name
+void *f ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct rendEquation *eq,
+		float *viewLoc, float viewScale );
+complexDec->eventFunct_name
+int *f ( SDL_Event *e, int *clickXY, int *eleWH, void *data,
+		float *viewLoc, float viewScale );
+
+along with a string, which is the mods (nickname or actual name?)
+complexDec->modName
+
+There are also params you can add to the function calls, i dont think these are developed.
+complexDec->renderParams
+complexDec->eventParams
+
+I dont think subVars are handled either.
+</div>
+
+
+<br>
+<br>
+
+<b>Thoughts</b><br>
 Why does complexDec have -&gt;modName?<br>
 
 <br>
@@ -265,7 +291,7 @@ i want the std type.
 <br>
 
 <div class="myParagraph" id="Examples">
-<b>Examples</br>
+<b>Examples</b><br>
 <br>
 
 jalbCalc's renderEquation.<br>

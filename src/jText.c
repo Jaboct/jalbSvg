@@ -74,6 +74,8 @@ int jText_attrib_arr[] = {
 	0,
 };
 void jTextBodyToVal ( void *varPass, int nameI, char *body ) {
+	printf ( "jTextBodyToVal ( )\n" );
+	printf ( "body: %s\n", body );
 
 	struct jText *var = varPass;
 
@@ -89,6 +91,8 @@ void jTextBodyToVal ( void *varPass, int nameI, char *body ) {
 }
 
 int jTextNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
+	printf ( "jTextNameToIndex ( )\n" );
+	printf ( "body: %s\n", body );
 
 //	struct jText *var = data;
 	if ( strcmp ( body, "XYWH" ) == 0 ) {
