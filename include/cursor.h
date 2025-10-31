@@ -46,6 +46,7 @@ enum cursor_unionEnum {
 	cu_Circ,
 	cu_Text,
 	cu_Rect,
+	cu_ComplexEle,
 };
 struct cursor_path {
 	int itself;

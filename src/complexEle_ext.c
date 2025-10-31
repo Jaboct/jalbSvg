@@ -24,6 +24,8 @@ struct jalbLayMod *(*modCore_modGetter) ( char *modNick ) = NULL;
 extern struct jalbFont *fonts[];
 extern int numFonts;
 
+extern int debugPrint_jvg_complex_render;
+
 
 /** Functions */
 
@@ -255,11 +257,12 @@ void complexEle_initType ( struct complexEle *ele, int type ) {
 
 void complexEleRender_sub ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct complexEle *complex, struct complexDec *dec,
 		float *viewLoc, float viewScale ) {
-/*
-	printf ( "complexEleRender_sub ( )\n" );
-	printf ( "complex: %p\n", complex );
-	printf ( "dec: %p\n", dec );
-*/
+	if ( debugPrint_jvg_complex_render ) {
+		printf ( "complexEleRender_sub ( )\n" );
+		printf ( "complex: %p\n", complex );
+		printf ( "dec: %p\n", dec );
+	}
+
 	int numParams = arrayListGetLength ( dec->renderParams );
 
 //	printf ( "numParams: %d\n", numParams );
@@ -313,6 +316,7 @@ void complexEleRender_sub ( int *screenDims, GLuint *glBuffers, int *XYWHpass, s
 		}
 	}
 }
+
 
 /** Event */
 
@@ -374,7 +378,10 @@ int complexEle_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct compl
 //		int (*funct)(SDL_Event *e, int *clickXYpass, int *eleWH, void *data) = dec->eventFunct;
 //		ret = funct ( e, clickXY, eleWH, ele );
 
+		// TODO, this is bad.
 		int relClick[2] = { clickXYpass[0] - ele->XYWH[0], clickXYpass[1] - ele->XYWH[1] };
+
+		sayIntArray ( "relClick", relClick, 2 );
 
 		int (*funct)(SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 			float *viewLoc, float viewScale) = dec->eventFunct;
@@ -382,11 +389,52 @@ int complexEle_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct compl
 			viewLoc, viewScale );
 	}
 
+	// TODO, check ret
+	set_cursorList_complex ( );
+
 	printf ( "complexEle_mEvent ( ) OVER\n" );
 
 	return ret;
 }
 
+int complexEle_kEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct complexEle *ele,
+		float *viewLoc, float viewScale ) {
+	printf ( "complexEle_kEvent ( )\n" );
+
+
+	int ret = 0;
+
+
+	/// TODO, this should be retrieved.
+	int modI = 0;
+	struct complexMod *mod = arrayListGetPointer ( glob_jvg->moduleList, modI );
+
+	if ( !mod ) {
+		printf ( "ERROR, !mod, complexEle_mEvent ( )\n" );
+		return 0;
+	}
+
+
+
+	struct complexDec *dec = arrayListGetPointer ( mod->complexDecList, ele->decType );
+
+	printf ( "dec->eventFunct: %p\n", dec->eventFunct );
+
+	if ( dec->eventFunct ) {
+		float worldXY[2];
+		loc_to_pointI ( clickXYpass, worldXY, viewLoc, viewScale );
+
+		int relClick[2] = { clickXYpass[0] - ele->XYWH[0], clickXYpass[1] - ele->XYWH[1] };
+
+		sayIntArray ( "relClick", relClick, 2 );
+
+		int (*funct)(SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
+			float *viewLoc, float viewScale) = dec->eventFunct;
+		ret = funct ( e, relClick, eleWH, ele,
+			viewLoc, viewScale );
+	}
+	return ret;
+}
 
 extern char altKeys[];
 
@@ -947,4 +995,60 @@ void add_global_complexMod ( ) {
 
 	printf ( "add_global_complexMod ( ) OVER\n" );
 }
+
+
+/// TEMP
+
+void spawn_complexEle ( ) {
+	printf ( "spawn_complexEle ( )\n" );
+
+
+	struct jvg *jvg = glob_jvg;
+
+	// add complexEle
+	struct jNakedUnion *uni = jNakedUnionInit ( );
+	jNakedUnionTypeChange0 ( uni, jNaked_Complex );
+	uni->complex->XYWH[0] = 637;
+	uni->complex->XYWH[1] = 418;
+	uni->complex->XYWH[2] = 400;
+	uni->complex->XYWH[3] = 100;
+
+	arrayListAddEndPointer ( jvg->eles, uni );
+
+
+	// do postInits.
+	int i = 0;
+	int len = arrayListGetLength ( jvg->moduleList );
+	while ( i < len ) {
+		struct complexMod *mod = arrayListGetPointer ( jvg->moduleList, i );
+
+		int j = 0;
+		int numDecs = arrayListGetLength ( mod->complexDecList );
+		while ( j < numDecs ) {
+			struct complexDec *dec = arrayListGetPointer ( mod->complexDecList, i );
+			complexDecPostInit ( dec );
+			j += 1;
+		}
+
+		i += 1;
+	}
+
+
+	printf ( "spawn_complexEle ( ) OVER\n" );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

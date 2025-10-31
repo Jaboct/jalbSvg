@@ -1,5 +1,6 @@
 #include "jProof.h"
 
+
 /** Variables */
 
 char *outputLog = "/home/jadoo/workspace/jHigh/jalbSvg/res/jvg_proof/outputLog.txt";
@@ -77,6 +78,88 @@ int hand_diff ( char *fknow, char *ftest ) {
 
 	printf ( "hand_diff ( ) OVER\n" );
 }
+
+
+/// Complex
+
+#include "jGroup.h"
+#include "jHand.h"
+
+extern struct jvg *glob_jvg;
+extern char saveDir[];
+
+void complex_test_03 ( ) {
+	printf ( "complex_test_03 ( )\n" );
+
+
+	// spawn new jvg ele, make a complexMod, make a complexDec, define it as jalbCalc,
+	// spawn a complexEle, then compare the render and save file.
+	// todo, add event, and add proofs for the uiGen eles.
+
+	char *fullDir = "/home/jadeb/workspace/jHigh/jalbSvg/res/jvgTest/test_03.xml";
+	strcpy ( saveDir, fullDir );
+
+	glob_jvg = jvgInit ( );
+	struct jvg *jvg = glob_jvg;
+
+	spawn_new_complexDec ( );
+
+	struct complexMod *mod = arrayListGetPointer ( jvg->moduleList, 0 );
+	struct complexDec *dec = arrayListGetPointer ( mod->complexDecList, 0 );
+
+	strcpy ( mod->name, "jalbCalc" );
+	strcpy ( dec->modName, "jalbCalc" );
+
+	strcpy ( dec->renderFunct_name, "rendEquation_render_dynamic" );
+	strcpy ( dec->eventFunct_name, "rendEquation_event_dynamic" );
+
+
+	// add complexEle
+	struct jNakedUnion *uni = jNakedUnionInit ( );
+	jNakedUnionTypeChange0 ( uni, jNaked_Complex );
+	uni->complex->XYWH[0] = 637;
+	uni->complex->XYWH[1] = 418;
+	uni->complex->XYWH[2] = 400;
+	uni->complex->XYWH[3] = 100;
+
+	arrayListAddEndPointer ( jvg->eles, uni );
+
+
+
+	complexDecPostInit ( dec );
+
+
+
+	jHand_save ( );
+
+	printf ( "complex_test_03 ( ) OVER\n" );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

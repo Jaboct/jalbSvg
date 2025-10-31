@@ -57,6 +57,11 @@ int jNakedList_mEvent_start ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayL
 int jNakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *eles,
 		float *viewLoc, float viewScale );
 
+
+void set_cursorList_text ( );
+void set_cursorList_complex ( );
+
+
 int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *text,
 		float *viewLoc, float viewScale );
 

@@ -4,7 +4,7 @@
     <uiUnion>
       <literalVar>
         <data>
-          <str>complexWrangler</str>
+          <str>complexMod edit</str>
           <useData>0</useData>
         </data>
         <pxMove>
@@ -19,6 +19,7 @@
       <eventList>
       </eventList>
     </uiUnion>
+
     <uiUnion>
       <renderObj>
         <locType>1</locType>
@@ -122,7 +123,7 @@
           <list>
             <uiUnion>
               <subVar>
-                <struI>6</struI>
+                <struI>13</struI>
                 <subVarI>1</subVarI>
                 <alRender>
                   <uniList>
@@ -130,13 +131,13 @@
                       <uiUnion>
                         <literalVar>
                           <data>
-                            <str>complex mod</str>
+                            <str>complex dec</str>
                             <useData>0</useData>
                           </data>
                           <pxMove>
                             <XYWH>
                               0,
-                              0,
+                              1,
                               0,
                               0,
                             </XYWH>
@@ -169,7 +170,7 @@
                                 <this>0</this>
                               </functRef_param>
                           </params>
-                          <name>uiGen_open_complexMod</name>
+                          <name>uiGen_open_complexDec</name>
                           <type>0</type>
                           <globalI>0</globalI>
                         </funct>
@@ -222,133 +223,12 @@
       <eventList>
       </eventList>
     </uiUnion>
-    <uiUnion>
-      <literalVar>
-        <data>
-          <str></str>
-          <useData>0</useData>
-        </data>
-        <pxMove>
-          <XYWH>
-            0,
-            1,
-            0,
-            0,
-          </XYWH>
-        </pxMove>
-      </literalVar>
-      <eventList>
-      </eventList>
-    </uiUnion>
-    <uiUnion>
-      <renderObj>
-        <locType>1</locType>
-        <absLoc>
-          0.000000,
-          0.000000,
-        </absLoc>
-        <relLoc>
-          390.000000,
-          0.000000,
-        </relLoc>
-        <WH>
-          20.000000,
-          20.000000,
-        </WH>
-        <drawRect>
-          <color>
-            0.000000,
-            1.000000,
-            0.000000,
-            1.000000,
-          </color>
-        </drawRect>
-        <xyOffsetScales>
-          0.000000,
-          0.000000,
-        </xyOffsetScales>
-        <scrollable>0</scrollable>
-        <scroll>0</scroll>
-      </renderObj>
-      <eventList>
-      </eventList>
-    </uiUnion>
-    <uiUnion>
-      <literalVar>
-        <data>
-          <str>complexEle List:</str>
-          <useData>0</useData>
-        </data>
-        <pxMove>
-          <XYWH>
-            0,
-            1,
-            0,
-            0,
-          </XYWH>
-        </pxMove>
-      </literalVar>
-      <eventList>
-      </eventList>
-    </uiUnion>
-    <uiUnion>
-      <renderObj>
-        <locType>1</locType>
-        <absLoc>
-          0.000000,
-          0.000000,
-        </absLoc>
-        <relLoc>
-          0.000000,
-          0.000000,
-        </relLoc>
-        <WH>
-          -1.000000,
-          -1.000000,
-        </WH>
-        <uniList>
-          <list>
-            <uiUnion>
-              <literalVar>
-                <data>
-                  <str>complex ele</str>
-                  <useData>0</useData>
-                </data>
-                <pxMove>
-                  <XYWH>
-                    0,
-                    1,
-                    0,
-                    0,
-                  </XYWH>
-                </pxMove>
-              </literalVar>
-              <eventList>
-              </eventList>
-            </uiUnion>
-          </list>
-          <cursor>
-            0,
-            0,
-            0,
-            0,
-          </cursor>
-        </uniList>
-        <xyOffsetScales>
-          0.000000,
-          0.000000,
-        </xyOffsetScales>
-        <scrollable>0</scrollable>
-        <scroll>0</scroll>
-      </renderObj>
-      <eventList>
-      </eventList>
-    </uiUnion>
+
   </vertList>
   <eventList>
   </eventList>
   <scroll>0</scroll>
-  <name>complexWrangler</name>
+  <name>complexMod</name>
   <data></data>
   <dataTypeDef>
     <>-1</>

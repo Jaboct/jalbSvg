@@ -25,6 +25,7 @@ extern int numFonts;
 
 
 extern float glob_viewScale;
+extern float glob_viewLoc[];
 
 
 //extern ArrayList *cursorList;
@@ -226,6 +227,22 @@ int keydown_cursor_ele ( SDL_Event *e, struct jNakedUnion *uni, struct cursor_el
 
 		struct jText *text = uni->text;
 		ret = keydown_text ( e, text );
+
+	} else if ( cursor->payload->type == cu_ComplexEle ) {
+		printf ( "cursor complex\n" );
+
+		// get the complex and its info?
+
+		struct complexEle *ele = uni->complex;
+
+		float *viewLoc = glob_viewLoc;
+		float viewScale = glob_viewScale;
+
+		int eleWH[2] = { 0, 0 };
+		int clickXYpass[2] = { 0, 0 };
+		ret = complexEle_kEvent ( e, clickXYpass, eleWH, ele,
+			viewLoc, viewScale );
+
 	} else {
 		printf ( "TODO, keydown_cursor_ele\n" );
 	}
@@ -374,6 +391,7 @@ int jalbJvg_mDown ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jvg *jvgE
 
 			ret = 1;
 			goto functEnd;
+
 	} else if ( cursorInputMode == ci_text ) {
 	}
 
@@ -823,6 +841,39 @@ int jNakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *e
 }
 
 
+void set_cursorList_text ( ) {
+
+	// handle cursor.
+	cursor_unionTypeChange0 ( temp_clickMem->payload, cu_Text );
+	struct cursor_text *cuText = temp_clickMem->payload->text;
+	cuText->vertI = 0;
+
+	ArrayList *cursorList = glob_cursor_ele->payload->group->eles;
+	int toggleRet = toggle_cursorEle ( cursorList, temp_clickMem_parent );
+	if ( toggleRet == 0 ) {
+		// TODO handle depth better.
+		arrayListAddEndPointer ( cursorList, temp_clickMem_parent );
+		temp_clickMem_parent = NULL;
+	}
+}
+
+void set_cursorList_complex ( ) {
+
+	// handle cursor.
+	cursor_unionTypeChange0 ( temp_clickMem->payload, cu_ComplexEle );
+//	struct cursor_text *cuText = temp_clickMem->payload->text;
+//	cuText->vertI = 0;
+
+	ArrayList *cursorList = glob_cursor_ele->payload->group->eles;
+	int toggleRet = toggle_cursorEle ( cursorList, temp_clickMem_parent );
+	if ( toggleRet == 0 ) {
+		// TODO handle depth better.
+		arrayListAddEndPointer ( cursorList, temp_clickMem_parent );
+		temp_clickMem_parent = NULL;
+	}
+}
+
+
 int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *text,
 		float *viewLoc, float viewScale ) {
 	printf ( "jText_mEvent ( )\n" );
@@ -836,6 +887,8 @@ int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *tex
 //	sayIntArray ( "clickXYpass", clickXYpass, 2 );
 //	sayFloatArray ( "screenXYWH", screenXYWH, 4 );
 
+	// check the entire box, for editing the text,
+	// below is the resize and move boxes.
 	if ( pointInsideI ( clickXYpass, screenXYWH ) ) {
 		if ( altKeys[akCtrl] ) {
 			printf ( "spawn text edit \n" );
@@ -850,20 +903,7 @@ int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *tex
 		printf ( "CLICKED IN TEXT\n" );
 
 
-
-		// handle cursor.
-		cursor_unionTypeChange0 ( temp_clickMem->payload, cu_Text );
-		struct cursor_text *cuText = temp_clickMem->payload->text;
-		cuText->vertI = 0;
-
-		ArrayList *cursorList = glob_cursor_ele->payload->group->eles;
-		int toggleRet = toggle_cursorEle ( cursorList, temp_clickMem_parent );
-		if ( toggleRet == 0 ) {
-			// TODO handle depth better.
-			arrayListAddEndPointer ( cursorList, temp_clickMem_parent );
-			temp_clickMem_parent = NULL;
-		}
-
+		set_cursorList_text ( );
 
 
 		selected = 1;

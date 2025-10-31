@@ -364,7 +364,7 @@ int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 
 	}
 
-	functEnd:;
+//	functEnd:;
 
 	if ( debugPrint_jvg_event ) {
 		printf ( "jalbJvg_mEvent ( ) OVER\n" );
@@ -689,6 +689,10 @@ void set_debugPrint_jvg_render ( int i ) {
 	debugPrint_jvg_complex_render = i;
 
 	printf ( "set_debugPrint_jvg_render ( ) OVER\n" );
+}
+
+void set_debugPrint_jvg_complex_render ( int i ) {
+	debugPrint_jvg_complex_render = 1;
 }
 
 extern int debugPrint_jvg_event;
@@ -1469,7 +1473,17 @@ void jvg_pass_toolbar ( ) {
 
 void spawn_new_complexDec ( ) {
 	printf ( "spawn_new_complexDec ( )\n" );
+
 	// add to the last mod.
+
+	if ( !glob_jvg ) {
+		printf ( "ERROR, !glob_jvg, spawn_new_complexDec ( )\n" );
+
+		// temp for debugging
+		glob_jvg = jvgInit ( );
+
+//		return;
+	}
 
 	int numMods = arrayListGetLength ( glob_jvg->moduleList );
 	struct complexMod *mod = NULL;
@@ -1482,10 +1496,18 @@ void spawn_new_complexDec ( ) {
 		mod = arrayListGetPointer ( glob_jvg->moduleList, numMods-1 );
 	}
 
+	printf ( "mod: %p\n", mod );
+
 	struct complexDec *dec = complexDecInit ( );
+
+	printf ( "dec: %p\n", dec );
+
 	arrayListAddEndPointer ( mod->complexDecList, dec );
+	printf ( "mod->complexDecList.len: %d\n", arrayListGetLength ( mod->complexDecList ) );
 
 	printf ( "spawn_new_complexDec ( ) OVER\n" );
+
+//exit ( 12 );
 }
 
 void spawn_projectInfo ( ) {
@@ -1773,6 +1795,62 @@ void uiGen_open_jNaked ( struct jNakedUnion *jNaked ) {
 	printf ( "uiGen_open_jNaked ( ) OVER\n" );
 }
 
+void uiGen_open_complexWrangler ( ) {
+	printf ( "uiGen_open_complexWrangler ( )\n" );
+
+	char *midDir = "res/uiGen_hand";
+
+	char *name = "complexWrangler.xml";
+	char fullDir[1024];
+	sprintf ( fullDir, "%s/%s/%s", jvg_projectDir, midDir, name );
+
+	int type = 0; // red bar.
+	int XYWH[4] = { 40, 40, 420, 600 };
+
+	void *data = glob_jvg;
+
+	uiGen_api->load_and_set_XYWH ( fullDir, data, XYWH, type );
+
+	printf ( "uiGen_open_complexWrangler ( ) OVER\n" );
+}
+
+void uiGen_open_complexMod ( struct complexMod *mod ) {
+	printf ( "uiGen_open_complexMod ( )\n" );
+
+	char *midDir = "res/uiGen_hand";
+
+	char *name = "complexMod.xml";
+	char fullDir[1024];
+	sprintf ( fullDir, "%s/%s/%s", jvg_projectDir, midDir, name );
+
+	int type = 0; // red bar.
+	int XYWH[4] = { 40, 40, 400, 400 };
+
+	void *data = mod;
+	uiGen_api->load_and_set_XYWH ( fullDir, data, XYWH, type );
+
+	printf ( "uiGen_open_complexMod ( ) OVER\n" );
+}
+
+void uiGen_open_complexDec ( struct complexDec *dec ) {
+	printf ( "uiGen_open_complexDec ( )\n" );
+
+	char *midDir = "res/uiGen_hand";
+
+	char *name = "complexDec.xml";
+	char fullDir[1024];
+	sprintf ( fullDir, "%s/%s/%s", jvg_projectDir, midDir, name );
+
+	int type = 0; // red bar.
+	int XYWH[4] = { 40, 40, 400, 400 };
+
+	void *data = dec;
+
+	uiGen_api->load_and_set_XYWH ( fullDir, data, XYWH, type );
+
+	printf ( "uiGen_open_complexDec ( ) OVER\n" );
+}
+
 
 /// uiGen left toolbar stuff
 
@@ -1819,7 +1897,19 @@ void firstRender_todo ( ) {
 
 
 
+/** Getters */
 
+void *get_glob_jvg ( ) {
+	printf ( "get_glob_jvg ( )\n" );
+
+	if ( !glob_jvg ) {
+		printf ( "ERROR, !glob_jvg, get_glob_jvg ( )\n" );
+		// temp for dev
+		glob_jvg = jvgInit ( );
+	}
+
+	return glob_jvg;
+}
 
 
 

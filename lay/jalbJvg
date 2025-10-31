@@ -128,10 +128,12 @@ jalbJvg	c	say_cursorList_new
 // complexEle development
 
 Hotkey:
-jalbJvg	1	hand_complex_save
-jalbJvg	2	hand_complex_load
-jalbJvg	3	hand_complex_01
-jalbJvg	4	set_jvg_viewScale	0.5
+#jalbJvg	1	hand_complex_save
+#jalbJvg	2	hand_complex_load
+#jalbJvg	3	hand_complex_01
+#jalbJvg	4	set_jvg_viewScale	0.5
+jalbJvg	1	spawn_complexEle
+jalbJvg	w	uiGen_open_complexWrangler
 
 #Hotkey:
 // For struct mapper, output from jHigh?
@@ -381,6 +383,18 @@ Run:
 
 #Run:
 #jalbJvg	jalbXml_02_set_debug	1
+
+
+
+
+## Proof
+
+Run:
+jalbJvg	complex_test_03
+#jalbJvg	set_debugPrint_jvg_complex_render	1
+
+
+
 
 
 

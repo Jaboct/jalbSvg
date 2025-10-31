@@ -62,6 +62,8 @@ void complexEleRender_sub ( int *screenDims, GLuint *glBuffers, int *XYWHpass, s
 
 int complexEle_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct complexEle *complex,
 		float *viewLoc, float viewScale );
+int complexEle_kEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct complexEle *ele,
+		float *viewLoc, float viewScale );
 
 int hand_ee_event ( SDL_Event *e, int *clickXYpass, int *eleWH, struct complexEle *ele );
 
@@ -93,6 +95,25 @@ void hand_resistor_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass,
 // i need further node info.
 void complexEleNodePosition ( float *viewLoc, float viewScale,
 		struct complexEle *complexEle, int type, float *fillXY );
+
+
+
+
+
+
+/// TEMP
+
+void spawn_complexEle ( );
+
+
+
+
+
+
+
+
+
+
 
 
 

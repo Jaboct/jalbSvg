@@ -114,12 +114,19 @@ void jNaked_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct j
 void jPath_render ( );
 void jText_render ( );
 void jCircRender ( );
-void jComplexRender ( );
+void complexEleRender ( );  // and complexEleRender_sub ( ) (complexEle_ext.h)
 </div>
 <u>Event:</u><br>
 <div class="codeBlock">(jHand.h)
 int jalbJvg_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 		float *viewLoc, float viewScale );
+
+complexEle_mEvent ( ) (complexEle_ext.h)
+</div>
+<u>Save + Load:</u><br>
+<div class="codeBlock">(jHand.h)
+jHand_save ( ); (relies on the global char saveDir[])
+jalbJvg_load_global ( char * );
 </div>
 <br>
 <br>
@@ -501,6 +508,14 @@ complexDec.xml
 complexWrangler
 eleSpawner (left toolbar)
 </div>
+complexWrangler<br>
+Shows me a list of all my complexDecs, maybe also complexEles.<br>
+Has buttons spawn new of each of them.<br>
+along with ctrl-click on the eles of the list,<br>
+ to pull up that specific Edit pane.<br>
+<br>
+Well i need a list of complexMods, each have a list of complexDecs.<br>
+
 <br>
 <br>
 

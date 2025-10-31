@@ -26,6 +26,10 @@ struct jLine;
 
 struct cursor_path;
 
+struct complexMod;
+struct complexDec;
+
+
 /** Structs */
 
 // special keys for adding unicode chars
@@ -106,6 +110,7 @@ void *jalbJvg_load ( char *dir );
 
 void toggle_debugPrint_jvg_render ( );
 void set_debugPrint_jvg_render ( int i );
+void set_debugPrint_jvg_complex_render ( int i );
 
 void add_special ( ArrayList *sb, int index );
 
@@ -199,6 +204,10 @@ struct jLine *load_jvg_example_jLine ( );
 void open_left_toolbar ( );
 void uiGen_open_eleList ( );
 void uiGen_open_jNaked ( struct jNakedUnion *jNaked );
+
+void uiGen_open_complexWrangler ( );
+void uiGen_open_complexMod ( struct complexMod *mod );
+void uiGen_open_complexDec ( struct complexDec *dec );
 
 float *toolBar_icon_color ( int i );
 

@@ -989,6 +989,7 @@ void complexEleRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struc
 		draw2dApi->drawRectF ( fXYWH, colorWhite, screenDims, glBuffers );
 	}
 
+	// < 0 means undefined.
 	if ( complex->decType < 0 ) {
 		float charXY[2] = { fXYWH[0] + 2, fXYWH[1] + 2 };
 
@@ -999,9 +1000,16 @@ void complexEleRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struc
 		draw2dApi->drawStringBounded ( screenDims, glBuffers, charXY,
 			fXYWH, font, str );
 	} else {
-//		printf ( "complex->decType: %d\n", complex->decType );
+		if ( debugPrint_jvg_complex_render ) {
+			printf ( "complex->decType: %d\n", complex->decType );
+		}
 
 		struct complexDec *dec = arrayListGetPointer ( mod->complexDecList, complex->decType );
+
+		if ( debugPrint_jvg_complex_render ) {
+			printf ( "dec: %p\n", dec );
+			printf ( "dec->renderFunct: %p\n", dec->renderFunct );
+		}
 
 /*
 		float screenXY[2] = {
@@ -1018,6 +1026,8 @@ void complexEleRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struc
 		};
 */
 
+
+
 		if ( dec->renderFunct ) {
 			// For normal non dynamic rendering.
 //			void (*funct)(int *screenDims, GLuint *glBuffers, int *XYWHpass, void *data) = dec->renderFunct;
@@ -1030,6 +1040,7 @@ void complexEleRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struc
 			funct ( screenDims, glBuffers, XYWH, NULL,
 				viewLoc, viewScale );
 */
+
 
 			int iXYWH[4] = { fXYWH[0], fXYWH[1], fXYWH[2], fXYWH[3] };
 			complexEleRender_sub ( screenDims, glBuffers, iXYWH, complex, dec,
