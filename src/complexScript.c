@@ -93,10 +93,10 @@ int complexScriptNameToIndex ( char *body, void *data, void *ret, char **strPtr,
 }
 
 struct xmlFuncts complexScriptXml = {
-	"complexScript",
-	complexScriptInitMask,
-	complexScriptNameToIndex,
-	complexScriptBodyToVal,
+	.typeName = "complexScript",
+	.init = complexScriptInitMask,
+	.nameToIndex = complexScriptNameToIndex,
+	.bodyToVal = complexScriptBodyToVal,
 };
 
 void complexScript_print ( struct complexScript *stru ) {
@@ -174,10 +174,10 @@ int cScriptEleNameToIndex ( char *body, void *data, void *ret, char **strPtr, ch
 }
 
 struct xmlFuncts cScriptEleXml = {
-	"cScriptEle",
-	cScriptEleInitMask,
-	cScriptEleNameToIndex,
-	cScriptEleBodyToVal,
+	.typeName = "cScriptEle",
+	.init = cScriptEleInitMask,
+	.nameToIndex = cScriptEleNameToIndex,
+	.bodyToVal = cScriptEleBodyToVal,
 	.typeChange = (void (*) (void*, int))cScriptEleTypeChange0,
 };
 

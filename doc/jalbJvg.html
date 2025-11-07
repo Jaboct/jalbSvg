@@ -131,6 +131,18 @@ jalbJvg_load_global ( char * );
 <br>
 <br>
 
+cursor does 1 thing.<br>
+keydown grabs the ele according to hte cursor.<br>
+jalbJvg_keyDown ( )<br>
+keydown_cursor_ele ( )<br>
+if its group it does something...<br>
+if its text:<br>
+keydown_text ( )<br>
+if its complex<br>
+complexEle_kEvent ( ) (complexEle_ext.h)<br>
+<br>
+<br>
+
 <u>Adding Eles:</u><br>
 set_cursorInputMode (hand.c)<br>
 Gets ran throught hotkey.<br>
@@ -148,6 +160,13 @@ always gets ran.<br>
 
 <div class="myParagraph" id="render">
 <b>Rendering</b><br>
+<br>
+
+<u>Dynamic Canvas</u><br>
+This program uses dynamic canvas functions, but never the less it renders 1 horizontal line up top.<br>
+So true canvas (0,0) (at start time) is in the top left, under the fileName bar.<br>
+
+<br>
 <br>
 Both Jvg and Svg render from (render_svg.c).<br>
 <br>
@@ -366,6 +385,10 @@ extern int thisSel; // used during rendering to figure if the ele, or a subEle, 
 int cursorScreenXY[2];
 </div>
 
+<b>toggle_cursorEle ( )</b><br>
+
+<br>
+<br>
 
 <br>
 </div>

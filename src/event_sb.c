@@ -11,7 +11,7 @@ extern int ctrlMemLast;
 
 /** coppied from jalbText */
 
-int debugPrint_newSb = 0;
+int debugPrint_newSb = 1;
 
 
 // return 0 regularly.
@@ -35,6 +35,8 @@ int sbKey ( SDL_Keycode key, ArrayList *sb, struct undoRedo *undoMem, int *curso
 		printf ( "sbKey ( )\n" );
 		printf ( "wrap: %d\n", wrap );
 		printf ( "maxCols: %d\n", maxCols );
+
+		printf ( "sb: %p\n", sb );
 
 		printf ( "key: %d\n", key );
 		sayIntArray ( "cursorStartMem", cursorStartMem, 3 );
@@ -113,6 +115,7 @@ int sbKey ( SDL_Keycode key, ArrayList *sb, struct undoRedo *undoMem, int *curso
 				}
 			}
 		} else if ( cursorStartMem[0] != -1 ) {
+printf ( "REG KEY\n" );
 			// ctrl is not pressed, and its a regular ascii character.
 
 			if ( altKeys[akShift] ) {
@@ -120,17 +123,21 @@ int sbKey ( SDL_Keycode key, ArrayList *sb, struct undoRedo *undoMem, int *curso
 			}
 
 			highlightRemove ( sb, cursorStartMem, cursorEndMem, undoMem );
-
+printf ( "if undo: %p\n", undoMem );
 			if ( undoMem ) {
 				undoCheck ( undoMem, key, 0, sb, cursorStartMem );
 			}
 
+printf ( "a\n" );
+printf ( "sb: %p\n", sb );
 			arrayListAdd ( sb, cursorStartMem[0], &key );
+printf ( "b\n" );
 			cursorStartMem[0] += 1;
 			cursorEndMem[0] = cursorStartMem[0];
-
+printf ( "c\n" );
 //			sbIndexToCoords ( cursorStartMem[0], &cursorStartMem[1], sb, eleWH );
 			newSbIndexToCoords ( cursorStartMem[0], &cursorStartMem[1], sb, wrap, maxCols, tabW );
+printf ( "z\n" );
 		}
 		// Parse recheck.
 		if ( search ) {

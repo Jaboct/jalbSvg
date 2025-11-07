@@ -383,11 +383,11 @@ extern int cursorEndMem[];
 */
 
 // XYWHpass doesnt get used.
-// i would like for this to return the number of lines i render im thinking?
+// i would like for this to return the number of lines i render?
+// this does its own scaling.
 int spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyphWH, float *fXYWH, ArrayList *sb,
 		int selected, int *cursorStartMem, int *cursorEndMem,
 		float *viewLoc, float viewScale ) {
-//	printf ( "spanRender ( )\n" );
 	if ( svg_debugPrint_render ||
 	     svg_debugPrint_render_text ) {
 		printf ( "spanRender ( )\n" );
@@ -396,6 +396,40 @@ int spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyph
 		sayFloatArray ( "glyphWH", glyphWH, 2 );
 
 		sayIntArray ( "XYWHpass", XYWHpass, 2 );
+
+		printSb ( sb );
+	}
+
+	point_to_loc ( fXYWH, fXYWH, viewLoc, viewScale );
+	fXYWH[0] += XYWHpass[0];
+	fXYWH[1] += XYWHpass[1];
+
+	fXYWH[2] /= viewScale;
+	fXYWH[3] /= viewScale;
+
+	// do ont screen check uphere instead of below.
+
+	int ret = spanRender_scaled ( screenDims, glBuffers, XYWHpass, glyphWH, fXYWH, sb,
+		selected, cursorStartMem, cursorEndMem,
+		viewLoc, viewScale );
+	return ret;
+}
+
+// the fXYWH passed, it is already relative to XYWH passed, so dont bother adding them together.
+// but do use them for bound checking?
+int spanRender_scaled ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyphWH, float *fXYWH, ArrayList *sb,
+		int selected, int *cursorStartMem, int *cursorEndMem,
+		float *viewLoc, float viewScale ) {
+	if ( svg_debugPrint_render ||
+	     svg_debugPrint_render_text ) {
+		printf ( "spanRender_scaled ( )\n" );
+
+		sayIntArray ( "XYWHpass", XYWHpass, 4 );
+		sayFloatArray ( "fXYWH", fXYWH, 4 );
+
+		printf ( "textWrap: %d\n", textWrap );
+//		printf ( "span->body: (%s)\n", span->body );
+		sayFloatArray ( "glyphWH", glyphWH, 2 );
 
 		printSb ( sb );
 	}
@@ -413,6 +447,7 @@ int spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyph
 
 	int numLines = 0;
 
+/*
 //	float XY[2];
 	point_to_loc ( fXYWH, fXYWH, viewLoc, viewScale );
 	fXYWH[0] += XYWHpass[0];
@@ -423,11 +458,14 @@ int spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyph
 	int XYWH[4] = { fXYWH[0], fXYWH[1], fXYWH[2], fXYWH[3] };
 //	XYWH[0] = XY[0];
 //	XYWH[1] = XY[1];
+*/
+	int XYWH[4] = { fXYWH[0], fXYWH[1], fXYWH[2], fXYWH[3] };
 
-	if ( svg_debugPrint_render ||
-	     svg_debugPrint_render_text ) {
+//	if ( svg_debugPrint_render ||
+//	     svg_debugPrint_render_text ) {
 		sayFloatArray ( "fXYWH", fXYWH, 4 );
-	}
+		sayIntArray ( "XYWHpass", XYWHpass, 4 );
+//	}
 
 	// is this on the screen at all?
 	// well i still want a decent return value...
@@ -435,7 +473,7 @@ int spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyph
 	     fXYWH[1] > (XYWHpass[1] + XYWHpass[3]) ||	// off below
 	     fXYWH[0] + fXYWH[2] < 0 ||	// off to the left.
 	     fXYWH[1] + fXYWH[3] < 0 ) {	// off above
-//		printf ( "text cut\n");
+		printf ( "text off screen, dont render\n");
 		return -1;
 	}
 

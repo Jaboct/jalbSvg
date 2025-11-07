@@ -30,9 +30,11 @@ struct complexMod {
 	ArrayList *globalVars;	// (struct subVar*)
 	ArrayList *globalScripts;	// (struct complexScript*)
 };
+
 struct complexModData {
 	ArrayList *globalData;	// (struct jLiveData*)
 };
+
 
 
 /** Post Includes */

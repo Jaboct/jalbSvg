@@ -23,6 +23,7 @@ extern int complexDecEditId;
 extern int complexEleEditId;
 extern int jLiveDataEditId;
 extern int complexRefEditId;
+extern int complexListEditId;
 extern int debugPrint_projectName_init;
 
 
@@ -39,6 +40,7 @@ extern struct backbone_structStruct backboneStru_complexDec;
 extern struct backbone_structStruct backboneStru_complexEle;
 extern struct backbone_structStruct backboneStru_jLiveData;
 extern struct backbone_structStruct backboneStru_complexRef;
+extern struct backbone_structStruct backboneStru_complexList;
 
 /** Functions */
 
@@ -146,10 +148,10 @@ int complexDecNameToIndex ( char *body, void *data, void *ret, char **strPtr, ch
 }
 
 struct xmlFuncts complexDecXml = {
-	"complexDec",
-	complexDecInitMask,
-	complexDecNameToIndex,
-	complexDecBodyToVal,
+	.typeName = "complexDec",
+	.init = complexDecInitMask,
+	.nameToIndex = complexDecNameToIndex,
+	.bodyToVal = complexDecBodyToVal,
 	.postInit = (void(*)(void*))complexDecPostInit,
 };
 
@@ -227,10 +229,10 @@ int complexEleNameToIndex ( char *body, void *data, void *ret, char **strPtr, ch
 }
 
 struct xmlFuncts complexEleXml = {
-	"complexEle",
-	complexEleInitMask,
-	complexEleNameToIndex,
-	complexEleBodyToVal,
+	.typeName = "complexEle",
+	.init = complexEleInitMask,
+	.nameToIndex = complexEleNameToIndex,
+	.bodyToVal = complexEleBodyToVal,
 };
 
 void complexEle_print ( struct complexEle *stru ) {
@@ -323,10 +325,10 @@ int jLiveDataNameToIndex ( char *body, void *data, void *ret, char **strPtr, cha
 }
 
 struct xmlFuncts jLiveDataXml = {
-	"jLiveData",
-	jLiveDataInitMask,
-	jLiveDataNameToIndex,
-	jLiveDataBodyToVal,
+	.typeName = "jLiveData",
+	.init = jLiveDataInitMask,
+	.nameToIndex = jLiveDataNameToIndex,
+	.bodyToVal = jLiveDataBodyToVal,
 	.typeChange = (void (*) (void*, int))jLiveDataTypeChange0,
 };
 
@@ -387,13 +389,81 @@ int complexRefNameToIndex ( char *body, void *data, void *ret, char **strPtr, ch
 }
 
 struct xmlFuncts complexRefXml = {
-	"complexRef",
-	complexRefInitMask,
-	complexRefNameToIndex,
-	complexRefBodyToVal,
+	.typeName = "complexRef",
+	.init = complexRefInitMask,
+	.nameToIndex = complexRefNameToIndex,
+	.bodyToVal = complexRefBodyToVal,
 };
 
 void complexRef_print ( struct complexRef *stru ) {
 	printf ( "complexRef_print ( )\n" );
+}
+/** complexList */
+
+struct complexList *complexListInit ( ) {
+	if ( debugPrint_projectName_init ) {
+		printf ( "complexListInit ( )\n" );
+	}
+	struct complexList *var = malloc ( sizeof ( struct complexList ) );
+	complexListFill ( var );
+	return var;
+}
+void complexListFill ( struct complexList *var ) {
+	var->XYWH[0] = 0;
+	var->XYWH[1] = 0;
+	var->XYWH[2] = 0;
+	var->XYWH[3] = 0;
+
+	var->eleList = initArrayList ( 10, sizeof ( struct complexEle* ), 10 );
+}
+
+void *complexListInitMask ( ) {
+	void *ret = complexListInit ( );
+	return ret;
+
+}
+void complexListClose ( struct complexList *var ) {
+	if ( var->eleList ) {
+		freeArrayListPointerFunction ( var->eleList, (void (*)(void*))complexEleClose );
+	}
+	free ( var );
+
+}
+int complexList_attrib_arr[] = {
+	0,
+	0,
+};
+void complexListBodyToVal ( void *varPass, int nameI, char *body ) {
+
+	struct complexList *var = varPass;
+
+	if ( nameI == 0 ) {
+		consumeStdArr ( body, 0, 1, var->XYWH, 4 );
+	} else if ( nameI == 1 ) {
+	}
+}
+
+int complexListNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName ) {
+
+	struct complexList *var = data;
+	if ( strcmp ( body, "XYWH" ) == 0 ) {
+		return 0;
+	} else if ( strcmp ( body, "eleList" ) == 0 ) {
+		void **ptrPtr = (void**)ret;
+		*ptrPtr = var->eleList;
+		return jxnAlPtr;
+	}
+	return -1;
+}
+
+struct xmlFuncts complexListXml = {
+	.typeName = "complexList",
+	.init = complexListInitMask,
+	.nameToIndex = complexListNameToIndex,
+	.bodyToVal = complexListBodyToVal,
+};
+
+void complexList_print ( struct complexList *stru ) {
+	printf ( "complexList_print ( )\n" );
 }
 /** Other Functs */

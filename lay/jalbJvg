@@ -133,6 +133,7 @@ Hotkey:
 #jalbJvg	3	hand_complex_01
 #jalbJvg	4	set_jvg_viewScale	0.5
 jalbJvg	1	spawn_complexEle
+jalbJvg	2	spawn_textEle
 jalbJvg	w	uiGen_open_complexWrangler
 
 #Hotkey:
@@ -390,9 +391,12 @@ Run:
 ## Proof
 
 Run:
-jalbJvg	complex_test_03
+#jalbJvg	complex_test_03
+#jalbJvg	complex_test_04
 #jalbJvg	set_debugPrint_jvg_complex_render	1
-
+#jalbJvg	set_debugPrint_jvg_event	1
+#jalbJvg	set_debugPrint_jvg_render	1
+#jalbJvg	set_debugPrint_jalbXml_macro	1
 
 
 

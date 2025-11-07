@@ -42,6 +42,7 @@ jh/structStruct/cursor_group.xml
 jh/structStruct/cursor_circ.xml
 jh/structStruct/cursor_text.xml
 jh/structStruct/cursor_rect.xml
+jh/structStruct/complexList.xml
 
 # fileStructs
 jh/fileStruct/mod.xml

@@ -1,6 +1,11 @@
 #include "jProof.h"
 
 
+/** Includes */
+
+#include "api/structStruct.h"
+
+
 /** Variables */
 
 char *outputLog = "/home/jadoo/workspace/jHigh/jalbSvg/res/jvg_proof/outputLog.txt";
@@ -135,6 +140,107 @@ void complex_test_03 ( ) {
 	printf ( "complex_test_03 ( ) OVER\n" );
 }
 
+void complex_test_04 ( ) {
+	printf ( "complex_test_04 ( )\n" );
+
+
+	// spawn new jvg ele, make a complexMod, make a complexDec, define it as jalbCalc,
+	// spawn a complexEle, then compare the render and save file.
+	// todo, add event, and add proofs for the uiGen eles.
+
+	char *fullDir = "/home/jadeb/workspace/jHigh/jalbSvg/res/jvgTest/test_04.xml";
+	strcpy ( saveDir, fullDir );
+
+	glob_jvg = jvgInit ( );
+	struct jvg *jvg = glob_jvg;
+
+	spawn_new_complexDec ( );
+
+	struct complexMod *mod = arrayListGetPointer ( jvg->moduleList, 0 );
+	struct complexDec *dec = arrayListGetPointer ( mod->complexDecList, 0 );
+
+	struct subVar *subVar = subVarInit ( );
+	arrayListAddEndPointer ( dec->subVars, subVar );
+
+	subVar->type = 0;
+	subVar->typeIndex = typeVoid;
+	subVar->length = 0;
+	subVar->literal = 0;
+
+/*
+	char name[256];
+	int type;
+	int typeIndex;
+	int initType;
+	struct initTypeData *initTypeData;
+	int closeType;
+	int length;
+	int literal;
+	int union_type;
+	union  {
+		struct subAl *subAl;
+		struct subComplex *subComplex;
+		struct bakein *bakein;
+		void *highStruct;
+		int structNameOffset;
+	};
+	int external;
+	int attribute;
+	int saveFlag;
+	int naked;
+	char comment[256];
+*/
+
+	strcpy ( mod->name, "jalbJvg" );
+	strcpy ( dec->modName, "jalbJvg" );
+
+	strcpy ( dec->renderFunct_name, "jText_render_scaled" );
+	strcpy ( dec->eventFunct_name, "jText_event" );
+
+
+	int XYWH[4] = {
+		637,
+		418,
+		400,
+		100,
+	};
+
+	// add complexEle
+	struct jNakedUnion *uni = jNakedUnionInit ( );
+	jNakedUnionTypeChange0 ( uni, jNaked_Complex );
+	uni->complex->XYWH[0] = XYWH[0];
+	uni->complex->XYWH[1] = XYWH[1];
+	uni->complex->XYWH[2] = XYWH[2];
+	uni->complex->XYWH[3] = XYWH[3];
+
+	struct jText *text = jTextInit ( );
+
+//	text->XYWH[0] = XYWH[0];
+//	text->XYWH[1] = XYWH[1];
+	text->XYWH[2] = XYWH[2];
+	text->XYWH[3] = XYWH[3];
+
+
+	printf ( "text: %p\n", text );
+
+	struct jLiveData *live = jLiveDataInit ( );
+	jLiveDataTypeChange0 ( live, jld_V );
+	live->v = text;
+	arrayListAddEndPointer ( uni->complex->liveSubVars, live );
+
+
+	arrayListAddEndPointer ( jvg->eles, uni );
+
+
+
+	complexDecPostInit ( dec );
+
+
+
+	jHand_save ( );
+
+	printf ( "complex_test_04 ( ) OVER\n" );
+}
 
 
 

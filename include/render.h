@@ -35,6 +35,9 @@ void segScale ( float *p0, float *p1, float *pSet, float scale, int len );
 int spanRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyphWH, float *fXYWH, ArrayList *sb,
 		int selected, int *cursorStartMem, int *cursorEndMem,
 		float *viewLoc, float viewScale );
+int spanRender_scaled ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float *glyphWH, float *fXYWH, ArrayList *sb,
+		int selected, int *cursorStartMem, int *cursorEndMem,
+		float *viewLoc, float viewScale );
 
 void rectRender ( int *screenDims, GLuint *glBuffers, int *XYWH, float *rXYWH,
 		float *viewLoc, float viewScale );

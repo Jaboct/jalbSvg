@@ -26,6 +26,8 @@ extern int numFonts;
 
 extern int debugPrint_jvg_complex_render;
 
+extern int cursorSet_override;
+
 
 /** Functions */
 
@@ -261,17 +263,28 @@ void complexEleRender_sub ( int *screenDims, GLuint *glBuffers, int *XYWHpass, s
 		printf ( "complexEleRender_sub ( )\n" );
 		printf ( "complex: %p\n", complex );
 		printf ( "dec: %p\n", dec );
+		sayIntArray ( "XYWHpass", XYWHpass, 4 );
 	}
+		sayIntArray ( "XYWHpass", XYWHpass, 4 );
 
 	int numParams = arrayListGetLength ( dec->renderParams );
 
 //	printf ( "numParams: %d\n", numParams );
 
 	if ( numParams <= 0 ) {
+
+		// this is shitty.
+		struct jLiveData *liveData = arrayListGetPointer ( complex->liveSubVars, 0 );
+		void *data = NULL;
+		if ( liveData->type == jld_V ) {
+			data = liveData->v;
+		}
+
+
 		// For dynamic rendering
 		void (*funct)(int *screenDims, GLuint *glBuffers, int *XYWHpass, void *data,
 			float *viewLoc, float viewScale) = dec->renderFunct;
-		funct ( screenDims, glBuffers, XYWHpass, NULL,
+		funct ( screenDims, glBuffers, XYWHpass, data,
 			viewLoc, viewScale );
 	} else {
 		void *params[numParams];
@@ -375,6 +388,19 @@ int complexEle_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct compl
 		};
 */
 
+
+
+		void *data = NULL;
+//		if ( numParams <= 0 ) {
+			// this is shitty.
+			struct jLiveData *liveData = arrayListGetPointer ( ele->liveSubVars, 0 );
+			if ( liveData->type == jld_V ) {
+				data = liveData->v;
+			}
+//		}
+		printf ( "data: %p\n", data );
+
+
 //		int (*funct)(SDL_Event *e, int *clickXYpass, int *eleWH, void *data) = dec->eventFunct;
 //		ret = funct ( e, clickXY, eleWH, ele );
 
@@ -385,8 +411,14 @@ int complexEle_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct compl
 
 		int (*funct)(SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 			float *viewLoc, float viewScale) = dec->eventFunct;
-		ret = funct ( e, relClick, eleWH, ele,
+//		ret = funct ( e, relClick, eleWH, ele,
+
+		int cursorSet_override_mem = cursorSet_override;
+		cursorSet_override = 1;
+		ret = funct ( e, relClick, eleWH, data,
 			viewLoc, viewScale );
+		cursorSet_override = 1;
+		cursorSet_override = cursorSet_override_mem;
 	}
 
 	// TODO, check ret
@@ -428,9 +460,17 @@ int complexEle_kEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct compl
 
 		sayIntArray ( "relClick", relClick, 2 );
 
+
+		void *data = NULL;
+			// this is shitty.
+			struct jLiveData *liveData = arrayListGetPointer ( ele->liveSubVars, 0 );
+			if ( liveData->type == jld_V ) {
+				data = liveData->v;
+			}
+
 		int (*funct)(SDL_Event *e, int *clickXYpass, int *eleWH, void *data,
 			float *viewLoc, float viewScale) = dec->eventFunct;
-		ret = funct ( e, relClick, eleWH, ele,
+		ret = funct ( e, relClick, eleWH, data,
 			viewLoc, viewScale );
 	}
 	return ret;
@@ -997,6 +1037,19 @@ void add_global_complexMod ( ) {
 }
 
 
+
+/// Complex List
+
+void complexList_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct complexList *ele,
+		float *viewLoc, float viewScale ) {
+	printf ( "complexList_render ( )\n" );
+
+	
+
+	printf ( "complexList_render ( ) OVER\n" );
+}
+
+
 /// TEMP
 
 void spawn_complexEle ( ) {
@@ -1037,6 +1090,29 @@ void spawn_complexEle ( ) {
 	printf ( "spawn_complexEle ( ) OVER\n" );
 }
 
+void spawn_textEle ( ) {
+	printf ( "spawn_textEle ( )\n" );
+
+	struct jvg *jvg = glob_jvg;
+
+	struct jNakedUnion *uni = jNakedUnionInit ( );
+	arrayListAddEndPointer ( jvg->eles, uni );
+	jNakedUnionTypeChange0 ( uni, jNaked_Text );
+
+	int XYWH[4] = {
+		100,
+		100,
+		300,
+		100,
+	};
+
+	uni->text->XYWH[0] = XYWH[0];
+	uni->text->XYWH[1] = XYWH[1];
+	uni->text->XYWH[2] = XYWH[2];
+	uni->text->XYWH[3] = XYWH[3];
+
+	printf ( "spawn_textEle ( ) OVER\n" );
+}
 
 
 

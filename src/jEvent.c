@@ -54,6 +54,7 @@ extern int selected;
 
 int debugPrint_jvg_event = 0;
 int debugPrint_jIterate = 0;
+int jvg_debugPrint_jText = 1;
 
 extern int cStart[];
 extern int cEnd[];
@@ -251,6 +252,10 @@ int keydown_cursor_ele ( SDL_Event *e, struct jNakedUnion *uni, struct cursor_el
 }
 
 int keydown_text ( SDL_Event *e, struct jText *text ) {
+	if ( jvg_debugPrint_jText ) {
+		printf ( "keydown_text ( )\n" );
+		printf ( "text: %p\n", text );
+	}
 
 	int ret = 0;
 
@@ -271,11 +276,12 @@ int keydown_text ( SDL_Event *e, struct jText *text ) {
 		goto functEnd;
 	}
 
+	printf ( "a\n" );
 
 	ret = sbKey ( e->key.keysym.sym, sb, undoMem, cStart, cEnd,
 		&searching, search, altKeys,
 		glob_ctrlKeys, NULL, textWrap, maxCols );
-//	printf ( "SB KEY RET: %d\n", ret );
+	printf ( "SB KEY RET: %d\n", ret );
 
 
 	if ( ret ) {
@@ -285,6 +291,9 @@ int keydown_text ( SDL_Event *e, struct jText *text ) {
 	functEnd:;
 
 //	printSb ( sb );
+
+	printf ( "keydown_text ( ) OVER\n" );
+
 	return ret;
 }
 
@@ -842,6 +851,7 @@ int jNakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *e
 
 
 void set_cursorList_text ( ) {
+	printf ( "set_cursorList_text ( )\n" );
 
 	// handle cursor.
 	cursor_unionTypeChange0 ( temp_clickMem->payload, cu_Text );
@@ -855,14 +865,19 @@ void set_cursorList_text ( ) {
 		arrayListAddEndPointer ( cursorList, temp_clickMem_parent );
 		temp_clickMem_parent = NULL;
 	}
+
+	printf ( "set_cursorList_text ( ) OVER\n" );
 }
 
 void set_cursorList_complex ( ) {
+	printf ( "set_cursorList_complex ( )\n" );
 
 	// handle cursor.
 	cursor_unionTypeChange0 ( temp_clickMem->payload, cu_ComplexEle );
 //	struct cursor_text *cuText = temp_clickMem->payload->text;
 //	cuText->vertI = 0;
+
+	printf ( "changed\n" );
 
 	ArrayList *cursorList = glob_cursor_ele->payload->group->eles;
 	int toggleRet = toggle_cursorEle ( cursorList, temp_clickMem_parent );
@@ -871,18 +886,42 @@ void set_cursorList_complex ( ) {
 		arrayListAddEndPointer ( cursorList, temp_clickMem_parent );
 		temp_clickMem_parent = NULL;
 	}
+
+	printf ( "set_cursorList_complex ( ) OVER\n" );
 }
 
+// wrapper funct for complexEle.
+int jText_event ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *text,
+		float *viewLoc, float viewScale ) {
+	printf ( "jText_event ( )\n" );
+	printf ( "text: %p\n", text );
+
+	int ret = 0;
+	if ( e->type == SDL_KEYDOWN ) {
+		ret = keydown_text ( e, text );
+
+	} else if ( e->type == SDL_MOUSEBUTTONDOWN ) {
+		ret = jText_mEvent ( e, clickXYpass, eleWH, text,
+			viewLoc, viewScale );
+	}
+	return ret;
+}
+
+int cursorSet_override = 0;
 
 int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *text,
 		float *viewLoc, float viewScale ) {
 	printf ( "jText_mEvent ( )\n" );
+	printf ( "text: %p\n", text );
 
 	float screenXYWH[4];
 	point_to_loc ( text->XYWH, screenXYWH, viewLoc, viewScale );
 
 	screenXYWH[2] = text->XYWH[2] / viewScale;
 	screenXYWH[3] = text->XYWH[3] / viewScale;
+
+
+	int ret = 0;
 
 //	sayIntArray ( "clickXYpass", clickXYpass, 2 );
 //	sayFloatArray ( "screenXYWH", screenXYWH, 4 );
@@ -901,12 +940,10 @@ int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *tex
 		}
 
 		printf ( "CLICKED IN TEXT\n" );
-
-
-		set_cursorList_text ( );
-
-
-		selected = 1;
+		if ( !cursorSet_override ) {
+			set_cursorList_text ( );
+			selected = 1;
+		}
 
 /*
 		// i doesnt matter, aslong as its 1 deeper than the text ele itself so i know im editing the internal text, not moving the ele around
@@ -948,7 +985,9 @@ int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *tex
 		// takes the index and returnes the clickXY
 		newSbIndexToCoords ( cStart[0], &cStart[1], text->sb, textWrap, maxCols, tabW );
 
-		return 1;
+//		return 1;
+		ret = 1;
+		goto functEnd;
 	}
 
 	// so if its 1 deeper with a value of 0 then im editing the text.
@@ -967,9 +1006,6 @@ int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *tex
 
 	if ( pointInsideI ( clickXYpass, boxXYWH ) ) {
 		printf ( "ADJUST top BAR\n" );
-
-
-
 
 		// handle cursor.
 		cursor_unionTypeChange0 ( temp_clickMem->payload, cu_Text );
@@ -996,7 +1032,9 @@ int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *tex
 */
 		selected = 1;
 
-		return 1;
+//		return 1;
+		ret = 1;
+		goto functEnd;
 	}
 
 	// check top bar for moving it around.
@@ -1039,10 +1077,15 @@ int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *tex
 */
 		selected = 1;
 
-		return 1;
+//		return 1;
+		ret = 1;
+		goto functEnd;
 	}
 
-	return 0;
+	functEnd:;
+	printf ( "jText_mEvent ( ) OVER\n" );
+
+	return ret;
 }
 
 
@@ -1739,7 +1782,7 @@ int keySpecialChar ( SDL_Event *e, ArrayList *sb ) {
 // return 2 if it was found and unselected, and its payload is now empty, so check as u go up to see if this needs to be deleted.
 // cursorList is the list from my top cursorEle.
 int toggle_cursorEle ( ArrayList *cursorList, struct cursor_ele *temp ) {
-	printf ( "toggle_cursorEle  ( )\n" );
+	printf ( "toggle_cursorEle ( )\n" );
 
 	printf ( "temp: %p\n", temp );
 	printf ( "temp->index: %d\n", temp->index );
@@ -1749,6 +1792,8 @@ int toggle_cursorEle ( ArrayList *cursorList, struct cursor_ele *temp ) {
 	int len = arrayListGetLength ( cursorList );
 	printf ( "cursorList.len: %d\n", len );
 
+	// iterates through the cursor list, looking at every element.
+	// if one matches this index, then run toggle_cursorChild ( )
 	while ( i < len ) {
 		struct cursor_ele *ele = arrayListGetPointer ( cursorList, i );
 
@@ -1760,10 +1805,14 @@ int toggle_cursorEle ( ArrayList *cursorList, struct cursor_ele *temp ) {
 				// todo free
 				arrayListRemove ( cursorList, i );
 			}
+
+			printf ( "toggle_cursorEle ( ) OVER a\n" );
 			return ret;
 		}
 		i += 1;
 	}
+
+	printf ( "toggle_cursorEle ( ) OVER b\n" );
 	return 0;
 }
 

@@ -27,6 +27,7 @@ struct complexScript {
 	char name[256];
 	ArrayList *eleList;	// (struct cScriptEle*)
 };
+
 struct cScriptEle {
 	int type;
 	union  {
@@ -35,6 +36,7 @@ struct cScriptEle {
 		void *operator;
 	};
 };
+
 enum cScriptEleEnum {
 	VarDec = 0,
 	Operator,

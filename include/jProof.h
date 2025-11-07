@@ -27,4 +27,8 @@ int hand_diff ( char *fknow, char *ftest );
 
 
 
+void complex_test_03 ( );
+void complex_test_04 ( );
+
+
 

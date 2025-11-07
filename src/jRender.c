@@ -683,10 +683,6 @@ void lines_CAD_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struc
 
 void jText_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jText *text,
 		float *viewLoc, float viewScale ) {
-	if ( debugPrint_jvg_render ) {
-		printf ( "jText_render ( )\n" );
-	}
-
 	float XYWH[4];
 	point_to_loc ( text->XYWH, XYWH, viewLoc, viewScale );
 	XYWH[0] += XYWHpass[0];
@@ -694,6 +690,44 @@ void jText_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jT
 
 	XYWH[2] = text->XYWH[2] / viewScale;
 	XYWH[3] = text->XYWH[3] / viewScale;
+
+	int iXYWH[4] = {
+		XYWH[0],
+		XYWH[1],
+		XYWH[2],
+		XYWH[3],
+	};
+
+	jText_render_scaled ( screenDims, glBuffers, XYWHpass, text, XYWH,
+//	jText_render_scaled ( screenDims, glBuffers, iXYWH, text,
+		viewLoc, viewScale );
+}
+
+// already scaled and translated to the canvas.
+
+void jText_render_scaled ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jText *text, float *XYWH,
+//void jText_render_scaled ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jText *text,
+		float *viewLoc, float viewScale ) {
+
+	debugPrint_jvg_render = 1;
+	if ( debugPrint_jvg_render ) {
+		printf ( "jText_render_scaled ( )\n" );
+		printf ( "text: %p\n", text );
+		sayFloatArray ( "text->XYWH", text->XYWH, 4 );
+
+//		sayFloatArray ( "XYWH", XYWH, 4 );
+		sayIntArray ( "XYWHpass", XYWHpass, 4 );
+	}
+
+/*
+	float XYWH[4] = {
+		XYWHpass[0],
+		XYWHpass[1],
+		XYWHpass[2],
+		XYWHpass[3],
+	};
+*/
+
 
 	float glyphWH[2];
 	glyphWH[0] = fonts[0]->atlasInfo.glyphW / viewScale;
@@ -728,8 +762,10 @@ void jText_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jT
 	}
 */
 
+	tempXYWH[0] += XYWHpass[0];
+	tempXYWH[1] += XYWHpass[1];
 //	spanRender ( screenDims, glBuffers, XYWHpass, glyphWH, XYWH, text->sb,
-	spanRender ( screenDims, glBuffers, XYWHpass, glyphWH, tempXYWH, text->sb,
+	spanRender_scaled ( screenDims, glBuffers, XYWHpass, glyphWH, tempXYWH, text->sb,
 		drawCursor, cStart, cEnd,
 		viewLoc, viewScale );
 

@@ -34,29 +34,40 @@ struct complexDec {
 	void *eventFunct;
 	ArrayList *eventParams;	// (int)
 };
+
 struct complexEle {
 	float XYWH[4];
 	int decModI;
 	int decType;
 	ArrayList *liveSubVars;	// (struct jLiveData*)
 };
+
 struct jLiveData {
 	int type;
 	union  {
 		int i;
 		float f;
+		void *v;
 		struct complexRef *complexRef;
 	};
 };
+
 enum jLiveDataEnum {
 	jld_I = 0,
 	jld_F,
+	jld_V,
 	jld_ComplexRef,
 };
 struct complexRef {
 	int eleI;
 	struct complexEle *complexPtr;
 };
+
+struct complexList {
+	int XYWH[4];
+	ArrayList *eleList;	// (struct complexEle*)
+};
+
 
 
 /** Post Includes */
@@ -98,5 +109,13 @@ void *complexRefInitMask ( );
 void complexRefClose ( struct complexRef *var );
 void complexRefBodyToVal ( void *varPass, int nameI, char *body );
 int complexRefNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
+
+/** complexList */
+struct complexList *complexListInit ( );
+void complexListFill ( struct complexList *var );
+void *complexListInitMask ( );
+void complexListClose ( struct complexList *var );
+void complexListBodyToVal ( void *varPass, int nameI, char *body );
+int complexListNameToIndex ( char *body, void *data, void *ret, char **strPtr, char **modName );
 
 /** Other Functs */

@@ -114,10 +114,10 @@ int complexModNameToIndex ( char *body, void *data, void *ret, char **strPtr, ch
 }
 
 struct xmlFuncts complexModXml = {
-	"complexMod",
-	complexModInitMask,
-	complexModNameToIndex,
-	complexModBodyToVal,
+	.typeName = "complexMod",
+	.init = complexModInitMask,
+	.nameToIndex = complexModNameToIndex,
+	.bodyToVal = complexModBodyToVal,
 };
 
 void complexMod_print ( struct complexMod *stru ) {
@@ -172,10 +172,10 @@ int complexModDataNameToIndex ( char *body, void *data, void *ret, char **strPtr
 }
 
 struct xmlFuncts complexModDataXml = {
-	"complexModData",
-	complexModDataInitMask,
-	complexModDataNameToIndex,
-	complexModDataBodyToVal,
+	.typeName = "complexModData",
+	.init = complexModDataInitMask,
+	.nameToIndex = complexModDataNameToIndex,
+	.bodyToVal = complexModDataBodyToVal,
 };
 
 void complexModData_print ( struct complexModData *stru ) {

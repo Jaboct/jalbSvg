@@ -64,6 +64,9 @@ void lines_CAD_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struc
 
 void jText_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jText *text,
 		float *viewLoc, float viewScale );
+void jText_render_scaled ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jText *text, float *XYWH,
+//void jText_render_scaled ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jText *text,
+		float *viewLoc, float viewScale );
 
 void jRectRender ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jRect *rect,
 		float *viewLoc, float viewScale );

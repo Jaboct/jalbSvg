@@ -98,8 +98,10 @@ void complexEleNodePosition ( float *viewLoc, float viewScale,
 
 
 
+/// Complex List
 
-
+void complexList_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct complexList *ele,
+		float *viewLoc, float viewScale );
 
 /// TEMP
 
