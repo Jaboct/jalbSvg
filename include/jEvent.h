@@ -17,6 +17,7 @@ struct jRect;
 struct jCirc;
 
 struct cursor_path;
+struct cursor_union;
 
 struct jvg;
 
@@ -114,6 +115,24 @@ int toggle_cursorEle_child ( struct cursor_ele *ele, struct cursor_ele *temp );
 
 int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct jNakedUnion **ele,
 		int *vertI, int *controlI, struct cursorMem **lastCursor );
+
+
+/** Cursor Utilities */
+
+/*
+// why is this a funct and not a string array?
+char *cursor_union_type_to_str ( struct cursor_union *uni );
+
+void say_jvg_cursor ( );
+void say_cursor_ele ( struct cursor_ele *ele );
+void say_cursor_union ( struct cursor_union *uni );
+*/
+
+
+
+
+
+
 
 
 

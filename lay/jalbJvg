@@ -399,6 +399,9 @@ Run:
 #jalbJvg	set_debugPrint_jalbXml_macro	1
 
 
+#Run:
+jalbJvg	set_debugPrint_jvg_event	0
+jalbJvg	set_debugPrint_jvg_render	0
 
 
 

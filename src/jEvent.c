@@ -191,6 +191,8 @@ int jalbJvg_keyDown ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jvg *jv
 
 	functEnd:;
 
+	say_cursor_ele ( glob_cursor_ele );
+
 	printf ( "jalbJvg_keyDown ( ) OVER\n" );
 	return ret;
 }
@@ -777,6 +779,7 @@ int jNakedList_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, ArrayList *e
 	while ( i < len ) {
 		struct jNakedUnion *uni = arrayListGetPointer ( eles, i );
 
+		// sets the index here, so if the click is good and gets added to the glob cursor, it already knows its index.
 		temp_clickMem->index = i;
 		temp_clickIndex = i;
 
@@ -975,12 +978,12 @@ int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *tex
 
 		int overClickLines = -1;
 		// determines the index of the click (this should also handle return the cursorXY...)
-		int ret = newSbClickToIndex_wrap ( charXY, text->sb, maxCols, tabW, &overClickLines );
+		int ret2 = newSbClickToIndex_wrap ( charXY, text->sb, maxCols, tabW, &overClickLines );
 
-//		printf ( "ret: %d\n", ret );
+//		printf ( "ret2: %d\n", ret2 );
 
-		cStart[0] = ret;
-		cEnd[0] = ret;
+		cStart[0] = ret2;
+		cEnd[0] = ret2;
 
 		// takes the index and returnes the clickXY
 		newSbIndexToCoords ( cStart[0], &cStart[1], text->sb, textWrap, maxCols, tabW );
@@ -1084,6 +1087,7 @@ int jText_mEvent ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jText *tex
 
 	functEnd:;
 	printf ( "jText_mEvent ( ) OVER\n" );
+	printf ( "ret: %d\n", ret );
 
 	return ret;
 }
@@ -2064,4 +2068,66 @@ int jIterateToSelected ( ArrayList *eleList, struct jNakedUnion **parent, struct
 */
 	return -1;
 }
+
+/** Cursor Utilities */
+
+/*
+void say_jvg_cursor ( ) {
+	printf ( "say_jvg_cursor ( )\n" );
+
+	printf ( "glob_cursor_ele: %p\n", glob_cursor_ele );
+
+	
+}
+
+void say_cursor_ele ( struct cursor_ele *ele ) {
+	printf ( "ele: %p\n", ele );
+	printf ( "ele->index: %d\n", ele->index );
+
+	struct cursor_union *payload = ele->payload;
+}
+
+// why is this a funct and not a string array?
+char *cursor_union_type_to_str ( struct cursor_union *uni ) {
+	if ( uni->type == cu_Path ) {
+		return "path";
+	} else if ( uni->type == cu_Group ) {
+		return "group";
+	} else if ( uni->type == cu_Circ ) {
+		return "circ";
+	} else if ( uni->type == cu_Text ) {
+		return "text";
+	} else if ( uni->type == cu_Rect ) {
+		return "rect";
+	} else if ( uni->type == cu_ComplexEle ) {
+		return "complexEle";
+	} else {
+		return "type out of range";
+	}
+}
+
+
+void say_cursor_union ( struct cursor_union *uni ) {
+	printf ( "uni: %p\n", uni );
+	printf ( "uni->type: %d (%s)\n", uni->type, cursor_union_type_to_str ( uni ) );
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

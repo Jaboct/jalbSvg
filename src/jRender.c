@@ -79,6 +79,8 @@ extern struct cursor_ele *hoverMem;
 // also used in event, it is filled on the way down.
 extern struct cursor_ele *temp_hoverMem;
 
+extern struct cursor_ele *glob_cursor_ele;
+
 struct cursor_ele *temp_actualMem = NULL;	// actually selected cursor eles
 extern int isHover;
 int render_hoverPayload = 0;
@@ -448,6 +450,7 @@ void jVerts_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, ArrayLis
 				printf ( "HOVER ELE MISMATCH\n" );
 			}
 		}
+
 		if ( temp_actualMem ) {
 			struct cursor_ele *ele = temp_actualMem;
 			// todo type check
@@ -463,6 +466,10 @@ void jVerts_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, ArrayLis
 				}
 			} else {
 				printf ( "ACTUAL ELE MISMATCH\n" );
+				printf ( "glob\n" );
+				say_cursor_ele ( glob_cursor_ele );
+				printf ( "actual\n" );
+				say_cursor_ele ( temp_actualMem );
 			}
 		}
 
@@ -685,18 +692,21 @@ void jText_render ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jT
 		float *viewLoc, float viewScale ) {
 	float XYWH[4];
 	point_to_loc ( text->XYWH, XYWH, viewLoc, viewScale );
+
 	XYWH[0] += XYWHpass[0];
 	XYWH[1] += XYWHpass[1];
 
 	XYWH[2] = text->XYWH[2] / viewScale;
 	XYWH[3] = text->XYWH[3] / viewScale;
 
+/*
 	int iXYWH[4] = {
 		XYWH[0],
 		XYWH[1],
 		XYWH[2],
 		XYWH[3],
 	};
+*/
 
 	jText_render_scaled ( screenDims, glBuffers, XYWHpass, text, XYWH,
 //	jText_render_scaled ( screenDims, glBuffers, iXYWH, text,
@@ -709,7 +719,7 @@ void jText_render_scaled ( int *screenDims, GLuint *glBuffers, int *XYWHpass, st
 //void jText_render_scaled ( int *screenDims, GLuint *glBuffers, int *XYWHpass, struct jText *text,
 		float *viewLoc, float viewScale ) {
 
-	debugPrint_jvg_render = 1;
+//	debugPrint_jvg_render = 1;
 	if ( debugPrint_jvg_render ) {
 		printf ( "jText_render_scaled ( )\n" );
 		printf ( "text: %p\n", text );
@@ -733,7 +743,8 @@ void jText_render_scaled ( int *screenDims, GLuint *glBuffers, int *XYWHpass, st
 	glyphWH[0] = fonts[0]->atlasInfo.glyphW / viewScale;
 	glyphWH[1] = fonts[0]->atlasInfo.glyphH / viewScale;
 
-	float tempXYWH[4] = { text->XYWH[0], text->XYWH[1], text->XYWH[2], text->XYWH[3] };
+//	float tempXYWH[4] = { text->XYWH[0], text->XYWH[1], text->XYWH[2], text->XYWH[3] };
+	float tempXYWH[4] = { XYWH[0], XYWH[1], XYWH[2], XYWH[3] };
 
 
 
@@ -762,8 +773,9 @@ void jText_render_scaled ( int *screenDims, GLuint *glBuffers, int *XYWHpass, st
 	}
 */
 
-	tempXYWH[0] += XYWHpass[0];
-	tempXYWH[1] += XYWHpass[1];
+//	tempXYWH[0] += XYWHpass[0];
+//	tempXYWH[1] += XYWHpass[1];
+
 //	spanRender ( screenDims, glBuffers, XYWHpass, glyphWH, XYWH, text->sb,
 	spanRender_scaled ( screenDims, glBuffers, XYWHpass, glyphWH, tempXYWH, text->sb,
 		drawCursor, cStart, cEnd,

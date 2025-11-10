@@ -461,11 +461,11 @@ int spanRender_scaled ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float
 */
 	int XYWH[4] = { fXYWH[0], fXYWH[1], fXYWH[2], fXYWH[3] };
 
-//	if ( svg_debugPrint_render ||
-//	     svg_debugPrint_render_text ) {
+	if ( svg_debugPrint_render ||
+	     svg_debugPrint_render_text ) {
 		sayFloatArray ( "fXYWH", fXYWH, 4 );
 		sayIntArray ( "XYWHpass", XYWHpass, 4 );
-//	}
+	}
 
 	// is this on the screen at all?
 	// well i still want a decent return value...
@@ -473,7 +473,7 @@ int spanRender_scaled ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float
 	     fXYWH[1] > (XYWHpass[1] + XYWHpass[3]) ||	// off below
 	     fXYWH[0] + fXYWH[2] < 0 ||	// off to the left.
 	     fXYWH[1] + fXYWH[3] < 0 ) {	// off above
-		printf ( "text off screen, dont render\n");
+//		printf ( "text off screen, dont render\n");
 		return -1;
 	}
 

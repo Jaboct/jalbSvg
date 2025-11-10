@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <title>jalbJvg (jalbSvg project)</title>
+
+<link rel="stylesheet" href="../../../../archive/notes/programs/html/codeSheet.css">
+
+<style type="text/css">
+#colorstrip{
+    position: fixed;
+    top: 0;
+    width: 100%; height: 38px;
+    z-index: 100;
+    border-style: solid;
+    border-color: white;
+    background-color: white;
+}
+
+body{
+	margin-top: 52px; /* Same as the height of the topbar */
+}
+
+</style>
+
+</head>
+
+<header>
+<body id="top">
+  <p>
+    <b>jalbJvg documentation</b><br>
+  </p>
+<!-- i should use a self made html ele, like head 2 or some shit. instead of pasting in 2 spaces and making it bold.-->
+<div id="colorstrip">
+
+<p class="alignleft">
+<a class="heads" href="#top">top</a>
+</p>
+
+<div style="clear: both;"></div>
+</div>
+</header>
+
+<body>
+
+<div class="myParagraph">
+&nbsp;&nbsp;<b>Links</b><br>
+<nav id="links">
+  <ul>
+    <li><a href="#selected">Selected + Cursor</a></li>
+  </ul>
+</nav>
+</div>
+
+<br>
+<br>
+
+<div class="myParagraph">
+<b>Jalb Jvg Cursor</b><br>
+<br>
+(2025-11-10 17:54:16)<br>
+I made some changes to jalbJvg cursor recently specifically to allow selecting multiple objects.<br>
+<br>
+<br>
+
+Overview:<br>
+<div class="codeBlock">struct cursor_ele *glob_cursor_ele; (declared where?)
+
+cursor_ele stores 2 things,
+ an index (relevent to groups?)
+ and the union,
+the union stores what type of ele it is pointing at,
+ and extra specific information depending on the ele type.
+
+<b>Render</b>
+At the start of rendering, i do:
+temp_actualMem = glob_cursor_ele;
+
+then i iterate through temp_actual mem as i go through rendering.
+
+<br>
+
+<br>
+<br>
+
+<br>
+</div>
+
+<br>
+<br>
+
+<div class="myParagraph" id="selected">
+<b>OLD</b>
+<b>Selected + Cursor</b><br>
+<a href="index.html#cursor">jalbSvg cursor</a><br>
+<br>
+When rendering i have the global:<br>
+int thisSel;<br>
+<br>
+I have the function:<br>
+thisSel ( int );<br>
+<br>
+<br>
+How do i handle dragging?<br>
+selected needs to be true.<br>
+can be set deep in the event, or at the top level.<br>
+<br>
+Upon click at the ele that was clicked on you need to run:<br>
+handleCursor_start, macro which depends on a few things TODO.<br>
+<br>
+Then return 1, and every recur'd function will run handleCursor macro<br>
+<br>
+<br>
+When handling drag, i jIterateToSelected ( )<br>
+<br>
+<b>Cursor Values</b><br>
+<br>
+<u>Text:</u><br>
+0: editing text<br>
+1: dragging?<br>
+5: resizing from bottom right?<br>
+<br>
+<u>Circle</u><br>
+0: moving center.<br>
+1: resizing from right.<br>
+<br>
+<br>
+
+<br>
+<br>
+
+<b>jIterateToSelected</b><br>
+Iterates through my cursor list to find the ele which is actually selected.<br>
+Because eles have a varying ammount of information, this can be complicated.<br>
+For example, a textBox needs 1 extra int, to signify if i am moving it, editing the text, resizing it.<br>
+
+<br>
+<br>
+
+<b>Cursor Change</b><br>
+set_cursor_iconI<br>
+onHoverCheck<br>
+<br>
+
+<br>
+<br>
+
+<br>
+<br>
+
+(2025-09-10 10:10:02)<br>
+<div class="codeBlock">Vars:
+extern ArrayList *cursorList;
+extern int cursor_depth;
+
+extern int cursorInputMode;
+
+// text cursor info.
+int cStart[3];
+int cEnd[3];
+
+
+extern int selected;
+extern int mouseHeld;
+int heldType = 0;
+float heldStart[2];
+float cursorWorldLoc[2] = { 0, 0 };
+extern int thisSel; // used during rendering to figure if the ele, or a subEle, being rendered is currently selected.
+
+// this is relative to the elements top left position, not to the entire window.
+int cursorScreenXY[2];
+</div>
+
+<b>toggle_cursorEle ( )</b><br>
+
+<br>
+<br>
+
+<br>
+</div>
+
+<br>
+<br>
+
+<br>
+<br>
+
+<br>
+<br>
+
+<br>
+<br>
+
+<br>
+<br>
+
+<br>
+<br>
+
+<br>
+<br>
+</body>
+
+
+</html>
+
