@@ -10,7 +10,6 @@
 
 #include "jEvent.h"
 #include "jEvent_path.h"
-#include "event_sb.h"
 
 #include "jRender.h"
 
@@ -74,9 +73,7 @@ extern int debugPrint_jvg_complex_render;
 extern int svg_debugPrint_render_text;
 
 
-
 int tabW = 8;
-int ctrlMemLast = -1;
 
 
 // more cursor

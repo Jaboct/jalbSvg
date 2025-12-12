@@ -13,8 +13,6 @@
 #include "jEvent_path.h"
 
 
-#include "event_sb.h"
-
 
 /** Variables */
 
@@ -280,9 +278,10 @@ int keydown_text ( SDL_Event *e, struct jText *text ) {
 
 	printf ( "a\n" );
 
+	int glyphH = fonts[0]->atlasInfo.glyphH;
 	ret = sbKey ( e->key.keysym.sym, sb, undoMem, cStart, cEnd,
 		&searching, search, altKeys,
-		glob_ctrlKeys, NULL, textWrap, maxCols );
+		glob_ctrlKeys, NULL, textWrap, maxCols, glyphH );
 	printf ( "SB KEY RET: %d\n", ret );
 
 

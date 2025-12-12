@@ -73,6 +73,14 @@ cursor_ele stores 2 things,
 the union stores what type of ele it is pointing at,
  and extra specific information depending on the ele type.
 
+index is the index this ele is of its parent group.
+We treat the top level ele as a group always.
+So if u select the 2nd ele of the global list the cursor will look like
+
+(0, cu_Group) {
+  (2, TYPE)
+}
+
 <b>Render</b>
 At the start of rendering, i do:
 temp_actualMem = glob_cursor_ele;

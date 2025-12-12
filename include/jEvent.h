@@ -6,6 +6,7 @@
 #include <jalb/jalbArrayList.h>
 #include <jalbApi/api_uiGen.h>
 
+#include <jalb/jalbSb_event.h>
 
 /** Foward Declaring */
 

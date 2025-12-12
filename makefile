@@ -29,9 +29,6 @@ LIBS = \
  -lGLEW -lGL -lSOIL \
  -lSDL2 -lSDL2_image \
  -lm
-# inorder to get jalb/jalbScreenshot to work i need to putin the second call of GLEW, GL, and SOIL.
-# i want to set up unit tests of this, so i can figure out the right way to order my libs.
-# well i had the 3 before freetype, but now its only after and that is no problem.
 Dep = dep/
 endif
 # -ldl // for dlsym stuff.
@@ -80,7 +77,7 @@ jalbSvgDeps = $(patsubst %,$(Dep)%.d,$(jalbSvgFiles))
 $(LDIR)jalbSvg.so: $(jalbSvgOs)
 	$(CC) $(CFLAGS) $(CFLAGS2) -o $@ $^ $(LIBS)
 
-# jalbJvg
+# jalbJvg event_sb
 jalbJvgFiles = jMod \
  jPath jText jShapes jGroup \
  jHand jEvent jEvent_path jRender \
@@ -88,7 +85,6 @@ jalbJvgFiles = jMod \
  complexMod complexEle complexEle_ext complexScript complexScript_ext \
  jProof jHand_proof \
  api \
- event_sb \
  backbone_jalbJvg xmlFunctGrouper_jalbJvg
 
 # can i make these 2 generic, so i dont need to copy paste it for each mod.
