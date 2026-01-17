@@ -4,8 +4,7 @@
 
 <head>
   <title>jalbSvg index.html</title>
-
-<link rel="stylesheet" href="../../../../archive/notes/programs/html/codeSheet.css">
+  <link rel="stylesheet" href="../../../../archive/notes/programs/html/codeSheet.css">
 
 <style type="text/css">
 #colorstrip{
@@ -354,8 +353,65 @@ selected should probably not be set deep in each ele types event?<br>
 <br>
 <br>
 
+<div class="myParagraph">
+<b>Render Functions</b>:<br>
+<br>
+List of standard vector features, and info about what functions handle it, and how those functions work.<br>
+<br>
+
+<div class="codeBlock">segment:
+
+text box:
+spanRender() (render.c)
+spanRender_scaled() (render.c)
+</div>
+
+<br>
+</div>
+
 <br>
 <br>
+
+<div class="myParagraph" id="spanRender">
+<b>spanRender ( )</b><br>
+<br>
+<div class="codeBlock">
+Init some vars, and do a check to see if the box is totally off the screen.
+
+if ( selected ) draw the cursor stuff
+
+while ( 1 ) {
+	if ( textWrap ) {
+		newSbLine_wrap
+	} else {
+		newSbLine
+	}
+	draw2dApi->drawStringBuilderCut_scale()
+}
+</div>
+
+
+<br>
+<br>
+</div>
+
+<br>
+<br>
+
+<div class="myParagraph" id="unicode">
+<b>Unicode Info</b><br>
+I should move this to its own file.<br>
+<br>
+Right now I want to understand how it handled unicode multi char characters.<br>
+ASCII - is an encoding rule set that encodes 1 character (8 bits) so its of value 0 to 255.<br>
+Unicode uses multiple characters to expand past the range of 255.<br>
+Since an int is 4 bytes, u can encode any unicode char into an int.<br>
+<br>
+int nextCharRender_sb()<br>
+<br>
+
+<br>
+</div>
 
 <br>
 <br>

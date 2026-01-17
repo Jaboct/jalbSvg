@@ -13,6 +13,8 @@
 
 #include "jRender.h"
 
+#include "jvg_ui.h"
+
 #include "complexEle_ext.h"
 
 #include "hover.h"
@@ -32,22 +34,16 @@ extern struct draw2dStruct *draw2dApi;
 extern struct jalbFont *fonts[];
 extern int numFonts;
 
-// uiGen
-struct uiGen_api *uiGen_api = NULL;
-
 
 // cursor
 extern ArrayList *cursorList;
 extern int cursor_depth;
-
-extern int cursorInputMode;
 
 // text cursor info.
 int cStart[3];
 int cEnd[3];
 
 
-//struct jvg *glob_jvg = NULL;
 extern struct jvg *glob_jvg;
 //ArrayList *global_jEles = NULL; // (struct jNakedUnion*)
 extern ArrayList *global_jEles; // (struct jNakedUnion*)
@@ -109,9 +105,6 @@ int vert_subMode = 0;
 extern ArrayList *glob_ctrlKeys;
 
 
-// this aint right
-char *workspaceDir_jalbJvg = "/home/jadeb/workspace/jHigh/jalbSvg/";
-
 
 
 /** Functions */
@@ -133,6 +126,20 @@ int jalbJvg_event ( SDL_Event *e, int *clickXY, int *eleWH, void *data ) {
 
 int render_todo_done = 0;
 int screenDim_mem[2];
+
+void make_glob_jvg ( ) {
+	printf ( "make_glob_jvg ( )\n" );
+
+	if ( !glob_jvg ) {
+		glob_jvg = jvgInit ( );
+		global_jEles = glob_jvg->eles;
+	}
+
+	// should this also create other lists, like cursorList which is for event and render.
+
+	printf ( "make_glob_jvg ( ) OVER\n" );
+}
+
 
 void jalbJvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void *data,
 		float *viewLoc, float viewScale ) {
@@ -156,6 +163,7 @@ void jalbJvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void
 		render_todo_done = 1;
 	}
 
+//	make_glob_jvg ( );
 	if ( !glob_jvg ) {
 		glob_jvg = jvgInit ( );
 		global_jEles = glob_jvg->eles;
@@ -270,7 +278,6 @@ void jalbJvg_renderDyn ( int *screenDims, GLuint *glBuffers, int *XYWHpass, void
 	XYWH[1] += XYWH[3] - 1;
 	XYWH[3] = 1;
 	draw2dApi->fillRect ( XYWH, colorWhite, screenDims, glBuffers );
-
 
 	if ( debugPrint_jvg_render ) {
 		printf ( "jalbJvg_renderDyn ( ) OVER\n" );
@@ -1247,90 +1254,6 @@ char *jType_to_str ( struct jNakedUnion *uni ) {
 }
 
 
-/// spawning uiGen eles
-
-void jType_spawnEditUi ( struct jNakedUnion *uni ) {
-	printf ( "jType_spawnEditUi ( )\n" );
-
-	char *dir = NULL;
-	void *data = NULL;
-
-	switch ( uni->type ) {
-		case jNaked_G:
-			break;
-		case jNaked_Path:
-			dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/jPath.xml";
-			data = uni->path;
-
-			break;
-		case jNaked_Text:
-			dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/jText.xml";
-			data = uni->text;
-
-			break;
-		case jNaked_Rect:
-
-			break;
-		case jNaked_Circ:
-
-			break;
-		case jNaked_Ellipse:
-
-			break;
-		case jNaked_Complex:
-			dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/complexEle.xml";
-			data = uni->text;
-
-			break;
-		default:
-			break;
-	}
-
-	if ( dir ) {
-		uiGen_api->load_and_set_norm ( dir, data );
-	}
-}
-
-void open_jVert_edit ( struct jVert *vert ) {
-	printf ( "open_jVert_edit ( )\n" );
-	printf ( "vert: %p\n", vert );
-	sayFloatArray ( "vert->XY", vert->XY, 2 );
-
-	printf ( "open_jVert_edit ( ) OVER\n" );
-
-//	exit ( 12 );
-}
-
-void open_jLine_edit ( struct jLine *line ) {
-	printf ( "open_jLine_edit ( )\n" );
-	printf ( "line: %p\n", line );
-
-	printf ( "line->v0: %d\n", line->v0 );
-	printf ( "line->v1: %d\n", line->v1 );
-
-//	char *workspaceDir_jalbJvg = "/home/jadeb/workspace/jHigh/jalbSvg/";
-	char *fileDir = "res/uiGen_hand/jLine.xml";
-
-	char fullDir[1024];
-	sprintf ( fullDir, "%s%s", workspaceDir_jalbJvg, fileDir );
-
-	if ( uiGen_api ) {
-		uiGen_api->load_and_set_norm ( fullDir, line );
-	}
-
-	printf ( "open_jLine_edit ( ) OVER\n" );
-}
-
-/// uiGen
-
-void set_uiGen_api ( void *data ) {
-	printf ( "set_uiGen_api ( ) (consume)\n" );
-
-	uiGen_api = data;
-
-	printf ( "uiGen_api: %p\n", uiGen_api );
-	printf ( "uiGen_api->uiGen_init: %p\n", uiGen_api->uiGen_init );
-}
 
 
 extern void (*setViewScale) (float s);
@@ -1378,6 +1301,7 @@ void set_api_toolbar ( void *data ) {
 	printf ( "set_api_toolbar ( ) OVER\n" );
 }
 
+// i believe i run this to link my functions to the toolbar buttons.
 void jvg_pass_toolbar ( ) {
 	printf ( "jvg_pass_toolbar ( )\n" );
 
@@ -1435,7 +1359,7 @@ void jvg_pass_toolbar ( ) {
 	topEle = api_toolbar->spawn_toolbarEle ( "jvg complex", rt_drop, NULL, NULL );
 	api_toolbar->add_toolbarEle ( topEle );
 
-	f = spawn_new_complexDec;
+	f = spawnAndOpen_new_complexDec;
 	dropEle = api_toolbar->spawn_toolbarEle ( "new complexDec", rt_funct, NULL, f );
 	api_toolbar->add_drop_toolbarEle ( topEle, dropEle );
 
@@ -1468,7 +1392,24 @@ void jvg_pass_toolbar ( ) {
 	printf ( "jvg_pass_toolbar ( ) OVER\n" );
 }
 
-void spawn_new_complexDec ( ) {
+// spawns a new complexMod, adds it to the relevent list, and opens its uiGen
+// also spawns one complexDec and adds it (remove this eventually)
+struct complexMod *spawnAndOpen_new_complexDec ( ) {
+	printf ( "spawnAndOpen_new_complexDec ( )\n" );
+
+	struct complexMod *mod = spawn_new_complexDec ( );
+
+	// I think i want this to also spawn a uiGen ele.
+	uiGen_open_complexMod ( mod );
+
+	printf ( "spawnAndOpen_new_complexDec ( ) OVER\n" );
+
+	return mod;
+}
+
+// spawns a new complexMod, adds it to the relevent list, and opens its uiGen
+// also spawns one complexDec and adds it (remove this eventually)
+struct complexMod *spawn_new_complexDec ( ) {
 	printf ( "spawn_new_complexDec ( )\n" );
 
 	// add to the last mod.
@@ -1504,7 +1445,7 @@ void spawn_new_complexDec ( ) {
 
 	printf ( "spawn_new_complexDec ( ) OVER\n" );
 
-//exit ( 12 );
+	return mod;
 }
 
 void spawn_projectInfo ( ) {
@@ -1513,6 +1454,7 @@ void spawn_projectInfo ( ) {
 	printf ( "spawn_projectInfo ( ) OVER\n" );
 }
 
+/// jalbDir
 
 void (*jalbDir_loadPane)(char *) = NULL;
 void set_jalbDir_loadPane ( void *data ) {
@@ -1537,6 +1479,8 @@ void load_jvg_dirList ( ) {
 
 	printf ( "load_jvg_dirList ( ) OVER\n" );
 }
+
+/// Toggles
 
 void jvg_toggle_CAD ( ) {
 	printf ( "jvg_toggle_CAD ( )\n" );
@@ -1611,265 +1555,7 @@ void set_cursor_complex ( ) {
 
 
 
-/** Loading examples for uiGen_liveDev */
 
-struct jvg *load_jvg_example_eleList ( ) {
-	printf ( "load_jvg_example_eleList ( )\n" );
-
-	struct jvg *jvg = jvgInit ( );
-	struct jNakedUnion *uni = jNakedUnionInit ( );
-	jNakedUnionTypeChange0 ( uni, jNaked_G );
-	arrayListAddEndPointer ( jvg->eles, uni );
-
-	uni = jNakedUnionInit ( );
-	jNakedUnionTypeChange0 ( uni, jNaked_Path );
-	arrayListAddEndPointer ( jvg->eles, uni );
-
-	uni = jNakedUnionInit ( );
-	jNakedUnionTypeChange0 ( uni, jNaked_Text );
-	arrayListAddEndPointer ( jvg->eles, uni );
-
-	uni = jNakedUnionInit ( );
-	jNakedUnionTypeChange0 ( uni, jNaked_Rect );
-	arrayListAddEndPointer ( jvg->eles, uni );
-
-	uni = jNakedUnionInit ( );
-	jNakedUnionTypeChange0 ( uni, jNaked_Circ );
-	arrayListAddEndPointer ( jvg->eles, uni );
-
-	uni = jNakedUnionInit ( );
-	jNakedUnionTypeChange0 ( uni, jNaked_Ellipse );
-	arrayListAddEndPointer ( jvg->eles, uni );
-
-	uni = jNakedUnionInit ( );
-	jNakedUnionTypeChange0 ( uni, jNaked_Complex );
-	arrayListAddEndPointer ( jvg->eles, uni );
-
-	glob_jvg = jvg;
-
-	printf ( "load_jvg_example_eleList ( ) OVER\n" );
-
-	return jvg;
-}
-
-struct jPath *load_jvg_example_jPath ( ) {
-	printf ( "load_jvg_example_jPath ( )\n" );
-
-	struct jPath *path = jPathInit ( );
-
-	struct jVert *vert = jVertInit ( );
-	arrayListAddEndPointer ( path->verts, vert );
-	vert->XY[0] = 1.0;
-	vert->XY[1] = -1.0;
-
-	vert = jVertInit ( );
-	arrayListAddEndPointer ( path->verts, vert );
-	vert->XY[0] = 2.0;
-	vert->XY[1] = -2.0;
-
-	struct jLine *line = jLineInit ( );
-	arrayListAddEndPointer ( path->lines, line );
-	line->v0 = 0;
-	line->v1 = 1;
-
-	printf ( "load_jvg_example_jPath ( ) OVER\n" );
-
-	return path;
-}
-
-struct jVert *load_jvg_example_jVert ( ) {
-	printf ( "load_jvg_example_jVert ( )\n" );
-
-	struct jVert *vert = jVertInit ( );
-	vert->XY[0] = 1.0;
-	vert->XY[1] = -1.0;
-
-	printf ( "load_jvg_example_jvert ( ) OVER\n" );
-
-	return vert;
-}
-
-struct jLine *load_jvg_example_jLine ( ) {
-	printf ( "load_jvg_example_jLine ( )\n" );
-
-	struct jLine *line = jLineInit ( );
-	line->v0 = 0;
-	line->v1 = 0;
-
-	printf ( "load_jvg_example_jLine ( ) OVER\n" );
-
-	return line;
-}
-
-
-
-/** UiGen spawning */
-
-char *jvg_projectDir = "/home/jadeb/workspace/jHigh/jalbSvg";
-
-void open_left_toolbar ( ) {
-	printf ( "open_left_toolbar ( )\n" );
-
-//	char *fullDir = "/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/eleSpawner.xml";
-
-	char *dir = "res/uiGen_hand/eleSpawner.xml";
-	char fullDir[256];
-	sprintf ( fullDir, "%s/%s", jvg_projectDir, dir );
-
-
-	void *data = NULL;
-	int type = 1; // no red bar.
-
-	int XYWH[4] = { 0, 54, 68, 114 };
-	void *uiGen = uiGen_api->load_and_set_XYWH ( fullDir, data, XYWH, type );
-
-	printf ( "uiGen: %p\n", uiGen );
-
-	printf ( "open_left_toolbar ( ) OVER\n" );
-}
-
-void uiGen_open_eleList ( ) {
-	printf ( "uiGen_open_eleList ( )\n" );
-
-	char *dir = "res/uiGen_hand/eleList.xml";
-
-	char fullDir[256];
-	sprintf ( fullDir, "%s/%s", jvg_projectDir, dir );
-
-	void *data = glob_jvg;
-	int type = 0; // red bar.
-
-	int width = 200;
-
-	// open it on the right side of the screen.
-	int XYWH[4] = { screenDim_mem[0] - width, 74, width, 400 };
-	uiGen_api->load_and_set_XYWH ( fullDir, data, XYWH, type );
-
-	printf ( "uiGen_open_eleList ( ) OVER\n" );
-}
-
-void uiGen_open_jNaked ( struct jNakedUnion *jNaked ) {
-	printf ( "uiGen_open_jNaked ( )\n" );
-
-	printf ( "projectDir: %s\n", jvg_projectDir );
-
-	printf ( "jNaked: %p\n", jNaked );
-	printf ( "jNaked->type: %d\n", jNaked->type );
-
-//	char *dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/";
-	char *midDir = "res/uiGen_hand";
-
-	int type = 0; // red bar.
-
-	if ( jNaked->type == jNaked_G ) {
-	} else if ( jNaked->type == jNaked_Path ) {
-		char *name = "jPath.xml";
-		char fullDir[1024];
-//		sprintf ( fullDir, "%s%s", dir, name );
-		sprintf ( fullDir, "%s/%s/%s", jvg_projectDir, midDir, name );
-
-		void *data = jNaked->path;
-
-		int XYWH[4] = { 40, 40, 400, 400 };
-		uiGen_api->load_and_set_XYWH ( fullDir, data, XYWH, type );
-
-	} else if ( jNaked->type == jNaked_Text ) {
-		char *name = "jText.xml";
-		char fullDir[1024];
-		sprintf ( fullDir, "%s/%s/%s", jvg_projectDir, midDir, name );
-
-		void *data = jNaked->text;
-
-		int XYWH[4] = { 40, 40, 400, 400 };
-		uiGen_api->load_and_set_XYWH ( fullDir, data, XYWH, type );
-
-	} else if ( jNaked->type == jNaked_Rect ) {
-	} else if ( jNaked->type == jNaked_Circ ) {
-	} else if ( jNaked->type == jNaked_Ellipse ) {
-	} else if ( jNaked->type == jNaked_Complex ) {
-	}
-
-	printf ( "uiGen_open_jNaked ( ) OVER\n" );
-}
-
-void uiGen_open_complexWrangler ( ) {
-	printf ( "uiGen_open_complexWrangler ( )\n" );
-
-	char *midDir = "res/uiGen_hand";
-
-	char *name = "complexWrangler.xml";
-	char fullDir[1024];
-	sprintf ( fullDir, "%s/%s/%s", jvg_projectDir, midDir, name );
-
-	int type = 0; // red bar.
-	int XYWH[4] = { 40, 40, 420, 600 };
-
-	void *data = glob_jvg;
-
-	uiGen_api->load_and_set_XYWH ( fullDir, data, XYWH, type );
-
-	printf ( "uiGen_open_complexWrangler ( ) OVER\n" );
-}
-
-void uiGen_open_complexMod ( struct complexMod *mod ) {
-	printf ( "uiGen_open_complexMod ( )\n" );
-
-	char *midDir = "res/uiGen_hand";
-
-	char *name = "complexMod.xml";
-	char fullDir[1024];
-	sprintf ( fullDir, "%s/%s/%s", jvg_projectDir, midDir, name );
-
-	int type = 0; // red bar.
-	int XYWH[4] = { 40, 40, 400, 400 };
-
-	void *data = mod;
-	uiGen_api->load_and_set_XYWH ( fullDir, data, XYWH, type );
-
-	printf ( "uiGen_open_complexMod ( ) OVER\n" );
-}
-
-void uiGen_open_complexDec ( struct complexDec *dec ) {
-	printf ( "uiGen_open_complexDec ( )\n" );
-
-	char *midDir = "res/uiGen_hand";
-
-	char *name = "complexDec.xml";
-	char fullDir[1024];
-	sprintf ( fullDir, "%s/%s/%s", jvg_projectDir, midDir, name );
-
-	int type = 0; // red bar.
-	int XYWH[4] = { 40, 40, 400, 400 };
-
-	void *data = dec;
-
-	uiGen_api->load_and_set_XYWH ( fullDir, data, XYWH, type );
-
-	printf ( "uiGen_open_complexDec ( ) OVER\n" );
-}
-
-
-/// uiGen left toolbar stuff
-
-float retColor[4] = { 0.0 };
-float *toolBar_icon_color ( int i ) {
-//	printf ( "toolBar_icon_color ( )\n" );
-//	printf ( "i: %d\n", i );
-
-	if ( cursorInputMode == i ) {
-		retColor[0] = 0.8;
-		retColor[1] = 0.6;
-		retColor[2] = 0.0;
-		retColor[3] = 1.0;
-	} else {
-		retColor[0] = 0.4;
-		retColor[1] = 0.4;
-		retColor[2] = 0.4;
-		retColor[3] = 1.0;
-	}
-
-	return retColor;
-}
 
 
 /** Specific Loading Examples */

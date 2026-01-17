@@ -29,7 +29,7 @@ body{
 <header>
 <body id="top">
   <p>
-    <b>jalbSvg documentation</b><br>
+    <b>Complex Ele Documentation (jalbJvg)</b><br>
   </p>
 <!-- i should use a self made html ele, like head 2 or some shit. instead of pasting in 2 spaces and making it bold.-->
 <div id="colorstrip">
@@ -62,7 +62,8 @@ body{
 
 <div class="myParagraph" id="complexEle">
 <b>Complex Ele</b><br>
-2 structs, <u>complexDec</u> and <u>complexEle</u><br>
+3 structs, <u>complexMod</u>, <u>complexDec</u>, and <u>complexEle</u><br>
+complexMod has a string name, and 3 lists. complexDecList (struct complexDec*), globalVars (struct subVar*), globalScripts (struct complexScript*) (idk what this is.)<br>
 complexDec is the declaration of a complex struct, where i choose what the subVars are and it gets saved into the list TODO.<br>
 complexEle is an instantiation of complexDec, it contains all (or some?) the subVars that were declared in complexDec, but this contains live variables.<br>
 <br>
@@ -142,7 +143,7 @@ i think its just globalVars for my project, not for the mods.<br>
 <br>
 <br>
 
-complexEle.h<br>
+<b>complexEle.h</b><br>
 <div class="codeBlock">struct complexDec {
 	char name[256];
 	ArrayList *subVars;	// (struct subVar*)
@@ -181,7 +182,8 @@ struct complexRef {
 
 <br>
 <br>
-complexMod.h<br>
+
+<b>complexMod.h</b><br>
 I believe the point here is to make it easier for u to create a new project, and inherit the relevent complex structs.<br>
 jvg->moduleList<br>
 probly rename this to reflect complex?<br>
@@ -207,6 +209,26 @@ struct complexModData {
 there is a toolbar ele "jvg complex" -> "new complexDec"<br>
 runs:<br>
 spawn_new_complexDec ( ) (jHand.c)<br>
+<br>
+<br>
+
+<div class="codeBlock">Here is just my theory, this isnt fully implemented:
+
+1: Determine which mod we want to import (or generate a new one if we dont have it).
+2: Create a new Jvg project, or load an existing Jvg project.
+3: top toolbar "jvg complex" -> "new complexDec"
+ (i need to make this spawn a uiGen ele) (how can i pull up the list w/o creating a new ele?)
+ (if u dont have that pane open, and create a new ele then open that pane, if its already open, then done open a new version of it)
+4: Set up this complexMod
+ mod
+ modName
+ renderF_name
+ eventF_name
+5: This mod should be saved inside of the Jvg xml file?
+
+great, now i want to create a complexDec inside of this mod.
+</div>
+
 <br>
 </div>
 

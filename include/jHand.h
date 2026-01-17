@@ -7,7 +7,10 @@
 #include <stdlib.h>
 
 #include <jalb/jalbArrayList.h>
-#include <jalbApi/api_uiGen.h>
+
+#include <jalbXml/jalbXml_02_read.h>
+#include <jalbXml/jalbXml_02_write.h>
+#include <jalbXml/backbone_wrangler.h>
 
 
 /** Foward Declaring */
@@ -71,6 +74,7 @@ enum heldTypes {	// u can have highlight and camera move at the same time.
 
 
 void *jalbJvg_init ( );
+void make_glob_jvg ( );
 
 void jalbJvg_render ( int *screenDims, GLuint *glBuffers, int *XYWH, void *data );
 int jalbJvg_event ( SDL_Event *e, int *clickXY, int *eleWH, void *data );
@@ -131,31 +135,14 @@ void iterateCharArr ( unsigned char *arr, int numChars );
 void decreaseCharArr ( unsigned char *arr, int numChars );
 
 
-
-
 /** Dragging */
 
 void dragJPath ( struct jPath *path, float *dXY );
 
 
-
-
 /// util stuff
 
 char *jType_to_str ( struct jNakedUnion *uni );
-
-
-/// spawning uiGen eles
-
-void jType_spawnEditUi ( struct jNakedUnion *uni );
-
-void open_jVert_edit ( struct jVert *vert );
-void open_jLine_edit ( struct jLine *line );
-
-
-/// uiGen
-
-void set_uiGen_api ( void *data );
 
 
 /// Xml
@@ -168,11 +155,19 @@ void prepairComplex_xml ( );
 
 void set_api_toolbar ( void *data );
 void jvg_pass_toolbar ( );
-void spawn_new_complexDec ( );
+
+struct complexMod *spawnAndOpen_new_complexDec ( );
+struct complexMod *spawn_new_complexDec ( );
 void spawn_projectInfo ( );
+
+
+/// jalbDir
 
 void set_jalbDir_loadPane ( void *data );
 void load_jvg_dirList ( );
+
+
+/// Toggles
 
 void jvg_toggle_CAD ( );
 
@@ -192,28 +187,23 @@ void set_cursor_complex ( );
 
 
 
-/** Loading examples for uiGen_liveDev */
-
-struct jvg *load_jvg_example_eleList ( );
-struct jPath *load_jvg_example_jPath ( );
-struct jVert *load_jvg_example_jVert ( );
-struct jLine *load_jvg_example_jLine ( );
-
-/** UiGen spawning */
-
-void open_left_toolbar ( );
-void uiGen_open_eleList ( );
-void uiGen_open_jNaked ( struct jNakedUnion *jNaked );
-
-void uiGen_open_complexWrangler ( );
-void uiGen_open_complexMod ( struct complexMod *mod );
-void uiGen_open_complexDec ( struct complexDec *dec );
-
-float *toolBar_icon_color ( int i );
 
 
 /** Specific Loading Examples */
 
 void load_CAD_00 ( );
 void firstRender_todo ( );
+
+
+/** Getters */
+
+void *get_glob_jvg ( );
+
+
+
+
+
+
+
+
 

@@ -4,7 +4,7 @@
     <uiUnion>
       <literalVar>
         <data>
-          <str>complexMod edit</str>
+          <str>complexMod edit (uiGen)</str>
           <useData>0</useData>
         </data>
         <pxMove>

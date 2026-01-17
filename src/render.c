@@ -531,19 +531,16 @@ int spanRender_scaled ( int *screenDims, GLuint *glBuffers, int *XYWHpass, float
 		}
 
 		draw2dApi->drawCharPre ( fonts[0], colorWhite );
-
-//		draw2dApi->drawStringBuilder ( start, startIndex, end, endIndex, screenDims, glBuffers, font16, subXYWH, tabW );
-//		draw2dApi->drawStringBuilderCut ( start, startIndex, end, endIndex, screenDims, glBuffers, fonts[0], XYWH, indentXY, tabW );
-
 		draw2dApi->drawStringBuilderCut_scale ( start, startIndex, end, endIndex,
 			screenDims, glBuffers, fonts, numFonts, desiredH, XYWH,
 			indentXY, tabW );
+
 /*
-printf ( "after\n" );
-printf ( "start: %p\n", start );
-printf ( "startIndex: %d\n", startIndex );
-printf ( "end: %p\n", end );
-printf ( "endIndex: %d\n", endIndex );
+		printf ( "after\n" );
+		printf ( "start: %p\n", start );
+		printf ( "startIndex: %d\n", startIndex );
+		printf ( "end: %p\n", end );
+		printf ( "endIndex: %d\n", endIndex );
 */
 
 		numLines += 1;
@@ -561,9 +558,11 @@ printf ( "endIndex: %d\n", endIndex );
 		start = end;
 		startIndex = endIndex;
 
+
 		// should this just be XYWH += ?
 //		fXYWH[1] += glyphWH[1];
 //		XYWH[1] += glyphWH[1];
+
 		colY += glyphWH[1];
 		XYWH[1] = colY;
 
