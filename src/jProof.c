@@ -5,6 +5,8 @@
 
 #include "api/structStruct.h"
 
+#include "jText.h"
+
 
 /** Variables */
 

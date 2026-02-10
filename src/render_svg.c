@@ -1,6 +1,24 @@
 #include "render_svg.h"
 
 
+#include "path.h"
+
+
+#include "svg.h"
+#include "render.h"
+
+#include "mod_ext.h"
+
+#include "recursiveCursor.h"
+
+// for say_ function, i should move them to a separate file
+#include "hand.h"
+
+#include "text.h"
+
+#include "shapes.h"
+
+
 /** Variables */
 
 extern struct draw2dStruct *draw2dApi;

@@ -16,9 +16,6 @@
 
 
 
-#include "jPath.h"
-#include "jText.h"
-#include "jShapes.h"
 
 void jGroup_preInit ( );
 

@@ -9,14 +9,11 @@
 #include <jalb/jama.h>
 #include <jalb/jalbSb.h>
 
-#include "svg.h"
 
-#include "proof.h"
+/** Forward Declaring */
 
-#include "render_svg.h"
-#include "render.h"
+struct pathUni;
 
-#include "autoTests.h"
 
 /** Structs */
 

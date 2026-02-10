@@ -1,5 +1,11 @@
 #include "jGroup.h"
 
+
+
+#include "jPath.h"
+#include "jText.h"
+#include "jShapes.h"
+
 /** AUTO GENERATED CODE */
 
 extern char altKeys[];

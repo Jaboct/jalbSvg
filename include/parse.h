@@ -1,6 +1,17 @@
 #pragma once
 
-#include <svg.h>
+
+#include <jalb/jalbArrayList.h>
+
+/** Forward Declaring */
+
+struct moveTo;
+struct lineTo;
+struct cubicBez;
+struct quadBez;
+struct ellipArc;
+
+struct pathUni;
 
 
 /** Functions */

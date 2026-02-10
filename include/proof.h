@@ -9,8 +9,7 @@
 
 #include <jalb/jalbScreenshot.h>
 
-#include "hand.h"
-#include "parse.h"
+
 
 /** Functions */
 

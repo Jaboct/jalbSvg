@@ -8,18 +8,19 @@
 #include "svg.h"
 #include "path.h"
 
+#include "jRender.h"
 #include "jEvent.h"
 #include "jEvent_path.h"
 
-#include "jRender.h"
-
-#include "jvg_ui.h"
-
 #include "complexEle_ext.h"
-
+#include "jvg_ui.h"
 #include "hover.h"
-
 #include "cursor.h"
+#include "cursorIcon.h"
+#include "hand.h"
+#include "mod_ext.h"
+
+#include "canvas_util.h"
 
 
 /** Variables */

@@ -1,6 +1,22 @@
 #include "hand.h"
 
 
+/** Includes */
+
+#include "svg.h"
+#include "path.h"
+#include "parse.h"
+
+#include "text.h"
+#include "shapes.h"
+
+#include "mod_ext.h"
+
+#include "recursiveCursor.h"
+
+//#include "complexEle.h"
+
+
 /** Variables */
 
 extern struct svg *global_svg;

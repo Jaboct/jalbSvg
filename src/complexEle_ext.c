@@ -3,12 +3,15 @@
 
 /** Includes */
 
+// this should be in the header?
+#include "api/structStruct.h"
+
+#include "jText.h"
+
 #include "cursorIcon.h"
 #include "recursiveCursor.h"
 
-#include "api/structStruct.h"
 #include "canvas_util.h"
-
 
 #include "complexEle.h"
 #include "complexScript_ext.h"

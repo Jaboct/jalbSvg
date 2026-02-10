@@ -10,12 +10,14 @@
 #include <jalb/jalbSb.h>
 
 //#include <jalb/jalb_cursor.h>	// this requires me to convert it from a struct to an int, todo.
-#include "recursiveCursor.h"
 
-#include "svg.h"
-#include "mod_ext.h"
+/** Forward Declaring */
 
-#include "cursorIcon.h"
+struct svg;
+struct path;
+struct pathUni;
+struct cursorMem;
+struct nakedUnion;
 
 
 /** Functions */

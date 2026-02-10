@@ -1,6 +1,16 @@
 #include "proof.h"
 
 
+/** Includes */
+
+#include "svg.h"
+#include "hand.h"
+#include "parse.h"
+//#include "jGroup.h"
+
+
+/** Variables */
+
 extern struct svg *global_svg;
 
 

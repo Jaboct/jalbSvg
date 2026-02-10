@@ -3,9 +3,12 @@
 
 /** Includes */
 
-#include "cursor.h"
-
+#include "jPath.h"
 #include "jGroup.h"
+#include "jShapes.h"
+#include "jText.h"
+
+#include "cursor.h"
 #include "cursorIcon.h"
 
 #include "canvas_util.h"

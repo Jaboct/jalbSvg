@@ -9,12 +9,16 @@
 #include <jalb/jama.h>
 #include <jalb/jalbSb.h>
 
-#include "svg.h"
-#include "render.h"
 
-#include "mod_ext.h"
+/** Forward Declaring */
 
-#include "recursiveCursor.h"
+struct svg;
+struct path;
+struct rect;
+struct circle;
+struct ellipse;
+struct text;
+
 
 /** Functions */
 

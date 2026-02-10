@@ -6,11 +6,20 @@
 #include "hand.h"
 #include "jHand.h"
 #include "jGroup.h"
+#include "jText.h"
+#include "jShapes.h"
+#include "jPath.h"
+
+#include "path.h"
 
 #include "cursor.h"
+#include "cursorIcon.h"
 #include "hover.h"
 
 #include "jEvent_path.h"
+#include "canvas_util.h"
+
+#include "mod_ext.h"
 
 
 

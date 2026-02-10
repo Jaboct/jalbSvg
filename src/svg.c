@@ -1,5 +1,13 @@
 #include "svg.h"
 
+
+#include "text.h"
+#include "hand.h"
+#include "shapes.h"
+
+#include "path.h"
+
+
 /** AUTO GENERATED CODE */
 
 extern char altKeys[];

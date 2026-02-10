@@ -6,6 +6,7 @@
 #include "jGroup.h"
 #include "jPath.h"
 #include "jText.h"
+#include "jShapes.h"
 
 #include "path.h"	// for enums
 #include "mod_ext.h"	// for enums
@@ -13,6 +14,8 @@
 
 #include "cursor.h"
 #include "hover.h"
+
+#include "recursiveCursor.h"
 
 #include "api/structStruct.h"
 

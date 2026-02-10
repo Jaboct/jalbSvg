@@ -1,5 +1,20 @@
 #include "event.h"
 
+
+/** Includes */
+
+#include "path.h"
+#include "recursiveCursor.h"
+
+#include "svg.h"
+#include "mod_ext.h"
+
+#include "cursorIcon.h"
+
+#include "canvas_util.h"
+#include "text.h"
+
+
 /** Varaibles */
 
 extern char altKeys[];

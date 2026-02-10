@@ -4,6 +4,8 @@
 #include <jalb/soMacros>
 #include <jalb/jalbUtilities.h>
 
+#include "jalbXml/backbone_wrangler.h"
+
 /** Foward Declaring */
 
 

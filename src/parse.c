@@ -1,5 +1,14 @@
 #include "parse.h"
 
+
+#include "svg.h"
+
+// for an enum, i should move them to a separate less busy file.
+#include "hand.h"
+
+#include "path.h"
+
+
 /** Functions */
 
 

@@ -71,10 +71,6 @@ struct path {
 
 /** Post Includes */
 
-#include "text.h"
-#include "hand.h"
-#include "shapes.h"
-
 
 /** Functions */
 

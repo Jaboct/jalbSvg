@@ -1,5 +1,18 @@
 #include "mod_ext.h"
 
+
+
+#include "svg.h"
+
+#include "path.h"
+
+#include "render_svg.h"
+#include "render.h"
+
+#include "proof.h"
+#include "autoTests.h"
+
+
 /** Variables */
 
 /// modCore externs 

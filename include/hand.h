@@ -1,20 +1,38 @@
 #pragma once
 
+
+/** Includes */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+
 #include <jalbXml/jalbXml_02.h>
 #include <jalb/jalbStr.h>
 
 #include <jalb/jalbSb.h>
 #include <jalb/jalbScreenshot.h>
 
-#include "svg.h"
-#include "path.h"
-#include "parse.h"
+#include <jalb/jalbUtilities.h>
 
-#include "mod_ext.h"
+#include <jalbXml/jalbXml_02_read.h>
+#include <jalbXml/jalbXml_02_write.h>
 
-#include "recursiveCursor.h"
 
-//#include "complexEle.h"
+/** Foward Declaring */
+
+struct svg;
+
+struct path;
+struct pathUni;
+
+struct text;
+struct tspan;
+
+struct rect;
+
+struct nakedUnion;
+struct g;
 
 
 /** Structs */
