@@ -21,6 +21,8 @@
 
 #include "mod_ext.h"
 
+#include "complexEle.h"
+#include "complexEle_ext.h"
 
 
 /** Variables */

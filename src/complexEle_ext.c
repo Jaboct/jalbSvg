@@ -6,6 +6,9 @@
 // this should be in the header?
 #include "api/structStruct.h"
 
+#include "jEvent.h"
+#include "jGroup.h"
+
 #include "jText.h"
 
 #include "cursorIcon.h"
@@ -13,6 +16,7 @@
 
 #include "canvas_util.h"
 
+#include "complexMod.h"
 #include "complexEle.h"
 #include "complexScript_ext.h"
 

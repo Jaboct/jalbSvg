@@ -14,7 +14,7 @@
 
 #include <jalbXml/jalbXml_02.h>
 
-#include "hand.h"
+
 
 
 

@@ -1,5 +1,11 @@
 #include "jMod.h"
 
+
+
+#include "jGroup.h"
+
+
+
 /** AUTO GENERATED CODE */
 
 char altKeys[akNum] = {0};

@@ -12,7 +12,10 @@
 #include "jEvent.h"
 #include "jEvent_path.h"
 
+#include "complexMod.h"
+#include "complexEle.h"
 #include "complexEle_ext.h"
+
 #include "jvg_ui.h"
 #include "hover.h"
 #include "cursor.h"
@@ -427,11 +430,11 @@ void hand_doStuff ( ) {
 }
 
 
-extern int num_structStruct_jalbSvg;
+extern int xmlFuncts_arr_len_jalbSvg;
 extern struct xmlFuncts *xmlFuncts_arr_jalbSvg[];
 
 void hand_doStuff2 ( char *dir ) {
-	struct svg *svgEle = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbSvg, num_structStruct_jalbSvg );
+	struct svg *svgEle = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbSvg, xmlFuncts_arr_len_jalbSvg );
 
 	convert_list ( svgEle->eles );
 /*
@@ -600,7 +603,7 @@ extern struct backbone_structStruct *backbone_arr_jalbJvg[];
 extern int jvg_attributes[];
 extern struct backbone_structStruct backboneStru_jvg;
 
-extern int num_structStruct_jalbJvg;
+extern int xmlFuncts_arr_len_jalbJvg;
 extern struct xmlFuncts *xmlFuncts_arr_jalbJvg[];
 
 
@@ -660,7 +663,7 @@ void jalbJvg_load_global ( char *dir ) {
 void *jalbJvg_load ( char *dir ) {
 	printf ( "jalbJvg_load ( )\n" );
 
-	struct jvg *jvgEle = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbJvg, num_structStruct_jalbJvg );
+	struct jvg *jvgEle = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbJvg, xmlFuncts_arr_len_jalbJvg );
 
 	printf ( "jalbJvg_load ( ) OVER\n" );
 
@@ -1270,7 +1273,9 @@ void set_jvg_viewScale ( float f ) {
 
 /// Xml
 
-extern int num_structStruct_consumeMod;
+// these come from consumeMod.so
+//extern int num_structStruct_consumeMod;
+extern int xmlFuncts_arr_len_consumeMod;
 extern struct xmlFuncts *xmlFuncts_arr_consumeMod[];
 
 int xmlPrepaired = 0;
@@ -1281,8 +1286,8 @@ void prepairComplex_xml ( ) {
 	}
 	xmlPrepaired = 1;
 
-	wrangleXmlFuncts ( "jalbJvg", num_structStruct_jalbJvg, xmlFuncts_arr_jalbJvg );
-	wrangleXmlFuncts ( "jHigh", num_structStruct_consumeMod, xmlFuncts_arr_consumeMod );
+	wrangleXmlFuncts ( "jalbJvg", xmlFuncts_arr_len_jalbJvg, xmlFuncts_arr_jalbJvg );
+	wrangleXmlFuncts ( "jHigh", xmlFuncts_arr_len_consumeMod, xmlFuncts_arr_consumeMod );
 }
 
 

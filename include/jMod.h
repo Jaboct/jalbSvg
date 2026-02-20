@@ -16,7 +16,7 @@
 
 
 
-#include "jGroup.h"
+
 
 void jMod_preInit ( );
 

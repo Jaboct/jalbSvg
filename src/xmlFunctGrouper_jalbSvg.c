@@ -1,8 +1,13 @@
 #include "xmlFunctGrouper_jalbSvg.h"
 
 
+#include "mod.h"
+#include "svg.h"
+#include "path.h"
+#include "text.h"
+#include "shapes.h"
 
-int num_structStruct_jalbSvg = 15;
+int xmlFuncts_arr_len_jalbSvg = 15;
 
 
 extern struct xmlFuncts svgXml;
@@ -41,15 +46,11 @@ struct xmlFuncts *xmlFuncts_arr_jalbSvg[] = {
 };
 
 
-void *get_num_structStruct ( ) {
-	return &num_structStruct_jalbSvg;
+void *get_xmlFuncts_arr_len ( ) {
+	return &xmlFuncts_arr_len_jalbSvg;
 }
 void *get_xmlFuncts_arr ( ) {
 	return xmlFuncts_arr_jalbSvg;
-}
-extern struct backbone_structStruct *backbone_arr_jalbSvg[];
-void *get_backbone_arr ( ) {
-	return backbone_arr_jalbSvg;
 }
 int num_projectVars_jalbSvg = 0;
 struct backbone_projectVar *projectVar_arr_jalbSvg[] = {

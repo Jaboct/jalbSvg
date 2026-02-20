@@ -6,6 +6,10 @@
 #include "jText.h"
 #include "jShapes.h"
 
+#include "complexMod.h"
+#include "complexEle_ext.h"
+#include "complexEle.h"
+
 /** AUTO GENERATED CODE */
 
 extern char altKeys[];

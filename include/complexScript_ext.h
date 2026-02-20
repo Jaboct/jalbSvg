@@ -1,11 +1,15 @@
 #pragma once
 
 #include <jalb/jalb_idPtr.h>
+#include <jalbXml/jalbXml_02_read.h>
+#include <jalbXml/jalbXml_02_write.h>
 
 #include "api/structStruct.h"
 
-#include "complexMod.h"
-#include "complexEle.h"
+
+/** Forward Declaring */
+
+struct complexMod;
 
 
 /** Structs */

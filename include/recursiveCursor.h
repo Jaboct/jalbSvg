@@ -1,3 +1,5 @@
+#pragma once 
+
 
 // TODO, unite with <jalb/jalb_cursor.h>
 

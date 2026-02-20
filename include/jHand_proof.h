@@ -3,11 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "jGroup.h"
-
-#include "complexEle.h"
-
-#include "jHand.h"
 
 
 /** Functions */

@@ -39,8 +39,6 @@ struct complexModData {
 
 /** Post Includes */
 
-#include "complexEle.h"
-#include "complexScript.h"
 
 
 /** Functions */

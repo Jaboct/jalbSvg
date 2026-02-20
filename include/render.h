@@ -12,8 +12,6 @@
 #include <jalbDraw/jalb_draw2d_api.h>
 
 
-#include "canvas_util.h"
-
 
 /** Functions */
 

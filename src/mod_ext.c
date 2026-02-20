@@ -1,6 +1,7 @@
 #include "mod_ext.h"
 
 
+/** Includes */
 
 #include "svg.h"
 
@@ -12,6 +13,9 @@
 #include "proof.h"
 #include "autoTests.h"
 
+#include "event.h"
+
+#include "canvas_util.h"
 
 /** Variables */
 

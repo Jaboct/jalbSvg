@@ -8,8 +8,6 @@
 #include <jalb/jalbUtilities.h>
 #include <jalb/jalbSay.h>
 
-#include "hand.h"
-
 
 /** Structs */
 

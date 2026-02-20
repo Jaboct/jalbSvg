@@ -100,7 +100,7 @@ $(LDIR)jalbJvg.so: $(jalbJvgOs) $(LDIR)jalbSvg.so $(LDIR)consumeMod.so
 
 # this is generic.
 $(ODIR)%.o:
-	$(CC) $(CFLAGS) $(CFLAGS2) -c -o $@ $< $(LIBS)
+	$(CC) $(CFLAGS) $(CFLAGS2) -c -o $@ $< $(LIBS) -lconsumeMod.so
 
 
 #in this, convert obj to $(ODIR)

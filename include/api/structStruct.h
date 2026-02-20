@@ -14,11 +14,9 @@
 
 #include <jalbXml/jalbXml_02.h>
 
-
-
 #include <jalb/typeEnum.h>
 
-//#include "stdTypeUnion.h"
+
 
 void structStruct_preInit ( );
 
@@ -90,11 +88,6 @@ enum initTypeDataEnum {
 	Std = 0,
 };
 
-
-/** Post Includes */
-
-
-//#include "structStruct_ext.h"
 
 
 

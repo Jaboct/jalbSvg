@@ -1,5 +1,8 @@
 #include "mod.h"
 
+
+#include "hand.h"
+
 /** AUTO GENERATED CODE */
 
 char altKeys[akNum] = {0};

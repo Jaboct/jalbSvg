@@ -1,5 +1,13 @@
 #include "backbone_jalbSvg.h"
 
+/** Includes */
+
+#include "mod.h"
+#include "svg.h"
+#include "path.h"
+#include "text.h"
+#include "shapes.h"
+
 
 /** mod */
 
@@ -1769,6 +1777,21 @@ int get_backbone_arr_len_jalbSvg ( ) {
 }
 
 int get_backbone_arr_total_jalbSvg ( struct backbone_structStruct ***arrPtr ) {
+	*arrPtr = backbone_arr_jalbSvg;
+	return len_backbone_arr_jalbSvg;
+}
+
+/// Getters
+
+struct backbone_structStruct **get_backbone_arr ( ) {
+	return backbone_arr_jalbSvg;
+}
+
+int get_backbone_arr_len ( ) {
+	return len_backbone_arr_jalbSvg;
+}
+
+int get_backbone_arr_total ( struct backbone_structStruct ***arrPtr ) {
 	*arrPtr = backbone_arr_jalbSvg;
 	return len_backbone_arr_jalbSvg;
 }

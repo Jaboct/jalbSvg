@@ -14,6 +14,8 @@
 #include "canvas_util.h"
 #include "text.h"
 
+#include "hand.h"
+
 
 /** Varaibles */
 

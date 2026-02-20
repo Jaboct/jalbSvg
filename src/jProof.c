@@ -7,6 +7,10 @@
 
 #include "jText.h"
 
+#include "complexMod.h"
+#include "complexEle.h"
+#include "complexEle_ext.h"
+
 
 /** Variables */
 

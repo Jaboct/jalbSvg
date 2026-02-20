@@ -15,7 +15,7 @@ extern struct svg *global_svg;
 
 
 
-extern int num_structStruct_jalbSvg;
+extern int xmlFuncts_arr_len_jalbSvg;
 extern struct xmlFuncts *xmlFuncts_arr_jalbSvg[];
 
 
@@ -34,7 +34,7 @@ void hand_test ( ) {
 	printf ( "hand_test ( )\n" );
 
 	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/test_00.xml";
-	struct svg *svgEle = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbSvg, num_structStruct_jalbSvg );
+	struct svg *svgEle = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbSvg, xmlFuncts_arr_len_jalbSvg );
 
 	say_svg ( svgEle );
 
@@ -50,7 +50,7 @@ void hand_test_load ( ) {
 	printf ( "hand_test_load ( )\n" );
 
 	char *dirLoad = "/home/jadoo/workspace/jHigh/jalbSvg/res/test_save_00.xml";
-	struct svg *svgEle = loadXmlFile_03 ( dirLoad, xmlFuncts_arr_jalbSvg, num_structStruct_jalbSvg );
+	struct svg *svgEle = loadXmlFile_03 ( dirLoad, xmlFuncts_arr_jalbSvg, xmlFuncts_arr_len_jalbSvg );
 
 //	printf ( "svgEle: %p\n", svgEle );
 	say_svg ( svgEle );
@@ -71,7 +71,7 @@ void hand_test_01 ( ) {
 	char *dirLoad = "/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/heart.svg";
 	char *dirSave = "/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/heart_save.svg";
 
-	struct svg *svgEle = loadXmlFile_03 ( dirLoad, xmlFuncts_arr_jalbSvg, num_structStruct_jalbSvg );
+	struct svg *svgEle = loadXmlFile_03 ( dirLoad, xmlFuncts_arr_jalbSvg, xmlFuncts_arr_len_jalbSvg );
 
 	expandSvg ( svgEle );
 
@@ -97,7 +97,7 @@ void line_1_test ( ) {
 	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/1_line_trim.svg";
 
 	// this is to test parsing.
-	struct svg *svgEle = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbSvg, num_structStruct_jalbSvg );
+	struct svg *svgEle = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbSvg, xmlFuncts_arr_len_jalbSvg );
 
 	int numEles = arrayListGetLength ( svgEle->eles );
 	printf ( "numEles: %d\n", numEles );
@@ -141,7 +141,7 @@ void extra_test ( ) {
 	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/test_save_extra.xml";
 
 	// this is to test parsing.
-	struct svg *svgEle = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbSvg, num_structStruct_jalbSvg );
+	struct svg *svgEle = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbSvg, xmlFuncts_arr_len_jalbSvg );
 
 	int numEles = arrayListGetLength ( svgEle->eles );
 	printf ( "numEles: %d\n", numEles );

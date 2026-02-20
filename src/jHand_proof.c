@@ -1,6 +1,18 @@
 #include "jHand_proof.h"
 
 
+/** Includes */
+
+#include "jGroup.h"
+
+#include "complexMod.h"
+#include "complexEle.h"
+
+#include "jHand.h"
+
+
+/** Variables */
+
 void *(*f_subVar_init) ( ) = NULL;
 void (*f_subVar_setName) ( void *data, char *name ) = NULL;
 
@@ -11,10 +23,10 @@ extern struct backbone_structStruct *backbone_arr_jalbJvg[];
 extern int len_backbone_arr_consumeMod;
 extern struct backbone_structStruct *backbone_arr_consumeMod[];
 
-extern int num_structStruct_jalbJvg;
+extern int xmlFuncts_arr_len_jalbJvg;
 extern struct xmlFuncts *xmlFuncts_arr_jalbJvg[];
 
-extern int num_structStruct_consumeMod;
+extern int xmlFuncts_arr_len_consumeMod;
 extern struct xmlFuncts *xmlFuncts_arr_consumeMod[];
 
 
@@ -30,8 +42,8 @@ void jvg_backbone_wrangle ( ) {
 		wrangleBackbone ( "jalbJvg", len_backbone_arr_jalbJvg, backbone_arr_jalbJvg );
 		wrangleBackbone ( "jHigh", len_backbone_arr_consumeMod, backbone_arr_consumeMod );
 
-		wrangleXmlFuncts ( "jalbJvg", num_structStruct_jalbJvg, xmlFuncts_arr_jalbJvg );
-		wrangleXmlFuncts ( "jHigh", num_structStruct_consumeMod, xmlFuncts_arr_consumeMod );
+		wrangleXmlFuncts ( "jalbJvg", xmlFuncts_arr_len_jalbJvg, xmlFuncts_arr_jalbJvg );
+		wrangleXmlFuncts ( "jHigh", xmlFuncts_arr_len_consumeMod, xmlFuncts_arr_consumeMod );
 
 		jvg_backbone_wrangled = 1;
 	}

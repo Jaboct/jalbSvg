@@ -25,7 +25,7 @@ extern struct svg *global_svg;
 int numFonts = 1;
 
 
-extern int num_structStruct_jalbSvg;
+extern int xmlFuncts_arr_len_jalbSvg;
 extern struct xmlFuncts *xmlFuncts_arr_jalbSvg[];
 
 /*
@@ -59,7 +59,7 @@ void load_global_svg ( char *dir ) {
 
 	strcpy ( global_svg_dir, dir );
 
-	struct svg *svgEle = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbSvg, num_structStruct_jalbSvg );
+	struct svg *svgEle = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbSvg, xmlFuncts_arr_len_jalbSvg );
 	global_svg = svgEle;
 
 	say_svg ( svgEle );
@@ -479,7 +479,7 @@ void hand_load ( char *dir ) {
 	printf ( "hand_load ( )\n" );
 	printf ( "dir: %s\n", dir );
 
-	struct svg *svgEle = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbSvg, num_structStruct_jalbSvg );
+	struct svg *svgEle = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbSvg, xmlFuncts_arr_len_jalbSvg );
 	say_svg ( svgEle );
 
 
@@ -806,7 +806,7 @@ void add_errand ( struct g *g, float *XY, char *name, char *desc ) {
 }
 
 
-extern int num_structStruct_jalbSvg;
+//extern int num_structStruct_jalbSvg;
 extern struct xmlFuncts *xmlFuncts_arr_jalbSvg[];
 
 extern int len_backbone_arr_jalbSvg;

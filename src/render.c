@@ -1,7 +1,12 @@
 #include "render.h"
 
 
-/** Vars */
+/** Includes */
+
+#include "canvas_util.h"
+
+
+/** Variables */
 
 int textWrap = 1;
 

@@ -1,5 +1,12 @@
 #include "complexScript_ext.h"
 
+/** Includes */
+
+#include "jGroup.h"
+
+#include "complexMod.h"
+#include "complexEle.h"
+
 
 /** Variables */
 
@@ -266,7 +273,7 @@ extern int complexMod_attributes[];
 extern struct backbone_structStruct backboneStru_complexMod;
 
 
-extern int num_structStruct_jalbJvg;
+extern int xmlFuncts_arr_len_jalbJvg;
 extern struct xmlFuncts *xmlFuncts_arr_jalbJvg[];
 
 
@@ -307,7 +314,7 @@ void hand_load_complexMod ( ) {
 	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/EE/test_00_script.xml";
 	char *dir2 = "/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/EE/test_00_script_2.xml";
 
-	struct complexMod *mod = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbJvg, num_structStruct_jalbJvg );
+	struct complexMod *mod = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbJvg, xmlFuncts_arr_len_jalbJvg );
 
 	printf ( "loaded: %p\n", mod );
 

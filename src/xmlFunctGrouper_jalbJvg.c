@@ -1,8 +1,23 @@
 #include "xmlFunctGrouper_jalbJvg.h"
 
 
+/** Includes */
 
-int num_structStruct_jalbJvg = 18;
+#include "jMod.h"
+#include "jPath.h"
+#include "jText.h"
+#include "jGroup.h"
+#include "jShapes.h"
+#include "complexEle.h"
+#include "complexMod.h"
+#include "complexScript.h"
+//#include "CAD_history.h"
+#include "cursor.h"
+
+
+/** Variables */
+
+int xmlFuncts_arr_len_jalbJvg = 27;
 
 
 extern struct xmlFuncts jPathXml;
@@ -23,6 +38,15 @@ extern struct xmlFuncts complexScriptXml;
 extern struct xmlFuncts cScriptEleXml;
 extern struct xmlFuncts complexModDataXml;
 extern struct xmlFuncts complexRefXml;
+//extern struct xmlFuncts CAD_historyXml;
+extern struct xmlFuncts cursor_eleXml;
+extern struct xmlFuncts cursor_unionXml;
+extern struct xmlFuncts cursor_pathXml;
+extern struct xmlFuncts cursor_groupXml;
+extern struct xmlFuncts cursor_circXml;
+extern struct xmlFuncts cursor_textXml;
+extern struct xmlFuncts cursor_rectXml;
+extern struct xmlFuncts complexListXml;
 
 
 struct xmlFuncts *xmlFuncts_arr_jalbJvg[] = {
@@ -44,18 +68,24 @@ struct xmlFuncts *xmlFuncts_arr_jalbJvg[] = {
 	&cScriptEleXml,
 	&complexModDataXml,
 	&complexRefXml,
+//	&CAD_historyXml,
+	NULL,
+	&cursor_eleXml,
+	&cursor_unionXml,
+	&cursor_pathXml,
+	&cursor_groupXml,
+	&cursor_circXml,
+	&cursor_textXml,
+	&cursor_rectXml,
+	&complexListXml,
 };
 
 
-void *get_num_structStruct ( ) {
-	return &num_structStruct_jalbJvg;
+void *get_xmlFuncts_arr_len ( ) {
+	return &xmlFuncts_arr_len_jalbJvg;
 }
 void *get_xmlFuncts_arr ( ) {
 	return xmlFuncts_arr_jalbJvg;
-}
-extern struct backbone_structStruct *backbone_arr_jalbJvg[];
-void *get_backbone_arr ( ) {
-	return backbone_arr_jalbJvg;
 }
 int num_projectVars_jalbJvg = 2;
 

@@ -44,7 +44,7 @@ struct tspan {
 
 /** Post Includes */
 
-#include "hand.h"
+
 
 /** Functions */
 

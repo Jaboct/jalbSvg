@@ -7,6 +7,7 @@
 #include "jGroup.h"
 #include "jShapes.h"
 #include "jText.h"
+#include "jEvent.h"
 
 #include "cursor.h"
 #include "cursorIcon.h"

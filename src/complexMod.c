@@ -1,5 +1,10 @@
 #include "complexMod.h"
 
+
+#include "complexEle.h"
+#include "complexScript.h"
+
+
 /** AUTO GENERATED CODE */
 
 extern char altKeys[];

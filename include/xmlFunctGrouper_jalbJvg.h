@@ -6,25 +6,15 @@
 #include <jalbXml/jalbXml.h>
 
 
-#include "backbone_jalbJvg.h"
-#include "jMod.h"
-#include "jPath.h"
-#include "jText.h"
-#include "jGroup.h"
-#include "jShapes.h"
-#include "complexEle.h"
-#include "complexMod.h"
-#include "complexScript.h"
+
 
 /** Functions */
 
-void *get_num_structStruct ( );
+void *get_xmlFuncts_arr_len ( );
 void *get_xmlFuncts_arr ( );
-void *get_backbone_arr ( );
+
 
 /** AUTO GENERATED FILE */
-
-
 
 
 void *get_num_projectVars ( );

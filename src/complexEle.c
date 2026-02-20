@@ -2,6 +2,15 @@
 
 /** AUTO GENERATED CODE */
 
+/** Includes */
+
+
+#include "complexEle_ext.h"
+
+
+/** Variables */
+
+
 extern char altKeys[];
 
 extern float colorWhite[];
@@ -259,12 +268,15 @@ void jLiveDataTypeChange0 ( struct jLiveData *var, int type ) {
 	if ( var->type == 0 ) {
 	} else if ( var->type == 1 ) {
 	} else if ( var->type == 2 ) {
+	} else if ( var->type == 3 ) {
 	}
 	if ( type == 0 ) {
 		var->i = 0;
 	} else if ( type == 1 ) {
 		var->f = 0.0;
 	} else if ( type == 2 ) {
+		var->v = NULL;
+	} else if ( type == 3 ) {
 		var->complexRef = complexRefInit ( );
 	}
 	var->type = type;
@@ -280,6 +292,7 @@ void jLiveDataClose ( struct jLiveData *var ) {
 	if ( var->type == 0 ) {
 	} else if ( var->type == 1 ) {
 	} else if ( var->type == 2 ) {
+	} else if ( var->type == 3 ) {
 		if ( var->complexRef ) {
 			complexRefClose ( var->complexRef );
 		}
@@ -301,6 +314,8 @@ void jLiveDataBodyToVal ( void *varPass, int nameI, char *body ) {
 			var->f = atof ( body );
 		} else if ( var->type == 2 ) {
 			// wont get called?
+		} else if ( var->type == 3 ) {
+			// wont get called?
 		}
 	}
 }
@@ -314,8 +329,11 @@ int jLiveDataNameToIndex ( char *body, void *data, void *ret, char **strPtr, cha
 	} else if ( strcmp ( body, "f" ) == 0 ) {
 		jLiveDataTypeChange0 ( var, 1 );
 		return 0;
-	} else if ( strcmp ( body, "complexRef" ) == 0 ) {
+	} else if ( strcmp ( body, "v" ) == 0 ) {
 		jLiveDataTypeChange0 ( var, 2 );
+		return 0;
+	} else if ( strcmp ( body, "complexRef" ) == 0 ) {
+		jLiveDataTypeChange0 ( var, 3 );
 		*strPtr = "complexRef";
 		void **retPtr = ret;
 		*retPtr = &var->complexRef;

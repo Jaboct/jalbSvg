@@ -1,5 +1,18 @@
 #include "backbone_jalbJvg.h"
 
+/** Includes */
+
+#include "jMod.h"
+#include "jPath.h"
+#include "jText.h"
+#include "jGroup.h"
+#include "jShapes.h"
+#include "complexEle.h"
+#include "complexMod.h"
+#include "complexScript.h"
+//#include "CAD_history.h"
+#include "cursor.h"
+
 
 /** jMod */
 
@@ -1250,6 +1263,65 @@ struct backbone_structStruct backboneStru_complexRef = {
 
 
 
+int complexList_attributes[] = {
+	0,
+	0,
+};
+struct backbone_subVar backboneVar_complexList_XYWH = {
+	.name = "XYWH",
+	.type = 0,
+	.typeIndex = 0,
+	.initType = 0,
+	.length = 4,
+	.literal = 1,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct complexList, XYWH ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subAl complexList_eleList_subAl = {
+	.overflow = 10,
+	.literal = 0,
+	.type = 1,
+	.typeIndex = 11,
+	.length = -1,
+	.naked = 0,
+};
+struct backbone_subVar backboneVar_complexList_eleList = {
+	.name = "eleList",
+	.type = 0,
+	.typeIndex = 3,
+	.initType = 0,
+	.length = 0,
+	.literal = 1,
+	.data = {
+		.id = 0,
+		.ptr = &complexList_eleList_subAl,
+	},
+	.external = offsetof ( struct complexList, eleList ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar *complexList_varArr[] = {
+	&backboneVar_complexList_XYWH,
+	&backboneVar_complexList_eleList,
+};
+struct backbone_structStruct backboneStru_complexList = {
+	.name = "complexList",
+	.varsLen = 2,
+	.vars = complexList_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
+	.structSize = sizeof ( struct complexList ),
+	.attributes = complexList_attributes,
+};
+
+
+
+
 
 
 /** complexMod */
@@ -1552,9 +1624,416 @@ struct backbone_structStruct backboneStru_cScriptEle = {
 
 
 
+
+
+/** CAD_history */
+/*
+int CAD_history_attributes[] = {
+};
+struct backbone_subVar *CAD_history_varArr[] = {
+};
+struct backbone_structStruct backboneStru_CAD_history = {
+	.name = "CAD_history",
+	.varsLen = 0,
+	.vars = CAD_history_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
+	.structSize = sizeof ( struct CAD_history ),
+	.attributes = CAD_history_attributes,
+};
+*/
+
+
+
+
+
+/** cursor */
+
+int cursor_ele_attributes[] = {
+	0,
+	0,
+};
+struct backbone_subVar backboneVar_cursor_ele_index = {
+	.name = "index",
+	.type = 0,
+	.typeIndex = 0,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct cursor_ele, index ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar backboneVar_cursor_ele_payload = {
+	.name = "payload",
+	.type = 1,
+	.typeIndex = 20,
+	.initType = 0,
+	.length = 0,
+	.literal = 0,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct cursor_ele, payload ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar *cursor_ele_varArr[] = {
+	&backboneVar_cursor_ele_index,
+	&backboneVar_cursor_ele_payload,
+};
+struct backbone_structStruct backboneStru_cursor_ele = {
+	.name = "cursor_ele",
+	.varsLen = 2,
+	.vars = cursor_ele_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
+	.structSize = sizeof ( struct cursor_ele ),
+	.attributes = cursor_ele_attributes,
+};
+
+
+
+
+int cursor_union_attributes[] = {
+	0,
+};
+int cursor_union__attributes[] = {
+	0,
+	0,
+	0,
+	0,
+	0,
+};
+struct backbone_subVar backboneVar_cursor_union__path = {
+	.name = "path",
+	.type = 1,
+	.typeIndex = 21,
+	.initType = 0,
+	.length = 0,
+	.literal = 1,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct cursor_union, path ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar backboneVar_cursor_union__group = {
+	.name = "group",
+	.type = 1,
+	.typeIndex = 22,
+	.initType = 0,
+	.length = 0,
+	.literal = 1,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct cursor_union, group ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar backboneVar_cursor_union__circ = {
+	.name = "circ",
+	.type = 1,
+	.typeIndex = 23,
+	.initType = 0,
+	.length = 0,
+	.literal = 1,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct cursor_union, circ ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar backboneVar_cursor_union__text = {
+	.name = "text",
+	.type = 1,
+	.typeIndex = 24,
+	.initType = 0,
+	.length = 0,
+	.literal = 1,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct cursor_union, text ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar backboneVar_cursor_union__rect = {
+	.name = "rect",
+	.type = 1,
+	.typeIndex = 25,
+	.initType = 0,
+	.length = 0,
+	.literal = 1,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct cursor_union, rect ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar *cursor_union__varArr[] = {
+	&backboneVar_cursor_union__path,
+	&backboneVar_cursor_union__group,
+	&backboneVar_cursor_union__circ,
+	&backboneVar_cursor_union__text,
+	&backboneVar_cursor_union__rect,
+};
+struct backbone_subComplex cursor_union__complex = {
+	.type = {
+	},
+	.typeDec = 0,
+	.listLen = 5,
+	.arr = cursor_union__varArr,
+	.prefix = "cu_"
+};
+struct backbone_subVar backboneVar_cursor_union_ = {
+	.name = "",
+	.type = 0,
+	.typeIndex = 6,
+	.initType = 0,
+	.length = 0,
+	.literal = 1,
+	.data = {
+		.id = 0,
+		.ptr = &cursor_union__complex,
+	},
+	.external = offsetof ( struct cursor_union, type ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar *cursor_union_varArr[] = {
+	&backboneVar_cursor_union_,
+};
+struct backbone_structStruct backboneStru_cursor_union = {
+	.name = "cursor_union",
+	.varsLen = 1,
+	.vars = cursor_union_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
+	.structSize = sizeof ( struct cursor_union ),
+	.attributes = cursor_union_attributes,
+};
+
+
+
+
+int cursor_path_attributes[] = {
+	0,
+	0,
+};
+struct backbone_subVar backboneVar_cursor_path_itself = {
+	.name = "itself",
+	.type = 0,
+	.typeIndex = 0,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct cursor_path, itself ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subAl cursor_path_verts_subAl = {
+	.overflow = 10,
+	.literal = 1,
+	.type = 0,
+	.typeIndex = 0,
+	.length = -1,
+	.naked = 0,
+};
+struct backbone_subVar backboneVar_cursor_path_verts = {
+	.name = "verts",
+	.type = 0,
+	.typeIndex = 3,
+	.initType = 0,
+	.length = 0,
+	.literal = 1,
+	.data = {
+		.id = 0,
+		.ptr = &cursor_path_verts_subAl,
+	},
+	.external = offsetof ( struct cursor_path, verts ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar *cursor_path_varArr[] = {
+	&backboneVar_cursor_path_itself,
+	&backboneVar_cursor_path_verts,
+};
+struct backbone_structStruct backboneStru_cursor_path = {
+	.name = "cursor_path",
+	.varsLen = 2,
+	.vars = cursor_path_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
+	.structSize = sizeof ( struct cursor_path ),
+	.attributes = cursor_path_attributes,
+};
+
+
+
+
+int cursor_group_attributes[] = {
+	0,
+	0,
+};
+struct backbone_subVar backboneVar_cursor_group_this = {
+	.name = "this",
+	.type = 0,
+	.typeIndex = 0,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct cursor_group, this ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subAl cursor_group_eles_subAl = {
+	.overflow = 10,
+	.literal = 0,
+	.type = 1,
+	.typeIndex = 19,
+	.length = -1,
+	.naked = 0,
+};
+struct backbone_subVar backboneVar_cursor_group_eles = {
+	.name = "eles",
+	.type = 0,
+	.typeIndex = 3,
+	.initType = 0,
+	.length = 0,
+	.literal = 1,
+	.data = {
+		.id = 0,
+		.ptr = &cursor_group_eles_subAl,
+	},
+	.external = offsetof ( struct cursor_group, eles ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar *cursor_group_varArr[] = {
+	&backboneVar_cursor_group_this,
+	&backboneVar_cursor_group_eles,
+};
+struct backbone_structStruct backboneStru_cursor_group = {
+	.name = "cursor_group",
+	.varsLen = 2,
+	.vars = cursor_group_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
+	.structSize = sizeof ( struct cursor_group ),
+	.attributes = cursor_group_attributes,
+};
+
+
+
+
+int cursor_circ_attributes[] = {
+	0,
+};
+struct backbone_subVar backboneVar_cursor_circ_type = {
+	.name = "type",
+	.type = 0,
+	.typeIndex = 0,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct cursor_circ, type ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar *cursor_circ_varArr[] = {
+	&backboneVar_cursor_circ_type,
+};
+struct backbone_structStruct backboneStru_cursor_circ = {
+	.name = "cursor_circ",
+	.varsLen = 1,
+	.vars = cursor_circ_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
+	.structSize = sizeof ( struct cursor_circ ),
+	.attributes = cursor_circ_attributes,
+};
+
+
+
+
+int cursor_text_attributes[] = {
+};
+struct backbone_subVar *cursor_text_varArr[] = {
+};
+struct backbone_structStruct backboneStru_cursor_text = {
+	.name = "cursor_text",
+	.varsLen = 0,
+	.vars = cursor_text_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
+	.structSize = sizeof ( struct cursor_text ),
+	.attributes = cursor_text_attributes,
+};
+
+
+
+
+int cursor_rect_attributes[] = {
+	0,
+};
+struct backbone_subVar backboneVar_cursor_rect_type = {
+	.name = "type",
+	.type = 0,
+	.typeIndex = 0,
+	.initType = 0,
+	.length = -1,
+	.literal = 1,
+	.data = {
+		.id = 0,
+	},
+	.external = offsetof ( struct cursor_rect, type ),
+	.saveFlag = 1,
+	.naked = 0,
+};
+struct backbone_subVar *cursor_rect_varArr[] = {
+	&backboneVar_cursor_rect_type,
+};
+struct backbone_structStruct backboneStru_cursor_rect = {
+	.name = "cursor_rect",
+	.varsLen = 1,
+	.vars = cursor_rect_varArr,
+	.overloadRenderEdit = "",
+	.overloadEventEdit = "",
+	.structDeclaration = 0,
+	.structSize = sizeof ( struct cursor_rect ),
+	.attributes = cursor_rect_attributes,
+};
+
+
+
+
 /// Data Array
 
-int len_backbone_arr_jalbJvg = 18;
+int len_backbone_arr_jalbJvg = 27;
 struct backbone_structStruct *backbone_arr_jalbJvg[] = {
 	&backboneStru_jPath,
 	&backboneStru_jVert,
@@ -1574,6 +2053,16 @@ struct backbone_structStruct *backbone_arr_jalbJvg[] = {
 	&backboneStru_cScriptEle,
 	&backboneStru_complexModData,
 	&backboneStru_complexRef,
+//	&backboneStru_CAD_history,
+	NULL,
+	&backboneStru_cursor_ele,
+	&backboneStru_cursor_union,
+	&backboneStru_cursor_path,
+	&backboneStru_cursor_group,
+	&backboneStru_cursor_circ,
+	&backboneStru_cursor_text,
+	&backboneStru_cursor_rect,
+	&backboneStru_complexList,
 };
 
 
@@ -1588,6 +2077,21 @@ int get_backbone_arr_len_jalbJvg ( ) {
 }
 
 int get_backbone_arr_total_jalbJvg ( struct backbone_structStruct ***arrPtr ) {
+	*arrPtr = backbone_arr_jalbJvg;
+	return len_backbone_arr_jalbJvg;
+}
+
+/// Getters
+
+struct backbone_structStruct **get_backbone_arr ( ) {
+	return backbone_arr_jalbJvg;
+}
+
+int get_backbone_arr_len ( ) {
+	return len_backbone_arr_jalbJvg;
+}
+
+int get_backbone_arr_total ( struct backbone_structStruct ***arrPtr ) {
 	*arrPtr = backbone_arr_jalbJvg;
 	return len_backbone_arr_jalbJvg;
 }

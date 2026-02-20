@@ -15,6 +15,7 @@
   <postInc>
 #include &quot;complexMod.h&quot;
 #include &quot;complexEle_ext.h&quot;
+#include &quot;complexEle.h&quot;
 </postInc>
   <structIds>
     19,

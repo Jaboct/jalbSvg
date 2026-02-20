@@ -4,11 +4,15 @@
 #include <jalb/soMacros>
 #include <jalb/jalbUtilities.h>
 
-#include "jalbXml/backbone_wrangler.h"
+#include <jalbXml/backbone_wrangler.h>
+
 
 /** Foward Declaring */
 
-
+struct jvg;
+struct complexDec;
+struct complexEle;
+struct complexList;
 
 
 /** Struct */
@@ -20,10 +24,7 @@ struct modWrap {
 };
 
 
-/** Post Includes */
 
-#include "jEvent.h"
-#include "jGroup.h"
 
 /** Functions */
 

@@ -17,6 +17,12 @@
 
 #include "recursiveCursor.h"
 
+#include "complexMod.h"
+#include "complexEle.h"
+#include "complexEle_ext.h"
+
+#include "canvas_util.h"
+
 #include "api/structStruct.h"
 
 

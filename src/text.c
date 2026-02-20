@@ -1,5 +1,9 @@
 #include "text.h"
 
+
+#include "hand.h"
+
+
 /** AUTO GENERATED CODE */
 
 extern char altKeys[];

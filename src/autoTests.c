@@ -3,6 +3,9 @@
 
 /** Largely coppied from uiGen_unitTests autoTest.c */
 
+/** Includes */
+
+#include "hand.h"
 
 /** Variables */
 

@@ -2,16 +2,6 @@
 
 #include <jalb/jalbSb.h>
 
-#include "jGroup.h"
-
-#include "jPath.h"
-#include "path.h"
-
-#include "jText.h"
-
-#include "jHand.h"
-
-#include "api_jvg.h"
 
 /** Functions */
 
