@@ -18,9 +18,9 @@ int doingTests = 0;
 extern int testStage;
 
 
-char *outputDir = "/home/jadoo/workspace/jHigh/jalbSvg/res/proofs/autoTest_log.txt";
-char *xmlDir = "/home/jadoo/workspace/jHigh/jalbSvg/res/proofs/svg/";
-char *imgDir = "/home/jadoo/workspace/jHigh/jalbSvg/res/proofs/img/";
+char *outputDir = "../jalbSvg/res/proofs/autoTest_log.txt";
+char *xmlDir = "../jalbSvg/res/proofs/svg/";
+char *imgDir = "../jalbSvg/res/proofs/img/";
 
 
 #define NUM_TESTS 4
@@ -225,7 +225,7 @@ int render_autoTest_end ( struct autoTest *render_auto ) {
 		// write this to a file, along with the time?
 
 		char buffer[512];
-		char *failDir = "/home/jadoo/workspace/jHigh/jalbSvg/res/proofs/fail";
+		char *failDir = "../jalbSvg/res/proofs/fail";
 		sprintf ( buffer, "%s/%s.ppm", failDir, testName );
 
 		jalbScreenshot_ppm_xywh ( buffer, render_auto->XYWH );

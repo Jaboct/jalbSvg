@@ -25,20 +25,18 @@ extern struct backbone_structStruct *backbone_arr_jalbSvg[];
 extern int svg_attributes[];
 extern struct backbone_structStruct backboneStru_svg;
 
-// todo
-char *homeDir = "/home/jadeb/";
 
 /** Functions */
 
 void hand_test ( ) {
 	printf ( "hand_test ( )\n" );
 
-	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/test_00.xml";
+	char *dir = "../jalbSvg/res/test_00.xml";
 	struct svg *svgEle = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbSvg, xmlFuncts_arr_len_jalbSvg );
 
 	say_svg ( svgEle );
 
-	char *dirSave = "/home/jadoo/workspace/jHigh/jalbSvg/res/test_save_00.xml";
+	char *dirSave = "../jalbSvg/res/test_save_00.xml";
 
 	fwriteXml_backbone ( dirSave, &backboneStru_svg, svgEle,
 		svg_attributes, backbone_arr_jalbSvg, len_backbone_arr_jalbSvg );
@@ -49,7 +47,7 @@ void hand_test ( ) {
 void hand_test_load ( ) {
 	printf ( "hand_test_load ( )\n" );
 
-	char *dirLoad = "/home/jadoo/workspace/jHigh/jalbSvg/res/test_save_00.xml";
+	char *dirLoad = "../jalbSvg/res/test_save_00.xml";
 	struct svg *svgEle = loadXmlFile_03 ( dirLoad, xmlFuncts_arr_jalbSvg, xmlFuncts_arr_len_jalbSvg );
 
 //	printf ( "svgEle: %p\n", svgEle );
@@ -57,7 +55,7 @@ void hand_test_load ( ) {
 
 	global_svg = svgEle;
 
-	char *dirSave = "/home/jadoo/workspace/jHigh/jalbSvg/res/test_save_01.xml";
+	char *dirSave = "../jalbSvg/res/test_save_01.xml";
 
 	fwriteXml_backbone ( dirSave, &backboneStru_svg, svgEle,
 		svg_attributes, backbone_arr_jalbSvg, len_backbone_arr_jalbSvg );
@@ -68,8 +66,8 @@ void hand_test_load ( ) {
 void hand_test_01 ( ) {
 	printf ( "hand_test_01 ( )\n" );
 
-	char *dirLoad = "/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/heart.svg";
-	char *dirSave = "/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/heart_save.svg";
+	char *dirLoad = "../jalbSvg/res/svgProof/heart.svg";
+	char *dirSave = "../jalbSvg/res/svgProof/heart_save.svg";
 
 	struct svg *svgEle = loadXmlFile_03 ( dirLoad, xmlFuncts_arr_jalbSvg, xmlFuncts_arr_len_jalbSvg );
 
@@ -93,8 +91,8 @@ void hand_test_01 ( ) {
 void line_1_test ( ) {
 	printf ( "line_1_test ( )\n" );
 
-//	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/1_line.svg";
-	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/1_line_trim.svg";
+//	char *dir = "../jalbSvg/res/svgProof/1_line.svg";
+	char *dir = "../jalbSvg/res/svgProof/1_line_trim.svg";
 
 	// this is to test parsing.
 	struct svg *svgEle = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbSvg, xmlFuncts_arr_len_jalbSvg );
@@ -138,7 +136,7 @@ void line_1_test ( ) {
 void extra_test ( ) {
 	printf ( "extra_test ( )\n" );
 
-	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/test_save_extra.xml";
+	char *dir = "../jalbSvg/res/test_save_extra.xml";
 
 	// this is to test parsing.
 	struct svg *svgEle = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbSvg, xmlFuncts_arr_len_jalbSvg );
@@ -276,7 +274,7 @@ void render_proof_00 ( int stage ) {
 //	printf ( "render_proof_00 ( )\n" );
 //	printf ( "stage: %d\n", stage );
 
-	char *folder = "/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/proof/";
+	char *folder = "../testEnv/res/jalbSvg/proof/";
 	char dir[256];
 
 	if ( !setViewScale ) {
@@ -319,7 +317,7 @@ void render_proof_01 ( int stage ) {
 	printf ( "render_proof_001( )\n" );
 	printf ( "stage: %d\n", stage );
 
-	char *folder = "/home/jadoo/workspace/jHigh/testEnv/res/jalbSvg/proof/t1_";
+	char *folder = "../testEnv/res/jalbSvg/proof/t1_";
 	char dir[256];
 
 	if ( !setViewScale ) {
@@ -383,9 +381,8 @@ void test_viewScale_00 ( ) {
 void fullTest ( ) {
 	printf ( "fullTest ( )\n" );
 
-//	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/svgProof/out.png";
-//	char *pngDir = "/home/jadoo/workspace/jHigh/jalbSvg/res/firstproof/out.png";
-	char *svgDir = "/home/jadoo/workspace/jHigh/jalbSvg/res/firstproof/heart.svg";
+//	char *pngDir = "../jalbSvg/res/firstproof/out.png";
+	char *svgDir = "../jalbSvg/res/firstproof/heart.svg";
 
 	// ok so load this first.
 	// then save it to a ppm.
@@ -398,7 +395,7 @@ void fullTest ( ) {
 
 //	glReadPixels ( XYWH[0], window_height - (XYWH[1]+height), width, height, FORMAT, GL_UNSIGNED_BYTE, pixels );
 
-	char *outputDir = "/home/jadoo/workspace/jHigh/jalbSvg/res/firstproof/made.png";
+	char *outputDir = "../jalbSvg/res/firstproof/made.png";
 	FILE *file = jfopenWB ( outputDir );
 
 
@@ -520,8 +517,8 @@ extern int glob_screenDims[];
 
 void load_png ( ) {
 	printf ( "load_png ( )\n" );
-	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/firstproof/out.png";
-	char *saveDir = "/home/jadoo/workspace/jHigh/jalbSvg/res/firstproof/save.ppm";
+	char *dir = "../jalbSvg/res/firstproof/out.png";
+	char *saveDir = "../jalbSvg/res/firstproof/save.ppm";
 /*
 	GLuint texture;
 	SDL_Surface *surface;
@@ -596,7 +593,7 @@ void load_png ( ) {
 void hand_screenshot ( ) {
 	printf ( "hand_screenshot ( )\n" );
 
-	char *saveDir = "/home/jadoo/workspace/jHigh/jalbSvg/res/firstproof/save.ppm";
+	char *saveDir = "../jalbSvg/res/firstproof/save.ppm";
 
 //	jalbScreenshot_ppm ( saveDir );
 	int xywh[4] = { 0, 0, 100, 100 };

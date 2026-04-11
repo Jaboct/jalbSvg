@@ -48,12 +48,12 @@ void jType_spawnEditUi ( struct jNakedUnion *uni ) {
 		case jNaked_G:
 			break;
 		case jNaked_Path:
-			dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/jPath.xml";
+			dir = "../jalbSvg/res/uiGen_hand/jPath.xml";
 			data = uni->path;
 
 			break;
 		case jNaked_Text:
-			dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/jText.xml";
+			dir = "../jalbSvg/res/uiGen_hand/jText.xml";
 			data = uni->text;
 
 			break;
@@ -67,7 +67,7 @@ void jType_spawnEditUi ( struct jNakedUnion *uni ) {
 
 			break;
 		case jNaked_Complex:
-			dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/complexEle.xml";
+			dir = "../jalbSvg/res/uiGen_hand/complexEle.xml";
 			data = uni->text;
 
 			break;
@@ -97,7 +97,6 @@ void open_jLine_edit ( struct jLine *line ) {
 	printf ( "line->v0: %d\n", line->v0 );
 	printf ( "line->v1: %d\n", line->v1 );
 
-//	char *workspaceDir_jalbJvg = "/home/jadeb/workspace/jHigh/jalbSvg/";
 	char *fileDir = "res/uiGen_hand/jLine.xml";
 
 	char fullDir[1024];
@@ -117,8 +116,6 @@ char *jvg_projectDir = "/home/jadeb/workspace/jHigh/jalbSvg";
 
 void open_left_toolbar ( ) {
 	printf ( "open_left_toolbar ( )\n" );
-
-//	char *fullDir = "/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/eleSpawner.xml";
 
 	char *dir = "res/uiGen_hand/eleSpawner.xml";
 	char fullDir[256];
@@ -165,7 +162,6 @@ void uiGen_open_jNaked ( struct jNakedUnion *jNaked ) {
 	printf ( "jNaked: %p\n", jNaked );
 	printf ( "jNaked->type: %d\n", jNaked->type );
 
-//	char *dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/";
 	char *midDir = "res/uiGen_hand";
 
 	int type = 0; // red bar.

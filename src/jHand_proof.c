@@ -79,7 +79,7 @@ printf ( "c\n" );
 printf ( "d\n" );
 	f_subVar_setName ( subVar, "firstSubVar" );
 
-	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/jvgTest/test_00.xml";
+	char *dir = "../jalbSvg/res/jvgTest/test_00.xml";
 	jalbJvg_save ( jvg, dir );
 
 	printf ( "hand_complex_save ( ) OVER\n" );
@@ -90,13 +90,13 @@ void hand_complex_load ( ) {
 
 	jvg_backbone_wrangle ( );
 
-	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/jvgTest/test_00.xml";
+	char *dir = "../jalbSvg/res/jvgTest/test_00.xml";
 	struct jvg *jvg = jalbJvg_load ( dir );
 
 
 //	printf ( "jvg->complexDecList.len: %d\n", arrayListGetLength ( mod->complexDecList ) );
 
-	char *dir1 = "/home/jadoo/workspace/jHigh/jalbSvg/res/jvgTest/test_01.xml";
+	char *dir1 = "../jalbSvg/res/jvgTest/test_01.xml";
 	jalbJvg_save ( jvg, dir1 );
 
 //	exit ( 12 );

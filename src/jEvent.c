@@ -85,7 +85,7 @@ extern ArrayList *glob_ctrlKeys;
 
 // uiGen
 extern struct uiGen_api *uiGenApi;
-char *uiGen_jTextEdit = "/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/jText.xml";
+char *uiGen_jTextEdit = "../jalbSvg/res/uiGen_hand/jText.xml";
 
 
 /** Functions */
@@ -151,7 +151,7 @@ int jalbJvg_keyDown ( SDL_Event *e, int *clickXYpass, int *eleWH, struct jvg *jv
 				if ( ele->type == jNaked_Path ) {
 					printf ( "load path uiGen\n" );
 
-					char *dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/uiGen_hand/jPath.xml";
+					char *dir = "../jalbSvg/res/uiGen_hand/jPath.xml";
 
 					uiGen_api->load_and_set_norm ( dir, ele->path );
 
@@ -288,6 +288,8 @@ int keydown_text ( SDL_Event *e, struct jText *text ) {
 	}
 
 	printf ( "a\n" );
+	sayIntArray ( "cStart", cStart, 3 );
+	sayIntArray ( "cEnd", cEnd, 3 );
 
 	int glyphH = fonts[0]->atlasInfo.glyphH;
 	ret = sbKey ( e->key.keysym.sym, sb, undoMem, cStart, cEnd,

@@ -14,15 +14,15 @@
 
 /** Variables */
 
-char *outputLog = "/home/jadoo/workspace/jHigh/jalbSvg/res/jvg_proof/outputLog.txt";
-char *diffTemp = "/home/jadoo/workspace/jHigh/jalbSvg/res/jvg_proof/diffTemp.txt";
+char *outputLog = "../jalbSvg/res/jvg_proof/outputLog.txt";
+char *diffTemp = "../jalbSvg/res/jvg_proof/diffTemp.txt";
 
 int num_jvg_tests = 1;
 struct jvg_proof_test jvg_tests[1] = {
 	{
 		.name = "test_00",
-		.knownDir = "/home/jadoo/workspace/jHigh/jalbSvg/res/jvg_proof/expected/test_00.xml",
-		.madeDir = "/home/jadoo/workspace/jHigh/jalbSvg/res/jvg_proof/created/test_00.xml",
+		.knownDir = "../jalbSvg/res/jvg_proof/expected/test_00.xml",
+		.madeDir = "../jalbSvg/res/jvg_proof/created/test_00.xml",
 	}
 };
 
@@ -107,7 +107,7 @@ void complex_test_03 ( ) {
 	// spawn a complexEle, then compare the render and save file.
 	// todo, add event, and add proofs for the uiGen eles.
 
-	char *fullDir = "/home/jadeb/workspace/jHigh/jalbSvg/res/jvgTest/test_03.xml";
+	char *fullDir = "../jalbSvg/res/jvgTest/test_03.xml";
 	strcpy ( saveDir, fullDir );
 
 	glob_jvg = jvgInit ( );
@@ -154,7 +154,7 @@ void complex_test_04 ( ) {
 	// spawn a complexEle, then compare the render and save file.
 	// todo, add event, and add proofs for the uiGen eles.
 
-	char *fullDir = "/home/jadeb/workspace/jHigh/jalbSvg/res/jvgTest/test_04.xml";
+	char *fullDir = "../jalbSvg/res/jvgTest/test_04.xml";
 	strcpy ( saveDir, fullDir );
 
 	glob_jvg = jvgInit ( );

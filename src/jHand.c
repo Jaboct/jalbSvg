@@ -44,6 +44,9 @@ extern ArrayList *cursorList;
 extern int cursor_depth;
 
 // text cursor info.
+// [0] is the index
+// [1] is the column (x value)
+// [2] is the row (y value)
 int cStart[3];
 int cEnd[3];
 
@@ -613,7 +616,7 @@ void jHand_save ( ) {
 	if ( saveDir[0] != '\0' ) {
 		jalbJvg_glob_save ( saveDir );
 	} else {
-		char *dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/jvg/test_00.xml";
+		char *dir = "../jalbSvg/res/jvg/test_00.xml";
 		jalbJvg_glob_save ( dir );
 	}
 
@@ -641,7 +644,7 @@ void jalbJvg_save ( struct jvg *jvgEle, char *dir ) {
 void jHand_load ( ) {
 	printf ( "jHand_load ( )\n" );
 
-	char *dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/jvg/test_00.xml";
+	char *dir = "../jalbSvg/res/jvg/test_00.xml";
 
 	jalbJvg_load ( dir );
 }
@@ -1480,7 +1483,7 @@ void load_jvg_dirList ( ) {
 		return;
 	}
 
-	char *dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/jvg/";
+	char *dir = "../jalbSvg/res/jvg/";
 	jalbDir_loadPane ( dir );
 
 	printf ( "load_jvg_dirList ( ) OVER\n" );

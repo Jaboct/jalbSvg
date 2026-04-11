@@ -281,7 +281,7 @@ void hand_save_complexMod ( ) {
 	printf ( "hand_save_complexMod ( )\n" );
 
 
-	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/EE/test_00_script.xml";
+	char *dir = "../jalbSvg/res/jvg/EE/test_00_script.xml";
 
 	struct complexMod *mod = complexModInit ( );
 	strcpy ( mod->name, "mod name" );
@@ -311,8 +311,8 @@ void hand_load_complexMod ( ) {
 	printf ( "hand_load_complexMod ( )\n" );
 
 
-	char *dir = "/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/EE/test_00_script.xml";
-	char *dir2 = "/home/jadoo/workspace/jHigh/jalbSvg/res/jvg/EE/test_00_script_2.xml";
+	char *dir = "../jalbSvg/res/jvg/EE/test_00_script.xml";
+	char *dir2 = "../jalbSvg/res/jvg/EE/test_00_script_2.xml";
 
 	struct complexMod *mod = loadXmlFile_03 ( dir, xmlFuncts_arr_jalbJvg, xmlFuncts_arr_len_jalbJvg );
 

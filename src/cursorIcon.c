@@ -20,34 +20,34 @@ int cursorRenderMode = 0;	// enum cursorRenderTypes;
 // the more positive hotXY is, the farther the even is down and to the right.
 struct cursorIconInfo cursorIcons[6] = {
 	{
-		.dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/cursor/cursor_32.png",
+		.dir = "../jalbSvg/res/cursor/cursor_32.png",
 		.hotXY = { 10, 4 },
 	},
 	{
-		.dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/cursor/cursor_text_32.png",
+		.dir = "../jalbSvg/res/cursor/cursor_text_32.png",
 		.hotXY = { 10, 10 },
 	},
 	{
-		.dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/cursor/pen_32.png",
+		.dir = "../jalbSvg/res/cursor/pen_32.png",
 		.hotXY = { 4, 4 },
 	},
 	{
-		.dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/cursor/rect.png",
+		.dir = "../jalbSvg/res/cursor/rect.png",
 		.hotXY = { 10, 10 },
 	},
 	{
-		.dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/cursor/arc_32.png",
+		.dir = "../jalbSvg/res/cursor/arc_32.png",
 		.hotXY = { 10, 10 },
 	},
 	{
-		.dir = "/home/jadeb/workspace/jHigh/jalbSvg/res/cursor/select-mouseover.png",
+		.dir = "../jalbSvg/res/cursor/select-mouseover.png",
 		.hotXY = { 0, 0 },
 	},
 };
 
 /*
 void changeCursor ( ) {
-	char *filename = "/home/jadeb/workspace/jHigh/jalbSvg/res/cursor/xterm_32.png";
+	char *filename = "../jalbSvg/res/cursor/xterm_32.png";
 	int hotX = 10;
 	int hotY = 10;
 
@@ -56,13 +56,13 @@ void changeCursor ( ) {
 
 
 	if ( cursorRenderMode == 0 ) {
-//		filename = "/home/jadeb/workspace/jHigh/jalbSvg/res/cursor/xterm_32.png";
-		filename = "/home/jadeb/workspace/jHigh/jalbSvg/res/cursor/cursor_text_32.png";
+//		filename = "../jalbSvg/res/cursor/xterm_32.png";
+		filename = "../jalbSvg/res/cursor/cursor_text_32.png";
 		hotX = 10;
 		hotY = 10;
 	} else {
-//		filename = "/home/jadeb/workspace/jHigh/jalbSvg/res/cursor/cursor_48.png";
-		filename = "/home/jadeb/workspace/jHigh/jalbSvg/res/cursor/cursor_32.png";
+//		filename = "../jalbSvg/res/cursor/cursor_48.png";
+		filename = "../jalbSvg/res/cursor/cursor_32.png";
 		hotX = 10;
 		hotY = 4;
 	}
