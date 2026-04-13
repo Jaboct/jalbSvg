@@ -15,6 +15,8 @@ Video showing a few features:
 - Textbox resizing and text wrapping
 - Shape drawing and editing
 - Circle drawing
+
+(downloads mp4)
 ![JalbJvg exmaple](https://github.com/Jaboct/jalbSvg/releases/download/Resources/jalbJvg.mp4)
 
 # Framework
