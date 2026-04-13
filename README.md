@@ -7,8 +7,18 @@ This project is broken into two parts:
 - **jalbSvg**, a true SVG editor: edit, load, and save .svg files.
 - **jalbJvg**, extending the SVG core to add additional features, most notibly the "Complex Ele", which allows hooking into other .dll's or .so's to render their application inside jalbJvg, for example a LaTeX renderer.
 
+Video showing a few features:
+- Loading from file
+- Lagless zoomout
+- Shape editing (bezier curve)
+- Text editing
+- Textbox resizing and text wrapping
+- Shape drawing and editing
+- Circle drawing
+![JalbJvg exmaple](https://github.com/Jaboct/jalbSvg/releases/download/Resources/jalbJvg.mp4)
 
-This program is built upon a **framework** so 
+# Framework
+This program is built upon a **framework** so there is no main function, instead these functions are called by the frameworks render and event loop.
  jalbSvg_renderDyn()
  jalbJvg_renderDyn()
 are the main render functions, and 
