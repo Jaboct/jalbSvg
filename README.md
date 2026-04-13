@@ -17,15 +17,22 @@ Video showing a few features:
 - Circle drawing
 
 (downloads mp4)
+
 ![JalbJvg exmaple](https://github.com/Jaboct/jalbSvg/releases/download/Resources/jalbJvg.mp4)
 
 # Framework
 This program is built upon a **framework** so there is no main function, instead these functions are called by the frameworks render and event loop.
+
  jalbSvg_renderDyn()
+
  jalbJvg_renderDyn()
+
 are the main render functions, and 
+
  jalbSvg_mEvent()
+
  jalbJvg_mEvent()
+
 are the main event functions.
 
 # Libraries
